@@ -67,7 +67,7 @@ angular
                             return $templateFactory.fromUrl('../modules/product/material.register.tpl.html');
                         }
                         if(userModel.isManufacturer()){
-                            return $templateFactory.fromUrl('../modules/product/product.ship.tpl.html');
+                            return $templateFactory.fromUrl('../modules/product/product.register.tpl.html');
                         }
                     },
                     controllerAs: 'vm',
