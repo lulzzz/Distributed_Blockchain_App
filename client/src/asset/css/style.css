@@ -62,6 +62,9 @@ header #errorDiv,
 header #user-info {
   background-color: #ffffff;
 }
+header #errorDiv {
+  padding-top: 20px;
+}
 header .displayInlineBlock img {
   vertical-align: initial;
   padding-left: 10px;

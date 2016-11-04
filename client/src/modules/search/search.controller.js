@@ -20,12 +20,13 @@ angular.module('bverifyApp')
             }
         }])
     // searchResultController for rendering shipment details
-    .controller('searchResultController', ['searchServiceAPI', '$state', '$stateParams', 'appConstants', '$log',
-        function (searchServiceAPI, $state, $stateParams, appConstants, $log) {
+    .controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails',
+        function ($state, appConstants, $log, shipmentDetails) {
             try {
                 var vm = this;
-                    searchServiceAPI
-                        .search($stateParams.id)
+                vm.product = {};
+                    shipmentDetails
+                        .$promise
                         .then(function (response) {
                             vm.product = response;
                         }, function (err) {

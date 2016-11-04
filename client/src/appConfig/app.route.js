@@ -27,6 +27,12 @@ angular
                     params: {
                         id: ''
                     },
+                    //Resolve added to retreive shipmentDetails before loading serachResultController
+                    resolve: {
+                        shipmentDetails: function ($stateParams, searchServiceAPI, appConstants) {
+                            return searchServiceAPI.search($stateParams.id);
+                        }
+                    },
                     controllerAs: 'vm',
                     controller: 'searchResultController'
                 })
@@ -59,14 +65,14 @@ angular
                 // PRODUCT REGISTER/SHIPMENT/ACKNOWLEDGMENT STATES
                 .state('product', {
                     url: '/product/register',
-                    templateProvider: function(userModel, $templateFactory){
+                    templateProvider: function (userModel, $templateFactory) {
                         /*
                         **  Load templates based on user roles. Route URL will be same for every user role.
                         */
-                        if(userModel.isProducer()){
+                        if (userModel.isProducer()) {
                             return $templateFactory.fromUrl('../modules/product/material.register.tpl.html');
                         }
-                        if(userModel.isManufacturer()){
+                        if (userModel.isManufacturer()) {
                             return $templateFactory.fromUrl('../modules/product/product.register.tpl.html');
                         }
                     },
