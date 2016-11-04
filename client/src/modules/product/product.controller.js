@@ -41,7 +41,8 @@ angular.module('bverifyApp')
                 vm.file = {
                     name: ''
                 }
-                vm.uploadFile = function (file) {
+                vm.uploadFile = function (file, event) {
+                    event.preventDefault();
                     if (file) {
                         vm.file.name = file.name;
                         vm.product.file = file;
@@ -96,6 +97,17 @@ angular.module('bverifyApp')
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.product = {};
+                vm.openDatepicker = function () {
+                    vm.datepickerObj.popup.opened = true;
+                };
+				vm.settings = {
+					scrollable : true,
+					scrollableHeight : '250px'
+				};
+				vm.example8model = []; 
+				vm.example8data = [ {id: 1, label: "Retailer1"}, {id: 2, label: "Retailer1"}, {id: 3, label: "Retailer1"},
+				{id: 4, label: "Retailer1"}, {id: 5, label: "Retailer1"},{id: 6, label: "Distributer1"},{id: 7, label: "Distributer2"}
+				,{id: 8, label: "Distributer3"},{id: 9, label: "Distributer4"},{id: 10, label: "Distributer5"}];
 
                 /*      TO-DO need to test with actual data and implementation
                                 // do Product/material shipment

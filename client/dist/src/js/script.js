@@ -19,11 +19,10 @@ angular.module('bverifyApp', ['appRoute', 'appConfig']);
   if(window){
     Object.assign(_env, window.__env);
   }
-  
 
 
 angular
-    .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize', 'ngFileUpload'])
+    .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize', 'ngFileUpload','angularjs-dropdown-multiselect'])
     .config(['$httpProvider', '$logProvider', function ($httpProvider, $logProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
@@ -156,13 +155,13 @@ angular
                     url: '/product/register',
                     templateProvider: function(userModel, $templateFactory){
                         /*
-                        **  Load templates with respect to user roles. Route URL will be same for every user role.
+                        **  Load templates based on user roles. Route URL will be same for every user role.
                         */
                         if(userModel.isProducer()){
                             return $templateFactory.fromUrl('../modules/product/material.register.tpl.html');
                         }
                         if(userModel.isManufacturer()){
-                            return $templateFactory.fromUrl('../modules/product/product.ship.tpl.html');
+                            return $templateFactory.fromUrl('../modules/product/product.register.tpl.html');
                         }
                     },
                     controllerAs: 'vm',
@@ -38516,7 +38515,8 @@ angular.module('bverifyApp')
                 vm.file = {
                     name: ''
                 }
-                vm.uploadFile = function (file) {
+                vm.uploadFile = function (file, event) {
+                    event.preventDefault();
                     if (file) {
                         vm.file.name = file.name;
                         vm.product.file = file;
@@ -38571,6 +38571,17 @@ angular.module('bverifyApp')
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.product = {};
+                vm.openDatepicker = function () {
+                    vm.datepickerObj.popup.opened = true;
+                };
+				vm.settings = {
+					scrollable : true,
+					scrollableHeight : '250px'
+				};
+				vm.example8model = []; 
+				vm.example8data = [ {id: 1, label: "Retailer1"}, {id: 2, label: "Retailer1"}, {id: 3, label: "Retailer1"},
+				{id: 4, label: "Retailer1"}, {id: 5, label: "Retailer1"},{id: 6, label: "Distributer1"},{id: 7, label: "Distributer2"}
+				,{id: 8, label: "Distributer3"},{id: 9, label: "Distributer4"},{id: 10, label: "Distributer5"}];
 
                 /*      TO-DO need to test with actual data and implementation
                                 // do Product/material shipment

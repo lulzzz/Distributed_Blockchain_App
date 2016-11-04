@@ -56,6 +56,9 @@ body {
 .setMarginTop(@top) {
     margin-top: @top;
 }
+.setMarginBottom(@bottom) {
+    margin-bottom: @bottom;
+}
 .fontBold {
 	font-weight:bold;
 }
@@ -185,7 +188,7 @@ header {
 			.form-control[readonly] {
 				background-color: @color-white;
 				color: @color-grey40;
-				border: 1px solid #ccc;
+				border: 1px solid @color-grey40;
 			}
 			.form-control {
 				background-color: @color-white;
@@ -254,7 +257,7 @@ header {
     width: 200px;
 	margin-right: -165px;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 35%;
     right: 0;
 	padding-top: 45px;
@@ -313,7 +316,8 @@ header {
 }
 .registerProduct {
 	.registerBtn{
-			.setMarginTop(30px);
+			.setMarginTop(10px);
+			.setMarginBottom(10px);
 	}
 }
 .singleSelect {
@@ -362,6 +366,11 @@ header {
 		 th{
 			text-align:left !important;
 			border-right:1px solid white;
+			vertical-align:middle;
+			input {
+				margin-left:10px !important;
+				margin-right:10px !important;
+			}
 		 }
 	}
 	 tbody{ 
@@ -374,6 +383,7 @@ header {
 					background-color: #EAEFF7;
 				}
 				td{
+					vertical-align:middle;
 					border-right:1px solid white;
 					a{
 						text-decoration:none;
@@ -388,20 +398,31 @@ header {
 							border:none;
 						}
 					}
+					input[type="text"] {
+						width:100%;
+					}
+					input[type="checkbox"] {
+						margin-left:10px !important;
+						margin-right:10px !important;
+					}
+					select {
+						width:100%;
+					}
 				}
 			 }
 		 }
 }
 
 #wrapper {
-  min-height: 100%;
+min-height: 100%;
   height: auto !important;
   margin: 0 auto -75px;
   padding: 0 0 60px;
 }
-/* Set the fixed height of the footer here */
+/*  min-height: 100%; Set the fixed height of the footer here */
 #footer {
   .img {
+		clear:both;
 		background-image: url(../images/footer.png);
 		background-repeat: repeat-x;
 		height:75px;
@@ -421,7 +442,30 @@ header {
 	}
 } 
 /*Datepicker class */
-
+.multiSelectDirective {
+	.multiselect-parent {
+		width:100%;
+		button {
+			width:100%;
+			text-align:left;
+			border-radius:0px;
+			border-color:@color-grey40;
+			background-color:white;
+			box-shadow:none;
+			&.btn-default:hover {
+				background-color:white;
+			}
+			span.caret {
+				float:right;
+				margin-top:8px;
+			}
+		}
+		ul.dropdown-menu{
+			width:100% !important;
+			overflow-x:hidden !important;
+		}
+	}
+}
 .errorDiv{
 	.fontBold;
 }

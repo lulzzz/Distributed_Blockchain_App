@@ -11,7 +11,7 @@ const express = require('express'),
 	app = express(),
 	appConfig = require('./src/config/appConfig')(app);
 
-var server = require('./server')(app);
+var server = require('./server.js')(app);
 var log = log4js.getLogger("app");
 
 

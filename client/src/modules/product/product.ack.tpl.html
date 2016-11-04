@@ -2,16 +2,18 @@
 
 <!-- Directive for app header -->
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header> <!-- TO-DO // remove hard-code value --> 
-
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" class="" value="" id=""/>
+</script>
 <div class="">
 
-    <div class="manageProducts col-lg-8 col-md-10 col-sm-10 hidden-xs">
+    <div class="manageProducts col-lg-10 col-md-10 col-sm-10 hidden-xs">
             <!-- Directive for module header -->
         <app-legend header="{{vm.header}}" ></app-legend> <!-- TO-DO need to apply condition based on profile -->
 			<div>
 				<table ng-table="" class="commonTable table" show-filter="false">
 					<tr>
-                        <td title="''">
+                        <td header="'headerCheckbox.html'">
                             <input type="checkbox" id="">
                         </td>
 						<td title="'Name'">Leather Full-grain</td>
@@ -22,6 +24,8 @@
 						<td title="'Tag PO#'">
                             <select id="po" class="selectPOCls" ng-disabled="true">
                                 <option id="" value="">Select PO#</option>
+								<option id="" value="">Select PO#</option>
+								<option id="" value="">Select PO#</option>
                             </select>
                         </td>
                         <td title="'Shipped On'">10/10/2016</td>
@@ -33,7 +37,7 @@
                         </td>
 					</tr>
 	    			<tr>
-                        <td title="''">
+                        <td header="'headerCheckbox.html'">
                             <input type="checkbox" id="">
                         </td>
 						<td title="'Name'">Leather Top-grain</td>
@@ -44,6 +48,8 @@
 						<td title="'Tag PO#'">
                             <select id="po" class="selectPOCls">
                                 <option id="" value="">Select PO#</option>
+								<option id="" value="">Select PO#</option>
+								<option id="" value="">Select PO#</option>
                             </select>
                         </td>
                         <td title="'Shipped On'">18/10/2016</td>
@@ -57,10 +63,10 @@
 				</table>
 			</div>
 
-            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right-lg text-center-xs text-right-md text-right-sm" style="padding-left:0px">
 				<button type="submit" class="btn btn-primary registerBtn">PROCURE</button>
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left-lg text-center-xs text-left-sm" style="padding-left:0px">
 				<button type="reset" class="btn btn-primary registerBtn">CANCLE</button>
 			</div>
 	</div>

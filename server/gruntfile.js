@@ -15,18 +15,18 @@ module.exports = function (grunt) {
 			dist: ["dist/"]
 		},
 		jshint: {
-			dist: ["client/**/*.js"]
+			dist: ["src/**/*.js"]
 		},
 		concat: {
 			dist: {
-				src: ["client/**/*.js"],
-				dest: "dist/client/js/script.js"
+				src: ["src/**/*.js"],
+				dest: "dist/src/js/script.js"
 			}
 		},
 		uglify: {
 			options: {
 				sourceMap: true,
-				sourceMapName: 'dist/client/js/scriptMap.map',
+				sourceMapName: 'dist/src/js/scriptMap.map',
 				banner: '/*! Application : <%= pkg.name %>        '
 							+'Version : <%= pkg.version %>        '
 							+'Description : <%= pkg.description %>          ' 
@@ -42,19 +42,19 @@ module.exports = function (grunt) {
 				}
 			},
 			dist: {
-				src: ["dist/client/js/script.js"],
-				dest: "dist/client/js/script-min.js"
+				src: ["dist/src/js/script.js"],
+				dest: "dist/src/js/script-min.js"
 			}
 		},
 		copy: {
 			dist: {
-				src: ["client/asset/css/*", "client/asset/data/*", "client/asset/images/*"],
+				src: ["src/asset/css/*", "src/asset/data/*", "src/asset/images/*"],
 				dest: "dist/"
 			}
 		},
 		watch: {
 			scripts: {
-				files: ['client/**/*.js', 'client/**/*.html', 'client/**/*.less'],
+				files: ['src/**/*.js', 'src/**/*.html', 'src/**/*.less'],
 				tasks: ['concat', 'uglify', 'less', 'copy', 'cssmin'],
 				options: {
 					spawn: false,
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 					ieCompat: true    // Enforce the CSS output is compatible with Internet Explorer 8.
 				},
 				files: {
-					"client/asset/css/style.css": "client/asset/css/style.less"  // destination file and source file
+					"src/asset/css/style.css": "src/asset/css/style.less"  // destination file and source file
 				},
 				tasks: ['cssmin']
 			}
@@ -81,14 +81,14 @@ module.exports = function (grunt) {
 					roundingPrecision: -1
 				},
 				files: {
-					'dist/client/asset/css/style.min.css': ['client/asset/**/*.css']
+					'dist/src/asset/css/style.min.css': ['src/asset/**/*.css']
 				}
 			}
 		},
 		browserSync: {
             dev: {
                 bsFiles: {
-                    src: ["./client/**/*.css", "./client/**/*.js", "./client/*.js", "./client/**/*.html", "./client/*.html", "./*.ico"]
+                    src: ["./src/**/*.css", "./src/**/*.js", "./src/*.js", "./src/**/*.html", "./src/*.html", "./*.ico"]
                 },
                 options: {
                     watchTask: true

@@ -21,7 +21,7 @@ try {
  * Initialise log4js first, so we don't miss any log messages
  */
 var log4js = require('log4js');
-log4js.configure('./src/config/log4js.json');
+log4js.configure('./server/src/config/log4js.json');
 
 var log = log4js.getLogger("startup");
 

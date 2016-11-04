@@ -159,7 +159,7 @@ header .userRole {
 .searchResult .searchResultForm form .form-control[readonly] {
   background-color: #ffffff;
   color: #424242;
-  border: 1px solid #ccc;
+  border: 1px solid #424242;
 }
 .searchResult .searchResultForm form .form-control {
   background-color: #ffffff;
@@ -221,7 +221,7 @@ header .userRole {
   width: 200px;
   margin-right: -165px;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 35%;
   right: 0;
   padding-top: 45px;
@@ -279,7 +279,8 @@ header .userRole {
   color: #FFFF00;
 }
 .registerProduct .registerBtn {
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .singleSelect .btn-primary.active,
 .singleSelect .btn-primary:active,
@@ -336,6 +337,11 @@ header .userRole {
 .commonTable .ng-table-sort-header th {
   text-align: left !important;
   border-right: 1px solid white;
+  vertical-align: middle;
+}
+.commonTable .ng-table-sort-header th input {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
 }
 .commonTable tbody tr {
   color: black;
@@ -347,6 +353,7 @@ header .userRole {
   background-color: #EAEFF7;
 }
 .commonTable tbody tr td {
+  vertical-align: middle;
   border-right: 1px solid white;
 }
 .commonTable tbody tr td a {
@@ -362,14 +369,25 @@ header .userRole {
 .commonTable tbody tr td a:last-child {
   border: none;
 }
+.commonTable tbody tr td input[type="text"] {
+  width: 100%;
+}
+.commonTable tbody tr td input[type="checkbox"] {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+.commonTable tbody tr td select {
+  width: 100%;
+}
 #wrapper {
   min-height: 100%;
   height: auto !important;
   margin: 0 auto -75px;
   padding: 0 0 60px;
 }
-/* Set the fixed height of the footer here */
+/*  min-height: 100%; Set the fixed height of the footer here */
 #footer .img {
+  clear: both;
   background-image: url(../images/footer.png);
   background-repeat: repeat-x;
   height: 75px;
@@ -384,6 +402,28 @@ header .userRole {
   border-radius: 0px;
 }
 /*Datepicker class */
+.multiSelectDirective .multiselect-parent {
+  width: 100%;
+}
+.multiSelectDirective .multiselect-parent button {
+  width: 100%;
+  text-align: left;
+  border-radius: 0px;
+  border-color: #424242;
+  background-color: white;
+  box-shadow: none;
+}
+.multiSelectDirective .multiselect-parent button.btn-default:hover {
+  background-color: white;
+}
+.multiSelectDirective .multiselect-parent button span.caret {
+  float: right;
+  margin-top: 8px;
+}
+.multiSelectDirective .multiselect-parent ul.dropdown-menu {
+  width: 100% !important;
+  overflow-x: hidden !important;
+}
 .errorDiv {
   font-weight: bold;
 }

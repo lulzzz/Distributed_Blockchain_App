@@ -61,7 +61,7 @@ angular
                     url: '/product/register',
                     templateProvider: function(userModel, $templateFactory){
                         /*
-                        **  Load templates with respect to user roles. Route URL will be same for every user role.
+                        **  Load templates based on user roles. Route URL will be same for every user role.
                         */
                         if(userModel.isProducer()){
                             return $templateFactory.fromUrl('../modules/product/material.register.tpl.html');
