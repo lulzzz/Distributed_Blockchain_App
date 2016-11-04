@@ -9,8 +9,6 @@ angular
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-            var templateURL = "";
-
             $urlRouterProvider.otherwise('/home');
 
             $stateProvider

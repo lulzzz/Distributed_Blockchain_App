@@ -28,6 +28,12 @@ body {
 .displayBlock {
   display: block;
 }
+.font12 {
+  font-size: 12px !important;
+}
+.font9 {
+  font-size: 9px !important;
+}
 .displayInline {
   display: inline;
 }
@@ -61,6 +67,9 @@ header #user-info {
 header #errorDiv,
 header #user-info {
   background-color: #ffffff;
+}
+header #errorDiv {
+  padding-top: 20px;
 }
 header .displayInlineBlock img {
   vertical-align: initial;
@@ -257,7 +266,7 @@ header .userRole {
   top: 43%;
   transform: rotate(-90deg);
   font-size: 18px;
-  left: -100px;
+  left: -105px;
   width: 125%;
 }
 .sidenav .closebtnLeft {

@@ -13,22 +13,22 @@ angular.module('bverifyApp', ['appRoute', 'appConfig']);
 'use strict';
 
 // Default environment variables
-  var _env = {};
-  
-  // Importing variable
-  if(window){
+var _env = {};
+
+// Importing variable
+if (window) {
     Object.assign(_env, window.__env);
-  }
+}
 
 
 angular
-    .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize', 'ngFileUpload','angularjs-dropdown-multiselect'])
+    .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize', 'ngFileUpload', 'angularjs-dropdown-multiselect'])
     .config(['$httpProvider', '$logProvider', function ($httpProvider, $logProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
-        
+
         //Configure http interceptor and application loader
         $httpProvider.interceptors.push('httpInterceptorService');
 
@@ -49,15 +49,15 @@ angular
                     return response || $q.when(response);
                 },
                 responseError: function (response) {
-                    try{
+                    try {
                         $rootScope.hasError = true;
-                        if(appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0){
+                        if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
                             $rootScope.ERROR_MSG = appConstants.UNAUTHORIZED_ERROR;
-                        }else{
+                        } else {
                             $rootScope.ERROR_MSG = appConstants.SERVICE_ERROR;
                         }
                         $rootScope.$broadcast("loaderHide");
-                    }catch(e){
+                    } catch (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     }
                     return $q.reject(response);
@@ -80,18 +80,34 @@ angular
     })
 
     .run(['$rootScope', '$window', 'localStorageService', '$log', function ($rootScope, $window, localStorageService, $log) {
-        
+
         $log.debug('appConfig bootstrapped!');
 
         $rootScope.isLoggedIn = false;
         $rootScope.activeMenu = '';
         $rootScope.hasError = false;
         $rootScope.ERROR_MSG = "";
-        $window.onunload = function () {
-            localStorageService.remove('User');
-        };
+        $window.onunload = callbackFunction(localStorageService);
+
     }]);
 
+function callbackFunction(localStorageService) {
+
+    if (window.event) {           
+        if (window.event.clientX < 40 && window.event.clientY < 0) {
+            console.log("not refreshed");   
+            localStorageService.remove('User');
+        } else {
+            
+        }
+    } else {
+        if (event.currentTarget.performance.navigation.type == 2) {
+            localStorageService.remove('User');
+        }
+        if (event.currentTarget.performance.navigation.type == 1) {
+        }
+    }
+};
 /*
 *   Module for configuring angular routing
 */
@@ -102,8 +118,6 @@ angular
 
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider) {
-
-            var templateURL = "";
 
             $urlRouterProvider.otherwise('/home');
 
@@ -120,6 +134,12 @@ angular
                     templateUrl: '../modules/search/searchResult.tpl.html',
                     params: {
                         id: ''
+                    },
+                    //Resolve added to retreive shipmentDetails before loading serachResultController
+                    resolve: {
+                        shipmentDetails: function ($stateParams, searchServiceAPI, appConstants) {
+                            return searchServiceAPI.search($stateParams.id);
+                        }
                     },
                     controllerAs: 'vm',
                     controller: 'searchResultController'
@@ -153,14 +173,14 @@ angular
                 // PRODUCT REGISTER/SHIPMENT/ACKNOWLEDGMENT STATES
                 .state('product', {
                     url: '/product/register',
-                    templateProvider: function(userModel, $templateFactory){
+                    templateProvider: function (userModel, $templateFactory) {
                         /*
                         **  Load templates based on user roles. Route URL will be same for every user role.
                         */
-                        if(userModel.isProducer()){
+                        if (userModel.isProducer()) {
                             return $templateFactory.fromUrl('../modules/product/material.register.tpl.html');
                         }
-                        if(userModel.isManufacturer()){
+                        if (userModel.isManufacturer()) {
                             return $templateFactory.fromUrl('../modules/product/product.register.tpl.html');
                         }
                     },
@@ -38631,6 +38651,7 @@ angular.module('bverifyApp')
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }]);
+
 /*
 *   User service to make service calls for user login/registration using ngResource
 *
@@ -38747,12 +38768,13 @@ angular.module('bverifyApp')
             }
         }])
     // searchResultController for rendering shipment details
-    .controller('searchResultController', ['searchServiceAPI', '$state', '$stateParams', 'appConstants', '$log',
-        function (searchServiceAPI, $state, $stateParams, appConstants, $log) {
+    .controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails',
+        function ($state, appConstants, $log, shipmentDetails) {
             try {
                 var vm = this;
-                    searchServiceAPI
-                        .search($stateParams.id)
+                vm.product = {};
+                    shipmentDetails
+                        .$promise
                         .then(function (response) {
                             vm.product = response;
                         }, function (err) {
