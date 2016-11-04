@@ -1,0 +1,76 @@
+[2016-11-04 13:23:36.762] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:23:57.780] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:30:20.532] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:30:38.487] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:30:54.733] [DEBUG] userController - ******do login****** { userName: 'producer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:31:28.856] [DEBUG] userController - ******do login****** { userName: 'producer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:39:36.782] [DEBUG] userController - ******do login****** { userName: 'producer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:39:53.042] [DEBUG] userController - ******do login****** { userName: 'retailer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:40:20.006] [DEBUG] userController - ******do login****** { userName: 'manufacturer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: 'dds' }
+[2016-11-04 13:41:13.069] [DEBUG] userController - ******do login****** { userName: 'manufacturer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:42:00.116] [DEBUG] userController - ******do login****** { userName: 'manufacturer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:45:01.868] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:45:06.684] [DEBUG] userController - ******do login****** { userName: 'producer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:45:19.615] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:45:26.991] [DEBUG] searchController - ******get shipment details****** {}
+[2016-11-04 13:45:31.283] [DEBUG] userController - ******do login****** { userName: 'retailer',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:45:44.567] [DEBUG] userController - ******do login****** { userName: 'admin',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:45:48.047] [DEBUG] userController - ******do registering****** {}
+[2016-11-04 13:46:12.314] [DEBUG] userController - ******do login****** { userName: 'admin',
+  certification: '',
+  consortium: { id: '', name: '' },
+  userProfile: { id: '', profile: '' },
+  isAuthenticatedUser: false,
+  password: '' }
+[2016-11-04 13:46:17.647] [DEBUG] userController - ******do registering****** {}
+[2016-11-04 13:51:54.622] [DEBUG] searchController - ******get shipment details****** {}

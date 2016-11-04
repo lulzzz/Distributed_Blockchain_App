@@ -1,0 +1,72 @@
+<!-- Product/Material acknowledgment by loggedIN user -->
+
+<!-- Directive for app header -->
+<app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header> <!-- TO-DO // remove hard-code value --> 
+
+<div class="">
+
+    <div class="manageProducts col-lg-8 col-md-10 col-sm-10 hidden-xs">
+            <!-- Directive for module header -->
+        <app-legend header="{{vm.header}}" ></app-legend> <!-- TO-DO need to apply condition based on profile -->
+			<div>
+				<table ng-table="" class="commonTable table" show-filter="false">
+					<tr>
+                        <td title="''">
+                            <input type="checkbox" id="">
+                        </td>
+						<td title="'Name'">Leather Full-grain</td>
+						<td title="'Quantity'">25</td>
+						<td title="'Required Quantity'">
+                            <input type="text" id="" ng-disabled="true">
+                        </td>
+						<td title="'Tag PO#'">
+                            <select id="po" class="selectPOCls" ng-disabled="true">
+                                <option id="" value="">Select PO#</option>
+                            </select>
+                        </td>
+                        <td title="'Shipped On'">10/10/2016</td>
+                        <td title="'Shipment From'">Raw Material Producer(xyz)</td>
+                        <td ng-if="vm.isRetailer" title="'Track Product details'">
+                            <center>
+                                <img style="height:35px;" src="asset/images/qr_search.png" />
+                            </center>
+                        </td>
+					</tr>
+	    			<tr>
+                        <td title="''">
+                            <input type="checkbox" id="">
+                        </td>
+						<td title="'Name'">Leather Top-grain</td>
+						<td title="'Quantity'">55</td>
+						<td title="'Required Quantity'">
+                            <input type="text" id="" >
+                        </td>
+						<td title="'Tag PO#'">
+                            <select id="po" class="selectPOCls">
+                                <option id="" value="">Select PO#</option>
+                            </select>
+                        </td>
+                        <td title="'Shipped On'">18/10/2016</td>
+                        <td title="'Shipment From'">Raw Material Producer(abc)</td>
+                        <td ng-if="vm.isRetailer" title="'Track Product details'">
+                            <center>
+                                <img style="height:35px;" src="asset/images/qr_search.png" />
+                            </center>
+                        </td>
+					</tr>
+				</table>
+			</div>
+
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
+				<button type="submit" class="btn btn-primary registerBtn">PROCURE</button>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
+				<button type="reset" class="btn btn-primary registerBtn">CANCLE</button>
+			</div>
+	</div>
+
+  </div>
+
+
+<!-- Directive for app side menu -->
+<side-menu user="vm.user"></side-menu>
