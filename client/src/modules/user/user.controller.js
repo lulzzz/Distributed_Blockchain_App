@@ -5,8 +5,8 @@
 "use strict";
 
 angular.module('bverifyApp')
-    .controller('userController', ['userModel', 'userServiceAPI', 'appConstants', '$state', '$log',
-        function (userModel, userServiceAPI, appConstants, $state, $log) {
+    .controller('userController', ['userModel', 'userServiceAPI', 'appConstants', '$state', '$log', '$rootScope',
+        function (userModel, userServiceAPI, appConstants, $state, $log, $rootScope) {
             var vm = this;
             if(!userModel.isLoggedIn){
                 userModel.resetUser();
@@ -28,7 +28,7 @@ angular.module('bverifyApp')
                     .catch(function (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     })
-            }
+            };
 
             //login current user. Any registered user can login
             vm.doLogin = function () {
@@ -44,7 +44,12 @@ angular.module('bverifyApp')
                     .catch(function (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     })
-            }
+            };
+            
+            vm.reset = function(){
+                    $rootScope.hasError = false;
+                    $rootScope.isSuccess = false;
+                };
 }])
     .controller('logoutController', ['userModel', 'appConstants', '$state', '$rootScope', '$log',
         function (userModel, appConstants, $state, $rootScope, $log) {

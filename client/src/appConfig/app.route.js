@@ -106,6 +106,7 @@ angular
                     try {
                         $rootScope.activeMenu = toState.url;
                         $rootScope.hasError = false;
+                        $rootScope.isSuccess = false;
                         // Authenticating user. Maintaining session on each route
                         const user = userModel.getUser();
                         if (!(appConstants.ROUTE_STATES_CONSTANTS.indexOf(toState.name) >= 0)) {

@@ -68,7 +68,9 @@ angular
             producer: 'PROD',
             manufacturer: 'MANUFACT',
             retailer: 'RETAIL'
-        }
+        },
+        PROD_REGISTERED: "Product has been registered successfully",
+        MATERIAL_REGISTERED: "Material has been registered successfully"
     })
 
     .run(['$rootScope', '$window', 'localStorageService', '$log', function ($rootScope, $window, localStorageService, $log) {
@@ -79,6 +81,8 @@ angular
         $rootScope.activeMenu = '';
         $rootScope.hasError = false;
         $rootScope.ERROR_MSG = "";
+        $rootScope.isSuccess = false;
+        $rootScope.SUCCESS_MSG = "";
         $window.onunload = callbackFunction(localStorageService);
 
     }]);

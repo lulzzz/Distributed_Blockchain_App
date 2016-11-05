@@ -14,21 +14,26 @@ angular.module('bverifyApp')
                 vm.user = userModel.getUser();
                 vm.search = function () {
                     $state.go('home.result', { id: vm.searchQuery });
+                };
+                vm.reset = function(){
+                    $rootScope.hasError = false;
+                    $rootScope.isSuccess = false;
+                    vm.searchQuery = '';
                 }
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }])
     // searchResultController for rendering shipment details
-    .controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails',
-        function ($state, appConstants, $log, shipmentDetails) {
+    .controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails', 'Product',
+        function ($state, appConstants, $log, shipmentDetails, Product) {
             try {
                 var vm = this;
-                vm.product = {};
+                vm.product = new Product();
                     shipmentDetails
                         .$promise
                         .then(function (response) {
-                            vm.product = response;
+                            vm.product.setData(response);
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
