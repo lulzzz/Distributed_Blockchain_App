@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "B-VERIFY Retail Blockchain application for Organic Whole Grain Oatmeal Cereal product",
   "scripts": {
-    "start": "node app.js"
+    "start": "concurrently  \" grunt build --force \""
   },
   "author": "saurabh.shankariya@cognizant.com",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-nodemon": "^0.4.2",
+    "gulp": "^3.9.1",
     "lite-server": "^2.2.2"
   },
   "dependencies": {

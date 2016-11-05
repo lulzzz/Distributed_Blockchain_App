@@ -13,12 +13,16 @@ exports.getShipmentDetails = function(reqObject, resObject) {
 
     try{        
     			var shipmentDetails = {
-    				name : "leather",
+    				materialName : "",
+                    productName : "Handbag",
     				batchNumber : 'B00RWSC2MW',
     				weight : '100kg',
-    				quantity : '100',
+    				quantity : '200',
     				manufactureDate : '10/10/2010',
-    				currentlyAt : 'DTDC'
+    				trackDetails : {
+                        currentlyAt : 'DTDC',
+                        trackRecord : []
+                    }
     			}
                 resObject.json(shipmentDetails);
     }catch(err){
