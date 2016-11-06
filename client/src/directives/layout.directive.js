@@ -109,38 +109,4 @@ angular.module('bverifyApp')
                     }
                 }
             }
-        }])
-
-    //Directive for rendering module section
-    .directive('appDatepicker', function () {
-        return {
-            restrict: 'E',
-            templateUrl: '../views/datepicker.tpl.html',
-            link: function (scope, element, attrs) {
-                try {
-                    scope.vm.datepickerObj = {
-                        dateFormat: 'dd-MM-yyyy',
-                        dateOptions: {
-                            startingDay: 1,
-                            showWeeks: false
-                        },
-                        popup: {
-                            opened: false
-                        }
-                    };
-                } catch (e) {
-                    console.log(appConstants.FUNCTIONAL_ERR, e);
-                }
-            }
-        }
-    })
-
-    .directive('appFileuploader', function () {
-        return {
-            restrict: 'E',
-            templateUrl: '../views/fileUpload.tpl.html',
-            link: function (scope, element, attrs) {
-                
-            }
-        }
-    });
+        }]);

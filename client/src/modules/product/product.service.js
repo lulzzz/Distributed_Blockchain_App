@@ -17,7 +17,7 @@ angular.module('bverifyApp')
     //Configuring resource for making service call
     .service('productResource', ['$resource', 'productUrl', '__ENV', function ($resource, productUrl, __ENV) {
         return $resource('', {}, {
-            productList: { url: __ENV.apiUrl + productUrl.products, method: "GET" },
+            productList: { url: __ENV.apiUrl + productUrl.products, method: "GET", isArray: "true" },
             registerProduct: { url: __ENV.apiUrl + productUrl.register, method: "POST" },
             shipProduct: { url: __ENV.apiUrl + productUrl.ship, method: "POST" },
             ackProduct: { url: __ENV.apiUrl + productUrl.acknowledge, method: "POST" },
@@ -43,11 +43,11 @@ angular.module('bverifyApp')
             }
             return deferred.promise;
         };
-        this.getProductList = function () {
+        this.getProductList = function (data) {
             var deferred = $q.defer();
             try{
                 productResource
-                    .productList({})
+                    .productList(data)
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);

@@ -46,10 +46,7 @@ angular.module('bverifyApp')
                     })
             };
             
-            vm.reset = function(){
-                    $rootScope.hasError = false;
-                    $rootScope.isSuccess = false;
-                };
+          
 }])
     .controller('logoutController', ['userModel', 'appConstants', '$state', '$rootScope', '$log',
         function (userModel, appConstants, $state, $rootScope, $log) {

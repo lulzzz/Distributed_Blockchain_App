@@ -7,7 +7,7 @@ angular
     .module('appRoute', ['ui.router'])
 
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        function($stateProvider, $urlRouterProvider, $locationProvider) {
 
             $urlRouterProvider.otherwise('/home');
 
@@ -27,7 +27,7 @@ angular
                     },
                     //Resolve added to retreive shipmentDetails before loading serachResultController
                     resolve: {
-                        shipmentDetails: function ($stateParams, searchServiceAPI, appConstants) {
+                        shipmentDetails: function($stateParams, searchServiceAPI, appConstants) {
                             return searchServiceAPI.search($stateParams.id);
                         }
                     },
@@ -63,7 +63,7 @@ angular
                 // PRODUCT REGISTER/SHIPMENT/ACKNOWLEDGMENT STATES
                 .state('product', {
                     url: '/product/register',
-                    templateProvider: function (userModel, $templateFactory) {
+                    templateProvider: function(userModel, $templateFactory) {
                         /*
                         **  Load templates based on user roles. Route URL will be same for every user role.
                         */
@@ -86,6 +86,15 @@ angular
                 .state('acknowledge', {
                     url: '/product/acknowledge',
                     templateUrl: '../modules/product/product.ack.tpl.html',
+                    resolve: {
+                        productList: function(userModel, productServiceAPI) {
+                            const user = userModel.getUser();
+                            return productServiceAPI.getProductList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+                        }
+                    },
                     controllerAs: 'vm',
                     controller: 'productAckController'
                 });
@@ -97,12 +106,12 @@ angular
 
 
     .run(['$rootScope', 'userModel', '$state', 'appConstants', '$log',
-        function ($rootScope, userModel, $state, appConstants, $log) {
+        function($rootScope, userModel, $state, appConstants, $log) {
 
             $log.debug('appRoute bootstrapped!');
 
             $rootScope.$on('$stateChangeStart',
-                function (event, toState, toParams, fromState, fromParams) {
+                function(event, toState, toParams, fromState, fromParams) {
                     try {
                         $rootScope.activeMenu = toState.url;
                         $rootScope.hasError = false;
@@ -120,4 +129,9 @@ angular
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     }
                 });
+
+            $rootScope.reset = function() {
+                $rootScope.hasError = false;
+                $rootScope.isSuccess = false;
+            };
         }])

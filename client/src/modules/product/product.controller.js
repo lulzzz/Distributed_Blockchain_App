@@ -14,10 +14,7 @@ angular.module('bverifyApp')
                 var vm = this;
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
-                vm.reset = function() {
-                    $rootScope.hasError = false;
-                    $rootScope.isSuccess = false;
-                }
+
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
@@ -33,7 +30,27 @@ angular.module('bverifyApp')
                 vm.isManufacturer = userModel.isManufacturer();
                 vm.isRetailer = userModel.isRetailer();
                 vm.header = vm.isManufacturer ? 'REGISTER NEW PRODUCT' : 'REGISTER NEW MATERIAL';
-                vm.product = {};
+                vm.product = new Product();
+                vm.list = [];
+
+                // get complete previous Product/material list
+                productServiceAPI
+                    .getProductList({
+                        userName: vm.user.userName,
+                        userProfile: vm.user.userProfile
+                    })
+                    .then(function(response) {
+                        vm.product.setProductList(response);
+                        vm.list = vm.product.getProductList();
+                        //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
+                    }, function(err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function(e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
+
+
                 vm.file = {
                     name: ''
                 }
@@ -47,15 +64,15 @@ angular.module('bverifyApp')
                 vm.openDatepicker = function() {
                     vm.datepickerObj.popup.opened = true;
                 };
-                vm.productList = [];
+
 
                 // Register new Product/material
                 vm.registerNewProduct = function() {
 
                     productServiceAPI
-                        .registerProduct(vm.product)
+                        .registerProduct(vm.product.getData())
                         .then(function(response) {
-                            vm.product = new Product(response.product);
+                            vm.product.setData(response);
                             $rootScope.isSuccess = true;
                             $rootScope.SUCCESS_MSG = vm.isManufacturer ? appConstants.PROD_REGISTERED : appConstants.MATERIAL_REGISTERED;
                         }, function(err) {
@@ -66,26 +83,7 @@ angular.module('bverifyApp')
                         });
                 };
 
-                /*      TO-DO need to test with actual data and implementation                                
-                            // get complete previous Product/material list
-                            productServiceAPI
-                                .getProductList({})
-                                .then(function (response) {
-                                    vm.productList = response.list;
-                                    //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
-                                }, function (err) {
-                                    $log.error(appConstants.FUNCTIONAL_ERR, err);
-                                })
-                                .catch(function (e) {
-                                    $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                });
-                            
-            */
 
-                vm.reset = function() {
-                    $rootScope.hasError = false;
-                    $rootScope.isSuccess = false;
-                };
             } catch (e) {
                 console.log(appConstants.FUNCTIONAL_ERR, e);
             }
@@ -126,44 +124,70 @@ angular.module('bverifyApp')
                                     })
                 */
 
-                vm.reset = function() {
-                    $rootScope.hasError = false;
-                    $rootScope.isSuccess = false;
-                };
+
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }])
 
     //For acknowledging received product
-    .controller('productAckController', ['userModel', 'appConstants', '$state', '$rootScope', 'productServiceAPI', '$log',
-        function(userModel, appConstants, $state, $rootScope, productServiceAPI, $log) {
+    .controller('productAckController', ['userModel', 'appConstants', '$state', '$rootScope', 
+                                'productServiceAPI', '$log', 'productList', 'NgTableParams', 'Product',
+        function(userModel, appConstants, $state, $rootScope, 
+                                productServiceAPI, $log, productList, NgTableParams, Product) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
                 vm.isManufacturer = userModel.isManufacturer();
                 vm.isRetailer = userModel.isRetailer();
+                vm.isProducer = userModel.isProducer();
                 vm.header = vm.isManufacturer ? 'PROCURE RAW MATERIALS' : 'ACKNOWLEDGE PRODUCTS';
-                vm.productList = [];
+                vm.product = new Product();
+                vm.list = [];
+                productList
+                    .$promise
+                    .then(function(response) {
+                        vm.product.setProductList(response);
+                        vm.list = vm.product.getProductList();
+                    }, function(err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function(e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
 
-                /*      TO-DO need to test with actual data and implementation
+
+
+
+
+                vm.customConfigParams =   new NgTableParams({
+                        page: 1,
+                        count: 10
+                    },
+                    {
+                        total : vm.list.length
+                    });
+                vm.userProfile = userModel.getUserProfile();
+
+                function createUsingFullOptions() {
+                    
+                   
+                };
+
+                /*      TO-DO need to test with actual data and implementation 
                                 // do Product/material shipment
                                 productServiceAPI
                                     .ackProduct(vm.product)
                                     .then(function (response) {
-                                        vm.product = response.shippedProduct;
+                                        
                                         //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
                                     }, function (err) {
                                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                                     })
                                     .catch(function (e) {
                                         $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                    });
-                */
-                vm.reset = function() {
-                    $rootScope.hasError = false;
-                    $rootScope.isSuccess = false;
-                };
+                                    });*/
+
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }

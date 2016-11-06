@@ -15,7 +15,7 @@ if (window) {
 
 angular
     .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize', 'ngFileUpload', 'angularjs-dropdown-multiselect'])
-    .config(['$httpProvider', '$logProvider', function ($httpProvider, $logProvider) {
+    .config(['$httpProvider', '$logProvider', function($httpProvider, $logProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;
@@ -28,19 +28,19 @@ angular
         $logProvider.debugEnabled(__env.enableDebug);
     }])
     .factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
-        function ($q, $rootScope, $log, appConstants) {
+        function($q, $rootScope, $log, appConstants) {
             return {
-                request: function (config) {
+                request: function(config) {
                     // Show loader
                     $rootScope.$broadcast("loaderShow");
                     return config || $q.when(config);
                 },
-                response: function (response) {
+                response: function(response) {
                     // Hide loader
                     $rootScope.$broadcast("loaderHide");
                     return response || $q.when(response);
                 },
-                responseError: function (response) {
+                responseError: function(response) {
                     try {
                         $rootScope.hasError = true;
                         if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
@@ -73,7 +73,7 @@ angular
         MATERIAL_REGISTERED: "Material has been registered successfully"
     })
 
-    .run(['$rootScope', '$window', 'localStorageService', '$log', function ($rootScope, $window, localStorageService, $log) {
+    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function($rootScope, $window, localStorageService, $log, ngTableDefaults) {
 
         $log.debug('appConfig bootstrapped!');
 
@@ -89,12 +89,12 @@ angular
 
 function callbackFunction(localStorageService) {
 
-    if (window.event) {           
+    if (window.event) {
         if (window.event.clientX < 40 && window.event.clientY < 0) {
-            console.log("not refreshed");   
+            console.log("not refreshed");
             localStorageService.remove('User');
         } else {
-            
+
         }
     } else {
         if (event.currentTarget.performance.navigation.type == 2) {

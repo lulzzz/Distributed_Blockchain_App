@@ -1,0 +1,16 @@
+<div class="manageProducts col-lg-8 col-md-10 col-sm-10 hidden-xs">
+    <app-legend header="{{title}}"></app-legend>
+    <!-- TO-DO need to apply condition based on profile -->
+    <div>
+
+        <table ng-table="{{customConfigParams}}" class="commonTable table table-condensed table-bordered table-striped" >
+            <tr ng-repeat="data in list">
+                <td ng-if="userProfile.isProducer" data-title="'Material'">{{data.materialName}}</td>
+                <td ng-if="userProfile.isManufacturer" data-title="'Product'">{{data.productName}}</td>
+                <td title="'Quantity'">{{data.quantity}}</td>
+                <td title="'Registered On'">{{data.registeredDate}}</td>
+                <td title="'View / Edit'"><a>Edit</a><a>View</a><a>Delete</a></td>                
+            </tr>
+        </table>
+    </div>
+</div>
