@@ -35,9 +35,7 @@ app.set('port', port);
 *  Create server
 */
 var server = http.createServer(app);
-server.listen(port, function (err) {
-  console.log(err);
-});
+server.listen(port);
     console.log(
         chalk.red('\nExpress server listening on port ')
         + chalk.yellow('%d')

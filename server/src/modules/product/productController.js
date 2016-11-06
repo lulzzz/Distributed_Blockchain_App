@@ -60,3 +60,15 @@ exports.acknowledgeProduct = function(reqObject, resObject) {
         resObject.json({errMsg : constants.SERVICE_ERROR});
     }
 };
+
+exports.shipProduct = function(reqObject, resObject) {
+    log.debug("******acknowledge product ******", reqObject.body);
+
+    try{        
+       
+        resObject.json(reqObject.body);
+    }catch(err){
+        log.error("Error occurred while acknowleding product", err);
+        resObject.json({errMsg : constants.SERVICE_ERROR});
+    }
+};

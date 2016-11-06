@@ -35,6 +35,10 @@ router.route('/product/register')
 router.route('/product/ack')
     .post(function(req, res) {
         productCtrl.acknowledgeProduct(req, res);
-    });    
+    }); 
+router.route('/product/ship')
+    .post(function(req, res) {
+        productCtrl.shipProduct(req, res);
+    });         
     
 module.exports = router;
