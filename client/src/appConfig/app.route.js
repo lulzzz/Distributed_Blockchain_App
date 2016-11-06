@@ -3,6 +3,8 @@
 */
 'use strict';
 
+var _self = this;
+
 angular
     .module('appRoute', ['ui.router'])
 
@@ -74,6 +76,16 @@ angular
                             return $templateFactory.fromUrl('../modules/product/product.register.tpl.html');
                         }
                     },
+                    //Resolve added to retreive productList before loading product register screen
+                    resolve: {
+                        productList: function(userModel, productServiceAPI) {
+                            const user = userModel.getUser();
+                            return productServiceAPI.getProductList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+                        }
+                    },
                     controllerAs: 'vm',
                     controller: 'productRegisterController'
                 })
@@ -86,6 +98,7 @@ angular
                 .state('acknowledge', {
                     url: '/product/acknowledge',
                     templateUrl: '../modules/product/product.ack.tpl.html',
+                    //Resolve added to retreive productList before loading product acknowledgment screen
                     resolve: {
                         productList: function(userModel, productServiceAPI) {
                             const user = userModel.getUser();
@@ -134,4 +147,4 @@ angular
                 $rootScope.hasError = false;
                 $rootScope.isSuccess = false;
             };
-        }])
+        }]);

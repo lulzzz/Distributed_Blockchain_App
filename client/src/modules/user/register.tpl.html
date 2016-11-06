@@ -31,7 +31,7 @@
             <label for="consortium">Consortium :</label>
           </div>
           <div class="form-group singleSelect col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <select id="consortium" class="form-control">
+            <select  id="consortium" class="form-control">
                 <option value="International Association of Natural Textile Industry(IVN)">International Association of Natural Textile Industry(IVN)</option>
             </select>
 			
@@ -42,7 +42,7 @@
             <label for="userProfile">Tag user profile :</label>
           </div>
           <div class="form-group singleSelect col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <select id="userProfile" class="form-control">
+            <select ng-model="vm.newUserObject.userProfile" id="userProfile" class="form-control">
                 <option id="PROD" value="Raw Material Producer">Raw Material Producer</option>
                 <option id="MANUFACT" value="Manufacturer">Manufacturer</option>
                 <option id="RETAIL" value="Retailer">Retailer</option>
@@ -55,19 +55,56 @@
             <label for="qrCode">Generate QR code :</label>
           </div>
           <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <input type="text" class="form-control" id="qrCode">
+            <input type="text" class="form-control" id="qrCode" readonly>
+            <span class="input-group-btn">
+                        <button class="btn btn-info btn-sm" type="button" ng-click="vm.generate()">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
           </div>
+          
         </div>
+        
+       
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel"></div>
           <div class="registerBtnDiv form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <button type="submit" class="btn btn-primary submitBtnColor">Submit</button>
+            <button type="submit" ng-disabled="!vm.displayQR" class="btn btn-primary submitBtnColor">Submit</button>
             <button type="reset" ng-click="reset()" class="btn btn-primary submitBtnColor">Cancel</button>
           </div>
         </div>
 
       </form>
+      
+      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            &nbsp;
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            &nbsp;
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            &nbsp;
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            &nbsp;
+        </div>
+
+        <div ng-if="vm.displayQR" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userQRCode">
+             <ul>
+                 <li>
+                     <i>Click on image to Download</i>
+                 </li>
+                 <li style="padding-top: 6px;">
+                     <qrcode version="5" error-correction-level="L" size="120" data="{{vm.qrObject}}" download></qrcode>
+                 </li>
+                 <li ng-if="vm.newUserObject.userName && vm.newUserObject.userProfile">
+                     <span class="fontBold" style="text-transform: capitalize;">{{vm.newUserObject.userName}} : <i>{{vm.newUserObject.userProfile}}</i></span>
+                 </li>
+             </ul>
+        </div>
+      </div>
 
     </div>
   </div>
