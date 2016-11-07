@@ -61,6 +61,7 @@ angular
         SERVICE_ERROR: "Service is temporarily unavailable. Please try after sometime.",
         UNAUTHORIZED_ERROR: "Access denied ! You may not have permission to acccess.",
         FUNCTIONAL_ERR: "Something went wrong here....",
+        UPLOAD_ERR: "Error ! Please verify the Uploaded File",
         ROUTE_STATES_CONSTANTS: ['login', 'register', 'home', 'home.result'],
         ACCESS_DENIED_CODE: [401, 403, 408],
         USER_ROLES: {

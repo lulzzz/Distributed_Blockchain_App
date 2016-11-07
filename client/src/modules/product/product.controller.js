@@ -47,16 +47,6 @@ angular.module('bverifyApp')
                     });
 
 
-                vm.file = {
-                    name: ''
-                }
-                vm.uploadFile = function(file, event) {
-                    event.preventDefault();
-                    if (file) {
-                        vm.file.name = file.name;
-                        vm.product.file = file;
-                    }
-                };
                 vm.openDatepicker = function() {
                     vm.datepickerObj.popup.opened = true;
                 };
@@ -64,7 +54,7 @@ angular.module('bverifyApp')
 
                 // Register new Product/material
                 vm.registerNewProduct = function() {
-
+                    console.log(vm.product.getData());
                     productServiceAPI
                         .registerProduct(vm.product.getData())
                         .then(function(response) {

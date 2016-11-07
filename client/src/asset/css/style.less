@@ -8,6 +8,7 @@
 @color-orange: #ED7D31;
 @color-label-black: #000000;
 @color-side-menu: #A0A0A0;/*grey*/
+@color-text: #727272;
 
 html {
 	height: 100%;	
@@ -76,6 +77,9 @@ body {
      -moz-border-radius: @radius;
           border-radius: @radius;
 }
+.setTxtTransform(@text){
+	text-transform: capitalize;	
+}
 .formLabel1 {
 	.setMarginTop(5px);
 	padding-left:0px;
@@ -106,14 +110,16 @@ header {
 	}
 	.userLbl{
 		color:@color-orange;
-		text-transform: capitalize;
+		.setTxtTransform(capitalize);
 	}
 	.userRole{
 		text-decoration: underline;
-		text-transform: capitalize;
+		.setTxtTransform(capitalize);
 	}
 }
-
+#spanID{
+	.setTxtTransform(capitalize);
+}
 .appLogo {
 	padding-top:10px;
 }
@@ -215,6 +221,12 @@ header {
 			}
 			
 		}
+		.uploadErrDiv{
+				    padding-top: 6px;
+					height: 35px;
+					padding-left: 4px;
+					font-weight: bold;
+			}
 	}
 	.searchResultQRCode {
 		.setMarginTop(100px);
@@ -451,6 +463,14 @@ min-height: 100%;
 	border-color:@color-grey40;
 	border-radius:0px;
 	}
+	.qrCodeGeneration {
+		padding:1px !important;
+		img {
+			height: 32px;
+			width: 32px;
+			margin-top: -2px;
+		}
+	}
 } 
 /*Datepicker class */
 .multiSelectDirective {
@@ -479,6 +499,31 @@ min-height: 100%;
 }
 .errorDiv{
 	.fontBold;
+}
+ 
+.userType {
+    background-color: #70AD47;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    label {
+    	.fontBold;
+    }
+}
+
+.verticalAlignment{
+                vertical-align:middle;
+                vertical-align:-webkit-baseline-middle;
+                color:@color-text;
+}
+.tokenNumberShipProduct {
+	position: absolute;
+    right: -77px;
+    top: 5px;
+    font-size: 14px;
+}
+input[type=radio] {
+    .setCursor(pointer);
 }
 
 /**/

@@ -1,7 +1,7 @@
 
 <p class="input-group datePicker">
-    <input ng-required="true" type="text" class="form-control" id="picture" readonly="true" ng-model="vm.file.name" />
+    <input ng-required="true" type="text" class="form-control" id="picture" readonly="true" ng-model="file.name" />
     <span class="input-group-btn">
-							 <button class="btn btn-default spanBtn" type="file" ngf-select="vm.uploadFile($file, $event)"><i class="glyphicon glyphicon-upload"></i></button>
+							 <button type="button" class="btn btn-default spanBtn" type="file" ngf-select="uploadFile($file, $event)"><i class="glyphicon glyphicon-upload"></i></button>
 						  </span>
 </p>

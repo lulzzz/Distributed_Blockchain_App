@@ -26,7 +26,11 @@
 	<!-- USER INFORMATION -->
 
 	<div class="row" id="user-info" ng-if="user.isAuthenticatedUser">
+
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userAccess text-right">
+			<div style="padding: 4px !important;" class="col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-lg-5 col-md-6 col-sm-8 col-xs-12 text-center noPadding">
+				<app-top-menu></app-top-menu>
+			</div>
 			<div class="displayInlineBlock">
 				<div>
 					<span><b>welcome</b></span>
@@ -37,23 +41,25 @@
 					<span><b><i class="userRole">{{:: user.userProfile.profile}}</i></b></span>
 				</div>
 			</div>
-			<div class="displayInlineBlock">
+			<div id="user-qrCode" class="displayInlineBlock">
 				<img src="asset/images/qr_search.png" width="50px" />
 			</div>
 		</div>
 	</div>
-    
-    <!-- Displaying error message if any -->
+
+
+	<!-- Displaying error message if any -->
 	<div class="row" id="errorDiv" ng-if="$root.hasError">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<ng-include src="'views/error.tpl.html'"></ng-include>
 		</div>
 	</div>
-    
-    <!-- Displaying success message if any -->
-    <div class="row" id="errorDiv" ng-if="$root.isSuccess">
+
+	<!-- Displaying success message if any -->
+	<div class="row" id="errorDiv" ng-if="$root.isSuccess">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<ng-include src="'views/success.tpl.html'"></ng-include>
 		</div>
 	</div>
+
 </header>

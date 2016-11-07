@@ -46,6 +46,9 @@ angular
                 .state('login', {
                     url: '/login',
                     templateUrl: '../modules/user/login.tpl.html',
+                    params: {
+                        msg: ''
+                    },
                     controllerAs: 'vm',
                     controller: 'userController'
                 })
@@ -91,7 +94,17 @@ angular
                 })
                 .state('shipment', {
                     url: '/product/ship',
-                    templateUrl: '../modules/product/product.ship.tpl.html',
+                    templateProvider: function(userModel, $templateFactory) {
+                        /*
+                        **  Load templates based on user roles. Route URL will be same for every user role.
+                        */
+                        if (userModel.isProducer()) {
+                            return $templateFactory.fromUrl('../modules/product/material.ship.tpl.html');
+                        }
+                        if (userModel.isManufacturer()) {
+                            return $templateFactory.fromUrl('../modules/product/product.ship.tpl.html');
+                        }
+                    },
                     controllerAs: 'vm',
                     controller: 'productShipController'
                 })

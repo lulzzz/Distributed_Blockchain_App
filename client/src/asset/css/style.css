@@ -83,6 +83,9 @@ header .userRole {
   text-decoration: underline;
   text-transform: capitalize;
 }
+#spanID {
+  text-transform: capitalize;
+}
 .appLogo {
   padding-top: 10px;
 }
@@ -182,6 +185,12 @@ header .userRole {
 .searchResult .searchResultForm form.registerProduct .form-group {
   padding-left: 0px !important;
   padding-right: 0px !important;
+}
+.searchResult .searchResultForm .uploadErrDiv {
+  padding-top: 6px;
+  height: 35px;
+  padding-left: 4px;
+  font-weight: bold;
 }
 .searchResult .searchResultQRCode {
   margin-top: 100px;
@@ -413,6 +422,14 @@ header .userRole {
   border-color: #424242;
   border-radius: 0px;
 }
+.datePicker .qrCodeGeneration {
+  padding: 1px !important;
+}
+.datePicker .qrCodeGeneration img {
+  height: 32px;
+  width: 32px;
+  margin-top: -2px;
+}
 /*Datepicker class */
 .multiSelectDirective .multiselect-parent {
   width: 100%;
@@ -438,6 +455,29 @@ header .userRole {
 }
 .errorDiv {
   font-weight: bold;
+}
+.userType {
+  background-color: #70AD47;
+  padding: 5px;
+  color: #ffffff;
+  font-size: 12px;
+}
+.userType label {
+  font-weight: bold;
+}
+.verticalAlignment {
+  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
+  color: #727272;
+}
+.tokenNumberShipProduct {
+  position: absolute;
+  right: -77px;
+  top: 5px;
+  font-size: 14px;
+}
+input[type=radio] {
+  cursor: pointer;
 }
 /**/
 /* Import statement should be placed at bottom */
