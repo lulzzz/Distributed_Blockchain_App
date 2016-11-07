@@ -35,7 +35,7 @@ angular.module('bverifyApp')
                         $rootScope.hasError = false;
                         $rootScope.isSuccess = true;
                         $rootScope.SUCCESS_MSG = "User has been registered successfully";
-                        $state.go('dashboard');
+                        
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -62,7 +62,14 @@ angular.module('bverifyApp')
                     .then(function (response) {
                         userModel.setUser(response.user);
                         vm.user = userModel.getUser();
-                        $state.go('dashboard'); //TO-DO this has to be redirect to dashboard screen
+                        
+                       //Redirect to same page but view as a logged in user
+                       if($stateParams.view && Object.keys($stateParams.view).length > 0){
+                            $state.go($stateParams.view.name);
+                        }else{
+                         //If not selected "View As" then redirect to by default 'dashboard' page
+                            $state.go('dashboard');
+                        }
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })

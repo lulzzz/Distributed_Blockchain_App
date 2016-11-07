@@ -1,5 +1,6 @@
 /*
-*   Module for configuring constants and rootscopes
+*   All application related constants, provider, interceptors,
+*   error handling and CORS has been wrapped up inside 'appConfig' module
 */
 
 'use strict';
@@ -61,7 +62,7 @@ angular
         SERVICE_ERROR: "Service is temporarily unavailable. Please try after sometime.",
         UNAUTHORIZED_ERROR: "Access denied ! You may not have permission to acccess.",
         FUNCTIONAL_ERR: "Something went wrong here....",
-        UPLOAD_ERR: "Error ! Please verify the Uploaded File",
+        UPLOAD_ERR: "Error ! Please upload a valid File",
         ROUTE_STATES_CONSTANTS: ['login', 'register', 'home', 'home.result'],
         ACCESS_DENIED_CODE: [401, 403, 408],
         USER_ROLES: {
@@ -84,24 +85,5 @@ angular
         $rootScope.ERROR_MSG = "";
         $rootScope.isSuccess = false;
         $rootScope.SUCCESS_MSG = "";
-        $window.onunload = callbackFunction(localStorageService);
 
     }]);
-
-function callbackFunction(localStorageService) {
-
-    if (window.event) {
-        if (window.event.clientX < 40 && window.event.clientY < 0) {
-            console.log("not refreshed");
-            localStorageService.remove('User');
-        } else {
-
-        }
-    } else {
-        if (event.currentTarget.performance.navigation.type == 2) {
-            localStorageService.remove('User');
-        }
-        if (event.currentTarget.performance.navigation.type == 1) {
-        }
-    }
-};

@@ -1,5 +1,5 @@
 /*
-*   Module for configuring angular routing
+*   All application related routing and authentication has been wrapped up inside 'appRoute' module
 */
 'use strict';
 
@@ -47,7 +47,8 @@ angular
                     url: '/login',
                     templateUrl: '../modules/user/login.tpl.html',
                     params: {
-                        msg: ''
+                        msg: '',
+                        view: null
                     },
                     controllerAs: 'vm',
                     controller: 'userController'
@@ -131,7 +132,7 @@ angular
         }])
 
 
-    .run(['$rootScope', 'userModel', '$state', 'appConstants', '$log',
+    .run(['$rootScope', 'userModel', '$state', 'appConstants', '$log', 
         function($rootScope, userModel, $state, appConstants, $log) {
 
             $log.debug('appRoute bootstrapped!');

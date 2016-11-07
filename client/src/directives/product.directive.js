@@ -85,7 +85,7 @@ angular.module('bverifyApp')
         }
     }])
 
-    .directive("appTopMenu", ['userModel', '$state', function (userModel, $state) {
+    .directive("appTopMenu", ['userModel', '$state', '$rootScope', function (userModel, $state, $rootScope) {
         return {
             restrict: 'E',
             templateUrl: '../views/topmenu.tpl.html',
@@ -109,7 +109,7 @@ angular.module('bverifyApp')
                     } else {
                         id = event.srcElement.id;
                         userModel.resetUser();
-                        $state.go("login", {msg: "<span>Please Login to view as " + id +"</span>"});
+                        $state.go("login", {msg: "<span>Please Login to view as " + id +"</span>", view: $state.current});
                     }
                 };
             }
