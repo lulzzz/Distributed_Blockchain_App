@@ -5,7 +5,7 @@
 	<a href="#" class="closebtn" ng-click="openNav()">MENU</a>
 	<!--Content should come here-->
 	
-		<a ng-if="userProfile.isProducer || userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER PRODUCT</a>
+		<a ng-if="userProfile.isProducer || userProfile.isManufacturer || userProfile.isRetailer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER PRODUCT</a>
 		<a ng-if="userProfile.isAdmin" ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a>
 		<a ng-class="{'selected': activeMenu.prodShip }" ui-sref="shipment">SHIP PRODUCT</a>
 		<a ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>

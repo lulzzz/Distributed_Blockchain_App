@@ -76,7 +76,7 @@ angular
                         if (userModel.isProducer()) {
                             return $templateFactory.fromUrl('../modules/product/material.register.tpl.html');
                         }
-                        if (userModel.isManufacturer()) {
+                        if (userModel.isManufacturer() || userModel.isRetailer()) {
                             return $templateFactory.fromUrl('../modules/product/product.register.tpl.html');
                         }
                     },
@@ -102,7 +102,7 @@ angular
                         if (userModel.isProducer()) {
                             return $templateFactory.fromUrl('../modules/product/material.ship.tpl.html');
                         }
-                        if (userModel.isManufacturer()) {
+                        if (userModel.isManufacturer() || userModel.isRetailer() || userModel.isAdmin()) {
                             return $templateFactory.fromUrl('../modules/product/product.ship.tpl.html');
                         }
                     },

@@ -29,6 +29,7 @@ angular.module('bverifyApp')
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.isManufacturer = userModel.isManufacturer();
                 vm.isRetailer = userModel.isRetailer();
+                vm.isAdmin = userModel.isAdmin();
                 vm.header = vm.isManufacturer ? 'REGISTER NEW PRODUCT' : 'REGISTER NEW MATERIAL';
                 vm.product = new Product();
                 vm.list = [];
@@ -83,6 +84,9 @@ angular.module('bverifyApp')
                 var vm = this;
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
+                vm.isManufacturer = userModel.isManufacturer();
+                vm.isRetailer = userModel.isRetailer();
+                vm.isAdmin = userModel.isAdmin();
                 vm.product = new Product();
                 vm.openDatepicker = function() {
                     vm.datepickerObj.popup.opened = true;
