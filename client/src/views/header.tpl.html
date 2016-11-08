@@ -17,7 +17,7 @@
 			<ul class="userLogin">
 				<li class="loginLink" ng-if="!user.isAuthenticatedUser"><a ui-sref="login"><b>Login</b></a></li>
 				<!-- Comment out. Register link will be available in side menu and it's for admin only' -->
-				<!--<li ng-if="!user.isAuthenticatedUser"><a ui-sref="register"><b>Register</b></a></li>-->
+				<li ng-if="!user.isAuthenticatedUser"><a ui-sref="home"><b>Home</b></a></li>
 				<li ng-if="user.isAuthenticatedUser"><a ui-sref="logout"><b>Sign Out</b></a></li>
 			</ul>
 		</div>

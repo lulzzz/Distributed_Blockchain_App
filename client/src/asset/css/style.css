@@ -49,6 +49,12 @@ body {
 .fontBold {
   font-weight: bold;
 }
+.padding-right-0 {
+  padding-right: 0px;
+}
+.margin-left-15 {
+  margin-left: 15px;
+}
 .formLabel1 {
   margin-top: 5px;
   padding-left: 0px;
@@ -98,15 +104,13 @@ header .userRole {
 .userAccess ul {
   list-style: none;
 }
-.userAccess ul {
-  /*.loginLink{
-		border-right:2px solid @color-white;  // Comment out. Register link will be available in side menu only
-	}*/
-}
 .userAccess ul li {
   display: inline;
   text-align: center;
   padding: 0px 10px;
+}
+.userAccess ul .loginLink {
+  border-right: 2px solid #ffffff;
 }
 .userAccess ul a {
   color: #ffffff;
@@ -152,6 +156,7 @@ header .userRole {
 }
 .searchBox .qrSearch {
   margin-left: 10px;
+  cursor: pointer;
 }
 .legendHead {
   color: #00b050;
@@ -518,6 +523,9 @@ input[type=radio] {
   #custom-search-input {
     width: 75% !important;
   }
+  .uploadErrDiv {
+    margin-left: 15px;
+  }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .text-left-not-sm,
@@ -537,6 +545,9 @@ input[type=radio] {
   }
   .text-justify-sm {
     text-align: justify;
+  }
+  .uploadErrDiv {
+    margin-left: 15px;
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {

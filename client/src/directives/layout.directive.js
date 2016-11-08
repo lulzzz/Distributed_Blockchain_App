@@ -43,6 +43,22 @@ angular.module('bverifyApp')
         }
     })
 
+    //Directive for rendering module section
+    .directive('uploadDialog', ['$rootScope', 'ngDialog', function ($rootScope, ngDialog) {
+        return {
+            restrict: 'E',
+            templateUrl: '../modules/search/uploadDialog.tpl.html',
+            link: function (scope, element, attrs) {
+                scope.searchQR = function(){
+                    $rootScope.$broadcast('searchQR');
+                };
+                scope.reset = function(){
+                    ngDialog.close();
+                }
+            }
+        }
+    }])
+
     //Directive for displaying/hiding loading on http request/response
     .directive("appLoader", ['$rootScope', function ($rootScope) {
         return {

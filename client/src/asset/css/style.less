@@ -77,6 +77,12 @@ body {
      -moz-border-radius: @radius;
           border-radius: @radius;
 }
+.padding-right-0 {
+	padding-right:0px;
+}
+.margin-left-15 {
+	margin-left:15px;
+} 
 .setTxtTransform(@text){
 	text-transform: capitalize;	
 }
@@ -137,9 +143,9 @@ header {
 		.textAlignCenter;
 		padding:0px 10px;
 	}
-	/*.loginLink{
+	.loginLink{
 		border-right:2px solid @color-white;  // Comment out. Register link will be available in side menu only
-	}*/
+	}
 	a{
 		color:@color-white;
 		.setCursor(pointer);	
@@ -183,6 +189,7 @@ header {
     margin-top:50px;
 	.qrSearch {
 		margin-left:10px;
+		.setCursor(pointer);
 	}
 }
 .legendHead{

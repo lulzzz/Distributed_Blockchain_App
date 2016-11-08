@@ -15,8 +15,9 @@ if (window) {
 
 
 angular
-    .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize', 'ngFileUpload', 'angularjs-dropdown-multiselect'])
-    .config(['$httpProvider', '$logProvider', function($httpProvider, $logProvider) {
+    .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize',
+        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog'])
+    .config(['$httpProvider', '$logProvider', 'ngDialogProvider', function ($httpProvider, $logProvider, ngDialogProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;
@@ -27,21 +28,30 @@ angular
 
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
+
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            showClose: true,
+            closeByDocument: true,
+            closeByEscape: true,
+            overlay: true,
+            closeByNavigation: true
+        });
     }])
     .factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
-        function($q, $rootScope, $log, appConstants) {
+        function ($q, $rootScope, $log, appConstants) {
             return {
-                request: function(config) {
+                request: function (config) {
                     // Show loader
                     $rootScope.$broadcast("loaderShow");
                     return config || $q.when(config);
                 },
-                response: function(response) {
+                response: function (response) {
                     // Hide loader
                     $rootScope.$broadcast("loaderHide");
                     return response || $q.when(response);
                 },
-                responseError: function(response) {
+                responseError: function (response) {
                     try {
                         $rootScope.hasError = true;
                         if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
@@ -57,6 +67,7 @@ angular
                 }
             };
         }])
+
     .constant('__ENV', _env)
     .constant('appConstants', {
         SERVICE_ERROR: "Service is temporarily unavailable. Please try after sometime.",
@@ -75,7 +86,7 @@ angular
         MATERIAL_REGISTERED: "Material has been registered successfully"
     })
 
-    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function($rootScope, $window, localStorageService, $log, ngTableDefaults) {
+    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function ($rootScope, $window, localStorageService, $log, ngTableDefaults) {
 
         $log.debug('appConfig bootstrapped!');
 

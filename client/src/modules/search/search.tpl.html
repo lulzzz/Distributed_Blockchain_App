@@ -11,13 +11,13 @@
                     <input ng-required="true" type="text" class="form-control input-lg" placeholder="Search by “Track id” or Scan “QR Code"" 
                     ng-model="vm.searchQuery"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button" ng-click="vm.search()">
+                        <button class="btn btn-info btn-lg" type="button" ng-click="vm.searchTrackID()">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
                 </div>
             </div>
-                <div class="qrSearch">
+                <div ng-click="vm.openDialog()" class="qrSearch">
                         <img src="asset/images/qr_search.png" />
                 </div>
         </div>
@@ -29,3 +29,7 @@
 
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>
+
+<script type="text/ng-template" id="uploadDialog">
+        <upload-dialog ></upload-dialog>
+</script>

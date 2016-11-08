@@ -25,12 +25,13 @@ angular
                     url: '/result',
                     templateUrl: '../modules/search/searchResult.tpl.html',
                     params: {
-                        id: ''
+                        id: '',
+                        trackInfo: null
                     },
                     //Resolve added to retreive shipmentDetails before loading serachResultController
                     resolve: {
                         shipmentDetails: function($stateParams, searchServiceAPI, appConstants) {
-                            return searchServiceAPI.search($stateParams.id);
+                            return searchServiceAPI.search($stateParams.trackInfo ? $stateParams.trackInfo : $stateParams.id);
                         }
                     },
                     controllerAs: 'vm',
