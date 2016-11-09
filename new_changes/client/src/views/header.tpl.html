@@ -1,0 +1,65 @@
+<!-- header content -->
+<header class="container-fluid">
+	<div class="row">
+		<div class="appName col-lg-6 col-md-6 col-sm-6 col-xs-9">
+			<h1>{{:: appName}}</h1>
+		</div>
+		<div class="appLogo col-lg-6 col-md-6 col-sm-6 col-xs-3 text-right">
+			<img src="asset/images/cts_logo.png" width="170" class="hidden-xs" />
+			<img src="asset/images/mobileLogo.png" width="60" class="hidden-lg hidden-md hidden-sm" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			<i>{{:: appDesc}}</i>
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 userAccess text-right">
+			<ul class="userLogin">
+				<li class="loginLink" ng-if="!user.isAuthenticatedUser"><a ui-sref="login"><b>Login</b></a></li>
+				<!-- Comment out. Register link will be available in side menu and it's for admin only' -->
+				<li ng-if="!user.isAuthenticatedUser"><a ui-sref="home"><b>Home</b></a></li>
+				<li ng-if="user.isAuthenticatedUser"><a ui-sref="logout"><b>Sign Out</b></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- USER INFORMATION -->
+
+	<div class="row" id="user-info" ng-if="user.isAuthenticatedUser">
+
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userAccess text-right">
+			<div style="padding: 4px !important;" class="col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-lg-5 col-md-6 col-sm-8 col-xs-12 text-center noPadding">
+				<app-top-menu></app-top-menu>
+			</div>
+			<div class="displayInlineBlock">
+				<div>
+					<span><b>welcome</b></span>
+					<span><b><i class="userLbl">{{:: user.userName}}</i></b></span>
+				</div>
+				<div>
+					<span><b>you have logged in as</b></span>
+					<span><b><i class="userRole">{{:: user.userProfile.profile}}</i></b></span>
+				</div>
+			</div>
+			<div id="user-qrCode" class="displayInlineBlock">
+				<img src="asset/images/qr_search.png" width="50px" />
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Displaying error message if any -->
+	<div class="row" id="errorDiv" ng-if="$root.hasError">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<ng-include src="'views/error.tpl.html'"></ng-include>
+		</div>
+	</div>
+
+	<!-- Displaying success message if any -->
+	<div class="row" id="errorDiv" ng-if="$root.isSuccess">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<ng-include src="'views/success.tpl.html'"></ng-include>
+		</div>
+	</div>
+
+</header>

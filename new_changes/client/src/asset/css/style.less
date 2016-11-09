@@ -1,0 +1,538 @@
+@color-header :#5298D8; 
+@color-white: #fff;
+@color-greyWhite: #eee;
+@color-grey80: #ccc;
+@color-grey40: #666666;
+@color-grey40: #424242;
+@color-green: #00B050;
+@color-orange: #ED7D31;
+@color-label-black: #000000;
+@color-side-menu: #A0A0A0;/*grey*/
+@color-text: #727272;
+
+html {
+	height: 100%;	
+}
+body {
+	height: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+}
+.noPadding {
+	padding:0px !important;
+}
+.floatLeft {
+    float: left;
+}
+.floatRight {
+     float: right;   
+}
+.clearBoth {
+    clear: both;
+}
+.absPosition {
+	position: absolute;
+}
+.displayNone{
+	display:none;
+}
+.displayBlock {
+	display: block;
+}
+.font12{
+	font-size:12px !important;
+}
+.font9{
+	font-size:9px !important;
+}
+.displayInline {
+	display: inline;
+}
+.displayInlineBlock {
+	display: inline-block;
+}
+.textAlignCenter {
+	text-align:center;
+}
+.textAlignLeft {
+	text-align:left;
+}
+.getWidth(@width) {
+    width: @width;
+}
+.setMarginTop(@top) {
+    margin-top: @top;
+}
+.setMarginBottom(@bottom) {
+    margin-bottom: @bottom;
+}
+.fontBold {
+	font-weight:bold;
+}
+.setCursor(@cursor) {
+	cursor: @cursor;
+}
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+.padding-right-0 {
+	padding-right:0px;
+}
+.margin-left-15 {
+	margin-left:15px;
+} 
+.setTxtTransform(@text){
+	text-transform: capitalize;	
+}
+.formLabel1 {
+	.setMarginTop(5px);
+	padding-left:0px;
+}
+.rawMaterialRegistration {
+	.formLabel{
+		.setMarginTop(5px);
+		padding-left:0px;
+	};
+}
+header {
+	background-color:@color-header;
+	color:@color-white;
+	#user-info {
+		color:@color-grey40;
+	}
+	#errorDiv, #user-info {
+			background-color:@color-white;
+	}
+	#errorDiv{
+		padding-top: 20px;
+	}
+	.displayInlineBlock{
+		img {
+			vertical-align: initial;
+			padding-left:10px;
+		}
+	}
+	.userLbl{
+		color:@color-orange;
+		.setTxtTransform(capitalize);
+	}
+	.userRole{
+		text-decoration: underline;
+		.setTxtTransform(capitalize);
+	}
+}
+#spanID{
+	.setTxtTransform(capitalize);
+}
+.appLogo {
+	padding-top:10px;
+}
+.mobileLogo {
+	clip: rect(0px,70px,200px,0px);
+    position: absolute;
+    left: 0;
+}
+.userQRCode ul, .userAccess ul{
+    list-style:none;
+}
+.userAccess ul{
+	li{
+		.displayInline;
+		.textAlignCenter;
+		padding:0px 10px;
+	}
+	.loginLink{
+		border-right:2px solid @color-white;  // Comment out. Register link will be available in side menu only
+	}
+	a{
+		color:@color-white;
+		.setCursor(pointer);	
+		text-decoration: underline;
+	}
+}
+#custom-search-input {
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+	background-color:@color-white;
+    .border-radius(6px);
+	.getWidth(80%) !important;
+	.floatLeft;
+	margin-right:15px;
+	input{
+		border: 0;
+		box-shadow: none;
+	}
+	button{
+		margin: 2px 0 0 0;
+		background: none;
+		box-shadow: none;
+		border: 0;
+		color: @color-grey40;
+		padding: 0 8px 0 10px;
+		border-left: solid 1px @color-grey80;
+		:hover{
+			border: 0;
+			box-shadow: none;
+		}
+	}
+	.glyphicon-search{
+    	font-size: 23px;
+	}
+	.glyphicon-search:focus{
+    	border:none;
+	}
+}
+
+.searchBox {
+    margin-top:50px;
+	.qrSearch {
+		margin-left:10px;
+		.setCursor(pointer);
+	}
+}
+.legendHead{
+	color:@color-green;
+	.fontBold;
+	border-bottom:1px solid @color-orange;
+}
+.searchResult {
+	.setMarginTop(40px);
+	.formLabel{
+		.setMarginTop(5px);
+		padding-left:0px;
+	}
+	.searchResultForm{
+		.col-sm-12{
+			padding-left:0px;
+		}
+		form {
+			padding-right:0px;
+			.form-control[readonly] {
+				background-color: @color-white;
+				color: @color-grey40;
+				border: 1px solid @color-grey40;
+			}
+			.form-control {
+				background-color: @color-white;
+				color: @color-grey40;
+				border: 1px solid @color-grey40;
+				border-radius:0px;
+			}
+			&.registerProduct {
+				.form-group {
+					padding-left:0px !important;
+					padding-right:0px !important;
+				}
+			}
+			
+		}
+		.uploadErrDiv{
+				    padding-top: 6px;
+					height: 35px;
+					padding-left: 4px;
+					font-weight: bold;
+			}
+	}
+	.searchResultQRCode {
+		.setMarginTop(100px);
+		.absPosition;
+		right:0px;
+		padding-left:0px;
+		padding-right:0px;
+		.token {
+			word-break: break-all;
+		}
+	}
+	.searchTooltip {
+		padding-left:0px;
+	}
+}
+.submitBtnColor, .submitBtnColor:hover, .submitBtnColor:focus{
+	background-color: @color-header;
+	color:@color-white;
+	border-color: inherit;
+	.fontBold;
+}
+
+.registerBtnDiv {
+	padding-left: 8% !important;
+}
+
+#loaderDiv {
+   .setCursor(wait);
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 1100;
+   background-color: @color-white;
+   opacity: .5;
+   .ajax-loader {
+		.absPosition;
+		.displayBlock;
+		.setMarginTop(-32px);
+		left: 50%;
+		top: 50%;
+		margin-left: -32px;   
+	}
+}
+
+/*Side Menu*/
+.sidenav {
+    height: auto;
+	overflow: hidden;
+    width: 200px;
+	margin-right: -165px;
+    position: fixed;
+    z-index: 2;
+    top: 35%;
+    right: 0;
+	padding-top: 45px;
+	padding-bottom: 45px;
+    background-color: @color-side-menu;
+	border-bottom-left-radius: 30px;
+	border-top-left-radius: 30px;
+    overflow-x: hidden;
+    transition: 0.5;
+	a {
+		padding: 8px 15px 8px 20px;
+		text-align:right;
+		font-size: 12px;
+		color: white;
+		display: block;
+		transition: 0.3;
+		text-decoration:underline;
+		&:nth-child(2) {
+			text-decoration:none;
+			text-align:center;
+		}
+		&:not(:nth-child(2)):hover{
+			color: #FFFF00;
+			text-decoration:none;
+		}
+		ul {
+			list-style: none;
+		}
+	}
+	.closebtn {
+		position: absolute;
+		top: 43%;
+		transform:rotate(-90deg);
+		font-size: 18px;
+		left:-105px;
+		width:125%;
+	}
+	.closebtnLeft{
+		position: absolute;
+		bottom: 7%;
+		transform:rotate(-90deg);
+		font-size: 18px;
+		left:0px;
+	}
+	.closebtnRight{
+		position: absolute;
+		top: 10%;
+		transform:rotate(-90deg);
+		font-size: 18px;
+		left:0px;
+	}
+	.selected{
+		.fontBold;
+		color: #FFFF00;
+	}
+}
+.registerProduct {
+	.registerBtn{
+			.setMarginTop(10px);
+			.setMarginBottom(10px);
+	}
+}
+.singleSelect {
+	.btn-primary.active, 
+	.btn-primary:active, 
+	.open>.dropdown-toggle.btn-primary,
+	.btn,
+	.btn-primary.active.focus, 
+	.btn-primary.active:focus, 
+	.btn-primary.active:hover, 
+	.btn-primary:active.focus, 
+	.btn-primary:active:focus, 
+	.btn-primary:active:hover, 
+	.open>.dropdown-toggle.btn-primary.focus, 
+	.open>.dropdown-toggle.btn-primary:focus, 
+	.open>.dropdown-toggle.btn-primary:hover {
+		background-color:@color-white;
+		border:1px solid @color-grey40;
+		color:@color-label-black;
+		border-radius:0px;
+		box-shadow:none;
+		.caret {
+			float:right;
+			margin-top:7px;
+		}
+	}
+	.dropdown-menu {
+		border: 1px solid @color-grey40;
+		border-radius: 0px;
+		margin-top:-1px;
+	}
+	.dropdown-menu>li>a {
+		white-space:normal;
+	}
+}
+
+/*Side Menu*/
+.manageProducts {
+	.setMarginTop(20px);
+}
+/**/
+.commonTable {
+	.ng-table-sort-header {
+		background-color:@color-header;
+		color:@color-white;
+		 th{
+			text-align:left !important;
+			border-right:1px solid white;
+			vertical-align:middle;
+			input {
+				margin-left:10px !important;
+				margin-right:10px !important;
+			}
+		 }
+	}
+	 tbody{ 
+			 tr{
+				color:black;
+				&:nth-child(even) {
+					background-color: #D2DEEF;
+				}
+				&:nth-child(odd) {
+					background-color: #EAEFF7;
+				}
+				td{
+					vertical-align:middle;
+					border-right:1px solid white;
+					a{
+						text-decoration:none;
+						.setCursor(pointer);
+						color:black;
+						padding:0px 10px;
+						border-right:1px solid black;
+						&:first-child {
+							padding-left:0px;
+						}
+						&:last-child {
+							border:none;
+						}
+					}
+					input[type="text"] {
+						width:100%;
+					}
+					input[type="checkbox"] {
+						margin-left:10px !important;
+						margin-right:10px !important;
+					}
+					select {
+						width:100%;
+					}
+				}
+			 }
+		 }
+}
+
+#wrapper {
+min-height: 100%;
+  height: auto !important;
+  margin: 0 auto -75px;
+  padding: 0 0 60px;
+}
+/*  min-height: 100%; Set the fixed height of the footer here */
+#footer {
+  .img {
+		clear:both;
+		background-image: url(../images/footer.png);
+		background-repeat: repeat-x;
+		height:75px;
+	}
+} 
+
+.selectPOCls{
+	height:26px;
+	width: 176px;
+}
+
+/* Datepicker class */
+.datePicker {
+	.spanBtn{
+	border-color:@color-grey40;
+	border-radius:0px;
+	}
+	.qrCodeGeneration {
+		padding:1px !important;
+		img {
+			height: 32px;
+			width: 32px;
+			margin-top: -2px;
+		}
+	}
+} 
+/*Datepicker class */
+.multiSelectDirective {
+	.multiselect-parent {
+		width:100%;
+		button {
+			width:100%;
+			text-align:left;
+			border-radius:0px;
+			border-color:@color-grey40;
+			background-color:white;
+			box-shadow:none;
+			&.btn-default:hover {
+				background-color:white;
+			}
+			span.caret {
+				float:right;
+				margin-top:8px;
+			}
+		}
+		ul.dropdown-menu{
+			width:100% !important;
+			overflow-x:hidden !important;
+		}
+	}
+}
+.errorDiv{
+	.fontBold;
+}
+ 
+.userType {
+    background-color: #70AD47;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    label {
+    	.fontBold;
+    }
+}
+
+.verticalAlignment{
+                vertical-align:middle;
+                vertical-align:-webkit-baseline-middle;
+                color:@color-text;
+}
+.tokenNumberShipProduct {
+	position: absolute;
+    right: -77px;
+    top: 5px;
+    font-size: 14px;
+}
+input[type=radio] {
+    .setCursor(pointer);
+}
+
+/**/
+/* Import statement should be placed at bottom */
+@import (less) "./mediaQuery.less";

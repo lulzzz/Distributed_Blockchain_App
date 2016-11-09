@@ -1,0 +1,113 @@
+<!-- Directive for app header -->
+<app-header isLoggedIn="!vm.user.isAuthenticatedUser" user="vm.user"></app-header>
+<!-- TO-DO // remove hard-code value -->
+
+<div class="">
+  <div class="searchResult col-lg-8 col-md-8 col-sm-10 col-xs-12">
+
+    <!-- Directive for module header -->
+    <app-legend header="REGISTER USER"></app-legend>
+
+    <div class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <form class="col-lg-8 col-md-9 col-sm-10 col-xs-10" ng-submit="vm.doRegistration()">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left text-xs-left formLabel">
+            <label for="username">User Name :</label>
+          </div>
+          <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <input ng-required="true" type="text" class="form-control" id="username" value="" ng-model="vm.newUserObject.userName" ng-model-options="{update : 'change'}">
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+            <label for="certification">Certification :</label>
+          </div>
+          <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <textarea rows="3" class="form-control" id="certification" ng-model="vm.newUserObject.certification"></textarea>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+            <label for="consortium">Consortium :</label>
+          </div>
+          <div class="form-group singleSelect col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <select id="consortium" class="form-control">
+                <option value="International Association of Natural Textile Industry(IVN)">International Association of Natural Textile Industry(IVN)</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+            <label for="userProfile">Tag user profile :</label>
+          </div>
+          <div class="form-group singleSelect col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <select ng-model="vm.newUserObject.userProfile"  ng-model-options="{update : 'change'}" id="userProfile" class="form-control">
+                <option id="PROD" value="Producer">Raw Material Producer</option>
+                <option id="MANUFACT" value="Manufacturer">Manufacturer</option>
+                <option id="RETAIL" value="Retailer">Retailer</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+            <label for="qrCode">Generate QR code :</label>
+          </div>
+          <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <p class="input-group datePicker">
+              <input ng-required="true" type="text" class="form-control" id="qrCode" readonly="true" />
+              <span class="input-group-btn">
+						<button type="button" ng-click="vm.generate()" class="btn btn-default spanBtn qrCodeGeneration"><i class="glyphicon"><img src="asset/images/qr_search.png"/></i></button>
+					</span>
+            </p>
+          </div>
+
+        </div>
+
+
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel"></div>
+          <div class="registerBtnDiv form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <button type="submit" ng-disabled="!vm.displayQR" class="btn btn-primary submitBtnColor">Submit</button>
+            <button type="reset" ng-click="reset()" class="btn btn-primary submitBtnColor">Cancel</button>
+          </div>
+        </div>
+
+      </form>
+
+      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          &nbsp;
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          &nbsp;
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          &nbsp;
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          &nbsp;
+        </div>
+
+        <div ng-if="vm.displayQR" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userQRCode">
+          <ul>
+            <li>
+              <i>Click on image to Download</i>
+            </li>
+            <li style="padding-top: 6px;">
+              <qrcode version="5" error-correction-level="M" size="120" data="{{vm.qrObject}}" download></qrcode>
+            </li>
+            <li ng-if="vm.newUserObject.userName && vm.newUserObject.userProfile">
+              <span class="fontBold" style="text-transform: capitalize;">{{vm.newUserObject.userName}} : <i>{{vm.newUserObject.userProfile}}</i></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Directive for app side menu -->
+  <side-menu user="vm.user"></side-menu>

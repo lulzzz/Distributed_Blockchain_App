@@ -1,0 +1,83 @@
+<!-- For rendering shipment details based on user search -->
+
+<div class="">
+	<div class="searchResult col-lg-8 col-md-8 col-sm-10 col-xs-12">
+
+		<!-- Directive for module header -->
+		<app-legend header="Shipment Details"></app-legend>
+	
+		<div class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<form class="col-lg-8 col-md-9 col-sm-10 col-xs-10">
+                
+                <!-- Material name for producer -->
+				<div ng-if="vm.product.materialName && vm.product.materialName !== ''" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left text-xs-left formLabel">
+						<label for="materialName">Material Name :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="materialName" readonly="true" ng-model="vm.product.materialName">
+					</div>
+				</div>
+                <!-- --------------------------------- -->
+                
+                <!-- Product name for manufacturer -->
+				<div ng-if="vm.product.productName && vm.product.productName !== ''" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left text-xs-left formLabel">
+						<label for="productName">Product Name :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="productName" readonly="true" ng-model="vm.product.productName">
+					</div>
+				</div>
+                <!-- --------------------------------- -->
+                
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+						<label for="batchNumber">RM Batch Number :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="batchNumber" readonly="true" ng-model="vm.product.batchNumber">
+					</div>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+						<label for="productWeight">Product Weight :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="productWeight" readonly="true" ng-model="vm.product.weight">
+					</div>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+						<label for="quantity">Quantity :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="quantity" readonly="true" ng-model="vm.product.quantity">	
+					</div>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+						<label for="manufacturingDate">Date of Manufacturing :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="manufacturingDate" readonly="true" ng-model="vm.product.manufactureDate">
+					</div>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 text-right-lg text-right-md text-sm-left formLabel">
+						<label for="currentlyAt">Currently at :</label>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<input type="text" class="form-control" id="currentlyAt" readonly="true" ng-model="vm.product.trackDetails.currentlyAt">
+					</div>
+				</div>
+			</form>
+			<div class="col-lg-4 col-md-3 col-sm-2 col-xs-2 searchResultQRCode">
+				<div>
+					<img src="asset/images/qr_search.png"/>
+				</div>
+				<div class="token">Token :123456</div> <!-- TO-DO need to remove hardcode-->
+			</div>
+		</div>
+	</div>
+</div>

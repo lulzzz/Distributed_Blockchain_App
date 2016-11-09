@@ -1,0 +1,598 @@
+/*grey*/
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+.noPadding {
+  padding: 0px !important;
+}
+.floatLeft {
+  float: left;
+}
+.floatRight {
+  float: right;
+}
+.clearBoth {
+  clear: both;
+}
+.absPosition {
+  position: absolute;
+}
+.displayNone {
+  display: none;
+}
+.displayBlock {
+  display: block;
+}
+.font12 {
+  font-size: 12px !important;
+}
+.font9 {
+  font-size: 9px !important;
+}
+.displayInline {
+  display: inline;
+}
+.displayInlineBlock {
+  display: inline-block;
+}
+.textAlignCenter {
+  text-align: center;
+}
+.textAlignLeft {
+  text-align: left;
+}
+.fontBold {
+  font-weight: bold;
+}
+.padding-right-0 {
+  padding-right: 0px;
+}
+.margin-left-15 {
+  margin-left: 15px;
+}
+.formLabel1 {
+  margin-top: 5px;
+  padding-left: 0px;
+}
+.rawMaterialRegistration .formLabel {
+  margin-top: 5px;
+  padding-left: 0px;
+}
+header {
+  background-color: #5298d8;
+  color: #ffffff;
+}
+header #user-info {
+  color: #424242;
+}
+header #errorDiv,
+header #user-info {
+  background-color: #ffffff;
+}
+header #errorDiv {
+  padding-top: 20px;
+}
+header .displayInlineBlock img {
+  vertical-align: initial;
+  padding-left: 10px;
+}
+header .userLbl {
+  color: #ed7d31;
+  text-transform: capitalize;
+}
+header .userRole {
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+#spanID {
+  text-transform: capitalize;
+}
+.appLogo {
+  padding-top: 10px;
+}
+.mobileLogo {
+  clip: rect(0px, 70px, 200px, 0px);
+  position: absolute;
+  left: 0;
+}
+.userQRCode ul,
+.userAccess ul {
+  list-style: none;
+}
+.userAccess ul li {
+  display: inline;
+  text-align: center;
+  padding: 0px 10px;
+}
+.userAccess ul .loginLink {
+  border-right: 2px solid #ffffff;
+}
+.userAccess ul a {
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+#custom-search-input {
+  padding: 3px;
+  border: solid 1px #E4E4E4;
+  background-color: #ffffff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  width: 80% !important;
+  float: left;
+  margin-right: 15px;
+}
+#custom-search-input input {
+  border: 0;
+  box-shadow: none;
+}
+#custom-search-input button {
+  margin: 2px 0 0 0;
+  background: none;
+  box-shadow: none;
+  border: 0;
+  color: #424242;
+  padding: 0 8px 0 10px;
+  border-left: solid 1px #cccccc;
+}
+#custom-search-input button :hover {
+  border: 0;
+  box-shadow: none;
+}
+#custom-search-input .glyphicon-search {
+  font-size: 23px;
+}
+#custom-search-input .glyphicon-search:focus {
+  border: none;
+}
+.searchBox {
+  margin-top: 50px;
+}
+.searchBox .qrSearch {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.legendHead {
+  color: #00b050;
+  font-weight: bold;
+  border-bottom: 1px solid #ed7d31;
+}
+.searchResult {
+  margin-top: 40px;
+}
+.searchResult .formLabel {
+  margin-top: 5px;
+  padding-left: 0px;
+}
+.searchResult .searchResultForm .col-sm-12 {
+  padding-left: 0px;
+}
+.searchResult .searchResultForm form {
+  padding-right: 0px;
+}
+.searchResult .searchResultForm form .form-control[readonly] {
+  background-color: #ffffff;
+  color: #424242;
+  border: 1px solid #424242;
+}
+.searchResult .searchResultForm form .form-control {
+  background-color: #ffffff;
+  color: #424242;
+  border: 1px solid #424242;
+  border-radius: 0px;
+}
+.searchResult .searchResultForm form.registerProduct .form-group {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.searchResult .searchResultForm .uploadErrDiv {
+  padding-top: 6px;
+  height: 35px;
+  padding-left: 4px;
+  font-weight: bold;
+}
+.searchResult .searchResultQRCode {
+  margin-top: 100px;
+  position: absolute;
+  right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.searchResult .searchResultQRCode .token {
+  word-break: break-all;
+}
+.searchResult .searchTooltip {
+  padding-left: 0px;
+}
+.submitBtnColor,
+.submitBtnColor:hover,
+.submitBtnColor:focus {
+  background-color: #5298d8;
+  color: #ffffff;
+  border-color: inherit;
+  font-weight: bold;
+}
+.registerBtnDiv {
+  padding-left: 8% !important;
+}
+#loaderDiv {
+  cursor: wait;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1100;
+  background-color: #ffffff;
+  opacity: .5;
+}
+#loaderDiv .ajax-loader {
+  position: absolute;
+  display: block;
+  margin-top: -32px;
+  left: 50%;
+  top: 50%;
+  margin-left: -32px;
+}
+/*Side Menu*/
+.sidenav {
+  height: auto;
+  overflow: hidden;
+  width: 200px;
+  margin-right: -165px;
+  position: fixed;
+  z-index: 2;
+  top: 35%;
+  right: 0;
+  padding-top: 45px;
+  padding-bottom: 45px;
+  background-color: #a0a0a0;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+  overflow-x: hidden;
+  transition: 0.5;
+}
+.sidenav a {
+  padding: 8px 15px 8px 20px;
+  text-align: right;
+  font-size: 12px;
+  color: white;
+  display: block;
+  transition: 0.3;
+  text-decoration: underline;
+}
+.sidenav a:nth-child(2) {
+  text-decoration: none;
+  text-align: center;
+}
+.sidenav a:not( :nth-child(2)):hover {
+  color: #FFFF00;
+  text-decoration: none;
+}
+.sidenav a ul {
+  list-style: none;
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 43%;
+  transform: rotate(-90deg);
+  font-size: 18px;
+  left: -105px;
+  width: 125%;
+}
+.sidenav .closebtnLeft {
+  position: absolute;
+  bottom: 7%;
+  transform: rotate(-90deg);
+  font-size: 18px;
+  left: 0px;
+}
+.sidenav .closebtnRight {
+  position: absolute;
+  top: 10%;
+  transform: rotate(-90deg);
+  font-size: 18px;
+  left: 0px;
+}
+.sidenav .selected {
+  font-weight: bold;
+  color: #FFFF00;
+}
+.registerProduct .registerBtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.singleSelect .btn-primary.active,
+.singleSelect .btn-primary:active,
+.singleSelect .open > .dropdown-toggle.btn-primary,
+.singleSelect .btn,
+.singleSelect .btn-primary.active.focus,
+.singleSelect .btn-primary.active:focus,
+.singleSelect .btn-primary.active:hover,
+.singleSelect .btn-primary:active.focus,
+.singleSelect .btn-primary:active:focus,
+.singleSelect .btn-primary:active:hover,
+.singleSelect .open > .dropdown-toggle.btn-primary.focus,
+.singleSelect .open > .dropdown-toggle.btn-primary:focus,
+.singleSelect .open > .dropdown-toggle.btn-primary:hover {
+  background-color: #ffffff;
+  border: 1px solid #424242;
+  color: #000000;
+  border-radius: 0px;
+  box-shadow: none;
+}
+.singleSelect .btn-primary.active .caret,
+.singleSelect .btn-primary:active .caret,
+.singleSelect .open > .dropdown-toggle.btn-primary .caret,
+.singleSelect .btn .caret,
+.singleSelect .btn-primary.active.focus .caret,
+.singleSelect .btn-primary.active:focus .caret,
+.singleSelect .btn-primary.active:hover .caret,
+.singleSelect .btn-primary:active.focus .caret,
+.singleSelect .btn-primary:active:focus .caret,
+.singleSelect .btn-primary:active:hover .caret,
+.singleSelect .open > .dropdown-toggle.btn-primary.focus .caret,
+.singleSelect .open > .dropdown-toggle.btn-primary:focus .caret,
+.singleSelect .open > .dropdown-toggle.btn-primary:hover .caret {
+  float: right;
+  margin-top: 7px;
+}
+.singleSelect .dropdown-menu {
+  border: 1px solid #424242;
+  border-radius: 0px;
+  margin-top: -1px;
+}
+.singleSelect .dropdown-menu > li > a {
+  white-space: normal;
+}
+/*Side Menu*/
+.manageProducts {
+  margin-top: 20px;
+}
+/**/
+.commonTable .ng-table-sort-header {
+  background-color: #5298d8;
+  color: #ffffff;
+}
+.commonTable .ng-table-sort-header th {
+  text-align: left !important;
+  border-right: 1px solid white;
+  vertical-align: middle;
+}
+.commonTable .ng-table-sort-header th input {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+.commonTable tbody tr {
+  color: black;
+}
+.commonTable tbody tr:nth-child(even) {
+  background-color: #D2DEEF;
+}
+.commonTable tbody tr:nth-child(odd) {
+  background-color: #EAEFF7;
+}
+.commonTable tbody tr td {
+  vertical-align: middle;
+  border-right: 1px solid white;
+}
+.commonTable tbody tr td a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+  padding: 0px 10px;
+  border-right: 1px solid black;
+}
+.commonTable tbody tr td a:first-child {
+  padding-left: 0px;
+}
+.commonTable tbody tr td a:last-child {
+  border: none;
+}
+.commonTable tbody tr td input[type="text"] {
+  width: 100%;
+}
+.commonTable tbody tr td input[type="checkbox"] {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+.commonTable tbody tr td select {
+  width: 100%;
+}
+#wrapper {
+  min-height: 100%;
+  height: auto !important;
+  margin: 0 auto -75px;
+  padding: 0 0 60px;
+}
+/*  min-height: 100%; Set the fixed height of the footer here */
+#footer .img {
+  clear: both;
+  background-image: url(../images/footer.png);
+  background-repeat: repeat-x;
+  height: 75px;
+}
+.selectPOCls {
+  height: 26px;
+  width: 176px;
+}
+/* Datepicker class */
+.datePicker .spanBtn {
+  border-color: #424242;
+  border-radius: 0px;
+}
+.datePicker .qrCodeGeneration {
+  padding: 1px !important;
+}
+.datePicker .qrCodeGeneration img {
+  height: 32px;
+  width: 32px;
+  margin-top: -2px;
+}
+/*Datepicker class */
+.multiSelectDirective .multiselect-parent {
+  width: 100%;
+}
+.multiSelectDirective .multiselect-parent button {
+  width: 100%;
+  text-align: left;
+  border-radius: 0px;
+  border-color: #424242;
+  background-color: white;
+  box-shadow: none;
+}
+.multiSelectDirective .multiselect-parent button.btn-default:hover {
+  background-color: white;
+}
+.multiSelectDirective .multiselect-parent button span.caret {
+  float: right;
+  margin-top: 8px;
+}
+.multiSelectDirective .multiselect-parent ul.dropdown-menu {
+  width: 100% !important;
+  overflow-x: hidden !important;
+}
+.errorDiv {
+  font-weight: bold;
+}
+.userType {
+  background-color: #70AD47;
+  padding: 5px;
+  color: #ffffff;
+  font-size: 14px;
+}
+.userType label {
+  font-weight: bold;
+}
+.verticalAlignment {
+  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
+  color: #727272;
+}
+.tokenNumberShipProduct {
+  position: absolute;
+  right: -77px;
+  top: 5px;
+  font-size: 14px;
+}
+input[type=radio] {
+  cursor: pointer;
+}
+/**/
+/* Import statement should be placed at bottom */
+@media (max-width: 600px) {
+  ::-webkit-input-placeholder {
+    font-size: 14px;
+  }
+}
+@media (max-width: 500px) {
+  ::-webkit-input-placeholder {
+    font-size: 11px;
+  }
+}
+@media (max-width: 420px) {
+  ::-webkit-input-placeholder {
+    font-size: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .text-left-not-xs,
+  .text-center-not-xs,
+  .text-right-not-xs,
+  .text-justify-not-xs {
+    text-align: inherit;
+  }
+  .text-left-xs {
+    text-align: left;
+  }
+  .text-center-xs {
+    text-align: center;
+  }
+  .text-right-xs {
+    text-align: right;
+  }
+  .text-justify-xs {
+    text-align: justify;
+  }
+  #custom-search-input {
+    width: 75% !important;
+  }
+  .uploadErrDiv {
+    margin-left: 15px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .text-left-not-sm,
+  .text-center-not-sm,
+  .text-right-not-sm,
+  .text-justify-not-sm {
+    text-align: inherit;
+  }
+  .text-left-sm {
+    text-align: left;
+  }
+  .text-center-sm {
+    text-align: center;
+  }
+  .text-right-sm {
+    text-align: right;
+  }
+  .text-justify-sm {
+    text-align: justify;
+  }
+  .uploadErrDiv {
+    margin-left: 15px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .text-left-not-md,
+  .text-center-not-md,
+  .text-right-not-md,
+  .text-justify-not-md {
+    text-align: inherit;
+  }
+  .text-left-md {
+    text-align: left;
+  }
+  .text-center-md {
+    text-align: center;
+  }
+  .text-right-md {
+    text-align: right;
+  }
+  .text-justify-md {
+    text-align: justify;
+  }
+}
+@media (min-width: 1200px) {
+  .text-left-not-lg,
+  .text-center-not-lg,
+  .text-right-not-lg,
+  .text-justify-not-lg {
+    text-align: inherit;
+  }
+  .text-left-lg {
+    text-align: left;
+  }
+  .text-center-lg {
+    text-align: center;
+  }
+  .text-right-lg {
+    text-align: right;
+  }
+  .text-justify-lg {
+    text-align: justify;
+  }
+}
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 45px;
+    padding-bottom: 45px;
+  }
+}
