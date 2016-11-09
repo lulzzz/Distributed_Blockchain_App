@@ -1,4 +1,7 @@
 <div id="uploadQRDialog">
+  <div ng-if="vm.hasUploadErr" class="row col-md-offset-1 col-md-7 col-sm-8 col-xs-11 alert alert-danger uploadErrDiv padding-right-0">
+        <div> {{:: vm.UPLOAD_ERR}} </div>
+      </div>
     <form class="" ng-submit="searchQR()">
         <div class="">
           <div class=" text-right-lg text-right-md formLabel">

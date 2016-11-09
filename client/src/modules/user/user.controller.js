@@ -51,6 +51,10 @@ angular.module('bverifyApp')
                 }
             });
 
+             $scope.$on('QRError', function (event) {
+                    vm.hasUploadErr = true;
+                });
+
             //login current user. Any registered user can login
             vm.doLogin = function () {
                 if (!loginRequest) {

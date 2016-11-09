@@ -12,21 +12,29 @@ angular.module('bverifyApp')
                 var vm = this;
                 vm.searchQuery = ''; //TO-DO need to remove harcode
                 vm.showDialog = false;
+                vm.hasUploadErr = false;
+                vm.UPLOAD_ERR = appConstants.UPLOAD_ERR;
                 vm.user = userModel.getUser();
-                var req = "";
-                vm.openDialog = function () {
-                    ngDialog.open({ template: 'uploadDialog'});
-                }
 
+                var req = "";
                 //Capturing broadcasted event from qrCodeReader directive to retreive User info read from uploaded QR img.
                 $scope.$on('readQR', function (event, trackInfo) {
+                    $scope.hasUploadErr = false;
                     if (trackInfo) {
                         req = trackInfo;
                     }
                 });
+                $scope.$on('QRError', function (event) {
+                    vm.hasUploadErr = true;
+                });
                 //Capturing broadcasted event from qrCodeReader directive to retreive User info read from uploaded QR img.
                 $scope.$on('searchQR', function (event) {
-                    $state.go('home.result', { id: vm.searchQuery, trackInfo: req });
+                     if(vm.hasUploadErr = true){
+                         return;
+                     }else{
+                        ngDialog.close();
+                        $state.go('home.result', { id: vm.searchQuery, trackInfo: req });
+                     }
                 });
                 vm.searchTrackID = function () {
                     $state.go('home.result', { id: vm.searchQuery });

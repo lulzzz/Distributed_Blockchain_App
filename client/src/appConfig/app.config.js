@@ -29,8 +29,10 @@ angular
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
 
+        //Configure model dialog options
         ngDialogProvider.setDefaults({
             className: 'ngdialog-theme-default',
+            plain: false,
             showClose: true,
             closeByDocument: true,
             closeByEscape: true,

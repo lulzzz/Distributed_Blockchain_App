@@ -46,17 +46,32 @@ angular.module('bverifyApp')
     //Directive for rendering module section
     .directive('uploadDialog', ['$rootScope', 'ngDialog', function ($rootScope, ngDialog) {
         return {
-            restrict: 'E',
-            templateUrl: '../modules/search/uploadDialog.tpl.html',
-            link: function (scope, element, attrs) {
-                scope.searchQR = function(){
-                    $rootScope.$broadcast('searchQR');
-                };
-                scope.reset = function(){
-                    ngDialog.close();
-                }
+            restrict: 'A',
+            scope: { uploadErr: '=', errMsg: '@' },
+            link: function ($scope, element) {
+                element.on('click', function () {
+                    ngDialog.open({
+                        template: '../modules/search/uploadDialog.tpl.html',
+                        scope: $scope,
+                        controller: ['$scope', function ($scope) {
+                            $scope.vm = {
+                                hasUploadErr: $scope.$parent.uploadErr,
+                                UPLOAD_ERR: $scope.$parent.errMsg
+                            };
+                            $scope.$watch('uploadErr', function (uploadErr) {
+                                $scope.vm.hasUploadErr = uploadErr;
+                            });
+                            $scope.searchQR = function () {
+                                $rootScope.$broadcast('searchQR');
+                            };
+                            $scope.reset = function () {
+                                ngDialog.close();
+                            };
+                        }]
+                    })
+                });
             }
-        }
+        };
     }])
 
     //Directive for displaying/hiding loading on http request/response
@@ -139,7 +154,7 @@ angular.module('bverifyApp')
                     try {
                         //Initialize file object
                         scope.file = {
-                            name : "Upload QR Code"
+                            name: "Upload QR Code"
                         };
 
                         var qr = new QrCode();
@@ -150,11 +165,11 @@ angular.module('bverifyApp')
                                 $rootScope.$broadcast('readQR', result);
                             }
                             else {
+                                $rootScope.$broadcast('QRError');
                                 console.log(appConstants.FUNCTIONAL_ERR, err);
                             }
                         };
                         scope.uploadFile = function (file, event) {
-                            scope.vm.hasUploadErr = false;
                             event.preventDefault();
                             if (file) {
                                 scope.file = file;
