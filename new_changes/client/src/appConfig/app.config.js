@@ -17,7 +17,7 @@ if (window) {
 angular
     .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize',
         'ngFileUpload', 'angularjs-dropdown-multiselect'])
-    .config(['$httpProvider', '$logProvider',  function ($httpProvider, $logProvider) {
+    .config(['$httpProvider', '$logProvider',   function ($httpProvider, $logProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;

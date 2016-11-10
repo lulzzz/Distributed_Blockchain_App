@@ -26,6 +26,7 @@ angular.module('bverifyApp')
                     var _self = this;
                     angular.forEach(list, function(obj, key) {
                         _self.productList.push({
+                            "id": obj.id || Math.floor(Math.random()*90000) + 10000,
                             "materialName": obj.materialName || "",
                             "productName": obj.productName || "",
                             "batchNumber": obj.batchNumber || "",

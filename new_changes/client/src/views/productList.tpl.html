@@ -1,15 +1,17 @@
 <div class="manageProducts col-lg-8 col-md-10 col-sm-10 hidden-xs">
     <app-legend header="{{title}}"></app-legend>
-    
+    {{list.length}}
     <div>
-
-        <table ng-table="{{customConfigParams}}" class="commonTable table table-condensed table-bordered table-striped" >
-            <tr ng-repeat="data in list">
-                <td ng-if="userProfile.isProducer" data-title="'Material'">{{data.materialName}}</td>
-                <td ng-if="userProfile.isManufacturer" data-title="'Product'">{{data.productName}}</td>
-                <td title="'Quantity'">{{data.quantity}}</td>
-                <td title="'Registered On'">{{data.registeredDate}}</td>
-                <td title="'View / Edit'"><a>Edit</a><a>View</a><a>Delete</a></td>                
+        <table ng-table="vm.customConfigParams" class="commonTable table table-condensed table-bordered table-striped" >
+            <tr ng-repeat="row in $data"> 
+                <td ng-if="vm.userProfile.isProducer" data-title="'Material'">{{row.materialName}}</td>
+                <td ng-if="vm.userProfile.isManufacturer" data-title="'Product'">{{row.productName}}</td>
+                <td title="'Quantity'">{{row.quantity}}</td>
+                <td title="'Registered On'">{{row.registeredDate}}</td>
+                <td title="'View / Edit'"><a id="{{row.id}}" ng-click="vm.editProduct(row)">Edit</a>
+                                          <a id="{{row.id}}" ng-click="vm.viewProduct(row)">View</a>
+                                          <a id="{{row.id}}" ng-click="vm.deleteProduct(row)">Delete</a>
+                </td>                
             </tr>
         </table>
     </div>

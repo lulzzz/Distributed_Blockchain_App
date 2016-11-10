@@ -88,7 +88,7 @@ angular
                     //Resolve added to retreive productList before loading product register screen
                     resolve: {
                         productList: function(userModel, productServiceAPI) {
-                            const user = userModel.getUser();
+                            var user = userModel.getUser();
                             return productServiceAPI.getProductList({
                                 userName: user.userName,
                                 userProfile: user.userProfile
@@ -120,7 +120,7 @@ angular
                     //Resolve added to retreive productList before loading product acknowledgment screen
                     resolve: {
                         productList: function(userModel, productServiceAPI) {
-                            const user = userModel.getUser();
+                            var user = userModel.getUser();
                             return productServiceAPI.getProductList({
                                 userName: user.userName,
                                 userProfile: user.userProfile
@@ -149,7 +149,7 @@ angular
                         $rootScope.hasError = false;
                         $rootScope.isSuccess = false;
                         // Authenticating user. Maintaining session on each route
-                        const user = userModel.getUser();
+                        var user = userModel.getUser();
                         if (!(appConstants.ROUTE_STATES_CONSTANTS.indexOf(toState.name) >= 0)) {
                             if (user === null || !user.isAuthenticatedUser) {
                                 $rootScope.isLoggedIn = false;
