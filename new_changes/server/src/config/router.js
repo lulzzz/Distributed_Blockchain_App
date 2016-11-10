@@ -39,6 +39,10 @@ router.route('/product/ack')
 router.route('/product/ship')
     .post(function(req, res) {
         productCtrl.shipProduct(req, res);
+    });
+router.route('/product/delete/:id')
+    .delete(function(req, res) {
+        productCtrl.deleteProduct(req, res);
     });         
     
 module.exports = router;
