@@ -4,26 +4,9 @@
 
 "use strict";
 
-angular.module('bverifyApp')
+angular.module('userModule')
     .factory('userModel', ['localStorageService', 'appConstants', '$log',
         function (localStorageService, appConstants, $log) {
-
-            /* Not for demo instance. can be used in future.
-            var _init = {
-                userName: '',
-                certification: '',
-                consortium: {
-                    id: '',
-                    name: ''
-                },
-                userProfile: {
-                    id: '',
-                    profile: ''
-                },
-                isAuthenticatedUser: false,
-                password: '' // TO-DO added for implementing login functionality. needs to replace with actual.
-    
-            };*/
 
             // Only for demo instance.
             var _init = {

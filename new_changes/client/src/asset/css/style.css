@@ -89,6 +89,45 @@ header .userRole {
   text-decoration: underline;
   text-transform: capitalize;
 }
+header .sideMenuPanel {
+  color: black;
+  font-size: 30px;
+  text-align: right !important;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+header .sideMenuPanel .popover {
+  max-width: 200px;
+  background-color: #a0a0a0;
+}
+header .sideMenuPanel .popover .arrow {
+  border-bottom-color: #ebebeb;
+}
+header .sideMenuPanel .popover.bottom > .arrow:after {
+  top: 2px;
+  border-bottom-color: #ebebeb !important;
+}
+header .sideMenuPanel .popover .popover-title {
+  text-align: center;
+  font-weight: bold;
+}
+header .sideMenuPanel span {
+  color: white;
+}
+header .sideMenuPanel .list ul {
+  padding-left: 0px;
+}
+header .sideMenuPanel .list ul li {
+  font-size: 12px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+header .sideMenuPanel .list ul li a {
+  text-decoration: none;
+}
+header .sideMenuPanel .list ul li a:hover {
+  color: #FFFF00;
+}
 #spanID {
   text-transform: capitalize;
 }
@@ -355,6 +394,9 @@ header .userRole {
 .manageProducts {
   margin-top: 20px;
 }
+.manageProducts .prodList {
+  overflow-x: auto;
+}
 /**/
 .commonTable .ng-table-sort-header {
   background-color: #5298d8;
@@ -401,9 +443,6 @@ header .userRole {
 .commonTable tbody tr td input[type="checkbox"] {
   margin-left: 10px !important;
   margin-right: 10px !important;
-}
-.commonTable tbody tr td select {
-  width: 100%;
 }
 #wrapper {
   min-height: 100%;

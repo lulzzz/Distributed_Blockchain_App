@@ -4,10 +4,10 @@
 */
 
 'use strict';
-angular.module('bverifyApp')
+angular.module('searchModule')
 
     //Registering shipment track url
-    .value('shipmentUrl',  {
+    .value('shipmentUrl', {
         'track': 'api/track'
     })
 

@@ -157,6 +157,9 @@ angular
                                 $state.go('home');
                             }
                         }
+                        if(angular.equals(toState.name, 'home') && angular.equals(fromState.name, '')){
+                               userModel.resetUser();
+                        }
                     } catch (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     }

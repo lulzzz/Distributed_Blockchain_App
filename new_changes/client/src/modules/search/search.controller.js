@@ -4,7 +4,7 @@
 
 "use strict";
 
-angular.module('bverifyApp')
+angular.module('searchModule')
     // searchController for tracking shipment details
     .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope', '$scope', '$stateParams', 'userInfo',
         function ($state, appConstants, userModel, $log, $rootScope, $scope, $stateParams, userInfo) {
@@ -27,6 +27,7 @@ angular.module('bverifyApp')
                         $state.go('home.result', { id: "", trackInfo: trackInfo });
                     }
                 });
+                //Capturing broadcasted event from qrCodeReader directive to display error.
                 $scope.$on('QRError', function (event) {
                     $rootScope.hasError = true;
                 });
@@ -40,12 +41,15 @@ angular.module('bverifyApp')
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }])
+
     // searchResultController for rendering shipment details
     .controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails', 'Product',
         function ($state, appConstants, $log, shipmentDetails, Product) {
             try {
                 var vm = this;
                 vm.product = new Product();
+
+                //Populating shipment details on load based on shipmentDetails resolve
                 shipmentDetails
                     .$promise
                     .then(function (response) {

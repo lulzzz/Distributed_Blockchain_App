@@ -3,7 +3,7 @@
 angular.module('bverifyApp')
 
     //Directive for rendering header section
-    .directive('appHeader', function () {
+    .directive('appHeader',['userModel', '$rootScope', function (userModel, $rootScope) {
         return {
             restrict: 'E',
             templateUrl: '../views/header.tpl.html',
@@ -14,9 +14,11 @@ angular.module('bverifyApp')
             link: function (scope, element, attrs) {
                 scope.appName = "B-VERIFY";
                 scope.appDesc = "Retail Blockchain Application";
+                scope.userProfile = populateUserProfile(userModel);
+                scope.activeMenu = populateActiveMenu($rootScope.activeMenu);
             }
         }
-    })
+    }])
 
     //Directive for rendering footer section
     .directive('appFooter', function () {
@@ -88,3 +90,24 @@ angular.module('bverifyApp')
                 }
             }
         }]);
+
+
+function populateUserProfile(userModel) {
+    return {
+        isAdmin: userModel.isAdmin(),
+        isProducer: userModel.isProducer(),
+        isManufacturer: userModel.isManufacturer(),
+        isRetailer: userModel.isRetailer()
+    }
+};
+
+function populateActiveMenu(menu) {
+    return {
+        dashboard: menu === '/dashboard' ? true : false,
+        userRegister: menu === '/register' ? true : false,
+        prodRegister: menu === '/product/register' ? true : false,
+        prodShip: menu === '/product/ship' ? true : false,
+        trackShip: menu === '/home' ? true : false,
+        prodAck: menu === '/product/acknowledge' ? true : false,
+    }
+};

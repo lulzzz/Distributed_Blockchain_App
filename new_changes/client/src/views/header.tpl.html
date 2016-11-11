@@ -14,12 +14,16 @@
 			<i>{{:: appDesc}}</i>
 		</div>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 userAccess text-right">
-			<ul class="userLogin">
-				<li class="loginLink" ng-if="!user.isAuthenticatedUser"><a ui-sref="login"><b>Login</b></a></li>
-				<!-- Comment out. Register link will be available in side menu and it's for admin only' -->
-				<li ng-if="!user.isAuthenticatedUser"><a ui-sref="home"><b>Home</b></a></li>
-				<li ng-if="user.isAuthenticatedUser"><a ui-sref="logout"><b>Sign Out</b></a></li>
-			</ul>
+		<ul class="userLogin">
+			<li class="loginLink hidden-xs" ng-if="!user.isAuthenticatedUser"><a ui-sref="login"><b>Login</b></a></li>
+			<!-- Comment out. Register link will be available in side menu and it's for admin only' -->
+			<li class="hidden-xs" ng-if="!user.isAuthenticatedUser"><a ui-sref="home"><b>Home</b></a></li>
+			<li class="hidden-xs" ng-if="user.isAuthenticatedUser"><a ui-sref="logout"><b>Sign Out</b></a></li>
+			
+			<li class="visible-xs sideMenuPanel">
+				<span uib-popover-template="'myPopoverTemplate.html'" popover-title="MENU" popover-trigger="outsideClick" popover-placement="bottom-right"  class="glyphicon glyphicon-menu-hamburger"></span>
+			</li>
+		</ul>
 		</div>
 	</div>
 
@@ -63,3 +67,26 @@
 	</div>
 
 </header>
+
+<div style="clear:both">
+	<script type="text/ng-template" id="myPopoverTemplate.html">
+		<div class="col-xs-12 list noPadding">
+			<ul>
+				<li ng-if="userProfile.isAdmin" class="col-xs-12"><a ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a></li>
+				<li ng-if="userProfile.isProducer || userProfile.isManufacturer"  class="col-xs-12"><a ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER PRODUCT</a></li>
+				<!-- For demo instance only -->
+				<li ng-if="userProfile.isRetailer" class="col-xs-12"><a href="#">REGISTER PRODUCT</a></li>
+				<li ng-if="userProfile.isRetailer" class="col-xs-12"><a href="#">SHIP PRODUCT</a></li>
+				<!-------------------------------------------->
+				<li ng-if="userProfile.isProducer || userProfile.isManufacturer"  class="col-xs-12"><a ui-sref="shipment">SHIP PRODUCT</a></li>
+				<li class="col-xs-12"><a ng-if="user.isAuthenticatedUser" ng-class="{'selected': activeMenu.trackShip }" ui-sref="home">TRACK SHIPMENTS</a></li>
+				<li class="col-xs-12"><a ng-if="user.isAuthenticatedUser" href="#" ng-class="{'selected': activeMenu.dashboard }">DASHBOARD</a></li>
+				<li ng-if="userProfile.isManufacturer" class="col-xs-12"><a ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">PROCURE RAW MATERIAL</a></li>
+				<li ng-if="userProfile.isRetailer" class="col-xs-12"><a ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">ACKNOWLEDGE PRODUCTS</a></li>
+				<li class="col-xs-12" ng-if="!user.isAuthenticatedUser"><a ui-sref="login"><b>LOGIN</b></a></li>
+				<li class="col-xs-12" ng-if="!user.isAuthenticatedUser"><a ui-sref="home"><b>HOME</b></a></li>
+				<li class="col-xs-12" ng-if="user.isAuthenticatedUser"><a ui-sref="logout"><b>SIGN OUT</b></a></li>
+			</ul>
+		</div>
+	</script>
+</div>

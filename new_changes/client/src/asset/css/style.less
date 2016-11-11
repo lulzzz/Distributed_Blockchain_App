@@ -122,6 +122,47 @@ header {
 		text-decoration: underline;
 		.setTxtTransform(capitalize);
 	}
+	.sideMenuPanel {
+		color:black;
+		font-size: 30px;
+		text-align:right !important;
+		.setMarginTop(10px);
+		margin-right:5px;
+		.popover {
+			max-width:200px;
+			background-color: #a0a0a0;
+			.arrow {
+							border-bottom-color:#ebebeb;
+			}
+			&.bottom>.arrow:after {
+							top: 2px;
+							border-bottom-color:#ebebeb !important;
+			}
+			.popover-title {
+							text-align: center;
+							font-weight: bold;
+			}
+		}
+		span {
+			color:white;
+		}
+		.list {
+			ul {
+				padding-left:0px;
+					li {
+						font-size:12px;
+						padding-bottom:10px;
+						text-align:left;
+					a{
+						text-decoration:none;
+						&:hover{
+							color:#FFFF00;
+						}
+					}
+				}
+			}
+		}
+}
 }
 #spanID{
 	.setTxtTransform(capitalize);
@@ -344,6 +385,10 @@ header {
 		color: #FFFF00;
 	}
 }
+.selected{
+	.fontBold;
+	color: #FFFF00;
+}
 .registerProduct {
 	.registerBtn{
 			.setMarginTop(10px);
@@ -387,6 +432,9 @@ header {
 /*Side Menu*/
 .manageProducts {
 	.setMarginTop(20px);
+	.prodList {
+		overflow-x:auto;
+	}
 }
 /**/
 .commonTable {
@@ -412,7 +460,7 @@ header {
 				&:nth-child(odd) {
 					background-color: #EAEFF7;
 				}
-				td{
+				td{	
 					vertical-align:middle;
 					border-right:1px solid white;
 					a{
@@ -434,9 +482,6 @@ header {
 					input[type="checkbox"] {
 						margin-left:10px !important;
 						margin-right:10px !important;
-					}
-					select {
-						width:100%;
 					}
 				}
 			 }

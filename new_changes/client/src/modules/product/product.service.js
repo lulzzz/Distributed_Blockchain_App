@@ -4,7 +4,7 @@
 */
 
 'use strict';
-angular.module('bverifyApp')
+angular.module('productModule')
 
     // Registering/Retreiving/shipping/acknowledging product
     .value('productUrl', {

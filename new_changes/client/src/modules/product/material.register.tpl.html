@@ -41,6 +41,7 @@
 							<label for="date">Date of <br class="visible-md"/>Manufacturing&nbsp;:</label>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
+							<!-- custom date picker directive -->
 							<app-datepicker></app-datepicker>
 						</div>
 					</div>
@@ -75,6 +76,7 @@
 							<label for="picture">Picture/Video :</label>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
+							<!-- custom file uploader directive -->
 							<app-fileuploader></app-fileuploader>
 						</div>
 					</div>
@@ -92,7 +94,7 @@
 </div>
 
         <!-- Directive for redning all pervious regsitered materials inside table -->
-        <app-productlist list="vm.list" title="MANAGE PREVIOUS REGISTRATION"></app-productlist> 
+        <app-productlist list="vm.list" title="MANAGE PREVIOUS REGISTRATION" is-register-screen="new Boolean(true)"></app-productlist> 
 </div>
 
 

@@ -4,7 +4,7 @@
 
 "use strict";
 
-angular.module('bverifyApp')
+angular.module('productModule')
     .factory('Product', ['appConstants', '$log',
         function(appConstants, $log) {
 

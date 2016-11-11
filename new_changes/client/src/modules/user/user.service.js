@@ -4,7 +4,7 @@
 */
 
 'use strict';
-angular.module('bverifyApp')
+angular.module('userModule')
 
     //Registering user login/register url
     .value('userUrl', {

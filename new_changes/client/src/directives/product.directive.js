@@ -10,7 +10,7 @@ angular.module('bverifyApp')
             link: function (scope, element, attrs) {
                 try {
                     scope.vm.datepickerObj = {
-                        dateFormat: 'MMM/dd/yyyy',
+                        dateFormat: 'MM/dd/yyyy',
                         dateOptions: {
                             startingDay: 1,
                             showWeeks: false
@@ -45,59 +45,6 @@ angular.module('bverifyApp')
             }
         }
     }])
-
-    //Directive for table section for product/material list
-    .directive('appProductlist', function () {
-        return {
-            restrict: 'E',
-            templateUrl: '../views/productList.tpl.html',
-            scope: {
-                list: '=',
-                title: '@'
-            },
-            link: function (scope, element, attrs) {
-            },
-            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel, $rootScope) {
-                var self = this;
-                self.userProfile = populateUserProfile(userModel);
-                self.customConfigParams = createUsingFullOptions();
-                self.editProduct = function (d) {
-                    $rootScope.$broadcast('edit/view', { data: d, isEdit: true });
-                }
-                self.viewProduct = function (d) {
-                    $rootScope.$broadcast('edit/view', { data: d, isEdit: false });
-                }
-                self.deleteProduct = function (d) {
-                    if (confirm("Are you sure ! You want to delete product ?") == true) {
-                       $rootScope.$broadcast('delete', d);
-                    } else {
-                        return;
-                    }
-                    
-                };
-
-                $scope.$watchCollection('list', function(newNames, oldNames) {
-                        self.customConfigParams = createUsingFullOptions();
-                    });
-
-                function createUsingFullOptions() {
-                    var initialParams = {
-                        count: 3 // initial page size
-                    };
-                    var initialSettings = {
-                        // page size buttons (right set of buttons in demo)
-                        counts: [],
-                        // determines the pager buttons (left set of buttons in demo)
-                        paginationMaxBlocks: 13,
-                        paginationMinBlocks: 2,
-                        dataset: $scope.list
-                    };
-                    return new NgTableParams(initialParams, initialSettings);
-                };
-            },
-            controllerAs: 'vm'
-        }
-    })
 
     .directive("appTopMenu", ['userModel', '$state', '$rootScope', function (userModel, $state, $rootScope) {
         return {
@@ -149,6 +96,66 @@ angular.module('bverifyApp')
                 }
             }
         }]);
+
+
+angular.module('productModule')
+//Directive for table section for product/material list
+    .directive('appProductlist', function () {
+        return {
+            restrict: 'E',
+            templateUrl: '../views/productList.tpl.html',
+            scope: {
+                list: '=',
+                title: '@',
+                isRegisterScreen: '@',
+                isProcureScreen: '@'
+            },
+            link: function (scope, element, attrs) {
+            },
+            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel, $rootScope) {
+                var self = this;
+                self.userProfile = populateUserProfile(userModel);
+                self.customConfigParams = createUsingFullOptions();
+
+                /** Only used for Register product/material screen */
+                self.editProduct = function (d) {
+                    $rootScope.$broadcast('edit/view', { data: d, isEdit: true });
+                }
+                self.viewProduct = function (d) {
+                    $rootScope.$broadcast('edit/view', { data: d, isEdit: false });
+                }
+                self.deleteProduct = function (d) {
+                    if (confirm("Are you sure ! You want to delete product ?") == true) {
+                       $rootScope.$broadcast('delete', d);
+                    } else {
+                        return;
+                    }
+                    
+                };
+                /************************************************** */
+
+                $scope.$watchCollection('list', function(newNames, oldNames) {
+                        self.customConfigParams = createUsingFullOptions();
+                    });
+
+                function createUsingFullOptions() {
+                    var initialParams = {
+                        count: 3 // initial page size
+                    };
+                    var initialSettings = {
+                        // page size buttons (right set of buttons in demo)
+                        counts: [],
+                        // determines the pager buttons (left set of buttons in demo)
+                        paginationMaxBlocks: 13,
+                        paginationMinBlocks: 2,
+                        dataset: $scope.list
+                    };
+                    return new NgTableParams(initialParams, initialSettings);
+                };
+            },
+            controllerAs: 'vm'
+        }
+    })
 
 
 function populateUserProfile(userModel) {

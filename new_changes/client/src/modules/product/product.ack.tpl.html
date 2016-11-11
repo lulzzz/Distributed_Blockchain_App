@@ -3,54 +3,18 @@
 <!-- Directive for app header -->
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
 <!-- TO-DO // remove hard-code value -->
-<script type="text/ng-template" id="headerCheckbox.html">
-    <input type="checkbox" class="" value="" id="" />
-</script>
+
 <div class="">
 
-    <div class="manageProducts col-lg-10 col-md-10 col-sm-10 hidden-xs">
-        <!-- Directive for module header -->
-        <app-legend header="{{vm.header}}"></app-legend>
-        <!-- TO-DO need to apply condition based on profile -->
-        <div>
+    <div class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
+        <!-- Directive for rendering all pervious registered materials inside table -->
+    <app-productlist list="vm.list" title="{{vm.header}}" is-procure-screen="new Boolean(true)"></app-productlist>
 
-            <table ng-table="" class="commonTable table">
-
-                <tr ng-repeat="data in vm.list">
-                    <td header="'headerCheckbox.html'">
-                        <input type="checkbox" id="">
-                    </td>
-                    <td ng-if="vm.isManufacturer" data-title="'Name'">{{data.materialName}}</td>
-                    <td ng-if="vm.isRetailer" data-title="'Name'">{{data.productName}}</td>
-                    <td title="'Quantity'">{{data.quantity}}</td>
-                    <td title="'Required Quantity'">
-                        <input type="text" id="" ng-model="data.requiredQuantity">
-                    </td>
-                    <td title="'Tag PO#'">
-                        <select id="po" class="selectPOCls" ng-model="data.poNumber" >
-                            <option id="" value="">Select PO#</option>
-                            <option id="" value="">Select PO#</option>
-                            <option id="" value="">Select PO#</option>
-                        </select>
-                    </td>
-                    <td title="'Shipped On'">{{data.shippedOn}}</td>
-                    <td title="'Shipment From'">{{data.shippedFrom}}</td>
-                    <td ng-if="vm.isRetailer" title="'Track Product details'">
-                        <center>
-                            <img style="height:35px;" src="asset/images/qr_search.png" />
-                        </center>
-                    </td>
-                </tr>
-
-
-            </table>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right-lg text-center-xs text-right-md text-right-sm" style="padding-left:0px">
+         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right-lg text-center-xs text-right-md text-right-sm" style="padding:10px 10px 10px 10px;">
             <button type="submit" class="btn btn-primary registerBtn">PROCURE</button>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left-lg text-center-xs text-left-sm" style="padding-left:0px">
-            <button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">CANCEL</button>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left-lg text-center-xs text-left-sm" style="padding:10px 10px 10px 10px;">
+            <button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">CANCLE</button>
         </div>
     </div>
 

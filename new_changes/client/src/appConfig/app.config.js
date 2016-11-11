@@ -42,7 +42,10 @@ angular
                 responseError: function (response) {
                     try {
                         $rootScope.hasError = true;
-                        if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
+                        if (response.errorMsg) {
+                            $rootScope.ERROR_MSG = response.errorMsg;
+                        }
+                        else if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
                             $rootScope.ERROR_MSG = appConstants.UNAUTHORIZED_ERROR;
                         } else {
                             $rootScope.ERROR_MSG = appConstants.SERVICE_ERROR;
@@ -70,7 +73,9 @@ angular
             retailer: 'RETAIL'
         },
         PROD_REGISTERED: "Product has been registered successfully",
-        MATERIAL_REGISTERED: "Material has been registered successfully"
+        PROD_DELETED : "Product has been deleted successfully",
+        MATERIAL_REGISTERED: "Material has been registered successfully",
+        MATERIAL_DELETED: "Material has been deleted successfully"
     })
 
     .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function ($rootScope, $window, localStorageService, $log, ngTableDefaults) {

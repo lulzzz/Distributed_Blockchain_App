@@ -4,7 +4,7 @@
 
 "use strict";
 
-angular.module('bverifyApp')
+angular.module('userModule')
     .controller('userController', ['userModel', 'userServiceAPI', 'appConstants', '$state',
         '$log', '$rootScope', '$scope', '$stateParams', '$sce',
         function (userModel, userServiceAPI, appConstants, $state,
