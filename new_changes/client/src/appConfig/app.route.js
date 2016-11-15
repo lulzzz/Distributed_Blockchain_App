@@ -70,6 +70,12 @@ angular
                     controllerAs: 'vm',
                     controller: 'logoutController'
                 })
+                .state('dashboard', {
+                    url: '/dashboard',
+                    templateUrl: '../modules/product/dashboard.tpl.html',
+                    controllerAs: 'vm',
+                    controller: 'dashboardController'
+                })
 
                 // PRODUCT REGISTER/SHIPMENT/ACKNOWLEDGMENT STATES
                 .state('product', {
