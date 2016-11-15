@@ -22,9 +22,9 @@ angular.module('productModule')
 
     //For new product/material resgistration
     .controller('productRegisterController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'productServiceAPI', '$log', 'Product', 'productList', '$scope',
+        'productServiceAPI', '$log', 'Product', 'productList', '$scope', 'ngDialog',
         function (userModel, appConstants, $state, $rootScope,
-            productServiceAPI, $log, Product, productList, $scope) {
+            productServiceAPI, $log, Product, productList, $scope, ngDialog) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();

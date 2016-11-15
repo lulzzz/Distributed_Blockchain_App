@@ -158,7 +158,7 @@ header .sideMenuPanel .list ul li a:hover {
 }
 #custom-search-input {
   padding: 3px;
-  border: solid 1px #E4E4E4;
+  border: solid 2px #41719C;
   background-color: #ffffff;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -212,6 +212,20 @@ header .sideMenuPanel .list ul li a:hover {
 .searchResult .searchResultForm .col-sm-12 {
   padding-left: 0px;
 }
+.searchResult .searchResultForm .popover {
+  max-width: 500px !important;
+  width: 400px;
+}
+.searchResult .searchResultForm .popover .qrImage {
+  font-size: 24px;
+  padding: 5px 0px 0px 5px;
+}
+.searchResult .searchResultForm .popover .upArrow {
+  font-size: 22px;
+  padding: 5px;
+  color: #7F7F7F;
+  clear: both;
+}
 .searchResult .searchResultForm form {
   padding-right: 0px;
 }
@@ -225,6 +239,22 @@ header .sideMenuPanel .list ul li a:hover {
   color: #424242;
   border: 1px solid #424242;
   border-radius: 0px;
+}
+.searchResult .searchResultForm form.registerProduct {
+  /*.popover {
+					max-width:500px !important;
+					width:400px; 
+				.qrImage {
+						font-size: 24px;
+							padding: 5px 0px 0px 5px;
+					}
+					.upArrow {
+						font-size: 22px;
+						padding: 5px;
+						color: #7F7F7F;
+						clear:both;
+					}
+				}*/
 }
 .searchResult .searchResultForm form.registerProduct .form-group {
   padding-left: 0px !important;
@@ -343,6 +373,10 @@ header .sideMenuPanel .list ul li a:hover {
   font-weight: bold;
   color: #FFFF00;
 }
+.selected {
+  font-weight: bold;
+  color: #FFFF00;
+}
 .registerProduct .registerBtn {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -398,6 +432,20 @@ header .sideMenuPanel .list ul li a:hover {
   overflow-x: auto;
 }
 /**/
+.commonTable .popover {
+  max-width: 500px !important;
+  width: 400px;
+}
+.commonTable .popover .qrImage {
+  font-size: 24px;
+  padding: 5px 0px 0px 5px;
+}
+.commonTable .popover .upArrow {
+  font-size: 22px;
+  padding: 5px;
+  color: #7F7F7F;
+  clear: both;
+}
 .commonTable .ng-table-sort-header {
   background-color: #5298d8;
   color: #ffffff;
@@ -523,6 +571,70 @@ header .sideMenuPanel .list ul li a:hover {
 input[type=radio] {
   cursor: pointer;
 }
+.trackShipmentLg .popover {
+  max-width: 500px !important;
+  width: 350px !important;
+}
+.trackShipmentSm .popover {
+  max-width: 250px !important;
+  width: 135px !important;
+}
+.ngdialog-button-secondary {
+  color: #424242 !important;
+}
+/****
+**	CSS for end user mobile view
+**/
+.endUserView .row-flex {
+  display: flex;
+  flex-flow: row wrap;
+  padding-top: 15px;
+}
+.endUserView .col-flex-item {
+  flex-flow: column;
+}
+.endUserView .col-flex-item i {
+  color: #5b9bd5;
+  font-size: 18px;
+}
+.endUserView .vertical-divider {
+  border-right: 1px solid #ED7D31;
+}
+.endUserView .contentQue {
+  color: #ED7D31;
+  font-size: 20px;
+}
+.endUserView .carousel-inner > .item > img,
+.endUserView .carousel-inner > .item > a > img {
+  width: 90%;
+  margin: auto;
+  height: 220px;
+  padding-top: 30px;
+}
+.endUserView .carousel-control {
+  color: black;
+  opacity: 1;
+  width: 5% !important;
+  top: 50% !important;
+  margin-top: -20px;
+  bottom: initial;
+}
+.endUserView .carousel-control.right,
+.endUserView .carousel-control.left {
+  background-image: none !important;
+}
+.endUserView .carousel-control:focus,
+.endUserView .carousel-control:hover {
+  color: black;
+}
+.endUserView .productDetails {
+  height: 180px;
+  font-size: 12px;
+}
+.endUserView .productDetails .col-xs-12 {
+  padding-bottom: 10px !important;
+}
+/************* Ends here ************/
 /**/
 /* Import statement should be placed at bottom */
 @media (max-width: 600px) {
@@ -565,6 +677,9 @@ input[type=radio] {
   .uploadErrDiv {
     margin-left: 15px;
   }
+  .informationTooltip {
+    top: 30px;
+  }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .text-left-not-sm,
@@ -588,6 +703,12 @@ input[type=radio] {
   .uploadErrDiv {
     margin-left: 15px;
   }
+  .informationTooltip {
+    top: 30px;
+  }
+  .noPaddingLeftSm {
+    padding-left: 0px;
+  }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .text-left-not-md,
@@ -608,6 +729,12 @@ input[type=radio] {
   .text-justify-md {
     text-align: justify;
   }
+  .informationTooltip {
+    top: 0px;
+  }
+  .noPaddingLeftMd {
+    padding-left: 0px;
+  }
 }
 @media (min-width: 1200px) {
   .text-left-not-lg,
@@ -627,6 +754,14 @@ input[type=radio] {
   }
   .text-justify-lg {
     text-align: justify;
+  }
+  .informationTooltip {
+    top: 0px;
+  }
+  .noPaddingLeftLg {
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-top: 5px;
   }
 }
 @media screen and (max-height: 450px) {

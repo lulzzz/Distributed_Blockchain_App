@@ -55,7 +55,7 @@
                     <td title="'Shipment From'">{{row.shippedFrom}}</td>
                     <td ng-if="vm.userProfile.isRetailer" title="'Track Product details'">
                         <center>
-                            <img style="height:35px;" src="asset/images/qr_search.png" />
+                            <img style="height:35px;" src="asset/images/qr_search.png" popover-trigger="click" popover-placement="right" uib-popover-template="'blackchainProductAck.html'" />
                         </center>
                     </td>
                 </tr>

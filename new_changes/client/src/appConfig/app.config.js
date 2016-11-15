@@ -75,7 +75,11 @@ angular
         PROD_REGISTERED: "Product has been registered successfully",
         PROD_DELETED : "Product has been deleted successfully",
         MATERIAL_REGISTERED: "Material has been registered successfully",
-        MATERIAL_DELETED: "Material has been deleted successfully"
+        MATERIAL_DELETED: "Material has been deleted successfully",
+        MULTISELECT_SETTINGS: {
+                    scrollable: true,
+                    scrollableHeight: '250px'
+                }
     })
 
     .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function ($rootScope, $window, localStorageService, $log, ngTableDefaults) {

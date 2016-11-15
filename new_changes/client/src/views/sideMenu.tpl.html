@@ -8,10 +8,7 @@
 		<a ng-if="userProfile.isProducer || userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER PRODUCT</a>
 		<a ng-if="userProfile.isAdmin" ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a>
 		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isProducer || userProfile.isManufacturer" ui-sref="shipment">SHIP PRODUCT</a>
-		<!-- For demo instance only -->
-		<a ng-if="userProfile.isRetailer" href="#">REGISTER PRODUCT</a>
-		<a ng-if="userProfile.isRetailer" href="#">SHIP PRODUCT</a>
-		<!-------------------------------------------->
+
 		<a ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>
 		<a href="#" ng-class="{'selected': activeMenu.dashboard }">DASHBOARD</a>
 		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">

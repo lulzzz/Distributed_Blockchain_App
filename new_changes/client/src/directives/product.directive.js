@@ -99,7 +99,7 @@ angular.module('bverifyApp')
 
 
 angular.module('productModule')
-//Directive for table section for product/material list
+    //Directive for table section for product/material list
     .directive('appProductlist', function () {
         return {
             restrict: 'E',
@@ -112,7 +112,7 @@ angular.module('productModule')
             },
             link: function (scope, element, attrs) {
             },
-            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel, $rootScope) {
+            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel, $rootScope, ngDialog) {
                 var self = this;
                 self.userProfile = populateUserProfile(userModel);
                 self.customConfigParams = createUsingFullOptions();
@@ -124,19 +124,32 @@ angular.module('productModule')
                 self.viewProduct = function (d) {
                     $rootScope.$broadcast('edit/view', { data: d, isEdit: false });
                 }
+
                 self.deleteProduct = function (d) {
-                    if (confirm("Are you sure ! You want to delete product ?") == true) {
-                       $rootScope.$broadcast('delete', d);
-                    } else {
-                        return;
+                    $scope.d = d;
+                    $scope.confirmDelete = function () {
+                        ngDialog.close();
+                        $rootScope.$broadcast('delete', d);
                     }
-                    
+                    ngDialog.open({
+                        scope: $scope,
+                        template: '\
+                            <legend class="legendHead">DELETE REGISTRATION\
+                            </legend>\
+                            <p>Are you sure you want to delete <span ng-if="d.materialName">material {{d.materialName}} </span><span ng-if="d.productName">product {{d.productName}}</span>?</p>\
+                            <div class="ngdialog-buttons">\
+                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">No</button>\
+                                <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirmDelete()">Yes</button>\
+                            </div>',
+                        plain: true
+                    });
+
                 };
                 /************************************************** */
 
-                $scope.$watchCollection('list', function(newNames, oldNames) {
-                        self.customConfigParams = createUsingFullOptions();
-                    });
+                $scope.$watchCollection('list', function (newNames, oldNames) {
+                    self.customConfigParams = createUsingFullOptions();
+                });
 
                 function createUsingFullOptions() {
                     var initialParams = {

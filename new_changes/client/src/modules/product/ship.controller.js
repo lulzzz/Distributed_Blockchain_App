@@ -21,14 +21,17 @@ angular.module('productModule')
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
-                vm.settings = {
-                    scrollable: true,
-                    scrollableHeight: '250px'
-                };
+                vm.settings = appConstants.MULTISELECT_SETTINGS;
                 vm.exampleModel = [];
-                vm.data = [{ id: 1, label: "Retailer1" }, { id: 2, label: "Retailer1" }, { id: 3, label: "Retailer1" },
+                if(vm.isManufacturer){
+                    vm.data = [{ id: 1, label: "Retailer1" }, { id: 2, label: "Retailer1" }, { id: 3, label: "Retailer1" },
                     { id: 4, label: "Retailer1" }, { id: 5, label: "Retailer1" }, { id: 6, label: "Distributer1" }, { id: 7, label: "Distributer2" }
                     , { id: 8, label: "Distributer3" }, { id: 9, label: "Distributer4" }, { id: 10, label: "Distributer5" }];
+                }
+                if(userModel.isProducer(0)){
+                    vm.data = [{ id: 1, label: "Manufacturer1" }, { id: 2, label: "Manufacturer2" }, { id: 3, label: "Manufacturer3" },
+                    { id: 4, label: "Manufacturer4" }];
+                }
 
                 vm.doProductShipment = function () {
                     // do Product/material shipment

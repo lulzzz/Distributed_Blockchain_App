@@ -9,7 +9,7 @@
         <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-10 col-xs-12 searchBox">
             <div id="custom-search-input">
                 <div class="input-group col-lg-12">
-                    <input ng-required="true" type="text" class="form-control input-lg" placeholder="Search by “Track id” or Scan “QR Code" " 
+                    <input ng-required="true" type="text" class="form-control input-lg" placeholder="Search by &quot;Track id&quot; or Scan/Upload &quot;QR Code&quot;"      
                     ng-model="vm.searchQuery "/>
                     <span class="input-group-btn ">
                         <button class="btn btn-info btn-lg " type="button " ng-click="vm.searchTrackID() ">
@@ -19,6 +19,7 @@
                 </div>
             </div>
                 <qr-code-reader></qr-code-reader>
+                <div class="col-lg-2 col-md-3 col-sm-2 col-xs-3 col-lg-offset-10 col-md-offset-10 col-sm-offset-10 col-xs-offset-9 noPaddingLeftSm noPaddingLeftMd noPaddingLeftLg"><strong>Scan/Upload<br/> QR Code</strong></div> 
         </div>
         
     </div>

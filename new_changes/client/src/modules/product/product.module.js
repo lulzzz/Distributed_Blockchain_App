@@ -7,4 +7,4 @@
 
 
 //All Product screen functionality has been wrapped up inside 'productModule' module
-angular.module('productModule', []);
+angular.module('productModule', ['ngDialog']);

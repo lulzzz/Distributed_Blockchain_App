@@ -29,12 +29,15 @@
     .text-justify-xs {
         text-align: justify;
     }
-                #custom-search-input{
-                                .getWidth(75%) !important;
-                }
-                .uploadErrDiv {
-                                margin-left:15px;
-                }
+	#custom-search-input{
+					.getWidth(75%) !important;
+	}
+	.uploadErrDiv {
+					margin-left:15px;
+	}
+	.informationTooltip{
+		top:30px;
+	}
 }
 @media (min-width: 768px) and (max-width: 991px) {
     .text-left-not-sm, .text-center-not-sm, .text-right-not-sm, .text-justify-not-sm {
@@ -52,9 +55,15 @@
     .text-justify-sm {
         text-align: justify;
     }
-                .uploadErrDiv {
-                                margin-left:15px;
-                }
+	.uploadErrDiv {
+					margin-left:15px;
+	}
+	.informationTooltip{
+		top:30px;
+	}
+    .noPaddingLeftSm {
+		padding-left:0px;
+	}
 }
 @media (min-width: 992px) and (max-width: 1199px) {
     .text-left-not-md, .text-center-not-md, .text-right-not-md, .text-justify-not-md {
@@ -72,6 +81,12 @@
     .text-justify-md {
         text-align: justify;
     }
+	.informationTooltip{
+		top:0px;
+	}
+    .noPaddingLeftMd {
+		padding-left:0px;
+	} 
 }
 @media (min-width: 1200px) {
     .text-left-not-lg, .text-center-not-lg, .text-right-not-lg, .text-justify-not-lg {
@@ -89,6 +104,14 @@
     .text-justify-lg {
         text-align: justify;
     }
+	.informationTooltip{
+		top:0px;
+	}
+    .noPaddingLeftLg {
+		padding-left:0px;
+		margin-left: 0px;
+		margin-top: 5px;
+	}
 }
 
 @media screen and (max-height: 450px) {
