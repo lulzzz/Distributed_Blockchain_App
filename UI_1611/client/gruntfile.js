@@ -11,9 +11,9 @@ module.exports = function (grunt) {
 	
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: {
-			dist: ["dist/"]
-		},
+		 clean: {
+            dist: ["dist/", "_package/"]
+        },
 		jshint: {
 			dist: ["src/**/*.js"]
 		},
@@ -84,7 +84,20 @@ module.exports = function (grunt) {
 					'dist/src/asset/css/style.min.css': ['src/asset/**/*.css']
 				}
 			}
-		}
+		},
+        compress: {
+            main: {
+                options: {
+                    archive: '_package/package.zip',
+                    mode: 'zip',
+                    pretty: true
+                },
+                files: [{
+                    src: ['src/*', 'dist/*', '*.html', '*.json', '*.js'],
+                    expand: true
+                }]
+            }
+        }
 
 	});
 
@@ -96,8 +109,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	//grunt.loadNpmTasks('grunt-browser-sync');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 
-	grunt.task.registerTask("build", ["clean", "less", "cssmin", "concat", "uglify", "copy", "watch"]);
+	grunt.task.registerTask("build", ["clean", "less", "cssmin", "concat", "uglify", "copy", "compress", "watch"]);
 
 }
