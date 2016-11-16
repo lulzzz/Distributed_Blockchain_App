@@ -1,0 +1,44 @@
+{
+  "name": "blockchain_demo",
+  "version": "1.0.0",
+  "description": "B-VERIFY Retail Blockchain application for Organic Whole Grain Oatmeal Cereal product",
+  "scripts": {
+    "start": "concurrently  \" grunt build --force\" \" node server.js\""
+  },
+  "author": "saurabh.shankariya@cognizant.com",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^3.1.0",
+    "grunt": "^1.0.1",
+    "grunt-browser-sync": "^2.2.0",
+    "grunt-concurrent": "~0.5.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jshint": "0.12.0",
+    "grunt-contrib-less": "~0.11.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "lite-server": "^2.2.2"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-local-storage": "^0.5.0",
+    "angular-resource": "^1.5.8",
+    "angular-sanitize": "^1.5.8",
+    "angular-ui-bootstrap": "^1.3.2",
+    "angular-ui-router": "^0.3.1",
+    "angularjs-dropdown-multiselect": "^1.10.2",
+    "bootstrap": "^3.3.7",
+    "browser-sync": "^2.17.5",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "ng-dialog": "^0.6.4",
+    "ng-file-upload": "^12.2.12",
+    "ng-resource": "^1.3.2",
+    "ng-table": "^2.1.0",
+    "underscore": "^1.8.3"
+  }
+}

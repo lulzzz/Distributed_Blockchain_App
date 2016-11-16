@@ -1,0 +1,33 @@
+<div ng-if="user.isAuthenticatedUser" id="mySidenav" class="sidenav hidden-xs">
+	<a href="#" ng-click="openNav()" class="closebtnRight">
+		<div class="glyphicon" ng-class="a===false ? 'glyphicon-arrow-up' : 'glyphicon-arrow-down'" style="font-size:12px;"></div>
+	</a>
+	<a href="#" class="closebtn" ng-click="openNav()">MENU</a>
+	
+	
+		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER PRODUCT</a>
+		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER RM</a>
+		<a ng-if="userProfile.isAdmin" ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a>
+		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isManufacturer" ui-sref="shipment">SHIP PRODUCT</a>
+		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isProducer" ui-sref="shipment">SHIP RAW MATERIAL</a>
+
+		<a ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>
+		<a ui-sref="dashboard" ng-class="{'selected': activeMenu.dashboard }">DASHBOARD</a>
+		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">
+				<ul>
+					<li>PROCURE</li>
+					 <li>RAW MATERIAL</li>
+				</ul>
+		</a>
+		<a ng-if="userProfile.isRetailer" ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">
+				<ul>
+					<li>ACKNOWLEDGE</li>
+					 <li>PRODUCTS</li>
+				</ul>
+		</a>
+
+
+	<a href="#" ng-click="openNav()" class="closebtnLeft">
+		<div class="glyphicon" ng-class="a===false ? 'glyphicon-arrow-up' : 'glyphicon-arrow-down'" style="font-size:12px;"></div>
+	</a>
+</div>

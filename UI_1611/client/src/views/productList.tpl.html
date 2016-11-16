@@ -1,0 +1,73 @@
+<div ng-if="isRegisterScreen" class="manageProducts col-lg-8 col-md-10 col-sm-10 col-xs-12">
+    <app-legend header="{{title}}"></app-legend>
+    
+    <!--- Render Previous registered Product/Material -->
+    <div class="prodList" >
+        <table ng-table="vm.customConfigParams" class="commonTable table table-condensed table-bordered table-striped" >
+            <tr ng-repeat="row in $data"> 
+                <td ng-if="vm.userProfile.isProducer" class="col-xs-2" data-title="'Name'">{{row.materialName}}</td>
+                <td ng-if="vm.userProfile.isManufacturer" class="col-xs-2" data-title="'Name'">{{row.productName}}</td>
+                <td title="'Quantity'">{{row.quantity}}</td>
+                <td title="'Registered On'">{{row.registeredDate}}</td>
+                <!-- desktop view --->
+                <td title="'View / Edit'">
+					<span class="hidden-xs"><a id="{{row.id}}" ng-click="vm.editProduct(row)">Edit</a>
+                                          <a id="{{row.id}}" ng-click="vm.viewProduct(row)">View</a>
+                                          <a id="{{row.id}}" ng-click="vm.deleteProduct(row)">Delete</a>
+                    </span>
+                    <!-- mobile view --->
+					<span class="visible-xs text-center">
+					<span id="{{row.id}}" ng-click="vm.editProduct(row)" class="glyphicon glyphicon-edit"></span>
+					<span id="{{row.id}}" ng-click="vm.viewProduct(row)" class="glyphicon glyphicon-info-sign"></span>
+					<span id="{{row.id}}" ng-click="vm.deleteProduct(row)" class="glyphicon glyphicon-remove"></span>
+					</span>
+				</td>            
+            </tr>
+        </table>
+    </div>
+</div>
+
+    <!--- Procure/Acknowledge Product/Material -->
+<div ng-if="isProcureScreen" class="manageProducts col-lg-12 col-md-10 col-sm-10 col-xs-12">
+    <app-legend header="{{title}}"></app-legend> 
+
+    <div class="prodList" >
+        <script type="text/ng-template" id="headerCheckbox.html">
+                <input type="checkbox" class="" value="" id="" />
+        </script>
+
+        <table ng-table="vm.customConfigParams" class="commonTable table ">
+
+                <tr ng-repeat="row in $data">
+                    <td header="'headerCheckbox.html'">
+                        <input type="checkbox" id="{{row.id}}">
+                    </td>
+                    <td ng-if="vm.userProfile.isManufacturer" data-title="'Name'">{{row.materialName}}</td>
+                    <td ng-if="vm.userProfile.isRetailer" data-title="'Name'">{{row.productName}}</td>
+                    <td title="'Quantity'">{{row.quantity}}</td>
+                    <td title="'Required Quantity'">
+                        <input type="text" id="" ng-model="row.requiredQuantity">
+                    </td>
+                    <td class="selectCommonTable" title="'Tag PO#'">
+                        <select id="po" class="col-lg-12 selectPOCls" ng-model="row.poNumber" >
+                            <option id="" value="">Select PO#</option>
+                            <option id="" value="">Select PO#</option>
+                            <option id="" value="">Select PO#</option>
+                        </select>
+                    </td>
+                    <td title="'Shipped On'">{{row.shippedOn}}</td>
+                    <td title="'Shipment From'">{{row.shippedFrom}}</td>
+                    <td ng-if="vm.userProfile.isRetailer" title="'Track Product details'">
+                        <center>
+                            <!-- Comment out based on new UI -->
+                            <!-- <img style="height:35px;" src="asset/images/qr_search.png" popover-trigger="click" popover-placement="right" uib-popover-template="'blackchainProductAck.html'" /> -->
+                            <img style="height:35px;" src="asset/images/user_qr.png"/>
+                        </center>
+                    </td>
+                </tr>
+    </div>
+
+
+</div>
+
+

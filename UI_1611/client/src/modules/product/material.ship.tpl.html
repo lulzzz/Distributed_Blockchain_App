@@ -1,0 +1,116 @@
+<!-- Product/Material shipment by logged user -->
+
+<!-- Directive for app header -->
+<app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
+<!-- TO-DO // remove hard-code value -->
+
+<div class="">
+    <div class="searchResult col-lg-8 col-md-8 col-sm-10 col-xs-12">
+
+        <!-- Directive for module header -->
+        <app-legend header="SHIP RAW MATERIAL"></app-legend>
+        <!-- TO-DO need to apply condition based on profile -->
+        <div>
+            <div class=" searchResultForm col-lg-12 col-md-12 col-sm-10 col-xs-10">
+                <form class="registerProduct" ng-submit="vm.doProductShipment()">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="materialName">Material Name :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <select id="materialName" class="form-control">
+                                    <option value="leather">{{vm.product.materialName}} - {{vm.product.quality}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 text-right-lg text-right-md formLabel">
+                                <label for="batchNum">RM Batch Number :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <span class="verticalAlignment">{{vm.product.batchNumber}}</span>
+                                <span class="verticalAlignment pull-right">
+                                     <img src="asset/images/qr_search.png" class="pull-left" style="width: 40px;position: absolute;right: 0">
+                                     </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="productWeight">Product Weight :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <span class="verticalAlignment">{{vm.product.weight}}</span>
+                                <span class="verticalAlignment tokenNumberShipProduct">Token : ABCDEFG</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="quantity">Quantity :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <input ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.product.quantity">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="date">Date of <br class="visible-md"/>Manufacturing&nbsp;:</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <span class="verticalAlignment">17/10/2016 10:50</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="carrier">Carrier :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <select id="carrier" class="form-control">
+                                    <option id="1" value="fedex">FedEx</option>
+                                    <option id="2" value="dtdc">DTDC</option>
+                                   </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="picture">Manufacturer :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <div class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.data" selected-model="vm.exampleModel"
+                                    checkboxes="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
+                        <button type="submit" class="btn btn-primary registerBtn">SHIP PRODUCT</button>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
+                        <button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Directive for app side menu -->
+<side-menu user="vm.user"></side-menu>
+
+<script type="text/ng-template" id="materialShipConfirmation">
+	<legend class="legendHead" style="padding-bottom: 5px;">CONFIRMATION</legend>
+	<div class="col-lg-12 col-xs-12 noPadding">
+		<div class="col-lg-8 col-xs-8 noPaddingLeft">The shipment for material &quot;{{name}}&quot; has been initiated and a token ID has been generated.</div>
+		<div class="col-lg-4 col-xs-4 noPadding">
+			<img src="asset/images/user_qr.png" class="" style="position: relative;top:0px;width:70px"/>
+			<div>Token : {{randomToken}}</div>
+		</div>
+	</div>
+	<div style="clear:both"></div>
+		<div class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
+		<a ng-click="redirectUser(true)" class="cursorPointer">OK</a>
+	</div>
+	<div style="clear:both"></div>
+</script>

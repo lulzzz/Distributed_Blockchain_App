@@ -1,0 +1,16 @@
+{
+   "user":{
+      "userName":"Mridul",
+      "isAuthenticatedUser":true,
+      "certification":"B00RWSC2MW",
+      "consortium":{
+         "id":"",
+         "name":""
+      },
+      "userProfile":{
+         "id":"PROD",
+         "profile":"producer",
+         "alias": "Raw Material Producer"
+      }
+   }
+}
