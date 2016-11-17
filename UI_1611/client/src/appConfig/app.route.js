@@ -17,19 +17,59 @@ angular
                 // HOME STATES AND NESTED VIEWS 
                 .state('home', {
                     url: '/home',
-                    templateUrl: '../modules/search/search.tpl.html',
                     // Only for demo instance
+                    views: {
+                        // the main template will be placed here (relatively named)
+                        '': {
+                            templateUrl: '../modules/search/search.tpl.html',
+                            controllerAs: 'vm',
+                            controller: 'searchController',
+
+                        },
+
+                        // the child views will be defined here (absolutely named)
+                        'shipmentList@home': {
+                            templateProvider: function (userModel, $templateFactory) {
+                                if (userModel.isManufacturer() || userModel.isProducer()) {
+                                    return $templateFactory.fromUrl('../modules/search/searchList.tpl.html');
+                                }
+                            },
+                            //templateUrl: '../modules/search/searchList.tpl.html',
+                            controllerAs: 'vm',
+                            controller: 'searchController'
+                        }
+                    },
                     params: {
                         role: window.profile
                     },
+                    /****** below needs to be change. This has to be justify more when service gets ready */
                     resolve: {
-                        userInfo: function ($stateParams, userServiceAPI) {
+                        userInfo: function ($stateParams, userServiceAPI, searchServiceAPI, userModel) {
                             return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
+                        },
+                        shipmentList: function ($stateParams, searchServiceAPI, userModel, userInfo) {
+                            userModel.setUser(userInfo.user);
+                            if (userModel.isRetailer() || userModel.isAdmin()) {
+                                return null;
+                            }
+                            if (userModel.isProducer()) {
+                                return searchServiceAPI.getMaterialShipmentList({
+                                    userName: userInfo.user.userName,
+                                    userProfile: userInfo.user.userProfile
+                                });
+                            }
+                            if (userModel.isManufacturer()) {
+                                return searchServiceAPI.getProductShipmentList({
+                                    userName: userInfo.user.userName,
+                                    userProfile: userInfo.user.userProfile
+                                });
+                            }
+                            else {
+                                return null;
+                            }
                         }
-                    },
-                    /*************************************************** */
-                    controllerAs: 'vm',
-                    controller: 'searchController'
+                    }
+                    /***************************************************************************************** */
                 })
                 .state("home.result", {
                     url: '/result',
@@ -143,7 +183,7 @@ angular
                     templateUrl: '../modules/product/product.ack.tpl.html',
                     //Resolve added to retreive productList before loading product acknowledgment screen
                     resolve: {
-                       productList: function (userModel, productServiceAPI) {
+                        productList: function (userModel, productServiceAPI) {
                             var user = userModel.getUser();
 
                             /****** below needs to be change. Hardcoded for demo */

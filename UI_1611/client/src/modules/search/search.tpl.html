@@ -27,6 +27,7 @@
     </div>
 </div>
 <div ui-view class=""></div>
+<div ng-if="vm.isProducer || vm.isManufacturer" ui-view="shipmentList" class=""></div>
 <div style="clear:both;padding-bottom:10px;"></div>
 
 <!-- Directive for app side menu -->

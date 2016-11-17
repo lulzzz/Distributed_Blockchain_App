@@ -1,0 +1,18 @@
+<div style="margin-top:0px;" class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
+    <app-legend header="{{title}}"></app-legend>
+    
+    <!--- Render Previous registered Product/Material -->
+    <div class="prodList" >
+        <table ng-table="vm.customConfigParams" class="commonTable table table-condensed table-bordered table-striped" >
+            <tr ng-repeat="row in $data"> 
+                <td class="col-xs-2" data-title="'Shipment Token ID'">{{row.tokenId | uppercase}}</td>
+                <td ng-if="vm.userProfile.isManufacturer" title="'Quantity'">{{row.quantity}} {{row.productName}}</td>
+                <td ng-if="vm.userProfile.isProducer" title="'Quantity'">{{row.quantity}} {{row.materialName}}</td>
+                <td title="'Port of exit'"><img style="height:25px;" ng-if="row.exitPort.isAvailable" src="asset/images/map_pin.png"/>   {{row.exitPort.location}}</td>
+                <td title="'Port of entry'"><img style="height:25px;" ng-if="row.entryPort.isAvailable" src="asset/images/map_pin.png"/>   {{row.entryPort.location}}</td>
+                <td title="'Manufacturer'"><img style="height:25px;" ng-if="row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '' " src="asset/images/map_pin.png"/>   {{row.manufacturerDetail.name | entityDisplayFilter}}</td>
+                <td title="'Distributor / Retailer'"><img style="height:25px;" ng-if="row.retailerDetail.isAvailable && row.retailerDetail.name !== '' " src="asset/images/map_pin.png"/>   {{row.retailerDetail.name | entityDisplayFilter}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -594,6 +594,87 @@ input[type=radio] {
   border: 1px solid #00b050 !important;
   border-radius: 20px !important;
 }
+/*Product Lineage CSS */
+.noPaddingLeft {
+  padding-left: 0px !important;
+}
+.legendHead.redWarn {
+  color: red !important;
+}
+.borderGreenLeft {
+  border: 5px solid #00B050;
+  position: absolute;
+  top: 80px;
+  left: 66px;
+  border-radius: 5px;
+}
+.borderGreenRight {
+  border: 5px solid #00B050;
+  position: absolute;
+  top: 80px;
+  right: -66px;
+  border-radius: 5px;
+}
+.borderGreen {
+  border: 3px solid #00B050;
+  position: absolute;
+  top: 82px;
+  right: -60px;
+  left: 75px;
+}
+.dataLineage .img-responsive {
+  padding-bottom: 20px;
+}
+.dataLineage .img-responsive img {
+  width: 70px;
+  height: 74px;
+}
+.dataLineage .img-responsive img.middleImages {
+  position: relative;
+  margin-top: 50px;
+}
+.dataLineage .img-responsive img.middleImagesSmall {
+  position: relative;
+  top: 65px;
+  left: -10px;
+}
+.dataLineage .img-responsive img.leftToZero {
+  left: 0px !important;
+}
+.dataLineage .ifManufacturer {
+  width: 7% !important;
+  border: 1px solid red;
+  height: 160px;
+}
+.dataLineage .smartContractManufactutrer {
+  width: 20px !important;
+  padding: 0px;
+  top: 45px;
+  position: absolute;
+  height: 20px !important;
+  left: 20px;
+  z-index: 9;
+}
+.dataLineage .leftTo10 {
+  left: -10px;
+}
+.dataLineage .leftTo0 {
+  left: 0px !important;
+}
+.dataLineage .straightLine {
+  border: 3px solid #00B0F0;
+  width: 5px;
+  height: 85px;
+  float: right;
+  margin-right: -63px;
+}
+.dataLineage .col-lg-10 {
+  line-height: 15px;
+}
+.ngdialog-content {
+  background: white !important;
+}
+/*Product Lineage*/
 /****
 **	CSS for end user mobile view
 **/

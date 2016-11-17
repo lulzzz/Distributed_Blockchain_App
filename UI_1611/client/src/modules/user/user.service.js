@@ -53,7 +53,7 @@ angular.module('userModule')
                         response.user.userName = 'Azim';
                         response.user.userProfile.id = 'MANUFACT';
                         response.user.userProfile.profile = 'Manufacturer';
-                        response.user.userProfile.alias = "Retailer";
+                        response.user.userProfile.alias = "Manufacturer";
                     }
                     if(angular.equals(user.id, 'retailer')){
                         response.user.userName = 'Macy';

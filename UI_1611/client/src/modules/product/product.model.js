@@ -10,6 +10,7 @@ angular.module('productModule')
 
             // Only for demo instance.
             var _init = {
+                tokenId: '',
                 materialName: 'Leather',
                 productName: 'Handheld Bag',
                 quantity: '50',
@@ -28,6 +29,22 @@ angular.module('productModule')
                 },
                 file: {
                     name: ''
+                },
+                exitPort: {
+                    location: "",
+                    isAvailable: false
+                },
+                entryPort: {
+                    location: "",
+                    isAvailable: false
+                },
+                manufacturerDetail: {
+                 name: '',
+                 isAvailable: false   
+                },
+                retailerDetail: {
+                    name: '',
+                    isAvailable: false
                 },
                 productList: []
             };
@@ -80,6 +97,7 @@ angular.module('productModule')
                 _clearProductList();
                 angular.forEach(list, function (obj, key) {
                     _product.productList.push({
+                        "tokenId": obj.tokenId || "",
                         "materialName": obj.materialName || "",
                         "productName": obj.productName || "",
                         "batchNumber": obj.batchNumber || "",
@@ -92,10 +110,13 @@ angular.module('productModule')
                         "shippedFrom": obj.shippedFrom || "",
                         "shippedOn": obj.shippedOn || "",
                         "quality": obj.quality || "",
-                        "trackDetails": obj.trackDetails
+                        "trackDetails": obj.trackDetails,
+                        "entryPort": obj.entryPort,
+                        "exitPort": obj.exitPort,
+                        "manufacturerDetail": obj.manufacturerDetail,
+                        "retailerDetail": obj.retailerDetail
                     });
                 });
-                console.log(_product);
             };
 
 

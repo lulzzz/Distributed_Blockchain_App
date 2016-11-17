@@ -16,8 +16,9 @@ if (window) {
 
 angular
     .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize',
-        'ngFileUpload', 'angularjs-dropdown-multiselect'])
-    .config(['$httpProvider', '$logProvider',   function ($httpProvider, $logProvider) {
+        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog'])
+
+    .config(['$httpProvider', '$logProvider', 'ngDialogProvider', function ($httpProvider, $logProvider, ngDialogProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;
@@ -29,7 +30,17 @@ angular
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
 
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            showClose: false,
+            closeByDocument: false,
+            closeByEscape: true,
+            overlay: true,
+            closeByNavigation: true
+        });
+
     }])
+
     .factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
         function ($q, $rootScope, $log, appConstants) {
             return {
@@ -73,16 +84,16 @@ angular
             retailer: 'RETAIL'
         },
         PROD_REGISTERED: "Product has been registered successfully",
-        PROD_DELETED : "Product has been deleted successfully",
+        PROD_DELETED: "Product has been deleted successfully",
         MATERIAL_REGISTERED: "Material has been registered successfully",
         MATERIAL_DELETED: "Material has been deleted successfully",
         MULTISELECT_SETTINGS: {
-                    scrollable: true,
-                    scrollableHeight: '250px'
-                }
+            scrollable: true,
+            scrollableHeight: '250px'
+        }
     })
 
-    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function ($rootScope, $window, localStorageService, $log, ngTableDefaults) {
+    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', '$templateCache', function ($rootScope, $window, localStorageService, $log, ngTableDefaults, $templateCache) {
 
         $log.debug('appConfig bootstrapped!');
 
@@ -92,5 +103,5 @@ angular
         $rootScope.ERROR_MSG = "";
         $rootScope.isSuccess = false;
         $rootScope.SUCCESS_MSG = "";
-
+        console.log($templateCache.get('views/material.confirmation.html'));
     }]);

@@ -6,19 +6,25 @@
 
 angular.module('searchModule')
     // searchController for tracking shipment details
-    .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope', '$scope', '$stateParams', 'userInfo',
-        function ($state, appConstants, userModel, $log, $rootScope, $scope, $stateParams, userInfo) {
+    .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope',
+        '$scope', '$stateParams', 'userInfo', 'shipmentList', 'productModel',
+        function ($state, appConstants, userModel, $log, $rootScope,
+            $scope, $stateParams, userInfo, shipmentList, productModel) {
             try {
                 var vm = this;
-                vm.searchQuery = ''; 
+                vm.searchQuery = '';
                 vm.user = userModel.getUser();
-                
+
                 // Only for demo instance
-                if(userInfo.user){
+                if (userInfo.user) {
                     vm.user = userInfo.user;
                     userModel.setUser(userInfo.user);
                 }
 
+                vm.isManufacturer = userModel.isManufacturer();
+                vm.isProducer = userModel.isProducer();
+                vm.isRetailer = userModel.isRetailer();
+                vm.isAdmin = userModel.isAdmin();
                 //Capturing broadcasted event from qrCodeReader directive to retreive User info read from uploaded QR img.
                 $scope.$on('readQR', function (event, trackInfo) {
                     $rootScope.hasError = false;
@@ -37,6 +43,31 @@ angular.module('searchModule')
                 };
                 /******************************* */
 
+
+
+                productModel.resetProduct();
+                vm.product = productModel.getProduct();
+                //Populating shipment details on load based on shipmentDetails resolve
+                //shipmentList will be 'null' for other than producer/manufacturer
+                if(shipmentList){
+                    shipmentList
+                        .$promise
+                        .then(function (response) {
+                            productModel.setProductList(response);
+                            vm.list = productModel.getProductList();
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                }
+
+
+
+
+
+
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
@@ -49,7 +80,7 @@ angular.module('searchModule')
                 var vm = this;
                 productModel.resetProduct();
                 vm.product = productModel.getProduct();
-                vm.tokenID = ($stateParams.id && $stateParams.id !== '') ? $stateParams.id : ''; 
+                vm.tokenID = ($stateParams.id && $stateParams.id !== '') ? $stateParams.id : '';
 
                 //Populating shipment details on load based on shipmentDetails resolve
                 shipmentDetails

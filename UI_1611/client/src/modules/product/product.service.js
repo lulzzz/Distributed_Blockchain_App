@@ -88,6 +88,7 @@ angular.module('productModule')
             }
             return deferred.promise;
         };
+        /********************************************************** */
          this.shipProduct = function (list) {
             var deferred = $q.defer();
             try{

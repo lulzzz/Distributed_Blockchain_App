@@ -83,9 +83,7 @@ angular.module('productModule')
                                 scope: $scope,
                                 width: 600,
                                 className: 'ngdialog-theme-default confirmation-box',
-                                template: templateID,
-                                closeByDocument: false,
-                                showClose: false
+                                template: templateID
                             });
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -149,15 +147,41 @@ angular.module('productModule')
                                 $log.error(appConstants.FUNCTIONAL_ERR, e);
                             });
                     }
-
+               });
                     /********************************************************************** */
 
 
 
+                /************** Product Lineage functionality *********************/
+                // isShipped value will be 'no'  for manufacturer
+                $scope.serviceData = {data:{product:{isShipped:'no',name:'Handbag',mfgDate:'1/1/2016',receivedDate:'1/1/2016',items:[{name:'Leather',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'Buckel',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'screws',mfgDate:'7/1/2016',shipmentDate:'7/1/2016',receivedDate:'17/1/2016'}]}}};
+				$scope.lineageData = $scope.serviceData.data;
+				$scope.lineageSubData = $scope.lineageData.product.items[0];
+				$scope.lineageSubMaterialData = $scope.lineageData.product.items;
 
+                vm.showProductLineage = function(){
+                    /****************Retailer************************/
+                    if($scope.lineageData.product.isShipped == 'yes'){
+						$scope.isShipped = true;
+						$scope.isShippedToRetailer = true;
 
+                    /****************Manufacturer************************/
+					} else if($scope.lineageData.product.isShipped == 'no') {
+						 $scope.isShipped = false;
+						 $scope.isShippedToRetailer = false;
+					}
+					else {
+						$scope.isShipped = true;
+						$scope.isShippedToRetailer = false;
+					}
 
-                });
+                    var dialog = ngDialog.open({
+                            scope : $scope,
+                            width: '70%',
+                            template: 'externalTemplate.html'
+					});
+                };
+                /*************************************************************** */
 
             } catch (e) {
                 console.log(appConstants.FUNCTIONAL_ERR, e);

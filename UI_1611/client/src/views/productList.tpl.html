@@ -1,4 +1,4 @@
-<div ng-if="isRegisterScreen" class="manageProducts col-lg-8 col-md-10 col-sm-10 col-xs-12">
+<div ng-if="isRegisterScreen" class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
     <app-legend header="{{title}}"></app-legend>
     
     <!--- Render Previous registered Product/Material -->
@@ -61,7 +61,7 @@
                         <center>
                             <!-- Comment out based on new UI -->
                             <!-- <img style="height:35px;" src="asset/images/qr_search.png" popover-trigger="click" popover-placement="right" uib-popover-template="'blackchainProductAck.html'" /> -->
-                            <img style="height:35px;" src="asset/images/user_qr.png"/>
+                            <img class="cursorPointer" ng-click="vm.showProductLineage()" style="height:35px;" src="asset/images/user_qr.png"/>
                         </center>
                     </td>
                 </tr>
