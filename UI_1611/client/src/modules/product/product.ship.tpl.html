@@ -28,9 +28,15 @@
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
 							<label for="prodName">Product Name :</label>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
+						<!--- <div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<input ng-required="true" type="text" class="form-control" id="prodName" ng-model="vm.product.productName">
-						</div>
+						</div> --->
+						<div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <select id="productName" class="form-control">
+                                    <option value="leather">{{vm.product.productName}}</option>
+									<option value="leather">Toto Bag</option>
+                                </select>
+                            </div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 text-right-lg text-right-md formLabel">
@@ -158,7 +164,7 @@
 <script type="text/ng-template" id="externalTemplate.html">
 
 	<legend class="legendHead" style="padding-bottom:10px;">Product Lineage
-		<span class="pull-right" style="color:black;font-weight:normal;font-size:12px;padding-right:20px;">
+		<span class="pull-right" style="color:black;font-weight:600;font-size:12px;padding-right:20px;">
 			<img style="width: 30px;padding: 0px 0px 5px 10px;" src="asset/images/smartContract.png"/>
 			<i>Smart Contract Verified</i>
 		</span>
@@ -189,7 +195,7 @@
 			<div><span style="border-color:#00B0F0;" class="borderGreen"></span><span style="border-color:#00B0F0;" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center"><img class="middleImages" src="asset/images/dataLineage3.png"/></div>
 		</div>
-		<div class="col-lg-2 col-xs-2 noPadding">
+		<div class="col-lg-3 col-xs-2 noPadding">
 			<!--<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-100px"></span><span class="borderGreenRight" style="right:-108px;"></span></div>-->
 			<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-10px"></span></div>
 			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png"/></div>

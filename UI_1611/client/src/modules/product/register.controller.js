@@ -73,7 +73,7 @@ angular.module('productModule')
 
                     /*******For Demo instance. Needs to refactor */
                      if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
-                            showWarning(ngDialog, 'warningBox', '42%', false);
+                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
                             return;
                     }else {
                         vm.product.materialName = vm.userMaterial;
@@ -182,6 +182,15 @@ angular.module('productModule')
                     }
                     renderProductLineage(ngDialog, $scope, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box');
                 };
+
+
+                //For material list
+                vm.settings = appConstants.MULTISELECT_SETTINGS;
+                vm.materialList = [];
+                if (vm.isManufacturer) {
+                    vm.dataList = [{ id: 1, label: "Leather - Full Grain" },{ id: 2, label: "Leather - Top Grain" }];
+                }
+
                 /*************************************************************** */
 
             } catch (e) {

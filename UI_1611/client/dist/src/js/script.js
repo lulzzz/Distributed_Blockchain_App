@@ -737,10 +737,8 @@ function populateActiveMenu(menu) {
 
 angular.module('bverifyApp')
 
-    .filter('entityDisplayFilter', function () {
-
-        // In the return function, we must pass in a single parameter which will be the data we will work on.
-        // We have the ability to support multiple other parameters that can be passed into the filter optionally
+    //filter for display '-' symbol in shipment details list table when input is null/empty
+    .filter('emptyfy', function () {
         return function (input, optional1, optional2) {
             if(input && input !== ''){
                 return input;
@@ -6692,7 +6690,7 @@ angular.module('productModule')
 
                     /*******For Demo instance. Needs to refactor */
                      if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
-                            showWarning(ngDialog, 'warningBox', '42%', false);
+                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
                             return;
                     }else {
                         vm.product.materialName = vm.userMaterial;
@@ -6801,6 +6799,15 @@ angular.module('productModule')
                     }
                     renderProductLineage(ngDialog, $scope, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box');
                 };
+
+
+                //For material list
+                vm.settings = appConstants.MULTISELECT_SETTINGS;
+                vm.materialList = [];
+                if (vm.isManufacturer) {
+                    vm.dataList = [{ id: 1, label: "Leather - Full Grain" },{ id: 2, label: "Leather - Top Grain" }];
+                }
+
                 /*************************************************************** */
 
             } catch (e) {
@@ -6858,11 +6865,9 @@ angular.module('productModule')
                 vm.settings = appConstants.MULTISELECT_SETTINGS;
                 vm.exampleModel = [];
                 if (vm.isManufacturer) {
-                    vm.data = [{ id: 1, label: "Retailer1" }, { id: 2, label: "Retailer1" }, { id: 3, label: "Retailer1" },
-                        { id: 4, label: "Retailer1" }, { id: 5, label: "Retailer1" }, { id: 6, label: "Distributer1" }, { id: 7, label: "Distributer2" }
-                        , { id: 8, label: "Distributer3" }, { id: 9, label: "Distributer4" }, { id: 10, label: "Distributer5" }];
+                    vm.data = [{ id: 1, label: "Retailer1" }, { id: 2, label: "Retailer2" },{ id: 5, label: "Retailer3" }, { id: 6, label: "Distributer1" }, { id: 7, label: "Distributer2" }];
                 }
-                if (userModel.isProducer(0)) {
+                if (vm.isProducer) {
                     vm.data = [{ id: 1, label: "Manufacturer1" }, { id: 2, label: "Manufacturer2" }, { id: 3, label: "Manufacturer3" },
                         { id: 4, label: "Manufacturer4" }];
                 }
@@ -6889,11 +6894,11 @@ angular.module('productModule')
 
                     if (!(isNaN(parseInt(vm.userQuantity, 10)))) {
                         if (parseInt(vm.userQuantity) > parseInt(vm.product.quantity)) {
-                            showWarning(ngDialog, 'warningBox', '42%', false);
+                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
                             return;
                         }
                     } else {
-                        showWarning(ngDialog, 'warningBox', '42%', false);
+                        showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
                         return;
                     }
                     vm.product.quantity = vm.userQuantity;
@@ -6975,11 +6980,12 @@ angular.module('productModule')
             }
         }]);
 
-function showWarning(ngDialog, templateID, width, showClose) {
+function showWarning(ngDialog, templateID, width, showClose, className) {
     ngDialog.open({
         width: width,
         template: templateID,
-        showClose: showClose
+        showClose: showClose,
+        className: className
     });
 };
 
