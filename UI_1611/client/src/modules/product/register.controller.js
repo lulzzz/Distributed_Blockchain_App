@@ -1,6 +1,6 @@
 /*
-**  product Controller for handling user based 
-**  product register/ship/acknowledgement business logic 
+**  register Controller for handling user based 
+**  product/material registeration business logic 
 */
 
 "use strict";
@@ -13,6 +13,7 @@ angular.module('productModule')
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
+                setUserProfile(vm, userModel);
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
 
             } catch (e) {
@@ -31,12 +32,8 @@ angular.module('productModule')
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.isReadonly = false;
-                vm.isManufacturer = userModel.isManufacturer();
-                vm.isProducer = userModel.isProducer();
-                vm.isRetailer = userModel.isRetailer();
-                vm.isAdmin = userModel.isAdmin();
+                setUserProfile(vm, userModel);
                 vm.header = vm.isManufacturer ? 'REGISTER NEW PRODUCT' : 'REGISTER NEW MATERIAL';
-                $scope.entity = vm.isManufacturer ? 'product' : 'material';
                 vm.product = productModel.getProduct();
                 vm.list = [];
 
@@ -68,11 +65,15 @@ angular.module('productModule')
                         $state.go('shipment', { tokenId: $scope.randomToken });
                     }
                 };
-                // Register new Product/material
+                
+                
+
+                /******************* Register new Product/material *************************/
                 vm.registerNewProduct = function () {
 
                     /*******For Demo instance. Needs to refactor */
                      if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
+                            $scope.warningMsg = appConstants.MATERIAL_ADHERED;
                             showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
                             return;
                     }else {
@@ -87,10 +88,10 @@ angular.module('productModule')
                         .then(function (response) {
                             //vm.product.setData(response);
                             $rootScope.hasError = false;
+                            $scope.entity = vm.isManufacturer ? 'product' : 'material';
                             $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
-                            var templateID = vm.isManufacturer ? 'productConfirmation' : 'materialConfirmation';
-                            renderProductLineage(ngDialog, $scope, templateID, 600, false, 'ngdialog-theme-default confirmation-box');
+                            renderProductLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -99,6 +100,8 @@ angular.module('productModule')
                         });
                 };
 
+
+                /******************* VIEW EDIT registered product *************************/
                 //Capturing broadcasted event from appProductList directive to implement edit/view
                 $scope.$on('edit/view', function (event, msg) {
                     productModel.setProduct(msg.data);
@@ -106,14 +109,11 @@ angular.module('productModule')
                     vm.isReadonly = msg.isEdit ? false : true;
                 });
 
+
+
+                /******************* DELETE registered product *************************/
                 //Capturing broadcasted event from appProductList directive to implement delete
                 $scope.$on('delete', function (event, data) {
-
-
-
-
-
-
 
                     /****** below needs to be change. Hardcoded for demo */
                     if (vm.isManufacturer) {
@@ -180,10 +180,11 @@ angular.module('productModule')
                         $scope.isShipped = true;
                         $scope.isShippedToRetailer = false;
                     }
-                    renderProductLineage(ngDialog, $scope, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box');
+                    renderProductLineage(ngDialog, $scope, 'productLineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
                 };
 
-
+                
+                /******************* MATERIAL Multiselect functionality *************************/
                 //For material list
                 vm.settings = appConstants.MULTISELECT_SETTINGS;
                 vm.materialList = [];
@@ -198,16 +199,20 @@ angular.module('productModule')
             }
         }]);
 
-function displayModelDialog(ngDialog, $scope, templateID) {
-    ngDialog.open({
-        scope: $scope,
-        width: 600,
-        template: templateID,
-        closeByDocument: false
-    });
 
+/****
+ *  Utility function for populating userProfile 
+ ***/
+function setUserProfile(vm, userModel) {
+    vm.isManufacturer = userModel.isManufacturer();
+    vm.isProducer = userModel.isProducer();
+    vm.isRetailer = userModel.isRetailer();
+    vm.isAdmin = userModel.isAdmin();
 };
 
+/****
+ *  Utility function for rendering product lineage 
+ ***/
 function renderProductLineage(ngDialog, scope, templateID, width, showClose, className) {
     return ngDialog.open({
         scope: scope,

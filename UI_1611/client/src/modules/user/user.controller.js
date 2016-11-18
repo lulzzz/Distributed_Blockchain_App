@@ -23,6 +23,7 @@ angular.module('userModule')
                 name: "Upload QR"
             }
             vm.displayBtn = false;
+            
             vm.uploadFile = function (file, event) {
                 if (file) {
                     vm.displayBtn = true;
@@ -42,6 +43,7 @@ angular.module('userModule')
             /***************************************** */
 
         }])
+        
     .controller('logoutController', ['userModel', 'appConstants', '$state', '$rootScope', '$log',
         function (userModel, appConstants, $state, $rootScope, $log) {
             try {

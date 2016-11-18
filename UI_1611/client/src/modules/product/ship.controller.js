@@ -1,5 +1,5 @@
 /*
-**  product Controller for handling user based 
+**  ship Controller for handling user based 
 **  product shipment business logic 
 */
 
@@ -17,15 +17,18 @@ angular.module('productModule')
                 productModel.resetProduct();
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
-                vm.isManufacturer = userModel.isManufacturer();
-                vm.isProducer = userModel.isProducer();
-                vm.isRetailer = userModel.isRetailer();
-                vm.isAdmin = userModel.isAdmin();
+                setUserProfile(vm, userModel);
                 vm.product = productModel.getProduct();
+                //hardcoded for demo
                 vm.userQuantity = "";
+                
+                
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
+                
+                
+                /****************** Distributer/Retailer Multiselect functionality *******************/
                 vm.settings = appConstants.MULTISELECT_SETTINGS;
                 vm.exampleModel = [];
                 if (vm.isManufacturer) {
@@ -35,7 +38,9 @@ angular.module('productModule')
                     vm.data = [{ id: 1, label: "Manufacturer1" }, { id: 2, label: "Manufacturer2" }, { id: 3, label: "Manufacturer3" },
                         { id: 4, label: "Manufacturer4" }];
                 }
-
+                
+                
+                /****************** Confirmation box functionality *******************/
                 $scope.redirectUser = function (flag) {
                     ngDialog.close();
                     var userReq = {
@@ -53,16 +58,20 @@ angular.module('productModule')
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         });
                 };
-
+                
+                
+                /****************** Product Shipment functionality *******************/
                 vm.doProductShipment = function () {
 
                     if (!(isNaN(parseInt(vm.userQuantity, 10)))) {
                         if (parseInt(vm.userQuantity) > parseInt(vm.product.quantity)) {
-                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
+                            $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
+                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
                             return;
                         }
                     } else {
-                        showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
+                        $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
+                        showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
                         return;
                     }
                     vm.product.quantity = vm.userQuantity;
@@ -81,8 +90,8 @@ angular.module('productModule')
                             $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
                             $scope.quality = response.quality;
-                            var templateID = vm.isManufacturer ? 'productShipConfirmation' : 'materialShipConfirmation';
-                            showConfirmation(ngDialog, templateID, 600, false, 'ngdialog-theme-default', $scope);
+                            $scope.entity = vm.isManufacturer ? 'product' : 'material';
+                            showConfirmation(ngDialog, 'confirmationBox', 600, false, 'ngdialog-theme-default', $scope);
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -94,7 +103,7 @@ angular.module('productModule')
 
 
 
-                /***** Product Lineage functionality */
+                /****************** Product Lineage functionality *******************/
                 // isShipped value will be 'pending' for manufacturer
                 //Hardcoded. Need to remove
                 $scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }] } } };
@@ -114,7 +123,7 @@ angular.module('productModule')
                         $scope.isShipped = true;
                         $scope.isShippedToRetailer = false;
                     }
-                    showConfirmation(ngDialog, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box', $scope);
+                    showConfirmation(ngDialog, 'productLineageBox', '60%', true, 'ngdialog-theme-default lineage-box', $scope);
                 };
 
                 /*************************************************************** */
@@ -125,9 +134,24 @@ angular.module('productModule')
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }]);
+        
+        
+/****
+ *  Utility function for populating userProfile 
+ ***/
+function setUserProfile(vm, userModel) {
+    vm.isManufacturer = userModel.isManufacturer();
+    vm.isProducer = userModel.isProducer();
+    vm.isRetailer = userModel.isRetailer();
+    vm.isAdmin = userModel.isAdmin();
+};
 
-function showWarning(ngDialog, templateID, width, showClose, className) {
+/****
+ *  Utility function for rendering warning message 
+ ***/
+function showWarning(ngDialog, templateID, width, showClose, className, scope) {
     ngDialog.open({
+        scope: scope,
         width: width,
         template: templateID,
         showClose: showClose,
@@ -135,7 +159,9 @@ function showWarning(ngDialog, templateID, width, showClose, className) {
     });
 };
 
-
+/****
+ *  Utility function for rendering confirmation message 
+ ***/
 function showConfirmation(ngDialog, templateID, width, showClose, className, scope) {
     ngDialog.open({
         scope: scope,
