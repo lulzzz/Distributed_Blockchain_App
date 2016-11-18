@@ -82,12 +82,7 @@ angular.module('productModule')
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
                             $scope.quality = response.quality;
                             var templateID = vm.isManufacturer ? 'productShipConfirmation' : 'materialShipConfirmation';
-                            ngDialog.open({
-                                scope: $scope,
-                                width: 600,
-                                showClose: true,
-                                template: templateID
-                            });
+                            showConfirmation(ngDialog, templateID, 600, false, 'ngdialog-theme-default', $scope);
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -119,21 +114,8 @@ angular.module('productModule')
                         $scope.isShipped = true;
                         $scope.isShippedToRetailer = false;
                     }
-
-                    var dialog = ngDialog.open({
-                        scope: $scope,
-                        width: '60%',
-                        showClose: true,
-                        template: 'externalTemplate.html',
-                        className: 'ngdialog-theme-default lineage-box'
-                    });
+                    showConfirmation(ngDialog, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box', $scope);
                 };
-
-
-                vm.verifyQuantity = function () {
-
-                }
-
 
                 /*************************************************************** */
 
@@ -154,11 +136,12 @@ function showWarning(ngDialog, templateID, width, showClose, className) {
 };
 
 
-function displayModelDialog(ngDialog, scope, templateID) {
+function showConfirmation(ngDialog, templateID, width, showClose, className, scope) {
     ngDialog.open({
         scope: scope,
-        width: 400,
-        template: '',
-        plain: true
+        width: width,
+        template: templateID,
+        showClose: showClose,
+        className: className
     });
 }

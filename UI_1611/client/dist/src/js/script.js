@@ -6965,12 +6965,6 @@ angular.module('productModule')
                     });
                 };
 
-
-                vm.verifyQuantity = function () {
-
-                }
-
-
                 /*************************************************************** */
 
 

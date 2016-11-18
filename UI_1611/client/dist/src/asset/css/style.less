@@ -543,6 +543,12 @@ header {
 				
 			 }
 		 }
+		 td.location-td-8px{
+			 padding-left: 8px;
+		 }
+		 td.location-td-29px{
+			 padding-left: 29px;
+		 }
 }
 
 #wrapper {
@@ -603,6 +609,8 @@ min-height: 100%;
 		ul.dropdown-menu{
 			width:100% !important;
 			overflow-x:hidden !important;
+			height: auto !important;
+			border: 1px solid !important;
 		}
 	}
 }
@@ -653,12 +661,15 @@ input[type=radio] {
 	color: @color-grey40 !important;
 }
 
-.confirmation-box .ngdialog-content {
+.confirmation-box .ngdialog-content, .warning-box .ngdialog-content {
 	border: 1px solid @color-green !important;
-	border-radius: 20px !important;
+}
+.lineage-box .ngdialog-content {
+	border: 1px solid #00BFFF !important;
 }
 .ngdialog-content {
 	color: black !important;
+	border-radius: 20px !important;
 }
 
 
@@ -669,6 +680,7 @@ input[type=radio] {
 
 .legendHead.redWarn {
 	color:red !important;
+	padding-bottom: 4px;
 }
 .borderGreenLeft {
 	border: 5px solid #00B050;
@@ -694,7 +706,7 @@ input[type=radio] {
 .dataLineage {
 	.img-responsive {
 		padding-bottom:20px;
-		img {
+		img {	
 			width:70px;
 			height:74px;
 			&.middleImages {
@@ -714,12 +726,13 @@ input[type=radio] {
 	.ifManufacturer {
 	width: 7% !important;
     border: 1px solid red;
-    height: 160px;
+    height: 120px;
+    border-radius: 5px;
 	}
 	.smartContractManufactutrer {
 		width: 20px !important;
 		padding: 0px;
-		top: 30px;
+		top: 42px;
 		position: absolute;
 		height: 20px !important;
 		left: 20px;
