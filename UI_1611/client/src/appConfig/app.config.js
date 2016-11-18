@@ -90,7 +90,9 @@ angular
         MULTISELECT_SETTINGS: {
             scrollable: true,
             scrollableHeight: '250px'
-        }
+        },
+        QUANTITY_EXCEEDED : "The Quantity to be shipped cannot exceed the available quantity/inventory. Please revalidate!",
+        MATERIAL_ADHERED : "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract."
     })
 
     .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', '$templateCache', function ($rootScope, $window, localStorageService, $log, ngTableDefaults, $templateCache) {
@@ -103,5 +105,4 @@ angular
         $rootScope.ERROR_MSG = "";
         $rootScope.isSuccess = false;
         $rootScope.SUCCESS_MSG = "";
-        console.log($templateCache.get('views/material.confirmation.html'));
     }]);
