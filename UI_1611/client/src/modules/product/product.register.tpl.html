@@ -75,7 +75,7 @@
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<div ng-click="vm.showProductLineage()" class="noPadding hidden-sm hidden-xs">
+							<div ng-mouseover="vm.showProductLineage()" class="noPadding hidden-sm hidden-xs">
 								<img  src="asset/images/qr_search.png" class="pull-left" style="width: 27px;position: absolute;left: -10px;" />
 								
 								<!-- comment based on new UI -->
@@ -181,7 +181,7 @@
 <script type="text/ng-template" id="externalTemplate.html">
 
 	<legend class="legendHead" style="padding-bottom:10px;">Product Lineage
-		<span class="pull-right" style="color:black;font-weight:normal;font-size:12px;padding-right:20px;">
+		<span class="pull-right" style="color:black;font-weight: 600;font-size:12px;padding-right:20px;">
 			<img style="width: 30px;padding: 0px 0px 5px 10px;" src="asset/images/smartContract.png"/>
 			<i>Smart Contract Verified</i>
 		</span>
@@ -230,7 +230,7 @@
 			<div><span style="left:0px;" class="borderGreen"></span><span style="" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center">
 				<img class="smartContractManufactutrer" src="asset/images/smartContract.png" ng-class="{leftTo10: isShipped == true}"/>
-				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="!isShipped" style="width:20px;height:20px;position:absolute;left:20px;z-index:9;top:75px;"/>
+				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="!isShipped" style="width:20px;height:20px;position:absolute;left:20px;z-index:9;top: 42px;"/>
 				<img class="middleImagesSmall" src="asset/images/dataLineage4.png" style="width:35px;height:35px;" ng-class="{leftTo0:isShipped == false}"/>
 			</div>
 		</div>

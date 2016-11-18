@@ -454,6 +454,9 @@ header .sideMenuPanel .list ul li a:hover {
   color: #7F7F7F;
   clear: both;
 }
+.commonTable .ng-table-header {
+  padding-left: 5px !important;
+}
 .commonTable .ng-table-sort-header {
   background-color: #5298d8;
   color: #ffffff;
@@ -594,6 +597,9 @@ input[type=radio] {
   border: 1px solid #00b050 !important;
   border-radius: 20px !important;
 }
+.ngdialog-content {
+  color: black !important;
+}
 /*Product Lineage CSS */
 .noPaddingLeft {
   padding-left: 0px !important;
@@ -649,7 +655,7 @@ input[type=radio] {
 .dataLineage .smartContractManufactutrer {
   width: 20px !important;
   padding: 0px;
-  top: 45px;
+  top: 30px;
   position: absolute;
   height: 20px !important;
   left: 20px;
@@ -673,6 +679,13 @@ input[type=radio] {
 }
 .ngdialog-content {
   background: white !important;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-close:active:before,
+.ngdialog.ngdialog-theme-default .ngdialog-close:hover:before {
+  color: #424242 !important;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-close:before {
+  color: #424242 !important;
 }
 /*Product Lineage*/
 /****

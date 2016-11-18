@@ -127,6 +127,9 @@ angular.module('productModule')
                 self.showProductLineage = function (d) {
                     $rootScope.$broadcast('productLineage', { data: d });
                 }
+                self.procureProducts = function(){
+                    $rootScope.$broadcast('procureEvent', {data: $scope.list});
+                }
 
                 self.deleteProduct = function (d) {
                     $scope.d = d;

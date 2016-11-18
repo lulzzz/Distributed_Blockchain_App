@@ -10,12 +10,6 @@
         <!-- Directive for rendering all pervious registered materials inside table -->
     <app-productlist list="vm.list" title="{{vm.header}}" is-procure-screen="new Boolean(true)"></app-productlist>
 
-         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right-lg text-center-xs text-right-md text-right-sm" style="padding:10px 10px 10px 10px;">
-            <button type="submit" class="btn btn-primary registerBtn">PROCURE</button>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left-lg text-center-xs text-left-sm" style="padding:10px 10px 10px 10px;">
-            <button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">CANCLE</button>
-        </div>
     </div>
 
 </div>
@@ -53,7 +47,7 @@
 <script type="text/ng-template" id="externalTemplate.html">
 
 	<legend class="legendHead" style="padding-bottom:10px;">Product Lineage
-		<span class="pull-right" style="color:black;font-weight:normal;font-size:12px;padding-right:20px;">
+		<span class="pull-right" style="color:black;font-weight:600;font-size:12px;padding-right:20px;">
 			<img style="width: 30px;padding: 0px 0px 5px 10px;" src="asset/images/smartContract.png"/>
 			<i>Smart Contract Verified</i>
 		</span>

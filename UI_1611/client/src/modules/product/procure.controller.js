@@ -36,28 +36,36 @@ angular.module('productModule')
                     });
 
 
-                /*      TO-DO need to test with actual data and implementation 
+                 /*    TO-DO need to test with actual data and implementation */ 
                                 // do Product/material shipment
+
+                                $scope.$on('procureEvent', function(event, msg){
+                                    console.log(msg);
                                 productServiceAPI
                                     .ackProduct(vm.product)
                                     .then(function (response) {
                                          $rootScope.isSuccess = true;
                                          $rootScope.SUCCESS_MSG = "Products has been acknowledged successfully";
                                         //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
+                                        if(vm.isManufacturer){
+                                            $state.go('product');
+                                        }if(vm.isRetailer){
+                                            return;
+                                        }
                                     }, function (err) {
                                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                                     })
                                     .catch(function (e) {
                                         $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                    });*/
-
+                                    });
+                                });
 
 
 
                  /***** Product Lineage functionality */
                  // isShipped value will be 'yes' for retailer
                 //Hardcoded. Need to remove
-                $scope.serviceData = {data:{product:{isShipped:'yes',name:'Handbag',mfgDate:'1/1/2016',receivedDate:'1/1/2016',items:[{name:'Leather',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'Buckel',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'screws',mfgDate:'7/1/2016',shipmentDate:'7/1/2016',receivedDate:'17/1/2016'}]}}};
+                $scope.serviceData = {data:{product:{isShipped:'yes',name:'Handbag',mfgDate:'1/1/2016',receivedDate:'1/1/2016',items:[{name:'Leather',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'Buckel',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'}]}}};
 				$scope.lineageData = $scope.serviceData.data;
 				$scope.lineageSubData = $scope.lineageData.product.items[0];
 				$scope.lineageSubMaterialData = $scope.lineageData.product.items;
@@ -79,6 +87,7 @@ angular.module('productModule')
                     var dialog = ngDialog.open({
                             scope : $scope,
                             width: '70%',
+                            showClose: true,
                             template: 'externalTemplate.html'
 					});
                 });

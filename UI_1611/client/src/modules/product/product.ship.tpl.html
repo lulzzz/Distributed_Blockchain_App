@@ -56,6 +56,14 @@
 							<input ng-required="true" type="text" class="form-control" id="productWeight" ng-model="vm.product.weight">
 						</div>
 					</div>
+					 <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+                                <label for="quantity">Quantity :</label>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
+                                <input ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.userQuantity">
+                            </div>
+                        </div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
 							<label for="quality">Quality :</label>
@@ -63,7 +71,7 @@
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<input ng-required="true" type="text" class="form-control" id="quality" ng-model="vm.product.quality">
 							<div class="noPadding">
-								<img class="cursorPointer" ng-click="vm.showProductLineage()" src="asset/images/qr_search.png" class="pull-right" style="width: 27px;position: absolute;top:0px;right: -35px;" />
+								<img class="cursorPointer" ng-mouseover="vm.showProductLineage()" src="asset/images/qr_search.png" class="pull-right" style="width: 27px;position: absolute;top:0px;right: -35px;" />
 								<!-- Comment out based on new UI -->
 								<!-- popover-trigger="mouseenter" popover-placement="top-left" uib-popover-template="'blackchainProductShipDataView.html'" /> -->
 								<div class="pull-right font9" style="position:absolute;top:30px;right:-85px;">Token : ABCDEFG</div>
@@ -259,5 +267,19 @@
 </div>
 
 
+	<div style="clear:both"></div>
+</script>
+
+
+
+<script type="text/ng-template" id="warningBox">
+	<legend class="legendHead redWarn">WARNING</legend>
+	<div class="col-lg-12 col-xs-12 noPadding">
+		The Quantity to be shipped cannot exceed the available quantity/inventory. Please revalidate!
+	</div>
+	<div style="clear:both"></div>
+	<div class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
+		<a class="cursorPointer" ng-click="closeThisDialog(0)"><u style="color:#00BFFF">OK</u></a>
+	</div>
 	<div style="clear:both"></div>
 </script>

@@ -49,7 +49,7 @@
                                 <label for="quantity">Quantity :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <input ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.product.quantity">
+                                <input ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.userQuantity">
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -102,7 +102,7 @@
 <script type="text/ng-template" id="materialShipConfirmation">
 	<legend class="legendHead" style="padding-bottom: 5px;">CONFIRMATION</legend>
 	<div class="col-lg-12 col-xs-12 noPadding">
-		<div class="col-lg-8 col-xs-8 noPaddingLeft">The shipment for material &quot;{{name}}&quot; has been initiated and a token ID has been generated.</div>
+		<div class="col-lg-8 col-xs-8 noPaddingLeft">The shipment for material &quot;{{name}} - {{quality}}&quot; has been initiated and a token ID has been generated.</div>
 		<div class="col-lg-4 col-xs-4 noPadding">
 			<img src="asset/images/user_qr.png" class="" style="position: relative;top:0px;width:70px"/>
 			<div>Token : {{randomToken}}</div>
@@ -111,6 +111,19 @@
 	<div style="clear:both"></div>
 		<div class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
 		<a ng-click="redirectUser(true)" class="cursorPointer"><u style="color:#00BFFF">OK</u></a>
+	</div>
+	<div style="clear:both"></div>
+</script>
+
+
+<script type="text/ng-template" id="warningBox">
+	<legend class="legendHead redWarn">WARNING</legend>
+	<div class="col-lg-12 col-xs-12 noPadding">
+		The Quantity to be shipped cannot exceed the available quantity/inventory. Please revalidate!
+	</div>
+	<div style="clear:both"></div>
+	<div class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
+		<a class="cursorPointer" ng-click="closeThisDialog(0)"><u style="color:#00BFFF">OK</u></a>
 	</div>
 	<div style="clear:both"></div>
 </script>
