@@ -45,7 +45,7 @@ angular.module('productModule')
                                     .ackProduct(vm.product)
                                     .then(function (response) {
                                          $rootScope.isSuccess = true;
-                                         $rootScope.SUCCESS_MSG = "Products has been acknowledged successfully";
+                                         $rootScope.SUCCESS_MSG = "Selected Products has been acknowledged successfully";
                                         //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
                                         if(vm.isManufacturer){
                                             $state.go('product');
@@ -88,6 +88,7 @@ angular.module('productModule')
                             scope : $scope,
                             width: '70%',
                             showClose: true,
+                            className: 'ngdialog-theme-default lineage-box',
                             template: 'externalTemplate.html'
 					});
                 });

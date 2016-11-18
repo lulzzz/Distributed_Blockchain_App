@@ -33,7 +33,7 @@
 							<label for="materialName">Material :</label>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input  ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.product.materialName">
+							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.userMaterial">
 						</div>
 					</div>
 
@@ -75,12 +75,12 @@
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<div ng-mouseover="vm.showProductLineage()" class="noPadding hidden-sm hidden-xs">
-								<img  src="asset/images/qr_search.png" class="pull-left" style="width: 27px;position: absolute;left: -10px;" />
-								
+							<div class="noPadding hidden-sm hidden-xs">
+								<img ng-mouseover="vm.showProductLineage()" src="asset/images/qr_search.png" class="cursorPointer pull-left" style="width: 27px;position: absolute;left: -10px;" />
+
 								<!-- comment based on new UI -->
 								<!-- popover-trigger="mouseenter" popover-placement="right" uib-popover-template="'blackchainProductRegisterDataView.html'" /> -->
-								<div class="pull-left font9" style="position:absolute;top:30px;left: -10px;">Token : ABCDEFG</div>
+								<div class="pull-left font9" style="position:absolute;top:30px;left: -10px;">Token : LFG14561</div>
 							</div>
 							<label class="noPadding" for="color">Color/Dimension :</label>
 						</div>
@@ -90,8 +90,8 @@
 					</div>
 					<div class="hidden-lg hidden-md col-sm-12">
 						<div class="noPadding">
-							<img ng-click="vm.showProductLineage()" src="asset/images/qr_search.png" class="pull-left" style="width: 27px;" />
-							<div class="pull-left font9" style="margin-top:10px;">Token : ABCDEFG</div>
+							<img ng-mouseover="vm.showProductLineage()" src="asset/images/qr_search.png" class="cursorPointer pull-left" style="width: 27px;" />
+							<div class="pull-left font9" style="margin-top:10px;">Token : LFG14561</div>
 						</div>
 					</div>
 					<div style="clear:both"></div>
@@ -113,13 +113,13 @@
 							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="productWeight" ng-model="vm.product.weight">
 						</div>
 					</div>
-					<input type="hidden" ng-model="vm.product.id"/>
+					<input type="hidden" ng-model="vm.product.id" />
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-10 col-md-6 col-sm-12 text-right-lg text-right-md">
 							<button type="submit" ng-disabled="vm.isReadonly" class="btn btn-primary registerBtn font12">REGISTER PRODUCT & GENERATE TOKEN</button>
 						</div>
 						<div class="form-group col-lg-2 col-md-6 col-sm-10">
-							<button type="reset"  ng-click="reset()" class="btn btn-primary registerBtn font12">CANCEL</button>
+							<button type="reset" ng-click="reset()" class="btn btn-primary registerBtn font12">CANCEL</button>
 						</div>
 					</div>
 
@@ -144,13 +144,13 @@
  <script type="text/ng-template" id="blackchainProductRegisterDataView.html">
         <div class="col-lg-12 innerPopups">
 			<div class="text-center">Manufacturer 1 (18/10/2016, 13:44 - #19507-)</div> -->
-			<!-- <div class="col-lg-2"><span class="glyphicon glyphicon-qrcode qrImage"></span></div> -->
-			
-			<!--<div class="text-center upArrow"><span class="glyphicon glyphicon-arrow-up"></span></div>
+<!-- <div class="col-lg-2"><span class="glyphicon glyphicon-qrcode qrImage"></span></div> -->
+
+<!--<div class="text-center upArrow"><span class="glyphicon glyphicon-arrow-up"></span></div>
 			
 			<div class="text-center">Raw material producer (18/10/2016, 10:44 - #19507-)</div> -->
-			<!-- <div class="col-lg-2"><span class="glyphicon glyphicon-qrcode qrImage"></span></div> -->
-		<!--</div>
+<!-- <div class="col-lg-2"><span class="glyphicon glyphicon-qrcode qrImage"></span></div> -->
+<!--</div>
 </script> -->
 
 
@@ -167,7 +167,8 @@
 	</div>
 	<div style="clear:both"></div>
 	<div class="col-lg-12 col-xs-12 noPaddingLeft" style="padding-top:20px;">
-		Click <a ng-click="redirectUser(true)" class="cursorPointer"> <u style="color:#00BFFF">REGISTER Products</u> </a> to register more products or  <a class="cursorPointer" ng-click="redirectUser(false)"><u style="color:#00BFFF">Ship Products</u> </a> to transfer registered materials to  a manufacturer
+		Click <a ng-click="redirectUser(true)" class="cursorPointer"> <u style="color:#00BFFF">REGISTER Products</u></a> to register more products or  
+		<a class="cursorPointer" ng-click="redirectUser(false)"><u style="color:#00BFFF">Ship Products</u></a> to transfer registered materials to  a manufacturer
 	</div>
 	<div style="clear:both"></div>
 </script>
@@ -220,7 +221,7 @@
 			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
 				<div>Manufacturer</div>
 				<div ng-repeat="data in lineageSubMaterialData">
-					<div class="text-center"><strong>{{data.name}}</strong></div>
+					<div class=""><strong>{{data.name}}</strong></div>
 					<div>Mfg on: {{data.mfgDate}}</div>
 					<div>Received on: {{data.receivedDate}}</div>
 				</div>
@@ -230,7 +231,7 @@
 			<div><span style="left:0px;" class="borderGreen"></span><span style="" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center">
 				<img class="smartContractManufactutrer" src="asset/images/smartContract.png" ng-class="{leftTo10: isShipped == true}"/>
-				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="!isShipped" style="width:20px;height:20px;position:absolute;left:20px;z-index:9;top: 42px;"/>
+				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="!isShipped" style="width:20px;height:20px;position:absolute;left:15px;z-index:9;top: 55px;"/>
 				<img class="middleImagesSmall" src="asset/images/dataLineage4.png" style="width:35px;height:35px;" ng-class="{leftTo0:isShipped == false}"/>
 			</div>
 		</div>
@@ -290,5 +291,18 @@
 </div>
 
 
+	<div style="clear:both"></div>
+</script>
+
+
+<script type="text/ng-template" id="warningBox">
+	<legend class="legendHead redWarn">WARNING</legend>
+	<div class="col-lg-12 col-xs-12 noPadding">
+		The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.
+	</div>
+	<div style="clear:both"></div>
+	<div class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
+		<a class="cursorPointer" ng-click="closeThisDialog(0)"><u style="color:#00BFFF">OK</u></a>
+	</div>
 	<div style="clear:both"></div>
 </script>

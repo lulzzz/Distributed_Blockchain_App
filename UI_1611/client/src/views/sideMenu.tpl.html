@@ -11,7 +11,7 @@
 		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isManufacturer" ui-sref="shipment">SHIP PRODUCT</a>
 		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isProducer" ui-sref="shipment">SHIP RAW MATERIAL</a>
 
-		<a ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>
+		<a ng-if="userProfile.isManufacturer || userProfile.isProducer" ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>
 		<a ui-sref="dashboard" ng-class="{'selected': activeMenu.dashboard }">DASHBOARD</a>
 		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">
 				<ul>

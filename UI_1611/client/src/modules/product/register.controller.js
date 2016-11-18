@@ -40,6 +40,9 @@ angular.module('productModule')
                 vm.product = productModel.getProduct();
                 vm.list = [];
 
+                //For demo
+                vm.userMaterial = vm.product.materialName;
+
                 //Populating list of Products on load based on productList resolve
                 productList
                     .$promise
@@ -56,17 +59,25 @@ angular.module('productModule')
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
-                $scope.redirectUser = function(flag){
+                $scope.redirectUser = function (flag) {
                     ngDialog.close();
-                    if(flag){
+                    if (flag) {
                         $state.reload();
                     }
                     else {
-                        $state.go('shipment',{tokenId: $scope.randomToken});
+                        $state.go('shipment', { tokenId: $scope.randomToken });
                     }
                 };
                 // Register new Product/material
                 vm.registerNewProduct = function () {
+
+                    /*******For Demo instance. Needs to refactor */
+                     if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
+                            showWarning(ngDialog, 'warningBox', '42%', false);
+                            return;
+                    }else {
+                        vm.product.materialName = vm.userMaterial;
+                    }
 
                     var req = angular.copy(productModel.getProduct());
                     delete req['productList'];
@@ -76,15 +87,10 @@ angular.module('productModule')
                         .then(function (response) {
                             //vm.product.setData(response);
                             $rootScope.hasError = false;
-                            $scope.randomToken = 'LFG' + (Math.floor(Math.random()*90000) + 10000) + '';
+                            $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
                             var templateID = vm.isManufacturer ? 'productConfirmation' : 'materialConfirmation';
-                            ngDialog.open({
-                                scope: $scope,
-                                width: 600,
-                                className: 'ngdialog-theme-default confirmation-box',
-                                template: templateID
-                            });
+                            renderProductLineage(ngDialog, $scope, templateID, 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -110,7 +116,7 @@ angular.module('productModule')
 
 
                     /****** below needs to be change. Hardcoded for demo */
-                    if(vm.isManufacturer){
+                    if (vm.isManufacturer) {
                         //Making delete service call
                         productServiceAPI
                             .productDelete({ productId: data.id })
@@ -130,7 +136,7 @@ angular.module('productModule')
 
 
                     /****** below needs to be change. Hardcoded for demo */
-                    if(vm.isProducer){
+                    if (vm.isProducer) {
                         //Making delete service call
                         productServiceAPI
                             .materialDelete({ productId: data.id })
@@ -147,40 +153,34 @@ angular.module('productModule')
                                 $log.error(appConstants.FUNCTIONAL_ERR, e);
                             });
                     }
-               });
-                    /********************************************************************** */
+                });
+                /********************************************************************** */
 
 
 
                 /************** Product Lineage functionality *********************/
                 // isShipped value will be 'no'  for manufacturer
-                $scope.serviceData = {data:{product:{isShipped:'no',name:'Handbag',mfgDate:'1/1/2016',receivedDate:'1/1/2016',items:[{name:'Leather',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'Buckel',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'}]}}};
-				$scope.lineageData = $scope.serviceData.data;
-				$scope.lineageSubData = $scope.lineageData.product.items[0];
-				$scope.lineageSubMaterialData = $scope.lineageData.product.items;
+                $scope.serviceData = { data: { product: { isShipped: 'no', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }] } } };
+                $scope.lineageData = $scope.serviceData.data;
+                $scope.lineageSubData = $scope.lineageData.product.items[0];
+                $scope.lineageSubMaterialData = $scope.lineageData.product.items;
 
-                vm.showProductLineage = function(){
+                vm.showProductLineage = function () {
                     /****************Retailer************************/
-                    if($scope.lineageData.product.isShipped == 'yes'){
-						$scope.isShipped = true;
-						$scope.isShippedToRetailer = true;
+                    if ($scope.lineageData.product.isShipped == 'yes') {
+                        $scope.isShipped = true;
+                        $scope.isShippedToRetailer = true;
 
-                    /****************Manufacturer************************/
-					} else if($scope.lineageData.product.isShipped == 'no') {
-						 $scope.isShipped = false;
-						 $scope.isShippedToRetailer = false;
-					}
-					else {
-						$scope.isShipped = true;
-						$scope.isShippedToRetailer = false;
-					}
-
-                    var dialog = ngDialog.open({
-                            scope : $scope,
-                            width: '70%',
-                            template: 'externalTemplate.html',
-                            showClose: true
-					});
+                        /****************Manufacturer************************/
+                    } else if ($scope.lineageData.product.isShipped == 'no') {
+                        $scope.isShipped = false;
+                        $scope.isShippedToRetailer = false;
+                    }
+                    else {
+                        $scope.isShipped = true;
+                        $scope.isShippedToRetailer = false;
+                    }
+                    renderProductLineage(ngDialog, $scope, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box');
                 };
                 /*************************************************************** */
 
@@ -197,4 +197,14 @@ function displayModelDialog(ngDialog, $scope, templateID) {
         closeByDocument: false
     });
 
+};
+
+function renderProductLineage(ngDialog, scope, templateID, width, showClose, className) {
+    return ngDialog.open({
+        scope: scope,
+        width: width,
+        template: templateID,
+        showClose: showClose,
+        className: className
+    });
 };

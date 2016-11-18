@@ -229,7 +229,9 @@ header {
     	border:none;
 	}
 }
-
+.cursorPointer {
+		.setCursor(pointer);
+}
 .searchBox {
     margin-top:50px;
 	.qrSearch {
@@ -470,6 +472,7 @@ header {
 	.setMarginTop(20px);
 	.prodList {
 		overflow-x:auto;
+		padding-left: 20px;
 	}
 }
 /**/
@@ -487,6 +490,9 @@ header {
 			color: #7F7F7F;
 			clear:both;
 		}
+	}
+	.ng-table-header {
+		padding-left: 5px !important;
 	}
 	.ng-table-sort-header {
 		background-color:@color-header;
@@ -647,7 +653,105 @@ input[type=radio] {
 	color: @color-grey40 !important;
 }
 
+.confirmation-box .ngdialog-content {
+	border: 1px solid @color-green !important;
+	border-radius: 20px !important;
+}
+.ngdialog-content {
+	color: black !important;
+}
 
+
+/*Product Lineage CSS */
+.noPaddingLeft {
+	padding-left:0px !important;
+}
+
+.legendHead.redWarn {
+	color:red !important;
+}
+.borderGreenLeft {
+	border: 5px solid #00B050;
+    position: absolute;
+    top: 80px;
+    left: 66px;
+    border-radius: 5px;
+}
+.borderGreenRight{
+	border: 5px solid #00B050;
+    position: absolute;
+    top: 80px;
+    right: -66px;
+    border-radius: 5px;
+}
+.borderGreen {
+    border: 3px solid #00B050;
+    position: absolute;
+    top: 82px;
+    right: -60px;
+    left: 75px;
+}
+.dataLineage {
+	.img-responsive {
+		padding-bottom:20px;
+		img {
+			width:70px;
+			height:74px;
+			&.middleImages {
+				position: relative;
+				margin-top: 50px;
+			}
+			&.middleImagesSmall {
+				position: relative;
+				top: 65px;
+				left:-10px;
+			}
+			&.leftToZero {
+				left:0px !important;
+			}
+		}
+	}
+	.ifManufacturer {
+	width: 7% !important;
+    border: 1px solid red;
+    height: 160px;
+	}
+	.smartContractManufactutrer {
+		width: 20px !important;
+		padding: 0px;
+		top: 30px;
+		position: absolute;
+		height: 20px !important;
+		left: 20px;
+		z-index:9;
+	}
+	.leftTo10 {
+		left:-10px;
+	}
+	.leftTo0 {
+		left:0px !important;
+	}
+	.straightLine {
+		border: 3px solid #00B0F0;
+		width: 5px;
+		height: 85px;
+		float: right;
+		margin-right: -63px;
+	}
+	.col-lg-10 {
+		line-height:15px;
+	}
+}	
+.ngdialog-content {
+	background:white !important;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-close:active:before, .ngdialog.ngdialog-theme-default .ngdialog-close:hover:before{
+	    color: #424242 !important;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-close:before{
+	color: #424242 !important;
+}
+/*Product Lineage*/
 
 /****
 **	CSS for end user mobile view

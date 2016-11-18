@@ -1,10 +1,10 @@
 {
-	"materialName": "sds",
-	"quantity": "sds",
-	"batchNumber": "dsd",
-	"manufactureDate": "2016-11-17T18:30:00.000Z",
-	"quality": "ds",
-	"color": "dsd",
-	"weight": "sd",
+	"materialName": "Leather",
+	"quantity": "Handbag",
+	"batchNumber": "B00RWSC2MW",
+	"manufactureDate": "10/17/2016",
+	"quality": "Full Grain",
+	"color": "",
+	"weight": "100 kg",
 	"file": {}
 }

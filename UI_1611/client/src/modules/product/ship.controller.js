@@ -104,7 +104,7 @@ angular.module('productModule')
                 /***** Product Lineage functionality */
                 // isShipped value will be 'pending' for manufacturer
                 //Hardcoded. Need to remove
-                $scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'screws', mfgDate: '7/1/2016', shipmentDate: '7/1/2016', receivedDate: '17/1/2016' }] } } };
+                $scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }] } } };
                 $scope.lineageData = $scope.serviceData.data;
                 $scope.lineageSubData = $scope.lineageData.product.items[0];
                 $scope.lineageSubMaterialData = $scope.lineageData.product.items;
@@ -124,8 +124,10 @@ angular.module('productModule')
 
                     var dialog = ngDialog.open({
                         scope: $scope,
-                        width: '70%',
-                        template: 'externalTemplate.html'
+                        width: '60%',
+                        showClose: true,
+                        template: 'externalTemplate.html',
+                        className: 'ngdialog-theme-default lineage-box'
                     });
                 };
 

@@ -1,20 +1,6 @@
 [{
-	"id": "materialID0",
-	"productName": "Tote Bag",
-	"batchNumber": "B00RWSC2MW0",
-	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
-	"registeredDate": "10/09/2010",
-	"trackDetails": {
-		"currentlyAt": "DTDC",
-		"trackRecord": []
-	},
-	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
-}, {
 	"id": "materialID1",
-	"productName": "Hobo Bag",
+	"materialName": "Tote Bag",
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
@@ -25,10 +11,10 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)"
+	"shippedFrom": "Manufacturer (Rajeev)"
 }, {
 	"id": "materialID2",
-	"productName": "Tote Bag",
+	"materialName": "Handeld Leather Bag",
 	"batchNumber": "B00RWSC2MW2",
 	"weight": "100kg",
 	"quantity": "200",
@@ -39,10 +25,10 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
+	"shippedFrom": "Manufacturer (Azim)"
 }, {
 	"id": "materialID3",
-	"productName": "Hobo Bag",
+	"materialName": "Tote Bag",
 	"batchNumber": "B00RWSC2MW3",
 	"weight": "100kg",
 	"quantity": "200",
@@ -53,10 +39,10 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)"
+	"shippedFrom": "Manufacturer (Rajeev)"
 }, {
 	"id": "materialID4",
-	"productName": "Tote Bag",
+	"productName": "Handeld Leather Bag",
 	"batchNumber": "B00RWSC2MW4",
 	"weight": "100kg",
 	"quantity": "200",
@@ -67,5 +53,5 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
+	"shippedFrom": "Manufacturer (Azim)"
 }]

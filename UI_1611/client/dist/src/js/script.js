@@ -27,8 +27,9 @@ if (window) {
 
 angular
     .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize',
-        'ngFileUpload', 'angularjs-dropdown-multiselect'])
-    .config(['$httpProvider', '$logProvider',   function ($httpProvider, $logProvider) {
+        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog'])
+
+    .config(['$httpProvider', '$logProvider', 'ngDialogProvider', function ($httpProvider, $logProvider, ngDialogProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;
@@ -40,7 +41,17 @@ angular
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
 
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            showClose: false,
+            closeByDocument: false,
+            closeByEscape: true,
+            overlay: true,
+            closeByNavigation: true
+        });
+
     }])
+
     .factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
         function ($q, $rootScope, $log, appConstants) {
             return {
@@ -84,16 +95,16 @@ angular
             retailer: 'RETAIL'
         },
         PROD_REGISTERED: "Product has been registered successfully",
-        PROD_DELETED : "Product has been deleted successfully",
+        PROD_DELETED: "Product has been deleted successfully",
         MATERIAL_REGISTERED: "Material has been registered successfully",
         MATERIAL_DELETED: "Material has been deleted successfully",
         MULTISELECT_SETTINGS: {
-                    scrollable: true,
-                    scrollableHeight: '250px'
-                }
+            scrollable: true,
+            scrollableHeight: '250px'
+        }
     })
 
-    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', function ($rootScope, $window, localStorageService, $log, ngTableDefaults) {
+    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', '$templateCache', function ($rootScope, $window, localStorageService, $log, ngTableDefaults, $templateCache) {
 
         $log.debug('appConfig bootstrapped!');
 
@@ -103,7 +114,7 @@ angular
         $rootScope.ERROR_MSG = "";
         $rootScope.isSuccess = false;
         $rootScope.SUCCESS_MSG = "";
-
+        console.log($templateCache.get('views/material.confirmation.html'));
     }]);
 /*
 *   All application related routing and authentication has been wrapped up inside 'appRoute' module
@@ -124,19 +135,59 @@ angular
                 // HOME STATES AND NESTED VIEWS 
                 .state('home', {
                     url: '/home',
-                    templateUrl: '../modules/search/search.tpl.html',
                     // Only for demo instance
+                    views: {
+                        // the main template will be placed here (relatively named)
+                        '': {
+                            templateUrl: '../modules/search/search.tpl.html',
+                            controllerAs: 'vm',
+                            controller: 'searchController',
+
+                        },
+
+                        // the child views will be defined here (absolutely named)
+                        'shipmentList@home': {
+                            templateProvider: function (userModel, $templateFactory) {
+                                if (userModel.isManufacturer() || userModel.isProducer()) {
+                                    return $templateFactory.fromUrl('../modules/search/searchList.tpl.html');
+                                }
+                            },
+                            //templateUrl: '../modules/search/searchList.tpl.html',
+                            controllerAs: 'vm',
+                            controller: 'searchController'
+                        }
+                    },
                     params: {
                         role: window.profile
                     },
+                    /****** below needs to be change. This has to be justify more when service gets ready */
                     resolve: {
-                        userInfo: function ($stateParams, userServiceAPI) {
+                        userInfo: function ($stateParams, userServiceAPI, searchServiceAPI, userModel) {
                             return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
+                        },
+                        shipmentList: function ($stateParams, searchServiceAPI, userModel, userInfo) {
+                            userModel.setUser(userInfo.user);
+                            if (userModel.isRetailer() || userModel.isAdmin()) {
+                                return null;
+                            }
+                            if (userModel.isProducer()) {
+                                return searchServiceAPI.getMaterialShipmentList({
+                                    userName: userInfo.user.userName,
+                                    userProfile: userInfo.user.userProfile
+                                });
+                            }
+                            if (userModel.isManufacturer()) {
+                                return searchServiceAPI.getProductShipmentList({
+                                    userName: userInfo.user.userName,
+                                    userProfile: userInfo.user.userProfile
+                                });
+                            }
+                            else {
+                                return null;
+                            }
                         }
-                    },
-                    /*************************************************** */
-                    controllerAs: 'vm',
-                    controller: 'searchController'
+                    }
+                    /***************************************************************************************** */
                 })
                 .state("home.result", {
                     url: '/result',
@@ -250,7 +301,7 @@ angular
                     templateUrl: '../modules/product/product.ack.tpl.html',
                     //Resolve added to retreive productList before loading product acknowledgment screen
                     resolve: {
-                       productList: function (userModel, productServiceAPI) {
+                        productList: function (userModel, productServiceAPI) {
                             var user = userModel.getUser();
 
                             /****** below needs to be change. Hardcoded for demo */
@@ -558,6 +609,12 @@ angular.module('productModule')
                 self.viewProduct = function (d) {
                     $rootScope.$broadcast('edit/view', { data: d, isEdit: false });
                 }
+                self.showProductLineage = function (d) {
+                    $rootScope.$broadcast('productLineage', { data: d });
+                }
+                self.procureProducts = function(){
+                    $rootScope.$broadcast('procureEvent', {data: $scope.list});
+                }
 
                 self.deleteProduct = function (d) {
                     $scope.d = d;
@@ -584,6 +641,7 @@ angular.module('productModule')
                 $scope.$watchCollection('list', function (newNames, oldNames) {
                     self.customConfigParams = createUsingFullOptions();
                 });
+               
 
                 function createUsingFullOptions() {
                     var initialParams = {
@@ -602,7 +660,57 @@ angular.module('productModule')
             },
             controllerAs: 'vm'
         }
-    })
+    });
+
+
+
+
+
+
+angular.module('searchModule')
+    //Directive for table section for product/material list
+    .directive('appShipmentlist', function () {
+        return {
+            restrict: 'E',
+            templateUrl: '../views/shipmentList.tpl.html',
+            scope: {
+                list: '=',
+                title: '@'
+            },
+            link: function (scope, element, attrs) {
+            },
+            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel) {
+                var self = this;
+                self.userProfile = populateUserProfile(userModel);
+                self.customConfigParams = createUsingFullOptions();
+                $scope.$watchCollection('list', function (newNames, oldNames) {
+                    self.customConfigParams = createUsingFullOptions();
+                });
+ 
+                function createUsingFullOptions() {
+                    var initialParams = {
+                        count: 6 // initial page size
+                    };
+                    var initialSettings = {
+                        // page size buttons (right set of buttons in demo)
+                        counts: [],
+                        // determines the pager buttons (left set of buttons in demo)
+                        paginationMaxBlocks: 13,
+                        paginationMinBlocks: 2,
+                        // initial filter
+                        filter: { name: "" }, 
+                        dataset: $scope.list
+                    };
+                    return new NgTableParams(initialParams, initialSettings);
+                };
+            },
+            controllerAs: 'vm'
+        }
+    });
+
+
+
+
 
 
 function populateUserProfile(userModel) {
@@ -624,6 +732,24 @@ function populateActiveMenu(menu) {
         prodAck: menu === '/product/acknowledge' ? true : false,
     }
 };
+
+'use strict';
+
+angular.module('bverifyApp')
+
+    .filter('entityDisplayFilter', function () {
+
+        // In the return function, we must pass in a single parameter which will be the data we will work on.
+        // We have the ability to support multiple other parameters that can be passed into the filter optionally
+        return function (input, optional1, optional2) {
+            if(input && input !== ''){
+                return input;
+            }else{
+                return '-';
+            }
+        }
+
+    });
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -5945,9 +6071,9 @@ angular.module('productModule')
 
     //For acknowledging received product
     .controller('productAckController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'productServiceAPI', '$log', 'productList', 'productModel',
-        function (userModel, appConstants, $state, $rootScope,
-            productServiceAPI, $log, productList, productModel) {
+        'productServiceAPI', '$log', 'productList', 'productModel', 'ngDialog', '$scope',
+        function (userModel, appConstants, $state, $rootScope, 
+            productServiceAPI, $log, productList, productModel, ngDialog, $scope) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
@@ -5972,20 +6098,64 @@ angular.module('productModule')
                     });
 
 
-                /*      TO-DO need to test with actual data and implementation 
+                 /*    TO-DO need to test with actual data and implementation */ 
                                 // do Product/material shipment
+
+                                $scope.$on('procureEvent', function(event, msg){
+                                    console.log(msg);
                                 productServiceAPI
                                     .ackProduct(vm.product)
                                     .then(function (response) {
                                          $rootScope.isSuccess = true;
-                                         $rootScope.SUCCESS_MSG = "Products has been acknowledged successfully";
+                                         $rootScope.SUCCESS_MSG = "Selected Products has been acknowledged successfully";
                                         //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
+                                        if(vm.isManufacturer){
+                                            $state.go('product');
+                                        }if(vm.isRetailer){
+                                            return;
+                                        }
                                     }, function (err) {
                                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                                     })
                                     .catch(function (e) {
                                         $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                    });*/
+                                    });
+                                });
+
+
+
+                 /***** Product Lineage functionality */
+                 // isShipped value will be 'yes' for retailer
+                //Hardcoded. Need to remove
+                $scope.serviceData = {data:{product:{isShipped:'yes',name:'Handbag',mfgDate:'1/1/2016',receivedDate:'1/1/2016',items:[{name:'Leather',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'},{name:'Buckel',mfgDate:'3/1/2016',shipmentDate:'4/1/2016',receivedDate:'7/1/2016'}]}}};
+				$scope.lineageData = $scope.serviceData.data;
+				$scope.lineageSubData = $scope.lineageData.product.items[0];
+				$scope.lineageSubMaterialData = $scope.lineageData.product.items;
+
+
+                $scope.$on('productLineage', function (event, msg) {
+                     if($scope.lineageData.product.isShipped === 'yes'){
+						$scope.isShipped = true;
+						$scope.isShippedToRetailer = true;
+					} else if($scope.lineageData.product.isShipped === 'no') {
+						 $scope.isShipped = false;
+						 $scope.isShippedToRetailer = false;
+					}
+					else {
+						$scope.isShipped = true;
+						$scope.isShippedToRetailer = false;
+					}
+
+                    var dialog = ngDialog.open({
+                            scope : $scope,
+                            width: '70%',
+                            showClose: true,
+                            className: 'ngdialog-theme-default lineage-box',
+                            template: 'externalTemplate.html'
+					});
+                });
+
+                /*************************************************************** */
 
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
@@ -6003,6 +6173,7 @@ angular.module('productModule')
 
             // Only for demo instance.
             var _init = {
+                tokenId: '',
                 materialName: 'Leather',
                 productName: 'Handheld Bag',
                 quantity: '50',
@@ -6021,6 +6192,22 @@ angular.module('productModule')
                 },
                 file: {
                     name: ''
+                },
+                exitPort: {
+                    location: "",
+                    isAvailable: false
+                },
+                entryPort: {
+                    location: "",
+                    isAvailable: false
+                },
+                manufacturerDetail: {
+                 name: '',
+                 isAvailable: false   
+                },
+                retailerDetail: {
+                    name: '',
+                    isAvailable: false
                 },
                 productList: []
             };
@@ -6073,6 +6260,7 @@ angular.module('productModule')
                 _clearProductList();
                 angular.forEach(list, function (obj, key) {
                     _product.productList.push({
+                        "tokenId": obj.tokenId || "",
                         "materialName": obj.materialName || "",
                         "productName": obj.productName || "",
                         "batchNumber": obj.batchNumber || "",
@@ -6085,10 +6273,13 @@ angular.module('productModule')
                         "shippedFrom": obj.shippedFrom || "",
                         "shippedOn": obj.shippedOn || "",
                         "quality": obj.quality || "",
-                        "trackDetails": obj.trackDetails
+                        "trackDetails": obj.trackDetails,
+                        "entryPort": obj.entryPort,
+                        "exitPort": obj.exitPort,
+                        "manufacturerDetail": obj.manufacturerDetail,
+                        "retailerDetail": obj.retailerDetail
                     });
                 });
-                console.log(_product);
             };
 
 
@@ -6358,6 +6549,7 @@ angular.module('productModule')
             }
             return deferred.promise;
         };
+        /********************************************************** */
          this.shipProduct = function (list) {
             var deferred = $q.defer();
             try{
@@ -6467,6 +6659,9 @@ angular.module('productModule')
                 vm.product = productModel.getProduct();
                 vm.list = [];
 
+                //For demo
+                vm.userMaterial = vm.product.materialName;
+
                 //Populating list of Products on load based on productList resolve
                 productList
                     .$promise
@@ -6483,17 +6678,25 @@ angular.module('productModule')
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
-                $scope.redirectUser = function(flag){
+                $scope.redirectUser = function (flag) {
                     ngDialog.close();
-                    if(flag){
+                    if (flag) {
                         $state.reload();
                     }
                     else {
-                        $state.go('shipment',{tokenId: $scope.randomToken});
+                        $state.go('shipment', { tokenId: $scope.randomToken });
                     }
                 };
                 // Register new Product/material
                 vm.registerNewProduct = function () {
+
+                    /*******For Demo instance. Needs to refactor */
+                     if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
+                            showWarning(ngDialog, 'warningBox', '42%', false);
+                            return;
+                    }else {
+                        vm.product.materialName = vm.userMaterial;
+                    }
 
                     var req = angular.copy(productModel.getProduct());
                     delete req['productList'];
@@ -6503,17 +6706,10 @@ angular.module('productModule')
                         .then(function (response) {
                             //vm.product.setData(response);
                             $rootScope.hasError = false;
-                            $scope.randomToken = 'LFG' + (Math.floor(Math.random()*90000) + 10000) + '';
+                            $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
                             var templateID = vm.isManufacturer ? 'productConfirmation' : 'materialConfirmation';
-                            ngDialog.open({
-                                scope: $scope,
-                                width: 600,
-                                className: 'ngdialog-theme-default confirmation-box',
-                                template: templateID,
-                                closeByDocument: false,
-                                showClose: false
-                            });
+                            renderProductLineage(ngDialog, $scope, templateID, 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -6539,7 +6735,7 @@ angular.module('productModule')
 
 
                     /****** below needs to be change. Hardcoded for demo */
-                    if(vm.isManufacturer){
+                    if (vm.isManufacturer) {
                         //Making delete service call
                         productServiceAPI
                             .productDelete({ productId: data.id })
@@ -6559,7 +6755,7 @@ angular.module('productModule')
 
 
                     /****** below needs to be change. Hardcoded for demo */
-                    if(vm.isProducer){
+                    if (vm.isProducer) {
                         //Making delete service call
                         productServiceAPI
                             .materialDelete({ productId: data.id })
@@ -6576,15 +6772,36 @@ angular.module('productModule')
                                 $log.error(appConstants.FUNCTIONAL_ERR, e);
                             });
                     }
-
-                    /********************************************************************** */
-
-
-
-
-
-
                 });
+                /********************************************************************** */
+
+
+
+                /************** Product Lineage functionality *********************/
+                // isShipped value will be 'no'  for manufacturer
+                $scope.serviceData = { data: { product: { isShipped: 'no', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }] } } };
+                $scope.lineageData = $scope.serviceData.data;
+                $scope.lineageSubData = $scope.lineageData.product.items[0];
+                $scope.lineageSubMaterialData = $scope.lineageData.product.items;
+
+                vm.showProductLineage = function () {
+                    /****************Retailer************************/
+                    if ($scope.lineageData.product.isShipped == 'yes') {
+                        $scope.isShipped = true;
+                        $scope.isShippedToRetailer = true;
+
+                        /****************Manufacturer************************/
+                    } else if ($scope.lineageData.product.isShipped == 'no') {
+                        $scope.isShipped = false;
+                        $scope.isShippedToRetailer = false;
+                    }
+                    else {
+                        $scope.isShipped = true;
+                        $scope.isShippedToRetailer = false;
+                    }
+                    renderProductLineage(ngDialog, $scope, 'externalTemplate.html', '60%', true, 'ngdialog-theme-default lineage-box');
+                };
+                /*************************************************************** */
 
             } catch (e) {
                 console.log(appConstants.FUNCTIONAL_ERR, e);
@@ -6599,6 +6816,16 @@ function displayModelDialog(ngDialog, $scope, templateID) {
         closeByDocument: false
     });
 
+};
+
+function renderProductLineage(ngDialog, scope, templateID, width, showClose, className) {
+    return ngDialog.open({
+        scope: scope,
+        width: width,
+        template: templateID,
+        showClose: showClose,
+        className: className
+    });
 };
 /*
 **  product Controller for handling user based 
@@ -6624,6 +6851,7 @@ angular.module('productModule')
                 vm.isRetailer = userModel.isRetailer();
                 vm.isAdmin = userModel.isAdmin();
                 vm.product = productModel.getProduct();
+                vm.userQuantity = "";
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
@@ -6639,25 +6867,36 @@ angular.module('productModule')
                         { id: 4, label: "Manufacturer4" }];
                 }
 
-                $scope.redirectUser = function(flag){
+                $scope.redirectUser = function (flag) {
                     ngDialog.close();
                     var userReq = {
-                        id : vm.isManufacturer ? 'retailer' : vm.isProducer ? 'manufacturer' : ''
+                        id: vm.isManufacturer ? 'retailer' : vm.isProducer ? 'manufacturer' : ''
                     }
                     userServiceAPI
-                            .login(userReq)
-                            .then(function(response){
-                                userModel.setUser(response.user);
-                                $state.go('acknowledge');
-                            }, function(err){
-                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
-                            })
-                            .catch(function(e){
-                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
-                            });
+                        .login(userReq)
+                        .then(function (response) {
+                            userModel.setUser(response.user);
+                            $state.go('acknowledge');
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        });
                 };
 
                 vm.doProductShipment = function () {
+
+                    if (!(isNaN(parseInt(vm.userQuantity, 10)))) {
+                        if (parseInt(vm.userQuantity) > parseInt(vm.product.quantity)) {
+                            showWarning(ngDialog, 'warningBox', '42%', false);
+                            return;
+                        }
+                    } else {
+                        showWarning(ngDialog, 'warningBox', '42%', false);
+                        return;
+                    }
+                    vm.product.quantity = vm.userQuantity;
                     // do Product/material shipment
                     productServiceAPI
                         .shipProduct(vm.product)
@@ -6669,15 +6908,16 @@ angular.module('productModule')
                             $rootScope.SUCCESS_MSG = "Product has been shipped successfully";
                             */
                             //displayModelDialog(ngDialog, $scope, '');
-                            
-                            $scope.randomToken = 'LFG' + (Math.floor(Math.random()*90000) + 10000) + '';
+                            //Hardcoded. Need to remove
+                            $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
+                            $scope.quality = response.quality;
                             var templateID = vm.isManufacturer ? 'productShipConfirmation' : 'materialShipConfirmation';
                             ngDialog.open({
                                 scope: $scope,
                                 width: 600,
-                                template: templateID,
-                                closeByDocument: false,
+                                showClose: true,
+                                template: templateID
                             });
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -6687,10 +6927,62 @@ angular.module('productModule')
                         });
                 };
 
+
+
+
+                /***** Product Lineage functionality */
+                // isShipped value will be 'pending' for manufacturer
+                //Hardcoded. Need to remove
+                $scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }] } } };
+                $scope.lineageData = $scope.serviceData.data;
+                $scope.lineageSubData = $scope.lineageData.product.items[0];
+                $scope.lineageSubMaterialData = $scope.lineageData.product.items;
+
+                vm.showProductLineage = function () {
+                    if ($scope.lineageData.product.isShipped === 'yes') {
+                        $scope.isShipped = true;
+                        $scope.isShippedToRetailer = true;
+                    } else if ($scope.lineageData.product.isShipped === 'no') {
+                        $scope.isShipped = false;
+                        $scope.isShippedToRetailer = false;
+                    }
+                    else {
+                        $scope.isShipped = true;
+                        $scope.isShippedToRetailer = false;
+                    }
+
+                    var dialog = ngDialog.open({
+                        scope: $scope,
+                        width: '60%',
+                        showClose: true,
+                        template: 'externalTemplate.html',
+                        className: 'ngdialog-theme-default lineage-box'
+                    });
+                };
+
+
+                vm.verifyQuantity = function () {
+
+                }
+
+
+                /*************************************************************** */
+
+
+
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }]);
+
+function showWarning(ngDialog, templateID, width, showClose) {
+    ngDialog.open({
+        width: width,
+        template: templateID,
+        showClose: showClose
+    });
+};
+
 
 function displayModelDialog(ngDialog, scope, templateID) {
     ngDialog.open({
@@ -6708,19 +7000,25 @@ function displayModelDialog(ngDialog, scope, templateID) {
 
 angular.module('searchModule')
     // searchController for tracking shipment details
-    .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope', '$scope', '$stateParams', 'userInfo',
-        function ($state, appConstants, userModel, $log, $rootScope, $scope, $stateParams, userInfo) {
+    .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope',
+        '$scope', '$stateParams', 'userInfo', 'shipmentList', 'productModel',
+        function ($state, appConstants, userModel, $log, $rootScope,
+            $scope, $stateParams, userInfo, shipmentList, productModel) {
             try {
                 var vm = this;
-                vm.searchQuery = ''; 
+                vm.searchQuery = '';
                 vm.user = userModel.getUser();
-                
+
                 // Only for demo instance
-                if(userInfo.user){
+                if (userInfo.user) {
                     vm.user = userInfo.user;
                     userModel.setUser(userInfo.user);
                 }
 
+                vm.isManufacturer = userModel.isManufacturer();
+                vm.isProducer = userModel.isProducer();
+                vm.isRetailer = userModel.isRetailer();
+                vm.isAdmin = userModel.isAdmin();
                 //Capturing broadcasted event from qrCodeReader directive to retreive User info read from uploaded QR img.
                 $scope.$on('readQR', function (event, trackInfo) {
                     $rootScope.hasError = false;
@@ -6739,6 +7037,31 @@ angular.module('searchModule')
                 };
                 /******************************* */
 
+
+
+                productModel.resetProduct();
+                vm.product = productModel.getProduct();
+                //Populating shipment details on load based on shipmentDetails resolve
+                //shipmentList will be 'null' for other than producer/manufacturer
+                if(shipmentList){
+                    shipmentList
+                        .$promise
+                        .then(function (response) {
+                            productModel.setProductList(response);
+                            vm.list = productModel.getProductList();
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                }
+
+
+
+
+
+
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
@@ -6751,7 +7074,7 @@ angular.module('searchModule')
                 var vm = this;
                 productModel.resetProduct();
                 vm.product = productModel.getProduct();
-                vm.tokenID = ($stateParams.id && $stateParams.id !== '') ? $stateParams.id : ''; 
+                vm.tokenID = ($stateParams.id && $stateParams.id !== '') ? $stateParams.id : '';
 
                 //Populating shipment details on load based on shipmentDetails resolve
                 shipmentDetails
@@ -6789,13 +7112,18 @@ angular.module('searchModule')
 
     //Registering shipment track url
     .value('shipmentUrl', {
-        'track': 'asset/data/track.json' // TO-DO replace with WEB API URL
+        'track': 'asset/data/track.json', // TO-DO replace with WEB API URL
+        'productShipments': 'asset/data/productShipmentList.json', // TO-DO replace with WEB API URL
+        'materialShipments': 'asset/data/materialShipmentList.json' // TO-DO replace with WEB API URL
     })
 
     //Configuring resource for making service call
     .service('trackResource', ['$resource', 'shipmentUrl', '__ENV', function ($resource, shipmentUrl, __ENV) {
         return $resource('', {}, {
-            trackShipment: { url: __ENV.apiUrl + shipmentUrl.track, method: "GET" }
+            trackShipment: { url: __ENV.apiUrl + shipmentUrl.track, method: "GET" },
+            /****** below needs to be change. Hardcoded for demo */
+            productShipmentRecords: { url: __ENV.apiUrl + shipmentUrl.productShipments, method: "GET", isArray: true },
+            materialShipmentRecords: { url: __ENV.apiUrl + shipmentUrl.materialShipments, method: "GET", isArray: true }  
         });
     }])
 
@@ -6817,6 +7145,43 @@ angular.module('searchModule')
             }
             return deferred.promise;
         };
+
+        /****** below needs to be change. Hardcoded for demo */
+        this.getProductShipmentList = function (user) {
+            var deferred = $q.defer();
+            try {
+                trackResource
+                    .productShipmentRecords(user)
+                    .$promise
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+            } catch (e) {
+                $log.error(appConstants.FUNCTIONAL_ERR, e);
+            }
+            return deferred.promise;
+        };
+
+        /****** below needs to be change. Hardcoded for demo */
+        this.getMaterialShipmentList = function (user) {
+            var deferred = $q.defer();
+            try {
+                trackResource
+                    .materialShipmentRecords(user)
+                    .$promise
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+            } catch (e) {
+                $log.error(appConstants.FUNCTIONAL_ERR, e);
+            }
+            return deferred.promise;
+        };
+
     }]);
 /*
 **  userController for handling user login/registration business logic 
@@ -7033,7 +7398,7 @@ angular.module('userModule')
                         response.user.userName = 'Azim';
                         response.user.userProfile.id = 'MANUFACT';
                         response.user.userProfile.profile = 'Manufacturer';
-                        response.user.userProfile.alias = "Retailer";
+                        response.user.userProfile.alias = "Manufacturer";
                     }
                     if(angular.equals(user.id, 'retailer')){
                         response.user.userName = 'Macy';
