@@ -59,6 +59,9 @@ body {
   margin-top: 5px;
   padding-left: 0px;
 }
+.colorLightBlue {
+  color: #00bfff;
+}
 .rawMaterialRegistration .formLabel {
   margin-top: 5px;
   padding-left: 0px;
@@ -432,9 +435,6 @@ header .sideMenuPanel .list ul li a:hover {
   white-space: normal;
 }
 /*Side Menu*/
-.manageProducts {
-  margin-top: 20px;
-}
 .manageProducts .prodList {
   overflow-x: auto;
   padding-left: 20px;
@@ -508,6 +508,12 @@ header .sideMenuPanel .list ul li a:hover {
 }
 .commonTable td.location-td-29px {
   padding-left: 29px;
+}
+.commonTable td a.tokenLink {
+  cursor: pointer !important;
+  color: #5b9bd5 !important;
+  font-weight: 600;
+  text-decoration: underline;
 }
 #wrapper {
   min-height: 100%;

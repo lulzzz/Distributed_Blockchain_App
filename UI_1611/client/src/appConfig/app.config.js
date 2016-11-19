@@ -29,7 +29,8 @@ angular
 
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
-
+        
+        //Configure default ngDialog settings
         ngDialogProvider.setDefaults({
             className: 'ngdialog-theme-default',
             showClose: false,

@@ -112,7 +112,8 @@ angular.module('productModule')
                 editProduct: '&?',
                 viewProduct: '&?',
                 deleteProduct: '&?',
-                procureProduct: '&?'
+                procureProduct: '&?',
+                showProductLineage: '&?'
             },
             link: function (scope, element, attrs) {
             },
@@ -120,10 +121,6 @@ angular.module('productModule')
                 var self = this;
                 self.userProfile = populateUserProfile(userModel);
                 self.customConfigParams = createUsingFullOptions();
-
-                self.showProductLineage = function (d) {
-                    $scope.$emit('productLineage', { data: d });
-                }
 
                 /************************************************** */
 
@@ -170,7 +167,6 @@ angular.module('searchModule')
             link: function (scope, element, attrs) {
             },
             controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel) {
-                console.log($scope);
                 var self = this;
                 self.userProfile = populateUserProfile(userModel);
                 self.customConfigParams = createUsingFullOptions();

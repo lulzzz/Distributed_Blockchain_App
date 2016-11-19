@@ -38,7 +38,7 @@ angular.module('bverifyApp')
         }
     }])
     
-       //Directive for rendering delete box section
+     //Directive for rendering delete box section
     .directive('dialogDelete',[function () {
         return {
             restrict: 'E',

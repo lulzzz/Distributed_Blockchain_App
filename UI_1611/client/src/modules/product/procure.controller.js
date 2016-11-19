@@ -72,8 +72,7 @@ angular.module('productModule')
                 $scope.lineageSubData = $scope.lineageData.product.items[0];
                 $scope.lineageSubMaterialData = $scope.lineageData.product.items;
 
-
-                $scope.$on('productLineage', function(event, msg) {
+                vm.showProductLineage = function(data){
                     if ($scope.lineageData.product.isShipped === 'yes') {
                         $scope.isShipped = true;
                         $scope.isShippedToRetailer = true;
@@ -86,7 +85,7 @@ angular.module('productModule')
                         $scope.isShippedToRetailer = false;
                     }
                     renderProductLineage(ngDialog, $scope, 'productLineageBox', '70%', true, 'ngdialog-theme-default lineage-box');
-                });
+                };
 
                 /*************************************************************** */
 

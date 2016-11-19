@@ -165,7 +165,7 @@ angular.module('productModule')
                 $scope.lineageSubData = $scope.lineageData.product.items[0];
                 $scope.lineageSubMaterialData = $scope.lineageData.product.items;
 
-                vm.showProductLineage = function() {
+                vm.showProductLineage = function(data) {
                     /****************Retailer************************/
                     if ($scope.lineageData.product.isShipped == 'yes') {
                         $scope.isShipped = true;

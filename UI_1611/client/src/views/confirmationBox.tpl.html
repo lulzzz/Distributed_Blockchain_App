@@ -1,23 +1,40 @@
 <script type="text/ng-template" id="confirmationBox">
-	<legend class="legendHead" style="padding-bottom: 5px;">CONFIRMATION</legend>
-	<div class="col-lg-12 col-xs-12 noPadding">
-		<div ng-if="$parent.isShipmentScreen" class="col-lg-8 col-xs-8 noPaddingLeft">The shipment for {{$parent.entity}} &quot;{{$parent.name}} - {{$parent.quality}}&quot; has been initiated and a token ID has been generated.</div>
-        <div ng-if="$parent.isRegisterScreen" class="col-lg-8 col-xs-8 noPaddingLeft">The {{$parent.entity}} &quot;{{$parent.name}}&quot; has been blockchain-ed in the b-verify app and a token has been generated.</div>
-		<div class="col-lg-4 col-xs-4 noPadding">
-			<img src="asset/images/user_qr.png" class="" style="position: relative;top:0px;width:70px"/>
-			<div>Token : {{$parent.randomToken}}</div>
-		</div>
-	</div>
-	<div style="clear:both"></div>
-		<div ng-if="$parent.isShipmentScreen" class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
-		<a ng-click="redirectUser(true)" class="cursorPointer"><u class="colorLightBlue">OK</u></a>
-	</div>
+    <legend class="legendHead" style="padding-bottom: 5px;">CONFIRMATION</legend>
+    <div class="col-lg-12 col-xs-12 noPadding">
+        <div ng-if="$parent.isShipmentScreen" class="col-lg-8 col-xs-8 noPaddingLeft">The shipment for {{$parent.entity}} &quot;{{$parent.name}} - {{$parent.quality}}&quot; has been initiated and a token
+            ID has been generated.</div>
+        <div ng-if="$parent.isRegisterScreen" class="col-lg-8 col-xs-8 noPaddingLeft">The {{$parent.entity}} &quot;{{$parent.name}}&quot; has been blockchain-ed in the b-verify app and a token has been
+            generated.</div>
+        <div class="col-lg-4 col-xs-4 noPadding userQRCode">
+            <!--<a download="asset/images/user_qr.png"><img src="asset/images/user_qr.png" class="" style="position: relative;top:0px;width:70px"/> </a>
+			<div>Token : {{$parent.randomToken}}</div>-->
+            <ul>
+                <li>
+                    <i style="font-size: 12px;">Click on image to Download</i>
+                </li>
+                <li style="padding-top: 6px;">
+                    <qrcode version="5" error-correction-level="M" size="80" data="{{$parent.randomToken}}" download></qrcode>
+                </li>
+                <li>
+                    <span class="fontBold">Token : {{$parent.randomToken}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <div ng-if="$parent.isShipmentScreen" class="col-lg-12 col-xs-12 noPaddingLeft text-center" >
+        <a ng-click="redirectUser(true)" class="cursorPointer"><u class="colorLightBlue">OK</u></a>
+    </div>
     <div ng-if="$parent.isRegisterScreen && $parent.vm.isProducer" class="col-lg-12 col-xs-12 noPaddingLeft" style="padding-top:20px;">
-		Click <a  ng-click="redirectUser(true)" class="cursorPointer"> <u class="colorLightBlue">REGISTER Materials</u> </a> to register more materials or  <a class="cursorPointer" ng-click="redirectUser(false)"><u class="colorLightBlue">Ship Materials</u> </a> to transfer registered materials to  a manufacturer
-	</div>
+        Click
+        <a ng-click="redirectUser(true)" class="cursorPointer"> <u class="colorLightBlue">REGISTER Materials</u> </a> to register more materials or
+        <a class="cursorPointer" ng-click="redirectUser(false)"><u class="colorLightBlue">Ship Materials</u> </a> to transfer registered materials to a manufacturer
+    </div>
     <div ng-if="$parent.isRegisterScreen && $parent.vm.isManufacturer" class="col-lg-12 col-xs-12 noPaddingLeft" style="padding-top:20px;">
-		Click <a ng-click="redirectUser(true)" class="cursorPointer"> <u class="colorLightBlue">REGISTER Products</u></a> to register more products or  
-		<a class="cursorPointer" ng-click="redirectUser(false)"><u class="colorLightBlue">Ship Products</u></a> to transfer registered materials to  a manufacturer
-	</div>
-	<div style="clear:both"></div>
+        Click
+        <a ng-click="redirectUser(true)" class="cursorPointer"> <u class="colorLightBlue">REGISTER Products</u></a> to register more products or
+        <a class="cursorPointer" ng-click="redirectUser(false)"><u class="colorLightBlue">Ship Products</u></a> to transfer
+        registered materials to a manufacturer
+    </div>
+    <div style="clear:both"></div>
 </script>

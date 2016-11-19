@@ -9,7 +9,7 @@ angular
     .module('appRoute', ['ui.router'])
 
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        function($stateProvider, $urlRouterProvider, $locationProvider) {
 
             $urlRouterProvider.otherwise('/home');
 
@@ -29,7 +29,7 @@ angular
 
                         // the child views will be defined here (absolutely named)
                         'shipmentList@home': {
-                            templateProvider: function (userModel, $templateFactory) {
+                            templateProvider: function(userModel, $templateFactory) {
                                 if (userModel.isManufacturer() || userModel.isProducer()) {
                                     return $templateFactory.fromUrl('../modules/search/searchList.tpl.html');
                                 }
@@ -44,14 +44,11 @@ angular
                     },
                     /****** below needs to be change. This has to be justify more when service gets ready */
                     resolve: {
-                        userInfo: function ($stateParams, userServiceAPI, searchServiceAPI, userModel) {
+                        userInfo: function($stateParams, userServiceAPI, searchServiceAPI, userModel) {
                             return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
                         },
-                        shipmentList: function ($stateParams, searchServiceAPI, userModel, userInfo) {
+                        shipmentList: function($stateParams, searchServiceAPI, userModel, userInfo) {
                             userModel.setUser(userInfo.user);
-                            if (userModel.isRetailer() || userModel.isAdmin()) {
-                                return null;
-                            }
                             if (userModel.isProducer()) {
                                 return searchServiceAPI.getMaterialShipmentList({
                                     userName: userInfo.user.userName,
@@ -81,10 +78,10 @@ angular
                     },
                     //Resolve added to retreive shipmentDetails before loading serachResultController
                     resolve: {
-                        shipmentDetails: function ($stateParams, searchServiceAPI, appConstants) {
-                            if($stateParams.tokenInfo){
+                        shipmentDetails: function($stateParams, searchServiceAPI, appConstants) {
+                            if ($stateParams.tokenInfo) {
                                 return $stateParams.tokenInfo;
-                            }else{
+                            } else {
                                 return searchServiceAPI.search($stateParams.qrCode ? $stateParams.qrCode : $stateParams.id);
                             }
                         }
@@ -125,7 +122,7 @@ angular
                 // PRODUCT REGISTER/SHIPMENT/ACKNOWLEDGMENT STATES
                 .state('product', {
                     url: '/product/register',
-                    templateProvider: function (userModel, $templateFactory) {
+                    templateProvider: function(userModel, $templateFactory) {
                         /*
                         **  Load templates based on user roles. Route URL will be same for every user role.
                         */
@@ -138,7 +135,7 @@ angular
                     },
                     //Resolve added to retreive productList before loading product register screen
                     resolve: {
-                        productList: function (userModel, productServiceAPI) {
+                        productList: function(userModel, productServiceAPI) {
                             var user = userModel.getUser();
 
                             /****** below needs to be change. Hardcoded for demo */
@@ -169,7 +166,7 @@ angular
                 })
                 .state('shipment', {
                     url: '/product/ship',
-                    templateProvider: function (userModel, $templateFactory) {
+                    templateProvider: function(userModel, $templateFactory) {
                         /*
                         **  Load templates based on user roles. Route URL will be same for every user role.
                         */
@@ -188,7 +185,7 @@ angular
                     templateUrl: '../modules/product/product.ack.tpl.html',
                     //Resolve added to retreive productList before loading product acknowledgment screen
                     resolve: {
-                        productList: function (userModel, productServiceAPI) {
+                        productList: function(userModel, productServiceAPI) {
                             var user = userModel.getUser();
 
                             /****** below needs to be change. Hardcoded for demo */
@@ -224,12 +221,12 @@ angular
 
 
     .run(['$rootScope', 'userModel', '$state', 'appConstants', '$log',
-        function ($rootScope, userModel, $state, appConstants, $log) {
+        function($rootScope, userModel, $state, appConstants, $log) {
 
             $log.debug('appRoute bootstrapped!');
 
             $rootScope.$on('$stateChangeStart',
-                function (event, toState, toParams, fromState, fromParams) {
+                function(event, toState, toParams, fromState, fromParams) {
                     try {
                         $rootScope.activeMenu = toState.url;
                         $rootScope.hasError = false;
@@ -251,7 +248,7 @@ angular
                     }
                 });
 
-            $rootScope.reset = function () {
+            $rootScope.reset = function() {
                 $rootScope.hasError = false;
                 $rootScope.isSuccess = false;
             };
