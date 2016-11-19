@@ -28,7 +28,7 @@ angular.module('bverifyApp')
         }
     }])
     
-        //Directive for rendering warning box section
+    //Directive for rendering product lineage box section
     .directive('dialogProductLineage',[function () {
         return {
             restrict: 'E',
@@ -37,3 +37,13 @@ angular.module('bverifyApp')
             }
         }
     }])
+    
+       //Directive for rendering delete box section
+    .directive('dialogDelete',[function () {
+        return {
+            restrict: 'E',
+            templateUrl: '../views/deleteConfirmation.tpl.html',
+            link: function (scope, element, attrs) {
+            }
+        }
+    }]);

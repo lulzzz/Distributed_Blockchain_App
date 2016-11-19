@@ -133,7 +133,8 @@
 </div>
 
 <!-- Directive for redning all pervious regsitered materials inside table -->
-<app-productlist ng-if="vm.isManufacturer" list="vm.list" title="MANAGE PRODUCTS" is-register-screen="new Boolean(true)"></app-productlist>
+<app-productlist ng-if="vm.isManufacturer" list="vm.list" title="MANAGE PRODUCTS" is-register-screen="new Boolean(true)"
+    edit-product="vm.editProduct(data)" view-product="vm.viewProduct(data)" delete-product="vm.deleteProduct(data)"></app-productlist>
 
 </div>
 
@@ -156,6 +157,8 @@
 </script> -->
 
 
+
+<dialog-delete></dialog-delete>
 
 <!-- Directive for displaying confirmation box -->
 <dialog-confirmation is-register-screen="true"></dialog-confirmation>

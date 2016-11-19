@@ -86,7 +86,7 @@
 					<button type="submit" ng-disabled="vm.isReadonly" class="btn btn-primary registerBtn">REGISTER RAW MATERTIAL</button>
 				</div>
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
-					<button type="reset" ng-disabled="vm.isReadonly" ng-click="reset()" class="btn btn-primary registerBtn">RESET</button>
+					<button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">RESET</button>
 				</div>
 			</form>
 		</div>
@@ -102,6 +102,7 @@
 <side-menu user="vm.user"></side-menu>
 
 
+<dialog-delete></dialog-delete>
 
 <!-- Directive for displaying confirmation box -->
 <dialog-confirmation is-register-screen="true" /></dialog-confirmation>

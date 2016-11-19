@@ -10,6 +10,7 @@
 @color-side-menu: #A0A0A0;/*grey*/
 @color-text: #727272;
 @color-text-end-user:#5B9BD5; 
+@color-light-blue: #00BFFF;
 
 html {
 	height: 100%;	
@@ -90,6 +91,9 @@ body {
 .formLabel1 {
 	.setMarginTop(5px);
 	padding-left:0px;
+}
+.colorLightBlue{
+    color: @color-light-blue;
 }
 .rawMaterialRegistration {
 	.formLabel{
@@ -469,7 +473,7 @@ header {
 
 /*Side Menu*/
 .manageProducts {
-	.setMarginTop(20px);
+	//.setMarginTop(20px);
 	.prodList {
 		overflow-x:auto;
 		padding-left: 20px;
@@ -549,6 +553,12 @@ header {
 		 td.location-td-29px{
 			 padding-left: 29px;
 		 }
+         td a.tokenLink{
+             .setCursor(pointer) !important;
+             color: @color-text-end-user !important;
+             font-weight: 600;
+             text-decoration: underline;
+         }
 }
 
 #wrapper {

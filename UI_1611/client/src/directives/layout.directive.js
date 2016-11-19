@@ -31,7 +31,7 @@ angular.module('bverifyApp')
         }
     })
 
-    //Directive for rendering module section
+    //Directive for rendering legend section
     .directive('appLegend', function () {
         return {
             restrict: 'E',
@@ -45,9 +45,9 @@ angular.module('bverifyApp')
         }
     })
     
-    //Directive for QR code uploader/reader. Login screen
-    .directive('qrCodeReader', ['$rootScope', 'userModel', 'appConstants', '$log',
-        function ($rootScope, userModel, appConstants, $log) {
+    //Directive for QR code uploader/reader.
+    .directive('qrCodeReader', ['userModel', 'appConstants', '$log', 
+        function (userModel, appConstants, $log) {
 
             return {
                 restrict: 'E',
@@ -60,10 +60,10 @@ angular.module('bverifyApp')
                         qr.callback = function (result, err) {
                             if (result) {
                                 //Broadcasting event and data user info after successfull reading of QR code
-                                $rootScope.$broadcast('readQR', result);
+                                scope.$emit('readQR', result);
                             }
                             else {
-                                $rootScope.$broadcast('QRError');
+                                scope.$emit('QRError');
                                 console.log(appConstants.FUNCTIONAL_ERR, err);
                             }
                         };

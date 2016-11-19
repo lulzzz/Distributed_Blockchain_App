@@ -76,12 +76,17 @@ angular
                     templateUrl: '../modules/search/searchResult.tpl.html',
                     params: {
                         id: '',
-                        trackInfo: null
+                        qrCode: null,
+                        tokenInfo: null
                     },
                     //Resolve added to retreive shipmentDetails before loading serachResultController
                     resolve: {
                         shipmentDetails: function ($stateParams, searchServiceAPI, appConstants) {
-                            return searchServiceAPI.search($stateParams.trackInfo ? $stateParams.trackInfo : $stateParams.id);
+                            if($stateParams.tokenInfo){
+                                return $stateParams.tokenInfo;
+                            }else{
+                                return searchServiceAPI.search($stateParams.qrCode ? $stateParams.qrCode : $stateParams.id);
+                            }
                         }
                     },
                     controllerAs: 'vm',
@@ -92,7 +97,7 @@ angular
                     url: '/register',
                     templateUrl: '../modules/user/register.tpl.html',
                     controllerAs: 'vm',
-                    controller: 'userController'
+                    controller: 'registerController'
                 })
                 .state('login', {
                     url: '/login',
@@ -103,7 +108,7 @@ angular
                     },
                     /*************************************** */
                     controllerAs: 'vm',
-                    controller: 'userController'
+                    controller: 'loginController'
                 })
                 .state('logout', {
                     url: '/home',

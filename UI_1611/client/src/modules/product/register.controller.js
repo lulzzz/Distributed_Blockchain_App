@@ -7,24 +7,10 @@
 
 angular.module('productModule')
 
-    //For dashboard of logged in user
-    .controller('dashboardController', ['userModel', 'appConstants', '$state', '$rootScope', 'productServiceAPI', '$log',
-        function (userModel, appConstants, $state, $rootScope, productServiceAPI, $log) {
-            try {
-                var vm = this;
-                vm.user = userModel.getUser();
-                setUserProfile(vm, userModel);
-                $rootScope.isLoggedIn = userModel.isLoggedIn();
-
-            } catch (e) {
-                $log.error(appConstants.FUNCTIONAL_ERR, e);
-            }
-        }])
-
     //For new product/material resgistration
     .controller('productRegisterController', ['userModel', 'appConstants', '$state', '$rootScope',
         'productServiceAPI', '$log', 'productModel', 'productList', '$scope', 'ngDialog',
-        function (userModel, appConstants, $state, $rootScope,
+        function(userModel, appConstants, $state, $rootScope,
             productServiceAPI, $log, productModel, productList, $scope, ngDialog) {
             try {
                 var vm = this;
@@ -43,20 +29,20 @@ angular.module('productModule')
                 //Populating list of Products on load based on productList resolve
                 productList
                     .$promise
-                    .then(function (response) {
+                    .then(function(response) {
                         productModel.setProductList(response);
                         vm.list = productModel.getProductList();
-                    }, function (err) {
+                    }, function(err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
-                    .catch(function (e) {
+                    .catch(function(e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
-                vm.openDatepicker = function () {
+                vm.openDatepicker = function() {
                     vm.datepickerObj.popup.opened = true;
                 };
-                $scope.redirectUser = function (flag) {
+                $scope.redirectUser = function(flag) {
                     ngDialog.close();
                     if (flag) {
                         $state.reload();
@@ -65,18 +51,18 @@ angular.module('productModule')
                         $state.go('shipment', { tokenId: $scope.randomToken });
                     }
                 };
-                
-                
+
+
 
                 /******************* Register new Product/material *************************/
-                vm.registerNewProduct = function () {
+                vm.registerNewProduct = function() {
 
                     /*******For Demo instance. Needs to refactor */
-                     if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
-                            $scope.warningMsg = appConstants.MATERIAL_ADHERED;
-                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
-                            return;
-                    }else {
+                    if (vm.isManufacturer && (vm.userMaterial !== vm.product.materialName)) {
+                        $scope.warningMsg = appConstants.MATERIAL_ADHERED;
+                        showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
+                        return;
+                    } else {
                         vm.product.materialName = vm.userMaterial;
                     }
 
@@ -85,76 +71,90 @@ angular.module('productModule')
 
                     productServiceAPI
                         .registerProduct(req)
-                        .then(function (response) {
+                        .then(function(response) {
                             //vm.product.setData(response);
                             $rootScope.hasError = false;
                             $scope.entity = vm.isManufacturer ? 'product' : 'material';
                             $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.isManufacturer ? response.productName : response.materialName;
                             renderProductLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
-                        }, function (err) {
+                        }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
-                        .catch(function (e) {
+                        .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
 
 
                 /******************* VIEW EDIT registered product *************************/
-                //Capturing broadcasted event from appProductList directive to implement edit/view
-                $scope.$on('edit/view', function (event, msg) {
-                    productModel.setProduct(msg.data);
+                vm.editProduct = function(data) {
+                    productModel.setProduct(data);
                     vm.product = productModel.getProduct();
-                    vm.isReadonly = msg.isEdit ? false : true;
-                });
-
-
-
+                    vm.isReadonly = false;
+                };
+                vm.viewProduct = function(data) {
+                    productModel.setProduct(data);
+                    vm.product = productModel.getProduct();
+                    vm.isReadonly = true;
+                };
+                
+                
+                
+                
                 /******************* DELETE registered product *************************/
-                //Capturing broadcasted event from appProductList directive to implement delete
-                $scope.$on('delete', function (event, data) {
+                vm.deleteProduct = function(data) {
+                    $scope.data = data;
+                    ngDialog.open({
+                        scope: $scope,
+                        template: 'deleteBox'
+                    });
+                    
+                    
+                    $scope.confirmDelete = function() {
+                        ngDialog.close();
+                        
+                        /****** below needs to be change. Hardcoded for demo */
+                        if (vm.isManufacturer) {
+                            //Making delete service call
+                            productServiceAPI
+                                .productDelete({ productId: data.tokenId })
+                                .then(function(response) {
+                                    productModel.setProductList(response);
+                                    vm.list = productModel.getProductList();
+                                    $rootScope.hasError = false;
+                                    $rootScope.isSuccess = true;
+                                    $rootScope.SUCCESS_MSG = vm.isManufacturer ? appConstants.PROD_DELETED : appConstants.MATERIAL_DELETED;
+                                }, function(err) {
+                                    $log.error(appConstants.FUNCTIONAL_ERR, err);
+                                })
+                                .catch(function(e) {
+                                    $log.error(appConstants.FUNCTIONAL_ERR, e);
+                                });
+                        }
 
-                    /****** below needs to be change. Hardcoded for demo */
-                    if (vm.isManufacturer) {
-                        //Making delete service call
-                        productServiceAPI
-                            .productDelete({ productId: data.id })
-                            .then(function (response) {
-                                productModel.setProductList(response);
-                                vm.list = productModel.getProductList();
-                                $rootScope.hasError = false;
-                                $rootScope.isSuccess = true;
-                                $rootScope.SUCCESS_MSG = vm.isManufacturer ? appConstants.PROD_DELETED : appConstants.MATERIAL_DELETED;
-                            }, function (err) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, err);
-                            })
-                            .catch(function (e) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, e);
-                            });
-                    }
 
+                        /****** below needs to be change. Hardcoded for demo */
+                        if (vm.isProducer) {
+                            //Making delete service call
+                            productServiceAPI
+                                .materialDelete({ productId: data.id })
+                                .then(function(response) {
+                                    productModel.setProductList(response);
+                                    vm.list = productModel.getProductList();
+                                    $rootScope.hasError = false;
+                                    $rootScope.isSuccess = true;
+                                    $rootScope.SUCCESS_MSG = vm.isManufacturer ? appConstants.PROD_DELETED : appConstants.MATERIAL_DELETED;
+                                }, function(err) {
+                                    $log.error(appConstants.FUNCTIONAL_ERR, err);
+                                })
+                                .catch(function(e) {
+                                    $log.error(appConstants.FUNCTIONAL_ERR, e);
+                                });
+                        }
+                    };
 
-                    /****** below needs to be change. Hardcoded for demo */
-                    if (vm.isProducer) {
-                        //Making delete service call
-                        productServiceAPI
-                            .materialDelete({ productId: data.id })
-                            .then(function (response) {
-                                productModel.setProductList(response);
-                                vm.list = productModel.getProductList();
-                                $rootScope.hasError = false;
-                                $rootScope.isSuccess = true;
-                                $rootScope.SUCCESS_MSG = vm.isManufacturer ? appConstants.PROD_DELETED : appConstants.MATERIAL_DELETED;
-                            }, function (err) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, err);
-                            })
-                            .catch(function (e) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, e);
-                            });
-                    }
-                });
-                /********************************************************************** */
+                };
 
 
 
@@ -165,7 +165,7 @@ angular.module('productModule')
                 $scope.lineageSubData = $scope.lineageData.product.items[0];
                 $scope.lineageSubMaterialData = $scope.lineageData.product.items;
 
-                vm.showProductLineage = function () {
+                vm.showProductLineage = function() {
                     /****************Retailer************************/
                     if ($scope.lineageData.product.isShipped == 'yes') {
                         $scope.isShipped = true;
@@ -183,13 +183,13 @@ angular.module('productModule')
                     renderProductLineage(ngDialog, $scope, 'productLineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
                 };
 
-                
+
                 /******************* MATERIAL Multiselect functionality *************************/
                 //For material list
                 vm.settings = appConstants.MULTISELECT_SETTINGS;
                 vm.materialList = [];
                 if (vm.isManufacturer) {
-                    vm.dataList = [{ id: 1, label: "Leather - Full Grain" },{ id: 2, label: "Leather - Top Grain" }];
+                    vm.dataList = [{ id: 1, label: "Leather - Full Grain" }, { id: 2, label: "Leather - Top Grain" }];
                 }
 
                 /*************************************************************** */

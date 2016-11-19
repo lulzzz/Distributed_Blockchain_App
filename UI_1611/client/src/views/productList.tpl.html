@@ -12,15 +12,15 @@
                 <td style="padding-left: 10px;"  title="'Registered On'">{{row.registeredDate}}</td>
                 <!-- desktop view --->
                 <td style="padding-left: 10px;"  title="'View / Edit'">
-					<span class="hidden-xs"><a id="{{row.id}}" ng-click="vm.editProduct(row)">Edit</a>
-                                          <a id="{{row.id}}" ng-click="vm.viewProduct(row)">View</a>
-                                          <a id="{{row.id}}" ng-click="vm.deleteProduct(row)">Delete</a>
+					<span class="hidden-xs"><a id="{{row.id}}" ng-click="editProduct({data: row})">Edit</a>
+                                          <a id="{{row.id}}" ng-click="viewProduct({data: row})">View</a>
+                                          <a id="{{row.id}}" ng-click="deleteProduct({data: row})">Delete</a>
                     </span>
                     <!-- mobile view --->
 					<span class="visible-xs text-center">
-					<span id="{{row.id}}" ng-click="vm.editProduct(row)" class="glyphicon glyphicon-edit"></span>
-					<span id="{{row.id}}" ng-click="vm.viewProduct(row)" class="glyphicon glyphicon-info-sign"></span>
-					<span id="{{row.id}}" ng-click="vm.deleteProduct(row)" class="glyphicon glyphicon-remove"></span>
+					<span id="{{row.id}}" ng-click="editProduct({data: row})" class="glyphicon glyphicon-edit"></span>
+					<span id="{{row.id}}" ng-click="viewProduct({data: row})" class="glyphicon glyphicon-info-sign"></span>
+					<span id="{{row.id}}" ng-click="deleteProduct({data: row})" class="glyphicon glyphicon-remove"></span>
 					</span>
 				</td>            
             </tr>
@@ -32,7 +32,7 @@
 <div ng-if="isProcureScreen" class="manageProducts col-lg-12 col-md-10 col-sm-10 col-xs-12">
     <app-legend header="{{title}}"></app-legend> 
 
-<form ng-submit="vm.procureProducts()">
+<form ng-submit="procureProduct({productList: list})">
     <div class="prodList" >
         <script type="text/ng-template" id="headerCheckbox.html">
                 <input type="checkbox" class="" value="" id="" />

@@ -19,8 +19,8 @@ angular.module('productModule')
                 vm.header = vm.isManufacturer ? 'PROCURE RAW MATERIALS' : 'ACKNOWLEDGE PRODUCTS';
                 vm.product = productModel.getProduct();
                 vm.list = [];
-                
-                
+
+
                 /****************** PRODUCT/MATERIAL List to procure */
                 //Populating list of Products on load based on productList resolve
                 productList
@@ -38,10 +38,14 @@ angular.module('productModule')
 
                 /******************* PROCURE List of product/material *************************/
                 /*    TO-DO need to test with actual data and implementation */
-                //Capturing broadcasted event from appProductList directive to implement PROCURE
-                $scope.$on('procureEvent', function(event, msg) {
+
+                vm.procureProduct = function(productList) {
+                    if (productList) {
+                        productModel.setProductList(productList);
+                        vm.list = productModel.getProductList();
+                    }
                     productServiceAPI
-                        .ackProduct(vm.product)
+                        .ackProduct(vm.list)
                         .then(function(response) {
                             $rootScope.isSuccess = true;
                             $rootScope.SUCCESS_MSG = "Selected Products has been acknowledged successfully";
@@ -57,8 +61,7 @@ angular.module('productModule')
                         .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
-                });
-
+                };
 
 
                 /**************Product Lineage functionality **********************/
@@ -82,7 +85,7 @@ angular.module('productModule')
                         $scope.isShipped = true;
                         $scope.isShippedToRetailer = false;
                     }
-                    renderProductLineage(ngDialog, $scope, 'productLineageBox', '70%', true, 'ngdialog-theme-default lineage-box'); 
+                    renderProductLineage(ngDialog, $scope, 'productLineageBox', '70%', true, 'ngdialog-theme-default lineage-box');
                 });
 
                 /*************************************************************** */
