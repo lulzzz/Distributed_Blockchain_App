@@ -16,13 +16,13 @@
                     title="'Port of entry'">
                     <img style="height:20px;" ng-if="row.entryPort.isAvailable" src="asset/images/map_pin.png" /> {{row.entryPort.location}}
                 </td>
-                <td ng-class="{'location-td-8px': row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '',  'location-td-29px': !row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== ''}"
-                    title="'Manufacturer'" ng-class="{'text-center': !row.manufacturerDetail.isAvailable && row.manufacturerDetail.name === '' }">
+                <td ng-class="{'location-td-8px': row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '',  'location-td-29px': !row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '' , 'text-center': !row.manufacturerDetail.isAvailable && row.manufacturerDetail.name === ''}"
+                    title="'Manufacturer'">
                     <img style="height:20px;" ng-if="row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '' "
                         src="asset/images/map_pin.png" /> {{row.manufacturerDetail.name | emptyfy}}
                 </td>
-                <td ng-class="{'location-td-8px': row.retailerDetail.isAvailable && row.retailerDetail.name !== '',  'location-td-29px': !row.retailerDetail.isAvailable && row.retailerDetail.name !== ''}"
-                    title="'Distributor / Retailer'" ng-class="{'text-center': !row.retailerDetail.isAvailable && row.retailerDetail.name === '' }">
+                <td ng-class="{'location-td-8px': row.retailerDetail.isAvailable && row.retailerDetail.name !== '',  'location-td-29px': !row.retailerDetail.isAvailable && row.retailerDetail.name !== '','text-center': !row.retailerDetail.isAvailable && row.retailerDetail.name === ''}"
+                    title="'Distributor / Retailer'">
                     <img style="height:20px;" ng-if="row.retailerDetail.isAvailable && row.retailerDetail.name !== '' " src="asset/images/map_pin.png"/>
                     {{row.retailerDetail.name | emptyfy}}
                 </td>

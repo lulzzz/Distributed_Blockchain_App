@@ -50,13 +50,13 @@ angular.module('userModule')
                      *  It's a temporary solution. This has to be removed in future once WEB API is up
                      */
                     if(angular.equals(user.id, 'manufacturer')){
-                        response.user.userName = 'Azim';
+                        response.user.userName = 'Coach';
                         response.user.userProfile.id = 'MANUFACT';
                         response.user.userProfile.profile = 'Manufacturer';
                         response.user.userProfile.alias = "Manufacturer";
                     }
                     if(angular.equals(user.id, 'retailer')){
-                        response.user.userName = 'Macy';
+                        response.user.userName = 'Walmart';
                         response.user.userProfile.id = 'RETAIL';
                         response.user.userProfile.profile = 'Retailer';
                         response.user.userProfile.alias = "Retailer";

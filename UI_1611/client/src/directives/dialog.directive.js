@@ -9,11 +9,13 @@ angular.module('bverifyApp')
             templateUrl: '../views/confirmationBox.tpl.html',
             scope:{
                 isShipmentScreen: '@?',
-                isRegisterScreen: '@?'
+                isRegisterScreen: '@?',
+				isProcureScreen :'@?'
             },
             link: function (scope, element, attrs) {
                  scope.$parent.isShipmentScreen = scope.isShipmentScreen;
                  scope.$parent.isRegisterScreen = scope.isRegisterScreen;
+				 scope.$parent.isProcureScreen = scope.isProcureScreen;
             }
         }
     }])

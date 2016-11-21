@@ -11,21 +11,26 @@
 		<div class="col-lg-2 col-xs-2 noPadding">
 			<div><span class="borderGreenLeft"></span><span class="borderGreen"></span><span class="borderGreenRight"></span></div>
 			<div class="img-responsive"><img src="asset/images/dataLineage1.png" style="width:90%"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>{{lineageSubData.name}}</div>
-				<div>Mfg on: {{lineageSubData.mfgDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>{{lineageSubData.name}}</div>
+					<div>Mfg on: {{lineageSubData.mfgDate}}</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-2 col-xs-2 noPadding">
 			<div><span class="borderGreenLeft" style="border-color:#00B0F0;"></span><span class="borderGreen" style="border-color:#00B0F0;"></span><span style="border-color:#00B0F0;" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>{{lineageSubData.name}}</div>
-				<div>Mfg on: {{lineageSubData.mfgDate}}</div>
-				<div>Shipped on: {{lineageSubData.shipmentDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>{{lineageSubData.name}}</div>
+					<div>Mfg on: {{lineageSubData.mfgDate}}</div>
+					<div>Shipped on: {{lineageSubData.shipmentDate}}</div>
+				</div>
 			</div>
+			
 		</div>
 		<div class="col-lg-1 col-xs-1 noPadding">
 			<img class="smartContractManufactutrer" src="asset/images/smartContract.png"/>
@@ -36,31 +41,36 @@
 			<!--<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-100px"></span><span class="borderGreenRight" style="right:-108px;"></span></div>-->
 			<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-10px"></span></div>
 			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>Manufacturer</div>
-				<div ng-repeat="data in lineageSubMaterialData">
-					<div class=""><strong>{{data.name}}</strong></div>
-					<div>Mfg on: {{data.mfgDate}}</div>
-					<div>Received on: {{data.receivedDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>Manufacturer</div>
+					<div ng-repeat="data in lineageSubMaterialData">
+						<div class=""><strong>{{data.name}}</strong></div>
+						<div>Mfg on: {{data.mfgDate}}</div>
+						<div>Received on: {{data.receivedDate}}</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-1 col-xs-1 noPadding" style="width:4.5%" ng-class="{ifManufacturer: isShipped == false}" >
+		<div class="col-lg-1 col-xs-1 noPadding" style="width:4.5%" ng-class="{ifManufacturer: isShipped == false}">
 			<div><span style="left:0px;" class="borderGreen"></span><span style="" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center">
 				<img class="smartContractManufactutrer" src="asset/images/smartContract.png" ng-class="{leftTo10: isShipped == true}"/>
-				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="!isShipped" style="width:20px;height:20px;position:absolute;left:20px;z-index:9;top:75px;"/>
+				<!-- ngIf=!shipped for cross image -->
+				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="false" style="width:20px;height:20px;position:absolute;left:16px;z-index:9;top:55px;"/>
 				<img class="middleImagesSmall" src="asset/images/dataLineage4.png" style="width:35px;height:35px;" ng-class="{leftTo0:isShipped == false}"/>
 			</div>
 		</div>
 		<div class="col-lg-2 col-xs-2 noPadding">
 			<div ng-if="isShippedToRetailer"><span class="borderGreenLeft" style="border-color:#00B0F0;"></span><span class="borderGreen" style="border-color:#00B0F0;"></span></div>
 			<div class="img-responsive text-center"><img src="asset/images/dataLineage5.png"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>Manufacturer</div>
-				<div>Mfg on: {{lineageData.product.mfgDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>Manufacturer</div>
+					<div>Mfg on: {{lineageData.product.mfgDate}}</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-1 col-xs-1 noPadding" style="width:4.5%" ng-if="isShippedToRetailer">
@@ -71,11 +81,13 @@
 		<div class="col-lg-2 col-xs-2 noPadding" style="width:16%" ng-if="isShippedToRetailer">
 			<img class="smartContractManufactutrer" src="asset/images/smartContract.png" style="left:50px;"/>
 			<div class="img-responsive text-right"><img src="asset/images/dataLineage7.png"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>Retailer</div>
-				<div>Mfg on: {{lineageData.product.mfgDate}}</div>
-				<div>Received on: {{lineageData.product.receivedDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>Retailer</div>
+					<div>Mfg on: {{lineageData.product.mfgDate}}</div>
+					<div>Received on: {{lineageData.product.receivedDate}}</div>
+				</div>
 			</div>
 		</div>
 </div>
@@ -85,20 +97,24 @@
 	<div class="col-lg-2 col-xs-2 noPadding">
 			<div><span class="borderGreenLeft"></span><span class="borderGreen"></span><span class="borderGreenRight"></span></div>
 			<div class="img-responsive"><img src="asset/images/dataLineage9.png" style="width:90%"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>{{data.name}}</div>
-				<div>Mfg on: {{data.mfgDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>{{data.name}}</div>
+					<div>Mfg on: {{data.mfgDate}}</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-2 col-xs-2 noPadding">
 			<div><span class="borderGreenLeft" style="border-color:#00B0F0;"></span><span class="borderGreen" style="border-color:#00B0F0;right:-20px"></span></div>
 			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png"/></div>
-			<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
-			<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
-				<div>{{data.name}}</div>
-				<div>Mfg on: {{data.mfgDate}}</div>
-				<div>Shipped on: {{data.shipmentDate}}</div>
+			<div class="dataDetails">
+				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
+				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
+					<div>{{data.name}}</div>
+					<div>Mfg on: {{data.mfgDate}}</div>
+					<div>Shipped on: {{data.shipmentDate}}</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-1 col-xs-1 noPadding">

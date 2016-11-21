@@ -545,6 +545,10 @@ header .sideMenuPanel .list ul li a:hover {
   width: 32px;
   margin-top: -2px;
 }
+.datePicker .qrCodeGeneration .uploadIcon {
+  padding: 5px;
+  font-size: 20px;
+}
 /*Datepicker class */
 .multiSelectDirective .multiselect-parent {
   width: 100%;
@@ -668,7 +672,7 @@ input[type=radio] {
 }
 .dataLineage .ifManufacturer {
   width: 7% !important;
-  border: 1px solid red;
+  /*border: 1px solid red; commented to remove red line*/
   height: 120px;
   border-radius: 5px;
 }
@@ -678,7 +682,7 @@ input[type=radio] {
   top: 42px;
   position: absolute;
   height: 20px !important;
-  left: 20px;
+  left: 15px;
   z-index: 9;
 }
 .dataLineage .leftTo10 {
@@ -697,6 +701,11 @@ input[type=radio] {
 .dataLineage .col-lg-10 {
   line-height: 15px;
 }
+.dataLineage .dataDetails {
+  z-index: 99;
+  position: relative;
+  left: 30px;
+}
 .ngdialog-content {
   background: white !important;
 }
@@ -708,6 +717,23 @@ input[type=radio] {
   color: #424242 !important;
 }
 /*Product Lineage*/
+.check_box {
+  display: none;
+}
+.check_box + label {
+  background: url('../images/check-box.png') no-repeat;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+.check_box:checked + label {
+  background: url('../images/check-box-checked.png') no-repeat;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
 /****
 **	CSS for end user mobile view
 **/

@@ -35,6 +35,22 @@ angular.module('productModule')
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
+					$scope.entity = vm.isManufacturer ? 'materials' :'products';
+					
+					$scope.redirectUser = function(flag){
+						if(!flag) {
+							ngDialog.close();
+							return;
+						}
+						if(flag && vm.isManufacturer) {
+							$state.go('product');
+						}
+						if(flag && vm.isRetailer) {
+							ngDialog.close();
+						} 						
+						
+						
+					};
 
                 /******************* PROCURE List of product/material *************************/
                 /*    TO-DO need to test with actual data and implementation */
@@ -47,14 +63,10 @@ angular.module('productModule')
                     productServiceAPI
                         .ackProduct(vm.list)
                         .then(function(response) {
-                            $rootScope.isSuccess = true;
-                            $rootScope.SUCCESS_MSG = "Selected Products has been acknowledged successfully";
+                            //$rootScope.isSuccess = true;
+                            //$rootScope.SUCCESS_MSG = "Selected Products has been acknowledged successfully";
                             //$state.go('product'); //TO-DO this has to be redirect to dashboard screen
-                            if (vm.isManufacturer) {
-                                $state.go('product');
-                            } if (vm.isRetailer) {
-                                return;
-                            }
+                            renderProductLineage(ngDialog, $scope, 'confirmationBox', '35%', false, 'ngdialog-theme-default confirmation-box');
                         }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })

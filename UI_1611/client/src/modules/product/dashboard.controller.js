@@ -7,7 +7,7 @@
 angular.module('productModule')
  
  //For dashboard of logged in user
-    .controller('dashboardController', ['userModel', 'appConstants', '$state', '$rootScope', 'productServiceAPI', '$log',
+    .controller('	', ['userModel', 'appConstants', '$state', '$rootScope', 'productServiceAPI', '$log',
         function (userModel, appConstants, $state, $rootScope, productServiceAPI, $log) {
             try {
                 var vm = this;
@@ -18,4 +18,14 @@ angular.module('productModule')
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
-        }])
+        }]);
+		
+/****
+ *  Utility function for populating userProfile 
+ ***/
+function setUserProfile(vm, userModel) {
+    vm.isManufacturer = userModel.isManufacturer();
+    vm.isProducer = userModel.isProducer();
+    vm.isRetailer = userModel.isRetailer();
+    vm.isAdmin = userModel.isAdmin();
+};
