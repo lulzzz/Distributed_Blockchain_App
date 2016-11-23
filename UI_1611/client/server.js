@@ -8,9 +8,11 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	productCtrl = require('./server/controller/productController'),
 	multer  = require('multer'),
+    autoReap  = require('multer-autoreap'),
 	app = express();
 
 const dest = './src/asset/images/';
+app.use(autoReap);
 
 
 /*
@@ -21,7 +23,7 @@ var storage = multer.diskStorage({
     cb(null, dest)
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldName + '-' + file.originalname + '_' + Date.now())
+    cb(null, Date.now() +'_'+ file.originalname)
   }
 });
 

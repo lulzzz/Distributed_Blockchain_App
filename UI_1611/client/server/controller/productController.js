@@ -1,8 +1,9 @@
 var path = require("path"),
-    AWS = require('aws-sdk');
+    AWS = require('aws-sdk'),
+    fs = require('fs');
 
-exports.uploadFile = function (req, res) {
-    console.log(req.body);
+exports.uploadFile = function(req, res) {
+  
     var accessKeyId = "AKIAJ2YVOM4ZXQ5GKSNQ";
     var secretAccessKey = "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";
 
@@ -11,19 +12,35 @@ exports.uploadFile = function (req, res) {
         secretAccessKey: secretAccessKey
     });
 
-    var s3 = new AWS.S3();
+    //For InvalidRequest error
+    var s3 = new AWS.S3({
+        endpoint: 's3-eu-central-1.amazonaws.com',
+        signatureVersion: 'v4',
+        region: 'eu-central-1'
+    });
 
     var params = {
         Bucket: 'bverifybucket',
         Key: req.file.originalname,
-        Body: JSON.stringify(req.file)
+        Body: fs.createReadStream(req.file.path),
+        ContentType: req.file.mimetype
     };
 
-    s3.putObject(params, function (perr, pres) {
+    s3.putObject(params, function(perr, pres) {
         if (perr) {
             console.log("Error uploading data: ", perr);
         } else {
-            console.log("Successfully uploaded data to myBucket/myKey");
+             console.log("uploaded data: ", pres);
+            var params = { Bucket: 'bverifybucket' };
+            s3.listObjects(params, function(err, data) {
+                var bucketContents = data.Contents;
+                for (var i = 0; i < bucketContents.length; i++) {
+                    var urlParams = { Bucket: 'bverifybucket', Key: bucketContents[i].Key };
+                    s3.getSignedUrl('getObject', urlParams, function(err, url) {
+                        console.log('the url of the image is', url);
+                    });
+                }
+            });
         }
     });
     var product = {
@@ -53,8 +70,8 @@ exports.uploadFile = function (req, res) {
 };
 
 
-exports.registerProduct = function (req, res) {
-    
+exports.registerProduct = function(req, res) {
+
     var product = {
         tokenId: '',
         materialName: 'Garcia leather',

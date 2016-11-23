@@ -86,16 +86,18 @@ angular.module('materialModule')
 
                 vm.upload = function (data) {
                     //Making delete service call
-                            materialService
-                                .uploadFile({file:data})
-                                .then(function (response) {
-                                   console.log(response);
-                                }, function (err) {
-                                    $log.error(appConstants.FUNCTIONAL_ERR, err);
-                                })
-                                .catch(function (e) {
-                                    $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                });
+                            if(data){
+                                materialService
+                                    .uploadFile({file:data})
+                                    .then(function (response) {
+                                    console.log(response);
+                                    }, function (err) {
+                                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                                    })
+                                    .catch(function (e) {
+                                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                                    });
+                            }
                 };
 
 
