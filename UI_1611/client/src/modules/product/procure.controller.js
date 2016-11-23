@@ -54,14 +54,34 @@ angular.module('productModule')
 
                 /******************* PROCURE List of product/material *************************/
                 /*    TO-DO need to test with actual data and implementation */
-
+				vm.selectedRows = [];
+				vm.rowSelected = function(data){
+                    $rootScope.hasError = false;
+                    if(checkRows(data.tokenId) > -1){
+                        vm.selectedRows.splice(vm.selectedRows.indexOf(data.tokenId, 1));
+                    }else{
+					    vm.selectedRows.push(data.tokenId);
+                    }
+					//console.log('selectedRows',vm.selectedRows);
+				};
+                function checkRows(tokenId) {
+                        return vm.selectedRows.indexOf(tokenId);
+                };
                 vm.procureProduct = function(productList) {
+                    //added for demo purpose
+                    if(vm.selectedRows.length <= 0){
+                        $rootScope.hasError = true;
+                        $rootScope.ERROR_MSG = "Please select atleast one record.";
+                        return;
+                    }
+                    $rootScope.hasError = false;
                     if (productList) {
                         productModel.setProductList(productList);
                         vm.list = productModel.getProductList();
                     }
                     productServiceAPI
-                        .ackProduct(vm.list)
+                        .ackProduct({}) // for demo instance
+                        //.ackProduct(vm.list)
                         .then(function(response) {
                             //$rootScope.isSuccess = true;
                             //$rootScope.SUCCESS_MSG = "Selected Products has been acknowledged successfully";
@@ -79,7 +99,7 @@ angular.module('productModule')
                 /**************Product Lineage functionality **********************/
                 // isShipped value will be 'yes' for retailer
                 //Hardcoded. Need to remove
-                $scope.serviceData = { data: { product: { isShipped: 'yes', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }, { name: 'Buckel', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016' }] } } };
+                 $scope.serviceData = { data: { product: { isShipped: 'yes', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Garcia leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc:'Florence, Italy',recLoc:'Florida' }, { name: 'Buckle', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc:'Florence, Italy',recLoc:'Florida' }] } } };
                 $scope.lineageData = $scope.serviceData.data;
                 $scope.lineageSubData = $scope.lineageData.product.items[0];
                 $scope.lineageSubMaterialData = $scope.lineageData.product.items;
@@ -96,7 +116,7 @@ angular.module('productModule')
                         $scope.isShipped = true;
                         $scope.isShippedToRetailer = false;
                     }
-                    renderProductLineage(ngDialog, $scope, 'productLineageBox', '70%', true, 'ngdialog-theme-default lineage-box');
+                    renderProductLineage(ngDialog, $scope, 'productLineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
                 };
 
                 /*************************************************************** */

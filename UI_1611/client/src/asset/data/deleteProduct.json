@@ -4,7 +4,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -18,7 +18,7 @@
 	"batchNumber": "B00RWSC2MW2",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -32,7 +32,7 @@
 	"batchNumber": "B00RWSC2MW3",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -46,7 +46,7 @@
 	"batchNumber": "B00RWSC2MW4",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",

@@ -5,8 +5,8 @@
 	<a href="#" class="closebtn" ng-click="openNav()">MENU</a>
 	
 	
-		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER PRODUCT</a>
-		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="product">REGISTER RM</a>
+		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="productReg">REGISTER PRODUCT</a>
+		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="materialreg">REGISTER RM</a>
 		<a ng-if="userProfile.isAdmin" ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a>
 		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isManufacturer" ui-sref="shipment">SHIP PRODUCT</a>
 		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isProducer" ui-sref="shipment">SHIP RAW MATERIAL</a>

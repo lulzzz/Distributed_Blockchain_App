@@ -1,0 +1,32 @@
+<div style="margin-top:0px;" class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
+    <app-legend header="{{title}}"></app-legend>
+
+    <!--- Render Previous registered Product/Material -->
+    <div class="prodList">
+        <table ng-table="vm.customConfigParams" class="commonTable table table-condensed table-bordered table-striped">
+            <tr ng-repeat="row in $data">
+                <td style="padding-left: 10px;" class="col-xs-2" data-title="'Shipment Token ID'"><a class="tokenLink" ng-click="getShipmentDetails({data: row})"><span>{{row.tokenId | uppercase}}<span></a></td>
+                <td style="padding-left: 10px;" ng-if="vm.userProfile.isManufacturer" title="'Quantity'">{{row.quantity}} {{row.productName}}</td>
+                <td style="padding-left: 10px;" ng-if="vm.userProfile.isProducer" title="'Quantity'">{{row.quantity}} {{row.materialName}}</td>
+                <td ng-class="{'location-td-8px': row.exitPort.isAvailable && row.exitPort.location !== '',  'location-td-29px': !row.exitPort.isAvailable && row.exitPort.location !== ''}"
+                    title="'Port of exit'">
+                    <img style="height:20px;" ng-if="row.exitPort.isAvailable" src="asset/images/map_pin.png" /> {{row.exitPort.location}}
+                </td>
+                <td ng-class="{'location-td-8px': row.entryPort.isAvailable && row.entryPort.location !== '', 'location-td-29px': !row.entryPort.isAvailable && row.entryPort.location !== ''  }"
+                    title="'Port of entry'">
+                    <img style="height:20px;" ng-if="row.entryPort.isAvailable" src="asset/images/map_pin.png" /> {{row.entryPort.location}}
+                </td>
+                <td ng-class="{'location-td-8px': row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '',  'location-td-29px': !row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '' , 'text-center': !row.manufacturerDetail.isAvailable && row.manufacturerDetail.name === ''}"
+                    title="'Manufacturer'">
+                    <img style="height:20px;" ng-if="row.manufacturerDetail.isAvailable && row.manufacturerDetail.name !== '' "
+                        src="asset/images/map_pin.png" /> {{row.manufacturerDetail.name | emptyfy}}
+                </td>
+                <td ng-class="{'location-td-8px': row.retailerDetail.isAvailable && row.retailerDetail.name !== '',  'location-td-29px': !row.retailerDetail.isAvailable && row.retailerDetail.name !== '','text-center': !row.retailerDetail.isAvailable && row.retailerDetail.name === ''}"
+                    title="'Distributor / Retailer'">
+                    <img style="height:20px;" ng-if="row.retailerDetail.isAvailable && row.retailerDetail.name !== '' " src="asset/images/map_pin.png"/>
+                    {{row.retailerDetail.name | emptyfy}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

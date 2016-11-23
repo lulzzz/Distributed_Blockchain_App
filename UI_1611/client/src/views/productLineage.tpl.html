@@ -15,7 +15,9 @@
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
 					<div>{{lineageSubData.name}}</div>
-					<div>Mfg on: {{lineageSubData.mfgDate}}</div>
+					<div>Prod on: {{lineageSubData.mfgDate}}</div>
+					<div>Locn: {{lineageSubData.loc}}</div>
+					<div><a><u>Certificate</u></a></div>
 				</div>
 			</div>
 		</div>
@@ -26,7 +28,7 @@
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
 					<div>{{lineageSubData.name}}</div>
-					<div>Mfg on: {{lineageSubData.mfgDate}}</div>
+					<div>Prod on: {{lineageSubData.mfgDate}}</div>
 					<div>Shipped on: {{lineageSubData.shipmentDate}}</div>
 				</div>
 			</div>
@@ -49,30 +51,37 @@
 						<div class=""><strong>{{data.name}}</strong></div>
 						<div>Mfg on: {{data.mfgDate}}</div>
 						<div>Received on: {{data.receivedDate}}</div>
+						<div>Locn: {{data.recLoc}}</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-1 col-xs-1 noPadding" style="width:4.5%" ng-class="{ifManufacturer: isShipped == false}">
-			<div><span style="left:0px;" class="borderGreen"></span><span style="" class="borderGreenRight"></span></div>
+		<div class="col-lg-1 col-xs-1 noPadding" style="width:4.5%" ng-class="{ifManufacturer: ifNegativeUsecase == true}">
+			<div ng-if="isShipped" ><span style="left:0px;" class="borderGreen"></span><span style="" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center">
 				<img class="smartContractManufactutrer" src="asset/images/smartContract.png" ng-class="{leftTo10: isShipped == true}"/>
 				<!-- ngIf=!shipped for cross image -->
-				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="false" style="width:20px;height:20px;position:absolute;left:16px;z-index:9;top:55px;"/>
-				<img class="middleImagesSmall" src="asset/images/dataLineage4.png" style="width:35px;height:35px;" ng-class="{leftTo0:isShipped == false}"/>
+				<img class="middleImagesSmall" src="asset/images/dataLineage8.png" ng-if="ifNegativeUsecase" style="width:20px;height:20px;position:absolute;left:16px;z-index:9;top:55px;"/>
+				<img class="middleImagesSmall" src="asset/images/dataLineage4.png" style="width:35px;height:35px;" ng-class="{leftTo0:ifNegativeUsecase == true}"/>
 			</div>
 		</div>
 		<div class="col-lg-2 col-xs-2 noPadding">
 			<div ng-if="isShippedToRetailer"><span class="borderGreenLeft" style="border-color:#00B0F0;"></span><span class="borderGreen" style="border-color:#00B0F0;"></span></div>
-			<div class="img-responsive text-center"><img src="asset/images/dataLineage5.png"/></div>
-			<div class="dataDetails">
+			<div ng-if="isShipped" class="img-responsive text-center"><img src="asset/images/dataLineage5.png"/></div>
+			<div class="dataDetails" ng-if="isShipped" >
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
 					<div>Manufacturer</div>
 					<div>Mfg on: {{lineageData.product.mfgDate}}</div>
+					<div>Locn: Coach, Florida</div>
+					<div><a><u>Certificate</u></a></div>
 				</div>
 			</div>
+			
 		</div>
+		<div class="col-lg-3 col-xs-3 noPadding" style="padding-left:5px !important;font-size:11px;line-height:18px;" ng-if="ifNegativeUsecase">
+					The Product "Coach Crosby line Tote Handbag" cannot be registered because it does not comply with the <strong>IVN NATURAL LEATHER standards</strong>.	
+			</div>
 		<div class="col-lg-1 col-xs-1 noPadding" style="width:4.5%" ng-if="isShippedToRetailer">
 			<div><span style="left:20px;right:-95px;border-color:#00B0F0;" class="borderGreen"></span><span style="right:-100px;border-color:#00B0F0;" class="borderGreenRight"></span></div>
 			<img class="smartContractManufactutrer" src="asset/images/smartContract.png"/>
@@ -87,6 +96,7 @@
 					<div>Retailer</div>
 					<div>Mfg on: {{lineageData.product.mfgDate}}</div>
 					<div>Received on: {{lineageData.product.receivedDate}}</div>
+					<div>Locn: Walmart, New York</div>
 				</div>
 			</div>
 		</div>
@@ -101,7 +111,9 @@
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
 					<div>{{data.name}}</div>
-					<div>Mfg on: {{data.mfgDate}}</div>
+					<div>Prod on: {{data.mfgDate}}</div>
+					<div>Locn: {{lineageSubData.loc}}</div>
+					<div><a><u>Certificate</u></a></div>
 				</div>
 			</div>
 		</div>
@@ -112,7 +124,7 @@
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
 					<div>{{data.name}}</div>
-					<div>Mfg on: {{data.mfgDate}}</div>
+					<div>Prod on: {{data.mfgDate}}</div>
 					<div>Shipped on: {{data.shipmentDate}}</div>
 				</div>
 			</div>

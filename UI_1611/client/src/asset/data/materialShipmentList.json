@@ -1,27 +1,27 @@
 [{
 	"tokenId": "LTG11400",
-	"materialName": "Leather - Top Grain",
+	"materialName": "Leather -Full Grain",
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)",
+	"shippedFrom": "Coach Florida",
     "exitPort": {
-        "location": "Location 123" ,
+        "location": "Florence,Italy",
         "isAvailable": true
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": false 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Azim)",
+        "name":"Manufacturer (John)",
         "isAvailable": false
     },
     "retailerDetail": {
@@ -31,27 +31,27 @@
 }, {
 	"tokenId": "LFG11401",
 	"materialName": "Leather - Full Grain",
-	"batchNumber": "B00RWSC2MW1",
-	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"batchNumber": "B00RWSCFRT",
+	"weight": "100 oz.",
+	"quantity": "100",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123",
+        "location": "Florence, Italy",
         "isAvailable": true
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": true 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Pandey)",
+        "name":"Manufacturer (Mike)",
         "isAvailable": true
     },
     "retailerDetail": {
@@ -61,27 +61,27 @@
 }, {
 	"tokenId": "LTG11402",
 	"materialName": "Leather - Top Grain",
-	"batchNumber": "B00RWSC2MW1",
-	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"batchNumber": "B00RWSC785",
+	"weight": "100 oz.",
+	"quantity": "150",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123",
+        "location": "Florence, Italy",
         "isAvailable": false
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": true 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Azim)",
+        "name":"Manufacturer (John)",
         "isAvailable": true
     },
     "retailerDetail": {
@@ -91,25 +91,25 @@
 }, {
 	"tokenId": "LFG11403",
 	"materialName": "Leather - Full Grain",
-	"batchNumber": "B00RWSC2MW1",
+	"batchNumber": "B00RWSC",
 	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"quantity": "120",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123" 
+        "location": "Florence, Italy" 
     },
     "entryPort": {
-        "location": "Location 456" 
+        "location": "Jacksonville, Florida" 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Pandey)",
+        "name":"Manufacturer (Mike)",
         "isAvailable": true
     },
     "retailerDetail": {
@@ -122,24 +122,24 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123" ,
+        "location": "Florence, Italy" ,
         "isAvailable": true
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": false 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Azim)",
+        "name":"Manufacturer (John)",
          "isAvailable": false
     },
     "retailerDetail": {
@@ -153,24 +153,24 @@
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)",
+	"shippedFrom": "Manufacturer (Sean)",
     "exitPort": {
-        "location": "Location 123" ,
+        "location": "Florence, Italy" ,
         "isAvailable": true
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": false 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Azim)",
+        "name":"Manufacturer (John)",
         "isAvailable": false
     },
     "retailerDetail": {
@@ -183,24 +183,24 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123",
+        "location": "Florence, Italy",
         "isAvailable": true
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": true 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Pandey)",
+        "name":"Manufacturer (Mike)",
         "isAvailable": true
     },
     "retailerDetail": {
@@ -213,24 +213,24 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123",
+        "location": "Florence, Italy",
         "isAvailable": false
     },
     "entryPort": {
-        "location": "Location 456",
+        "location": "Jacksonville, Florida",
         "isAvailable": true 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Azim)",
+        "name":"Manufacturer (John)",
         "isAvailable": true
     },
     "retailerDetail": {
@@ -243,22 +243,22 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)",
+	"shippedFrom": "Manufacturer (John)",
     "exitPort": {
-        "location": "Location 123" 
+        "location": "Florence, Italy" 
     },
     "entryPort": {
-        "location": "Location 456" 
+        "location": "Jacksonville, Florida" 
     },
     "manufacturerDetail": {
-        "name":"Manufacturer (Pandey)",
+        "name":"Manufacturer (Mike)",
         "isAvailable": true
     },
     "retailerDetail": {

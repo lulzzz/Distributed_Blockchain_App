@@ -8,7 +8,7 @@ angular.module('productModule')
 
     // Registering/Retreiving/shipping/acknowledging product
     .value('productUrl', {
-        'register': 'asset/data/register.json',  // TO-DO need to change against WEB API URL
+        'register': 'api/product/register.json',  // TO-DO need to change against WEB API URL
         /****** below needs to be change. Hardcoded for demo */
         'products': 'asset/data/productList.json', // TO-DO need to change against WEB API URL
         'materials': 'asset/data/materialList.json', // TO-DO need to change against WEB API URL
@@ -20,13 +20,14 @@ angular.module('productModule')
     })
 
     //Configuring resource for making service call
-    .service('productResource', ['$resource', 'productUrl', '__ENV', function ($resource, productUrl, __ENV) {
+    .service('productResource', ['$resource', 'productUrl', '__ENV', 'appConstants', function ($resource, productUrl, __ENV, appConstants) {
+
         return $resource('', {_id: '@productId'}, {
             /****** below needs to be change. Hardcoded for demo */
             productList: { url: __ENV.apiUrl + productUrl.products, method: "GET", isArray: "true" },
             materialList: { url: __ENV.apiUrl + productUrl.materials, method: "GET", isArray: "true" },
             /**************************************************************** */
-            registerProduct: { url: __ENV.apiUrl + productUrl.register, method: "GET" },  //  // TO-DO need to change POST
+            registerProduct: { url: __ENV.apiUrl + productUrl.register, method: "POST", transformRequest: appConstants.HEADER_CONFIG.transformRequest, headers: appConstants.HEADER_CONFIG.headers },  //  // TO-DO need to change POST
             shipProduct: { url: __ENV.apiUrl + productUrl.ship, method: "GET" },   // TO-DO need to change POST
             ackProduct: { url: __ENV.apiUrl + productUrl.acknowledge, method: "GET" },  // TO-DO need to change POST
             /****** below needs to be change. Hardcoded for demo */
@@ -39,6 +40,7 @@ angular.module('productModule')
     .service('productServiceAPI', ['productResource', 'appConstants', '$q', '$log', function (productResource, appConstants, $q, $log) {
         
         this.registerProduct = function (product) {
+             
             var deferred = $q.defer();
             try{
                 productResource

@@ -672,7 +672,7 @@ input[type=radio] {
 }
 .dataLineage .ifManufacturer {
   width: 7% !important;
-  /*border: 1px solid red; commented to remove red line*/
+  border: 1px solid red;
   height: 120px;
   border-radius: 5px;
 }

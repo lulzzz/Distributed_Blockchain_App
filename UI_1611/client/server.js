@@ -5,7 +5,27 @@
 'use strict';
 
 const express = require('express'),
+	bodyParser = require('body-parser'),
+	productCtrl = require('./server/controller/productController'),
+	multer  = require('multer'),
 	app = express();
+
+const dest = './src/asset/images/';
+
+
+/*
+*	Configuring multer for acessing form data and file name/upload in a specific destination.
+*/
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, dest)
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldName + '-' + file.originalname + '_' + Date.now())
+  }
+});
+
+var upload = multer({ storage: storage });
 
 /*
 *   Middleware to set request header. Added manually. Next method is called to jump into next middleware function
@@ -22,10 +42,16 @@ const express = require('express'),
     app.use(express.static('src'));
 	app.use(express.static('node_modules'));
 
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: false }));
+
 //Render landing page
 app.get("*", function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
+
+app.post('/api/material/upload', upload.single('file'), productCtrl.uploadFile);
+app.post('/api/material/register.json', productCtrl.registerProduct);
 
 /**
  * Get port from environment and store in Express.
@@ -40,7 +66,6 @@ app.listen(port, function(){
 */
 if (app.get('env') === 'development') {
 		  app.use(function(err, req, res, next) {
-		  	log.error("unexpected error occur ", err);
 		  	console.log(err);
 			res.status(err.status || 500);
 			res.json({errorMsg: "Currently we are experiencing technical difficulties. Please try after some time."});

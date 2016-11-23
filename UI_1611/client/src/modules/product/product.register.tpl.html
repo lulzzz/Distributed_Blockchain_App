@@ -121,7 +121,9 @@
 							<button type="submit" ng-disabled="vm.isReadonly" class="btn btn-primary registerBtn font12">REGISTER PRODUCT</button>
 						</div>
 						<div class="form-group col-lg-2 col-md-6 col-sm-10">
-							<button type="reset" ng-click="reset()" class="btn btn-primary registerBtn font12">RESET</button>
+							<!--Negative usecase included on reset on ushas comment-->
+							<!--<button type="reset" ng-click="reset()" class="btn btn-primary registerBtn font12">RESET</button>-->
+							<button type="button" ng-click="vm.negativeUsecase()" class="btn btn-primary registerBtn font12">RESET</button>
 						</div>
 					</div>
 

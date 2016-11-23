@@ -11,15 +11,16 @@ angular.module('productModule')
             // Only for demo instance.
             var _init = {
                 tokenId: '',
-                materialName: 'Leather',
+                materialName: 'Garcia leather',
                 productName: 'Handheld Bag',
-                quantity: '50',
-                batchNumber: 'B00RWSC2MW',
-                quality: 'Full Grain',
+                quantity: '35',
+                batchNumber: 'GLB14012016HK',
+                quality: 'Top Grain',
                 color: 'Brown',
-                weight: '100 kg',
-                manufactureDate: '10/17/2016',
+                weight: '50 oz.',
+                productionDate: '14/1/2016 19:01:26',
                 registeredDate: new Date(),
+                dimension: "33 sq. ft. (L) x .25 sq. ft. (H) x 18 sq. ft. (W)",
                 modelNumber: 'BG463A',
                 shippedFrom: '',
                 shippedOn: new Date(),
@@ -27,9 +28,7 @@ angular.module('productModule')
                     currentlyAt: 'FedEx',
                     trackRecords: []
                 },
-                file: {
-                    name: ''
-                },
+                file: {},
                 exitPort: {
                     location: "",
                     isAvailable: false
@@ -39,8 +38,8 @@ angular.module('productModule')
                     isAvailable: false
                 },
                 manufacturerDetail: {
-                 name: '',
-                 isAvailable: false   
+                    name: '',
+                    isAvailable: false
                 },
                 retailerDetail: {
                     name: '',
@@ -61,19 +60,52 @@ angular.module('productModule')
                 return this._product;
             };
 
-            var _clearAll = function(){
-                 try {
+            var _clearAll = function () {
+                try {
                     this._product = {};
                 } catch (e) {
                     $log.error(appConstants.FUNCTIONAL_ERR, e);
                 }
                 return this._product;
-            }
+            };
 
             //Set user object
             var _setProduct = function (obj) {
                 try {
-                    this._product = obj;
+                    this._product = {
+                        tokenId: obj.tokenId,
+                        materialName: obj.materialName,
+                        productName: obj.productName,
+                        quantity: obj.quantity,
+                        batchNumber: obj.quantity,
+                        quality: obj.quantity,
+                        color: obj.quantity,
+                        weight: obj.quantity,
+                        productionDate: obj.quantity,
+                        registeredDate: new Date(),
+                        dimension: obj.quantity,
+                        modelNumber: obj.quantity,
+                        shippedFrom: obj.quantity,
+                        shippedOn: new Date(),
+                        trackDetails: obj.trackDetails,
+                        file: obj.file,
+                        exitPort: {
+                            location: "",
+                            isAvailable: false
+                        },
+                        entryPort: {
+                            location: "",
+                            isAvailable: false
+                        },
+                        manufacturerDetail: {
+                            name: '',
+                            isAvailable: false
+                        },
+                        retailerDetail: {
+                            name: '',
+                            isAvailable: false
+                        }
+                    }
                 } catch (e) {
                     $log.error(appConstants.FUNCTIONAL_ERR, e);
                 }
@@ -82,6 +114,16 @@ angular.module('productModule')
             var _getProduct = function () {
                 try {
                     return this._product;
+                } catch (e) {
+                    $log.error(appConstants.FUNCTIONAL_ERR, e);
+                }
+            };
+            //Get user object
+            var _getNewRegisteredProduct = function () {
+                try {
+                    var prod = this._product;
+                    delete prod['productList'];
+                    return prod;
                 } catch (e) {
                     $log.error(appConstants.FUNCTIONAL_ERR, e);
                 }
@@ -103,7 +145,7 @@ angular.module('productModule')
                         "batchNumber": obj.batchNumber || "",
                         "weight": obj.weight || "",
                         "quantity": obj.quantity || "",
-                        "manufactureDate": obj.manufactureDate || "",
+                        "productionDate": obj.productionDate || "",
                         "registeredDate": obj.registeredDate || "",
                         "color": obj.color || "",
                         "modelNumber": obj.modelNumber || "",
@@ -122,6 +164,7 @@ angular.module('productModule')
 
             return {
                 'getProduct': _getProduct,
+                'getNewRegisteredProduct': _getNewRegisteredProduct,
                 'setProduct': _setProduct,
                 'getProductList': _getProductList,
                 'setProductList': _setProductList,

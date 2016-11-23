@@ -29,7 +29,7 @@ angular
 
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
-        
+
         //Configure default ngDialog settings
         ngDialogProvider.setDefaults({
             className: 'ngdialog-theme-default',
@@ -92,10 +92,24 @@ angular
             scrollable: true,
             scrollableHeight: '250px'
         },
-        QUANTITY_EXCEEDED : "The Quantity to be shipped cannot exceed the available quantity/inventory. Please revalidate!",
-        MATERIAL_ADHERED : "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.",
-		MATERIAL_PROCURED : "All the selected materials have been procured successfully.",
-		PRODUCT_PROCURED : "All the selected products have been acknowledge successfully."
+        QUANTITY_EXCEEDED: "The Quantity to be shipped cannot exceed the available quantity. Please revalidate!",
+        MATERIAL_ADHERED: "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.",
+        MATERIAL_PROCURED: "All the selected materials have been procured successfully.",
+        PRODUCT_PROCURED: "All the selected products have been acknowledge successfully.",
+        //Header configuration for posting file data to node server
+        HEADER_CONFIG: {
+            headers: {
+                'Content-Type': undefined,
+                enctype: 'multipart/form-data'
+            },
+            transformRequest: function (data) {
+                var formData = new FormData();
+                angular.forEach(data, function (value, key) {
+                    formData.append(key, value);
+                });
+                return formData;
+            }
+        }
     })
 
     .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', '$templateCache', function ($rootScope, $window, localStorageService, $log, ngTableDefaults, $templateCache) {

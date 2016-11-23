@@ -9,7 +9,7 @@
     <div class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
         <!-- Directive for rendering all pervious registered materials inside table -->
     <app-productlist list="vm.list" title="{{vm.header}}" is-procure-screen="new Boolean(true)" procure-product="vm.procureProduct(productList)"
-    show-product-lineage="vm.showProductLineage(data)" ></app-productlist>
+    show-product-lineage="vm.showProductLineage(data)" row-Selected="vm.rowSelected(data)"></app-productlist>
 
     </div>
 

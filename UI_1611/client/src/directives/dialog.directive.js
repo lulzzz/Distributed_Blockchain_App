@@ -31,7 +31,7 @@ angular.module('bverifyApp')
     }])
     
     //Directive for rendering product lineage box section
-    .directive('dialogProductLineage',[function () {
+    .directive('dialogLineage',[function () {
         return {
             restrict: 'E',
             templateUrl: '../views/productLineage.tpl.html',
