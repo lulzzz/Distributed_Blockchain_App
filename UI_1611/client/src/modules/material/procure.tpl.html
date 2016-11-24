@@ -2,13 +2,12 @@
 
 <!-- Directive for app header -->
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
-<!-- TO-DO // remove hard-code value -->
 
 <div class="">
 
     <div class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
-        <!-- Directive for rendering all pervious registered materials inside table -->
-    <app-registration-list list="vm.list" title="{{vm.header}}" is-procure-screen="new Boolean(true)" procure="vm.procure(dataList)"
+    <!-- Directive for rendering all shipped materials inside table -->
+    <app-registration-list list="vm.list" title="PROCURE RAW MATERIALS" is-procure-screen="new Boolean(true)" procure="vm.procure(dataList)"
     show-lineage="vm.showLineage(data)" row-Selected="vm.rowSelected(data)"></app-registration-list>
 
     </div>

@@ -59,6 +59,9 @@ body {
   margin-top: 5px;
   padding-left: 0px;
 }
+.colorLightBlue {
+  color: #00bfff;
+}
 .rawMaterialRegistration .formLabel {
   margin-top: 5px;
   padding-left: 0px;
@@ -432,9 +435,6 @@ header .sideMenuPanel .list ul li a:hover {
   white-space: normal;
 }
 /*Side Menu*/
-.manageProducts {
-  margin-top: 20px;
-}
 .manageProducts .prodList {
   overflow-x: auto;
   padding-left: 20px;
@@ -509,6 +509,12 @@ header .sideMenuPanel .list ul li a:hover {
 .commonTable td.location-td-29px {
   padding-left: 29px;
 }
+.commonTable td a.tokenLink {
+  cursor: pointer !important;
+  color: #5b9bd5 !important;
+  font-weight: 600;
+  text-decoration: underline;
+}
 #wrapper {
   min-height: 100%;
   height: auto !important;
@@ -539,6 +545,10 @@ header .sideMenuPanel .list ul li a:hover {
   width: 32px;
   margin-top: -2px;
 }
+.datePicker .qrCodeGeneration .uploadIcon {
+  padding: 5px;
+  font-size: 20px;
+}
 /*Datepicker class */
 .multiSelectDirective .multiselect-parent {
   width: 100%;
@@ -561,7 +571,7 @@ header .sideMenuPanel .list ul li a:hover {
 .multiSelectDirective .multiselect-parent ul.dropdown-menu {
   width: 100% !important;
   overflow-x: hidden !important;
-  height: auto !important;
+  height: auto;
   border: 1px solid !important;
 }
 .errorDiv {
@@ -672,7 +682,7 @@ input[type=radio] {
   top: 42px;
   position: absolute;
   height: 20px !important;
-  left: 20px;
+  left: 15px;
   z-index: 9;
 }
 .dataLineage .leftTo10 {
@@ -691,6 +701,11 @@ input[type=radio] {
 .dataLineage .col-lg-10 {
   line-height: 15px;
 }
+.dataLineage .dataDetails {
+  z-index: 99;
+  position: relative;
+  left: 30px;
+}
 .ngdialog-content {
   background: white !important;
 }
@@ -702,6 +717,23 @@ input[type=radio] {
   color: #424242 !important;
 }
 /*Product Lineage*/
+.check_box {
+  display: none;
+}
+.check_box + label {
+  background: url('../images/check-box.png') no-repeat;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+.check_box:checked + label {
+  background: url('../images/check-box-checked.png') no-repeat;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
 /****
 **	CSS for end user mobile view
 **/

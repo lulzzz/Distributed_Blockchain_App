@@ -8,21 +8,21 @@
 angular.module('materialModule')
 
     //For new material resgistration
-    .controller('materialRegisterController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'materialService', '$log', 'materialModel', 'materialList', '$scope', 'ngDialog',
+    .controller('registerMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
+        'materialService', '$log', 'materialModel', 'materialList', '$scope', 'ngDialog', 'localStorageService',
         function (userModel, appConstants, $state, $rootScope,
-            materialService, $log, materialModel, materialList, $scope, ngDialog) {
+            materialService, $log, materialModel, materialList, $scope, ngDialog, localStorageService) {
             try {
                 var vm = this;
-                materialModel.resetMaterial();
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.isReadonly = false;
                 setUserProfile(vm, userModel);
                 vm.material = materialModel.getMaterial();
                 vm.file = {};
+                vm.urlList = [];
                 vm.list = [];
-                
+
                 //Populating list of Products on load based on productList resolve
                 materialList
                     .$promise
@@ -38,14 +38,12 @@ angular.module('materialModule')
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
-                $scope.redirectUser = function (flag) {
-                    ngDialog.close();
-                    if (flag) {
-                        $state.reload();
-                    }
-                    else {
-                        $state.go('shipment', { tokenId: $scope.randomToken });
-                    }
+
+                vm.reset = function(){
+                    $rootScope.hasError = false;
+                    $rootScope.isSuccess = false;
+                    vm.isReadonly = false;
+                    vm.material = materialModel.resetMaterial();
                 };
 
 
@@ -54,6 +52,7 @@ angular.module('materialModule')
                 vm.registerMaterial = function () {
                     vm.material.file = vm.file;
                     materialModel.setMaterial(vm.material);
+                    materialModel.setFilePath(vm.urlList);
 
                     materialService
                         .registerMaterial(materialModel.getMaterial())
@@ -61,7 +60,7 @@ angular.module('materialModule')
                             $rootScope.hasError = false;
                             $scope.entity = 'raw material';
                             $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
-                            $scope.name = response.materialName;
+                            $scope.name = vm.material.materialName;
                             renderLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -70,6 +69,17 @@ angular.module('materialModule')
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
+
+                $scope.redirectUser = function (flag) {
+                    ngDialog.close();
+                    if (flag) {
+                        $state.reload();
+                    }
+                    else {
+                        $state.go('materialShip', { qrCode: $scope.randomToken });
+                    }
+                };
+
 
 
                 /******************* VIEW EDIT registered material *************************/
@@ -86,18 +96,18 @@ angular.module('materialModule')
 
                 vm.upload = function (data) {
                     //Making delete service call
-                            if(data){
-                                materialService
-                                    .uploadFile({file:data})
-                                    .then(function (response) {
-                                    console.log(response);
-                                    }, function (err) {
-                                        $log.error(appConstants.FUNCTIONAL_ERR, err);
-                                    })
-                                    .catch(function (e) {
-                                        $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                    });
-                            }
+                    if (data) {
+                        materialService
+                            .uploadFile({ file: data })
+                            .then(function (response) {
+                                vm.urlList = response;
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+                    }
                 };
 
 
@@ -113,22 +123,22 @@ angular.module('materialModule')
                     $scope.confirmDelete = function () {
                         ngDialog.close();
 
-                            //Making delete service call
-                            materialService
-                                .deleteMaterial({ materialId: $scope.data.id })
-                                .then(function (response) {
-                                    vm.list = response;
-                                    $rootScope.hasError = false;
-                                    $rootScope.isSuccess = true;
-                                    $rootScope.SUCCESS_MSG = appConstants.MATERIAL_DELETED;
-                                }, function (err) {
-                                    $log.error(appConstants.FUNCTIONAL_ERR, err);
-                                })
-                                .catch(function (e) {
-                                    $log.error(appConstants.FUNCTIONAL_ERR, e);
-                                });
-                        }
-                    };
+                        //Making delete service call
+                        materialService
+                            .deleteMaterial({ materialId: $scope.data.id })
+                            .then(function (response) {
+                                vm.list = response;
+                                $rootScope.hasError = false;
+                                $rootScope.isSuccess = true;
+                                $rootScope.SUCCESS_MSG = appConstants.MATERIAL_DELETED;
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+                    }
+                };
 
             } catch (e) {
                 console.log(appConstants.FUNCTIONAL_ERR, e);

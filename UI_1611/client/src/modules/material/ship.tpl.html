@@ -40,7 +40,7 @@
                                 <label for="materialWeight">Material Weight :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <span class="verticalAlignment">{{vm.material.weight}}</span>
+                                <span class="verticalAlignment">{{vm.ship.weight}}</span>
                                 <span class="verticalAlignment tokenNumberShipProduct">Token : LFG14561</span>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 <label for="date">Date of <br class="visible-md"/>Production&nbsp;:</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <span class="verticalAlignment">vm.ship.productionDate</span>
+                                <span class="verticalAlignment">{{vm.ship.productionDate}}</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -78,7 +78,7 @@
                                 <label for="picture">Manufacturer :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <div class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.data" selected-model="vm.exampleModel"
+                                <div class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.manufacturerList" selected-model="vm.exampleModel"
                                     checkboxes="true"></div>
                             </div>
                         </div>

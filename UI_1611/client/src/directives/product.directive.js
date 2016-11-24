@@ -98,61 +98,6 @@ angular.module('bverifyApp')
         }]);
 
 
-angular.module('productModule')
-    //Directive for table section for product/material list
-    .directive('appProductlist', function () {
-        return {
-            restrict: 'E',
-            templateUrl: '../views/productList.tpl.html',
-            scope: {
-                list: '=',
-                title: '@',
-                isRegisterScreen: '@?',
-                isProcureScreen: '@?',
-                editProduct: '&?',
-                viewProduct: '&?',
-                deleteProduct: '&?',
-                procureProduct: '&?',
-                showProductLineage: '&?'
-            },
-            link: function (scope, element, attrs) {
-            },
-            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel, ngDialog) {
-                var self = this;
-                self.userProfile = populateUserProfile(userModel);
-                self.customConfigParams = createUsingFullOptions();
-
-                /************************************************** */
-
-                $scope.$watchCollection('list', function (newNames, oldNames) {
-                    self.customConfigParams = createUsingFullOptions();
-                });
-               
-
-                function createUsingFullOptions() {
-                    var initialParams = {
-                        count: 3 // initial page size
-                    };
-                    var initialSettings = {
-                        // page size buttons (right set of buttons in demo)
-                        counts: [],
-                        // determines the pager buttons (left set of buttons in demo)
-                        paginationMaxBlocks: 13,
-                        paginationMinBlocks: 2,
-                        dataset: $scope.list
-                    };
-                    return new NgTableParams(initialParams, initialSettings);
-                };
-            },
-            controllerAs: 'vm'
-        }
-    });
-
-
-
-
-
-
 angular.module('searchModule')
     //Directive for table section for product/material list
     .directive('appShipmentlist', function () {

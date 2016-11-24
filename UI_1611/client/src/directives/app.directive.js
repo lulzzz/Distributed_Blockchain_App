@@ -158,8 +158,11 @@ function populateActiveMenu(menu) {
         dashboard: menu === '/dashboard' ? true : false,
         userRegister: menu === '/register' ? true : false,
         prodRegister: menu === '/product/register' ? true : false,
+        matRegister: menu === '/material/register' ? true : false,
         prodShip: menu === '/product/ship' ? true : false,
+        matShip: menu === '/material/ship' ? true : false,
         trackShip: menu === '/home' ? true : false,
-        prodAck: menu === '/product/acknowledge' ? true : false,
+        prodProcure: menu === '/product/acknowledge' ? true : false,
+        matProcure: menu === '/material/acknowledge' ? true : false
     }
 };

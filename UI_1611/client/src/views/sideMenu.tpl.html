@@ -6,20 +6,20 @@
 	
 	
 		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="productReg">REGISTER PRODUCT</a>
-		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="materialreg">REGISTER RM</a>
+		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.matRegister }" ui-sref="materialReg">REGISTER RM</a>
 		<a ng-if="userProfile.isAdmin" ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a>
 		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isManufacturer" ui-sref="shipment">SHIP PRODUCT</a>
-		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isProducer" ui-sref="shipment">SHIP RAW MATERIAL</a>
+		<a ng-class="{'selected': activeMenu.matShip }" ng-if="userProfile.isProducer" ui-sref="materialShip">SHIP RAW MATERIAL</a>
 
 		<a ng-if="userProfile.isManufacturer || userProfile.isProducer" ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>
 		<a ui-sref="dashboard" ng-class="{'selected': activeMenu.dashboard }">DASHBOARD</a>
-		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">
+		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.matProcure }" ui-sref="acknowledge">
 				<ul>
 					<li>PROCURE</li>
 					 <li>RAW MATERIAL</li>
 				</ul>
 		</a>
-		<a ng-if="userProfile.isRetailer" ng-class="{'selected': activeMenu.prodAck }" ui-sref="acknowledge">
+		<a ng-if="userProfile.isRetailer" ng-class="{'selected': activeMenu.prodProcure }" ui-sref="acknowledge">
 				<ul>
 					<li>ACKNOWLEDGE</li>
 					 <li>PRODUCTS</li>

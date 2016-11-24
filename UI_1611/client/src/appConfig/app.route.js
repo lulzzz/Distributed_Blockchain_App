@@ -116,7 +116,7 @@ angular
                 })
 
                 /************************** FOR MATERIAL STATES **********************************/
-                .state('materialreg', {
+                .state('materialReg', {
                     url: '/material/register',
                     templateUrl: '../modules/material/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
@@ -130,7 +130,58 @@ angular
                         }
                     },
                     controllerAs: 'vm',
-                    controller: 'materialRegisterController'
+                    controller: 'registerMaterialController'
+                })
+
+                .state('materialShip', {
+                    url: '/material/ship',
+                    templateUrl: '../modules/material/ship.tpl.html',
+                    params: {
+                        qrCode: null,
+                    },
+                    controllerAs: 'vm',
+                    controller: 'shipMaterialController'
+                })
+
+                 .state('materialAck', {
+                    url: '/material/procure',
+                    templateUrl: '../modules/material/procure.tpl.html',
+                    //Resolve added to retreive registered material List before loading material register screen
+                    resolve: {
+                        materialList: function (userModel, materialService) {
+                            var user = userModel.getUser();
+                            return materialService.getMaterialList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+                        }
+                    },
+                    controllerAs: 'vm',
+                    controller: 'procureMaterialController'
+                })
+
+               .state('productReg', {
+                    url: '/product/register',
+                    templateUrl: '../modules/product/register.tpl.html',
+                    //Resolve added to retreive registered material List before loading material register screen
+                    resolve: {
+                        productList: function (userModel, productService) {
+                            var user = userModel.getUser();
+                            return productService.getProductList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+                        },
+                        materialList: function (userModel, productService) {
+                            var user = userModel.getUser();
+                            return productService.getMaterialList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+                        }
+                    },
+                    controllerAs: 'vm',
+                    controller: 'registerProductController'
                 });
 
             /*.state('shipment', {
@@ -217,8 +268,4 @@ angular
                     }
                 });
 
-            $rootScope.reset = function () {
-                $rootScope.hasError = false;
-                $rootScope.isSuccess = false;
-            };
         }]);

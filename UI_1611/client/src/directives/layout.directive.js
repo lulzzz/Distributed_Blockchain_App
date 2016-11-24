@@ -44,6 +44,22 @@ angular.module('bverifyApp')
             }
         }
     })
+
+     //Directive for displaying/hiding loading on http request/response
+    .directive("appLoader", ['$rootScope', function ($rootScope) {
+        return {
+            restrict: 'E',
+            templateUrl: '../views/loader.tpl.html',
+            link: function ($scope, element, attrs) {
+                $rootScope.$on("loaderShow", function () {
+                    return element.removeClass('displayNone');
+                });
+                return $rootScope.$on("loaderHide", function () {
+                    return element.addClass('displayNone');
+                });
+            }
+        }
+    }])
     
     //Directive for QR code uploader/reader.
     .directive('qrCodeReader', ['userModel', 'appConstants', '$log', 

@@ -571,7 +571,7 @@ header .sideMenuPanel .list ul li a:hover {
 .multiSelectDirective .multiselect-parent ul.dropdown-menu {
   width: 100% !important;
   overflow-x: hidden !important;
-  height: auto !important;
+  height: auto;
   border: 1px solid !important;
 }
 .errorDiv {

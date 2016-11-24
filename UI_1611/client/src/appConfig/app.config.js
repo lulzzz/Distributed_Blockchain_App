@@ -46,22 +46,27 @@ angular
         function ($q, $rootScope, $log, appConstants) {
             return {
                 request: function (config) {
+                    if(appConstants.HTTP_METHODS.indexOf(config.method) > -1){
+                        $rootScope.$broadcast("loaderShow");
+                    }
                     return config || $q.when(config);
                 },
                 response: function (response) {
+                    $rootScope.$broadcast("loaderHide");
                     return response || $q.when(response);
                 },
                 responseError: function (response) {
                     try {
                         $rootScope.hasError = true;
-                        if (response.errorMsg) {
-                            $rootScope.ERROR_MSG = response.errorMsg;
+                        if (response.data.errorMsg) {
+                            $rootScope.ERROR_MSG = response.data.errorMsg;
                         }
                         else if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
                             $rootScope.ERROR_MSG = appConstants.UNAUTHORIZED_ERROR;
                         } else {
                             $rootScope.ERROR_MSG = appConstants.SERVICE_ERROR;
                         }
+                        $rootScope.$broadcast("loaderHide");
                     } catch (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     }
@@ -77,6 +82,7 @@ angular
         FUNCTIONAL_ERR: "Something went wrong here....",
         UPLOAD_ERR: "Error ! Please upload a valid File",
         ROUTE_STATES_CONSTANTS: ['login', 'register', 'home', 'home.result'],
+        HTTP_METHODS: ['POST', 'PUT', 'DELETE'],
         ACCESS_DENIED_CODE: [401, 403, 408],
         USER_ROLES: {
             admin: 'ADMIN',

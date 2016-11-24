@@ -15,7 +15,9 @@ angular.module('materialModule')
         'procure': 'asset/data/register.json',   // TO-DO need to change against WEB API URL
         /****** below needs to be change. Hardcoded for demo */
         'deleteMat': 'asset/data/deleteMaterial.json',   // TO-DO need to change against WEB API URL
-        'upload': 'api/material/upload'
+        'upload': 'api/material/upload',
+        'getMaterial': 'asset/data/material.json',
+        'manufacturerList': 'asset/data/manufacturerList.json' // TO-DO need to change against WEB API URL
     })
 
     //Configuring resource for making service call
@@ -30,7 +32,9 @@ angular.module('materialModule')
             procureMat: { url: __ENV.apiUrl + materialUrl.procure, method: "GET" },  // TO-DO need to change POST
             /****** below needs to be change. Hardcoded for demo */
             matDelete: { url: __ENV.apiUrl + materialUrl.deleteMat, method: "GET", isArray: "true" }, // TO-DO need to change DELETE
-            fileUpload: { url: __ENV.apiUrl + materialUrl.upload, method: "POST", transformRequest: appConstants.HEADER_CONFIG.transformRequest, headers: appConstants.HEADER_CONFIG.headers } // TO-DO need to change DELETE
+            fileUpload: { url: __ENV.apiUrl + materialUrl.upload, method: "POST", isArray: "true", transformRequest: appConstants.HEADER_CONFIG.transformRequest, headers: appConstants.HEADER_CONFIG.headers }, // TO-DO need to change DELETE
+            retreiveMat: { url: __ENV.apiUrl + materialUrl.getMaterial, method: "GET"}, // TO-DO need to change DELETE
+            manufacturerList: { url: __ENV.apiUrl + materialUrl.manufacturerList, method: "GET", isArray: "true"}
         });
     }])
 
@@ -74,8 +78,25 @@ angular.module('materialModule')
             return deferred.promise;
         };
 
+         /****** below needs to be change. Hardcoded for demo */
+        this.getMaterial = function (req) {
+            var deferred = $q.defer();
+            try{
+                materialResource
+                    .retreiveMat(req)
+                    .$promise
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+            }catch(e){
+                $log.error(appConstants.FUNCTIONAL_ERR, e);
+            }
+            return deferred.promise;
+        };
 
-        /********************************************************** */
+
          this.shipMaterial = function (req) {
             var deferred = $q.defer();
             try{
@@ -108,7 +129,7 @@ angular.module('materialModule')
             }
             return deferred.promise;
         };
-        /****** below needs to be change. Hardcoded for demo */
+        
         this.deleteMaterial = function (req) {
             var deferred = $q.defer();
             try{
@@ -132,6 +153,23 @@ angular.module('materialModule')
             try{
                 materialResource
                     .fileUpload(req)
+                    .$promise
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+            }catch(e){
+                $log.error(appConstants.FUNCTIONAL_ERR, e);
+            }
+            return deferred.promise;
+        };
+
+         this.getManufacturerList = function (req) {
+            var deferred = $q.defer();
+            try{
+                materialResource
+                    .manufacturerList(req)
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);

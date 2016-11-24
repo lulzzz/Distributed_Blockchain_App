@@ -1,9 +1,11 @@
 [{
-	"tokenId": "materialID0",
+	"qrCode": "materialID0",
 	"materialName": "Gracia Leather - Top Grain",
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
 	"quantity": "35",
+	"quality": "Top Grain",
+	"color": "Brown",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
@@ -13,11 +15,13 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Raw Material Producer(FODERFIL SRL)"
 }, {
-	"tokenId": "materialID1",
+	"qrCode": "materialID1",
 	"materialName": "Leather - Top Grain",
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
+	"quality": "Top Grain",
+	"color": "Brown",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
@@ -27,11 +31,13 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Raw Material Producer(Nick)"
 }, {
-	"tokenId": "materialID2",
+	"qrCode": "materialID2",
 	"materialName":"Buckle - Rose Gold finish",
 	"batchNumber": "B00RWSC2MW2",
 	"weight": "100kg",
 	"quantity": "200",
+	"quality": "Top Grain",
+	"color": "Brown",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
@@ -41,11 +47,13 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Raw Material Producer(Justin)"
 }, {
-	"tokenId": "materialID3",
+	"qrCode": "materialID3",
 	"materialName": "Leather - Top Grain",
 	"batchNumber": "B00RWSC2MW3",
 	"weight": "100kg",
 	"quantity": "200",
+	"quality": "Top Grain",
+	"color": "Brown",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
@@ -55,11 +63,13 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Raw Material Producer(Shamim)"
 }, {
-	"tokenId": "materialID4",
+	"qrCode": "materialID4",
 	"materialName": "Leather - Top Grain",
 	"batchNumber": "B00RWSC2MW4",
 	"weight": "100kg",
 	"quantity": "200",
+	"quality": "Top Grain",
+	"color": "Brown",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {

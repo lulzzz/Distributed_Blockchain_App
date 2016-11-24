@@ -10,6 +10,7 @@
 @color-side-menu: #A0A0A0;/*grey*/
 @color-text: #727272;
 @color-text-end-user:#5B9BD5; 
+@color-light-blue: #00BFFF;
 
 html {
 	height: 100%;	
@@ -90,6 +91,9 @@ body {
 .formLabel1 {
 	.setMarginTop(5px);
 	padding-left:0px;
+}
+.colorLightBlue{
+    color: @color-light-blue;
 }
 .rawMaterialRegistration {
 	.formLabel{
@@ -469,7 +473,7 @@ header {
 
 /*Side Menu*/
 .manageProducts {
-	.setMarginTop(20px);
+	//.setMarginTop(20px);
 	.prodList {
 		overflow-x:auto;
 		padding-left: 20px;
@@ -549,6 +553,12 @@ header {
 		 td.location-td-29px{
 			 padding-left: 29px;
 		 }
+         td a.tokenLink{
+             .setCursor(pointer) !important;
+             color: @color-text-end-user !important;
+             font-weight: 600;
+             text-decoration: underline;
+         }
 }
 
 #wrapper {
@@ -585,6 +595,10 @@ min-height: 100%;
 			width: 32px;
 			margin-top: -2px;
 		}
+		.uploadIcon {
+			padding:5px;
+			font-size:20px;
+		}
 	}
 } 
 /*Datepicker class */
@@ -609,7 +623,7 @@ min-height: 100%;
 		ul.dropdown-menu{
 			width:100% !important;
 			overflow-x:hidden !important;
-			height: auto !important;
+			height: auto;
 			border: 1px solid !important;
 		}
 	}
@@ -704,57 +718,63 @@ input[type=radio] {
     left: 75px;
 }
 .dataLineage {
-	.img-responsive {
-		padding-bottom:20px;
-		img {	
-			width:70px;
-			height:74px;
-			&.middleImages {
-				position: relative;
-				margin-top: 50px;
-			}
-			&.middleImagesSmall {
-				position: relative;
-				top: 65px;
-				left:-10px;
-			}
-			&.leftToZero {
-				left:0px !important;
-			}
-		}
-	}
-	.ifManufacturer {
-	width: 7% !important;
-    border: 1px solid red;
-    height: 120px;
-    border-radius: 5px;
-	}
-	.smartContractManufactutrer {
-		width: 20px !important;
-		padding: 0px;
-		top: 42px;
-		position: absolute;
-		height: 20px !important;
-		left: 20px;
-		z-index:9;
-	}
-	.leftTo10 {
-		left:-10px;
-	}
-	.leftTo0 {
-		left:0px !important;
-	}
-	.straightLine {
-		border: 3px solid #00B0F0;
-		width: 5px;
-		height: 85px;
-		float: right;
-		margin-right: -63px;
-	}
-	.col-lg-10 {
-		line-height:15px;
-	}
-}	
+                .img-responsive {
+                                padding-bottom:20px;
+                                img {      
+                                                width:70px;
+                                                height:74px;
+                                                &.middleImages {
+                                                                position: relative;
+                                                                margin-top: 50px;
+                                                }
+                                                &.middleImagesSmall {
+                                                                position: relative;
+                                                                top: 65px;
+                                                                left:-10px;
+                                                }
+                                                &.leftToZero {
+                                                                left:0px !important;
+                                                }
+                                }
+                }
+                .ifManufacturer {
+					width: 7% !important;
+					border: 1px solid red;
+					height: 120px;
+					border-radius: 5px;
+                }
+                .smartContractManufactutrer {
+                                width: 20px !important;
+                                padding: 0px;
+                                top: 42px;
+                                position: absolute;
+                                height: 20px !important;
+                                left: 15px;
+                                z-index:9;
+                }
+                .leftTo10 {
+                                left:-10px;
+                }
+                .leftTo0 {
+                                left:0px !important;
+                }
+                .straightLine {
+                                border: 3px solid #00B0F0;
+                                width: 5px;
+                                height: 85px;
+                                float: right;
+                                margin-right: -63px;
+                }
+                .col-lg-10 {
+                                line-height:15px;
+                }
+                .dataDetails {
+                                z-index:99;
+                                position:relative;
+                                left:30px;
+                }
+}
+	
 .ngdialog-content {
 	background:white !important;
 }
@@ -765,6 +785,30 @@ input[type=radio] {
 	color: #424242 !important;
 }
 /*Product Lineage*/
+
+
+
+.check_box {
+    display:none;
+}
+
+.check_box + label{
+    background:url('../images/check-box.png') no-repeat;
+    height: 16px;
+    width: 16px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+
+.check_box:checked + label{
+    background:url('../images/check-box-checked.png') no-repeat;
+    height: 16px;
+    width: 16px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+
+
 
 /****
 **	CSS for end user mobile view

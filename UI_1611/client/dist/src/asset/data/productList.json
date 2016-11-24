@@ -1,52 +1,52 @@
 [{
-	"id": "materialID0",
-	"productName": "Tote Bag",
+	"tokenId": "materialID0",
+	"productName": "Coach Crosby line Tote Handbag",
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"quantity": "25",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
+	"shippedFrom": "Coach, Florida"
 }, {
-	"id": "materialID1",
-	"productName": "Hobo Bag",
+	"tokenId": "materialID1",
+	"productName": "Coach Hobo Bag",
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"quantity": "25",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)"
+	"shippedFrom": "Coach, New York"
 }, {
-	"id": "materialID2",
-	"productName": "Tote Bag",
+	"tokenId": "materialID2",
+	"productName": "Coach Tote Bag",
 	"batchNumber": "B00RWSC2MW2",
 	"weight": "100kg",
-	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"quantity": "25",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
+	"shippedFrom": "Coach, Florida"
 }, {
-	"id": "materialID3",
+	"tokenId": "materialID3",
 	"productName": "Hobo Bag",
 	"batchNumber": "B00RWSC2MW3",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -55,12 +55,12 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Manufacturer (Azim)"
 }, {
-	"id": "materialID4",
+	"tokenId": "materialID4",
 	"productName": "Tote Bag",
 	"batchNumber": "B00RWSC2MW4",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
