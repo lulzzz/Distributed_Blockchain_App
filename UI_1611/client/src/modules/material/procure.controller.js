@@ -9,9 +9,9 @@ angular.module('materialModule')
 
     //For acknowledging received product
     .controller('procureMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'materialService', '$log', 'materialList','ngDialog', '$scope',
+        'procureMaterialService', '$log', 'materialList','ngDialog', '$scope',
         function(userModel, appConstants, $state, $rootScope,
-            materialService, $log, materialList, ngDialog, $scope) {
+            procureMaterialService, $log, materialList, ngDialog, $scope) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
@@ -46,7 +46,7 @@ angular.module('materialModule')
                 /*    TO-DO need to test with actual data and implementation */
 				
                 vm.procure = function(dataList) {
-                    materialService
+                    procureMaterialService
                         .procureMaterial({}) // for demo instance
                         //.procureMaterial(dataList)
                         .then(function(response) {
@@ -58,30 +58,6 @@ angular.module('materialModule')
                         .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
-                };
-
-
-                /**************Product Lineage functionality **********************/
-                // isShipped value will be 'yes' for retailer
-                //Hardcoded. Need to remove
-                $scope.serviceData = { data: { product: { isShipped: 'yes', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Garcia leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc:'Florence, Italy',recLoc:'Florida' }, { name: 'Buckle', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc:'Florence, Italy',recLoc:'Florida' }] } } };
-                $scope.lineageData = $scope.serviceData.data;
-                $scope.lineageSubData = $scope.lineageData.product.items[0];
-                $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-
-                vm.showLineage = function(data){
-                    if ($scope.lineageData.product.isShipped === 'yes') {
-                        $scope.isShipped = true;
-                        $scope.isShippedToRetailer = true;
-                    } else if ($scope.lineageData.product.isShipped === 'no') {
-                        $scope.isShipped = false;
-                        $scope.isShippedToRetailer = false;
-                    }
-                    else {
-                        $scope.isShipped = true;
-                        $scope.isShippedToRetailer = false;
-                    }
-                    renderLineage(ngDialog, $scope, 'productLineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
                 };
 
                 /*************************************************************** */

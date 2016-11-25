@@ -1,9 +1,9 @@
 [{
 	"tokenId": "materialID1",
-	"productName": "Tote Bag",
+	"productName": "Coach Hobo Bag",
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
-	"quantity": "200",
+	"quantity": "25",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
@@ -11,13 +11,13 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
+	"shippedFrom": "Coach, New York"
 }, {
 	"tokenId": "materialID2",
-	"productName": "Handeld Leather Bag",
+	"productName": "Coach Tote Bag",
 	"batchNumber": "B00RWSC2MW2",
 	"weight": "100kg",
-	"quantity": "200",
+	"quantity": "25",
 	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
@@ -25,10 +25,10 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)"
+	"shippedFrom": "Coach, Florida"
 }, {
 	"tokenId": "materialID3",
-	"productName": "Tote Bag",
+	"productName": "Hobo Bag",
 	"batchNumber": "B00RWSC2MW3",
 	"weight": "100kg",
 	"quantity": "200",
@@ -39,10 +39,10 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Rajeev)"
+	"shippedFrom": "Manufacturer (Azim)"
 }, {
 	"tokenId": "materialID4",
-	"productName": "Handeld Leather Bag",
+	"productName": "Tote Bag",
 	"batchNumber": "B00RWSC2MW4",
 	"weight": "100kg",
 	"quantity": "200",
@@ -53,5 +53,5 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Manufacturer (Azim)"
+	"shippedFrom": "Manufacturer (Rajeev)"
 }]

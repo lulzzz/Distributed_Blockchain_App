@@ -98,49 +98,6 @@ angular.module('bverifyApp')
         }]);
 
 
-angular.module('searchModule')
-    //Directive for table section for product/material list
-    .directive('appShipmentlist', function () {
-        return {
-            restrict: 'E',
-            templateUrl: '../views/shipmentList.tpl.html',
-            scope: {
-                list: '=',
-                title: '@',
-                getShipmentDetails: '&'
-            },
-            link: function (scope, element, attrs) {
-            },
-            controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel) {
-                var self = this;
-                self.userProfile = populateUserProfile(userModel);
-                self.customConfigParams = createUsingFullOptions();
-                $scope.$watchCollection('list', function (newNames, oldNames) {
-                    self.customConfigParams = createUsingFullOptions();
-                });
- 
-                function createUsingFullOptions() {
-                    var initialParams = {
-                        count: 6 // initial page size
-                    };
-                    var initialSettings = {
-                        // page size buttons (right set of buttons in demo)
-                        counts: [],
-                        // determines the pager buttons (left set of buttons in demo)
-                        paginationMaxBlocks: 13,
-                        paginationMinBlocks: 2,
-                        dataset: $scope.list
-                    };
-                    return new NgTableParams(initialParams, initialSettings);
-                };
-            },
-            controllerAs: 'vm'
-        }
-    });
-
-
-
-
 
 
 function populateUserProfile(userModel) {

@@ -7,24 +7,24 @@ exports.uploadFile = function (req, res) {
     try {
         var list = ["https://s3.ap-south-1.amazonaws.com/bverifybucket/manufacturer.png", "https://s3.ap-south-1.amazonaws.com/bverifybucket/qrcode.png"];
         //Configuring AWS account
-      /*  AWS.config.update({
-            accessKeyId: config.AWS_ACCESSKEY,
-            secretAccessKey: config.AWS_SECRETACCESSKEY
-        });
-
-        //For InvalidRequest error
-        var s3 = new AWS.S3({
-            endpoint: config.S3_ENDPOINT,
-            signatureVersion: config.S3_VERSION,
-            region: config.S3_REGION
-        });
-
-        var params = {
-            Bucket: config.S3_BUCKET,
-            Key: req.file.originalname,
-            Body: fs.createReadStream(req.file.path),
-            ContentType: req.file.mimetype
-        };*/
+        /*  AWS.config.update({
+              accessKeyId: config.AWS_ACCESSKEY,
+              secretAccessKey: config.AWS_SECRETACCESSKEY
+          });
+  
+          //For InvalidRequest error
+          var s3 = new AWS.S3({
+              endpoint: config.S3_ENDPOINT,
+              signatureVersion: config.S3_VERSION,
+              region: config.S3_REGION
+          });
+  
+          var params = {
+              Bucket: config.S3_BUCKET,
+              Key: req.file.originalname,
+              Body: fs.createReadStream(req.file.path),
+              ContentType: req.file.mimetype
+          };*/
 
         /*s3.putObject(params, function (err, data) {
             if (err) {
@@ -59,30 +59,42 @@ exports.uploadFile = function (req, res) {
 };
 
 
+exports.registerMaterial = function (req, res) {
+
+    var material = {
+        qrCode: "",
+        materialName: "Garcia leather",
+        quantity: "35",
+        batchNumber: "GLB14012016HK",
+        productionDate: "14/1/2016 19:01:26",
+        expiryDate: "Not Applicable",
+        quality: "Top Grain",
+        color: "Brown",
+        weight: "50 oz.",
+        description: "signature leather made from natural tanned Italian cowhide",
+        dimension: "33 sq. ft. (L) x .25 sq. ft. (H) x 18 sq. ft. (W)",
+        filePath: []
+    };
+    res.json(material);
+};
+
 exports.registerProduct = function (req, res) {
 
     var product = {
-        tokenId: '',
-        materialName: 'Garcia leather',
-        productName: 'Coach Crosby line Tote Handbag',
-        quantity: '25 units',
-        batchNumber: 'CCLTH22216FL',
-        quality: 'Top Grain',
-        color: 'Brown',
-        weight: '5.7 oz.',
-        manufactureDate: '22/2/2016',
-        registeredDate: new Date(),
-        dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
-        modelNumber: '33524LIC7C',
-        shippedFrom: '',
-        shippedOn: new Date(),
-        trackDetails: {
-            currentlyAt: 'FedEx',
-            trackRecords: []
-        },
-        file: {
-            name: ''
-        }
+                qrCode: "",
+                filePath: [],
+                productName: "Coach Crosby line Tote Handbag",
+                quantity: "25 units",
+                batchNumber: "CCLTH22216FL",
+                manufactureDate: "14/1/2016 19:01:26",
+                expiryDate: "",
+                quality: "Top Grain",
+                color: "Brown",
+                weight: "5.7 oz.",
+                description: "",
+                dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
+                modelNumber: "33524LIC7C",
+                selectedMaterials: []
     };
     res.json(product);
 };

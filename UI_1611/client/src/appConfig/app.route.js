@@ -121,9 +121,9 @@ angular
                     templateUrl: '../modules/material/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        materialList: function (userModel, materialService) {
+                        materialList: function (userModel, registerMaterialService) {
                             var user = userModel.getUser();
-                            return materialService.getMaterialList({
+                            return registerMaterialService.getMaterialList({
                                 userName: user.userName,
                                 userProfile: user.userProfile
                             });
@@ -148,9 +148,9 @@ angular
                     templateUrl: '../modules/material/procure.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        materialList: function (userModel, materialService) {
+                        materialList: function (userModel, procureMaterialService) {
                             var user = userModel.getUser();
-                            return materialService.getMaterialList({
+                            return procureMaterialService.getMaterialList({
                                 userName: user.userName,
                                 userProfile: user.userProfile
                             });
@@ -165,16 +165,16 @@ angular
                     templateUrl: '../modules/product/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        productList: function (userModel, productService) {
+                        productList: function (userModel, registerService) {
                             var user = userModel.getUser();
-                            return productService.getProductList({
+                            return registerService.getProductList({
                                 userName: user.userName,
                                 userProfile: user.userProfile
                             });
                         },
-                        materialList: function (userModel, productService) {
+                        materialList: function (userModel, registerService) {
                             var user = userModel.getUser();
-                            return productService.getMaterialList({
+                            return registerService.getMaterialList({
                                 userName: user.userName,
                                 userProfile: user.userProfile
                             });
@@ -182,58 +182,34 @@ angular
                     },
                     controllerAs: 'vm',
                     controller: 'registerProductController'
-                });
+                })
 
-            /*.state('shipment', {
-                url: '/product/ship',
-                templateProvider: function(userModel, $templateFactory) {
-                    /*
-                    **  Load templates based on user roles. Route URL will be same for every user role.
-                    */
-            /*   if (userModel.isProducer()) {
-                   return $templateFactory.fromUrl('../modules/product/material.ship.tpl.html');
-               }
-               if (userModel.isManufacturer() || userModel.isRetailer() || userModel.isAdmin()) {
-                   return $templateFactory.fromUrl('../modules/product/product.ship.tpl.html');
-               }
-           },
-           controllerAs: 'vm',
-           controller: 'productShipController'
-       })
-       .state('acknowledge', {
-           url: '/product/acknowledge',
-           templateUrl: '../modules/product/product.ack.tpl.html',
-           //Resolve added to retreive productList before loading product acknowledgment screen
-           resolve: {
-               productList: function(userModel, productServiceAPI) {
-                   var user = userModel.getUser();
+                .state('productShip', {
+                    url: '/product/ship',
+                    templateUrl: '../modules/product/ship.tpl.html',
+                    params: {
+                        qrCode: null,
+                    },
+                    controllerAs: 'vm',
+                    controller: 'shipProductController'
+                })
 
-                   /****** below needs to be change. Hardcoded for demo */
-            /*        if (userModel.isManufacturer()) {
-                        return productServiceAPI.getMaterialList({
-                            userName: user.userName,
-                            userProfile: user.userProfile
-                        });
-                    }
-                    if (userModel.isRetailer()) {
-                        return productServiceAPI.getProductList({
-                            userName: user.userName,
-                            userProfile: user.userProfile
-                        });
-                    }
-                    /****************************************************** */
-
-
-            /*return productServiceAPI.getProductList({
-                userName: user.userName,
-                userProfile: user.userProfile
-            });*/
-            /*   }
-           },
-           controllerAs: 'vm',
-           controller: 'productAckController'
-       });*/
-
+                .state('productAck', {
+                    url: '/product/procure',
+                    templateUrl: '../modules/product/procure.tpl.html',
+                    //Resolve added to retreive registered material List before loading material register screen
+                    resolve: {
+                        productList: function (userModel, procureService) {
+                            var user = userModel.getUser();
+                            return procureService.getProductList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+                        }
+                    },
+                    controllerAs: 'vm',
+                    controller: 'procureProductController'
+                })
 
             // use the HTML5 History API
             $locationProvider.html5Mode(true);

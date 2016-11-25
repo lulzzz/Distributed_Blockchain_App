@@ -8,8 +8,8 @@
 
     <div class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
         <!-- Directive for rendering all pervious registered materials inside table -->
-    <app-productlist list="vm.list" title="{{vm.header}}" is-procure-screen="new Boolean(true)" procure-product="vm.procureProduct(productList)"
-    show-product-lineage="vm.showProductLineage(data)" row-Selected="vm.rowSelected(data)"></app-productlist>
+    <app-registration-list list="vm.list" title="ACKNOWLEDGE PRODUCTS" is-procure-screen="new Boolean(true)" procure="vm.procure(dataList)"
+    show-lineage="vm.showLineage(data)" row-Selected="vm.rowSelected(data)"></app-registration-list>
 
     </div>
 
@@ -46,7 +46,7 @@
 
 
 <!-- Directive for displaying product lineage box -->
-<dialog-product-lineage></dialog-product-lineage>
+<dialog-lineage></dialog-lineage>
 
 <!-- Directive for displaying warning box -->
 <dialog-warning></dialog-warning>

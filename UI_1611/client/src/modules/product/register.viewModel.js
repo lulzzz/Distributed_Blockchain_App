@@ -23,7 +23,7 @@ angular.module('productModule')
                 description: "",
                 dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
                 modelNumber: "33524LIC7C",
-                materials: []
+                selectedMaterials: []
             };
 
             var _product = {};
@@ -59,27 +59,27 @@ angular.module('productModule')
                 this._product.filePath = fileList;
             };
             //set list of uploaded file url 
-            var _setMaterialList = function (list) {
-                this.materials = [];
+            var _setSelectedMaterials = function (list) {
+                this.selectedMaterials = [];
                 var self = this;
                 angular.forEach(list, function(val, key){
-                    self.materials.push({
+                    self.selectedMaterials.push({
                         'id': val.qrCode,
                         'label': val.materialName
                     })
                 });
             };
 
-            var _getMaterialList = function () {
-                return this.materials;
+            var _getSelectedMaterials = function () {
+                return this.selectedMaterials;
             };
 
             return {
                 'getProduct': _getProduct,
                 'setProduct': _setProduct,
                 'setFilePath': _setFilePath,
-                'setMaterialList': _setMaterialList,
-                'getMaterialList': _getMaterialList,
+                'setSelectedMaterials': _setSelectedMaterials,
+                'getSelectedMaterials': _getSelectedMaterials,
                 'resetProduct': _reset
             }
         }]);

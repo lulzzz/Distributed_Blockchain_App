@@ -9,9 +9,9 @@ angular.module('productModule')
 
     //For new product/material resgistration
     .controller('registerProductController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'productService', '$log', 'productModel', 'productList', '$scope', 'ngDialog', 'materialList',
+        'registerService', '$log', 'productModel', 'productList', '$scope', 'ngDialog', 'materialList',
         function (userModel, appConstants, $state, $rootScope,
-            productService, $log, productModel, productList, $scope, ngDialog, materialList) {
+            registerService, $log, productModel, productList, $scope, ngDialog, materialList) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
@@ -41,10 +41,14 @@ angular.module('productModule')
                 materialList
                     .$promise
                     .then(function (response) {
-                        productModel.setMaterialList.call(vm.product, response);
-                        vm.materialList = productModel.getMaterialList.call(vm.product, null);
+                        vm.materialList = [];
+                        angular.forEach(response, function (val, key) {
+                            vm.materialList.push({
+                                'id': val.qrCode,
+                                'label': val.materialName
+                            })
+                        });
                         vm.settings = appConstants.MULTISELECT_SETTINGS;
-                        vm.showList = true;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -78,7 +82,7 @@ angular.module('productModule')
                 vm.upload = function (data) {
                     //Making upload service call
                     if (data) {
-                        productService
+                        registerService
                             .uploadFile({ file: data })
                             .then(function (response) {
                                 vm.urlList = response;
@@ -104,13 +108,13 @@ angular.module('productModule')
                         ngDialog.close();
 
                         //Making delete service call
-                        productService
+                        registerService
                             .deleteProduct({ productId: $scope.data.id })
                             .then(function (response) {
                                 vm.list = response;
                                 $rootScope.hasError = false;
                                 $rootScope.isSuccess = true;
-                                $rootScope.SUCCESS_MSG = appConstants.PRODUCT_DELETED;
+                                $rootScope.SUCCESS_MSG = appConstants.PROD_DELETED;
                             }, function (err) {
                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
                             })
@@ -123,37 +127,57 @@ angular.module('productModule')
 
                 vm.showLineage = function (data) {
 
-                    /*productService
-                        .getLineageData(data)
-                        .then(function (response) {*/
-                            $scope.serviceData = { data: { product: { isShipped: 'no', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Garcia leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }, { name: 'Buckle', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }] } } };
-                          $scope.lineageData = $scope.serviceData.data;
-                          $scope.lineageSubData = $scope.lineageData.product.items[0];
-                          $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                              $scope.ifNegativeUsecase = false;
-                              /****************Retailer************************/
-                           if ($scope.lineageData.product.isShipped == 'yes') {
-       
-                               $scope.isShipped = true;
-                               $scope.isShippedToRetailer = true;
-       
-                               /****************Manufacturer************************/
-                           } else if ($scope.lineageData.product.isShipped == 'no') {
-                                $scope.isShipped = false;
-                                $scope.isShippedToRetailer = false;
-                            }
-                            else {
-                                $scope.isShipped = true;
-                                $scope.isShippedToRetailer = false;
-                            }
+                    registerService
+                        .getRegisterLineageData(data)
+                        .then(function (response) {
+                            $scope.lineageData = response.data;
+                            $scope.lineageSubData = $scope.lineageData.product.items[0];
+                            $scope.lineageSubMaterialData = $scope.lineageData.product.items;
+                            $scope.ifNegativeUsecase = false;
+                            $scope.isShipped = false;
+                            $scope.isShippedToRetailer = false;
+
                             renderLineage(ngDialog, $scope, 'productLineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
-                       /* }, function (err) {
+                        }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
                         .catch(function (e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });*/
-                }
+                        });
+                };
+
+
+                vm.registerProduct = function () {
+
+                    productModel.setProduct(vm.product);
+                    productModel.setSelectedMaterials.call(vm.product, vm.selectedMaterial);
+
+                    registerService
+                        .registerProduct(productModel.getProduct())
+                        .then(function (response) {
+                            $rootScope.hasError = false;
+                            $scope.entity = 'product';
+                            $scope.randomToken = 'CCTH' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            $scope.name = vm.product.productName;
+                            renderLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
+
+                $scope.redirectUser = function (flag) {
+                    ngDialog.close();
+                    if (flag) {
+                        productModel.resetProduct();
+                        $state.reload();
+                    }
+                    else {
+                        $state.go('productShip', { qrCode: $scope.randomToken });
+                    }
+                };
 
                 /*productModel.resetProduct();
                 vm.user = userModel.getUser();
@@ -224,7 +248,7 @@ angular.module('productModule')
                      productModel.setProduct(vm.product);
                      var req = productModel.getNewRegisteredProduct();
  
-                     productServiceAPI
+                     registerServiceAPI
                          .registerProduct(req)
                          .then(function (response) {
                              //vm.product.setData(response);
@@ -272,7 +296,7 @@ angular.module('productModule')
                            /****** below needs to be change. Hardcoded for demo */
                 /*        if (vm.isManufacturer) {
                             //Making delete service call
-                            productServiceAPI
+                            registerServiceAPI
                                 .productDelete({ productId: data.tokenId })
                                 .then(function (response) {
                                     productModel.setProductList(response);
@@ -292,7 +316,7 @@ angular.module('productModule')
                         /****** below needs to be change. Hardcoded for demo */
                 /*           if (vm.isProducer) {
                                //Making delete service call
-                               productServiceAPI
+                               registerServiceAPI
                                    .materialDelete({ productId: data.id })
                                    .then(function (response) {
                                        productModel.setProductList(response);

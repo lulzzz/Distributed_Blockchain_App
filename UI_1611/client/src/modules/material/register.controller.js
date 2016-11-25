@@ -9,9 +9,9 @@ angular.module('materialModule')
 
     //For new material resgistration
     .controller('registerMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'materialService', '$log', 'materialModel', 'materialList', '$scope', 'ngDialog', 'localStorageService',
+        'registerMaterialService', '$log', 'materialModel', 'materialList', '$scope', 'ngDialog', 'localStorageService',
         function (userModel, appConstants, $state, $rootScope,
-            materialService, $log, materialModel, materialList, $scope, ngDialog, localStorageService) {
+            registerMaterialService, $log, materialModel, materialList, $scope, ngDialog, localStorageService) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
@@ -54,7 +54,7 @@ angular.module('materialModule')
                     materialModel.setMaterial(vm.material);
                     materialModel.setFilePath(vm.urlList);
 
-                    materialService
+                    registerMaterialService
                         .registerMaterial(materialModel.getMaterial())
                         .then(function (response) {
                             $rootScope.hasError = false;
@@ -97,7 +97,7 @@ angular.module('materialModule')
                 vm.upload = function (data) {
                     //Making delete service call
                     if (data) {
-                        materialService
+                        registerMaterialService
                             .uploadFile({ file: data })
                             .then(function (response) {
                                 vm.urlList = response;
@@ -124,7 +124,7 @@ angular.module('materialModule')
                         ngDialog.close();
 
                         //Making delete service call
-                        materialService
+                        registerMaterialService
                             .deleteMaterial({ materialId: $scope.data.id })
                             .then(function (response) {
                                 vm.list = response;

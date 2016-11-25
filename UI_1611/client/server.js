@@ -53,7 +53,8 @@ app.get("*", function(req, res) {
 });
 
 app.post('/api/material/upload', upload.single('file'), productCtrl.uploadFile);
-app.post('/api/material/register.json', productCtrl.registerProduct);
+app.post('/api/material/register.json', productCtrl.registerMaterial);
+app.post('/api/product/register.json', productCtrl.registerProduct);
 
 /**
  * Get port from environment and store in Express.

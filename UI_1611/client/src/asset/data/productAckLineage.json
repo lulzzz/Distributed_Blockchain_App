@@ -1,7 +1,7 @@
 {
     "data": {
         "product": {
-            "isShipped": "no",
+            "isShipped": "yes",
             "name": "Handbag",
             "mfgDate": "1/1/2016",
             "receivedDate": "1/1/2016",

@@ -8,9 +8,9 @@
 angular.module('materialModule')
 
     //For shipment of registered products
-    .controller('shipMaterialController', ['userModel', 'appConstants', '$state', '$rootScope', 'materialService',
+    .controller('shipMaterialController', ['userModel', 'appConstants', '$state', '$rootScope', 'shipMaterialService',
         '$log', 'shipModel', 'ngDialog', '$scope', 'userServiceAPI', '$stateParams', 'localStorageService',
-        function (userModel, appConstants, $state, $rootScope, materialService,
+        function (userModel, appConstants, $state, $rootScope, shipMaterialService,
             $log, shipModel, ngDialog, $scope, userServiceAPI, $stateParams, localStorageService) {
             try {
                 var vm = this;
@@ -22,9 +22,9 @@ angular.module('materialModule')
                     vm.datepickerObj.popup.opened = true;
                 };
 
-                if ($stateParams.qrCode) {
+                //if ($stateParams.qrCode) {  for time being
                     //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
-                    materialService
+                    shipMaterialService
                         .getMaterial($stateParams.qrCode)
                         .then(function (response) {
                             shipModel.setModel(response);
@@ -35,8 +35,8 @@ angular.module('materialModule')
                         .catch(function (e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
-                } else {
-                    materialService
+               /* } else {  for time being
+                    shipMaterialService
                         .getMaterialList(vm.user)
                         .then(function (response) {
                             vm.materialList = response;
@@ -48,7 +48,7 @@ angular.module('materialModule')
                         .catch(function (e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
-                }
+                }*/
 
 
 
@@ -57,7 +57,7 @@ angular.module('materialModule')
                 vm.exampleModel = [];
 
                 //Retreive all manufacturerr list and populate inside Multiselect
-                materialService
+                shipMaterialService
                     .getManufacturerList(vm.user)
                     .then(function (response) {
                         vm.manufacturerList = response;
@@ -88,7 +88,7 @@ angular.module('materialModule')
                     shipModel.shippedTo(vm.manufacturerList);
 
                     // do material shipment
-                    materialService
+                    shipMaterialService
                         .shipMaterial(shipModel.getModel())
                         .then(function (response) {
                             $rootScope.hasError = false;
