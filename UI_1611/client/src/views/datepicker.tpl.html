@@ -1,7 +1,7 @@
 <p class="input-group datePicker">
-    <input ng-readonly="vm.isReadonly" type="text" class="form-control" uib-datepicker-popup="{{vm.datepickerObj.dateFormat}}" ng-model="vm.product.productionDate" show-button-bar="false"
+    <input ng-readonly="vm.isReadonly" type="text" class="form-control" uib-datepicker-popup="{{vm.datepickerObj.dateFormat}}" ng-model="date" show-button-bar="false"
         is-open="vm.datepickerObj.popup.opened" datepicker-options="vm.datepickerObj.dateOptions" ng-required="true" /> 
     <span class="input-group-btn">
-            <button type="button" class="btn btn-default spanBtn" ng-click="vm.openDatepicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+            <button type="button" class="btn btn-default spanBtn" ng-click="openDatepicker()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
 </p>

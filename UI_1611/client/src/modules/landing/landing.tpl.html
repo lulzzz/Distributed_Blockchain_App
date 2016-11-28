@@ -1,0 +1,50 @@
+<app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
+<div class="container landingPanel">
+<div class="col-lg-12 col-xs-12">
+	<div class="col-lg-4 col-xs-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading"><strong>RAW MATERIAL PRODUCER</strong></div>
+			<div class="panel-body">
+				<div>
+					<ul>
+						<li><u><a ng-click="vm.redirectUser('materialReg', vm.isProducer)" ng-class="{'cursorDefault': !vm.isProducer}">Register Raw Material</a></u></li>
+						<li><u><a ng-click="vm.redirectUser('materialBatch', vm.isProducer)" ng-class="{'cursorDefault': !vm.isProducer}">Register Raw Material Batch</a></u></li>
+						<li><u><a ng-click="vm.redirectUser('materialShip', vm.isProducer)" ng-class="{'cursorDefault': !vm.isProducer}">Ship Raw Material</a></u></li>
+						<li><u><a ng-click="vm.redirectUser('home', vm.isProducer)" ng-class="{'cursorDefault': !vm.isProducer}">Track Shipments</a></u></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-xs-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading"><strong>MANUFACTURER</strong></div>
+			<div class="panel-body">
+				<div>
+					<ul>
+						<li><u><a ng-click="vm.redirectUser('materialAck', vm.isManufacturer)" ng-class="{'cursorDefault': !vm.isManufacturer}">Procure Raw Materials</a></u></li>
+						<li><u><a ng-click="vm.redirectUser('productReg', vm.isManufacturer)" ng-class="{'cursorDefault': !vm.isManufacturer}">Register Finished Goods</a></u></li>
+						<li><u><a ng-click="vm.redirectUser('productShip', vm.isManufacturer)" ng-class="{'cursorDefault': !vm.isManufacturer}">Ship Finished Goods</a></u></li>
+						<li><u><a ng-click="vm.redirectUser('home', vm.isManufacturer)" ng-class="{'cursorDefault': !vm.isManufacturer}">Track Shipments</a></u></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-xs-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading"><strong>RETAILER</strong></div>
+			<div class="panel-body">
+				<div>
+					<ul>
+						<li><u><a ng-click="vm.redirectUser('productAck', vm.isRetailer)" ng-class="{'cursorDefault': !vm.isRetailer}"">Acknowledge Finished Goods</a></u></li>
+						<li><u><a class="cursorDefault">Track Shipments</a></u></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+	

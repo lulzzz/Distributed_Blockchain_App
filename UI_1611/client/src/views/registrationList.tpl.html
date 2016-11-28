@@ -1,4 +1,4 @@
-<div ng-if="isRegisterScreen" class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
+<div ng-if="isRegisterScreen" class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12 padding-top-20">
     <app-legend header="{{title}}"></app-legend>
     
     <!--- Render Previous registered Product/Material -->
@@ -29,20 +29,20 @@
 </div>
 
     <!--- Procure/Acknowledge Product/Material -->
-<div ng-if="isProcureScreen" class="manageProducts col-lg-12 col-md-10 col-sm-10 col-xs-12">
+<div ng-if="isProcureScreen" class="manageProducts col-lg-12 col-md-10 col-sm-10 col-xs-12 padding-top-20">
     <app-legend header="{{title}}"></app-legend> 
 
 <form ng-submit="procure({dataList: list})">
     <div class="prodList" >
         <script type="text/ng-template" id="headerCheckbox.html">
-                <input type="checkbox" class="" value="" id="" />
+                <input type="checkbox" ng-model="header.selectedRows" class="select-all" ng-click="selectAllRows(list,true)" />
         </script>
 
         <table ng-table="vm.customConfigParams" class="commonTable table ">
 
                 <tr ng-repeat="row in $data">
                     <td header="'headerCheckbox.html'">
-                        <input type="checkbox" id="{{row.id}}" ng-click="rowSelected({data:row})">
+                        <input type="checkbox" id="{{row.qrCode}}" ng-click="selectedRow(row)" ng-model="row.selectedRows">
                     </td>
                     <td style="padding-left: 10px;"  ng-if="vm.userProfile.isManufacturer" data-title="'Name'">{{row.materialName}}</td>
                     <td style="padding-left: 10px;"  ng-if="vm.userProfile.isRetailer" data-title="'Name'">{{row.productName}}</td>
@@ -64,6 +64,13 @@
                             <!-- Comment out based on new UI -->
                             <!-- <img style="height:35px;" src="asset/images/qr_search.png" popover-trigger="click" popover-placement="right" uib-popover-template="'blackchainProductAck.html'" /> -->
                             <img class="cursorPointer" ng-mouseover="showLineage({data: row})" style="height:35px;" src="asset/images/user_qr.png"/>
+                        </center>
+                    </td>
+                    <td ng-if="vm.userProfile.isManufacturer" title="'Trace Lineage'">
+                        <center>
+                            <!-- Comment out based on new UI -->
+                            <!-- <img style="height:35px;" src="asset/images/qr_search.png" popover-trigger="click" popover-placement="right" uib-popover-template="'blackchainProductAck.html'" /> -->
+                            <img class="cursorPointer" ng-mouseover="showProductLineage({data: row})" style="height:35px;" src="asset/images/user_qr.png"/>
                         </center>
                     </td>
                 </tr>

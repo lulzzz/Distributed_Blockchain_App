@@ -1,17 +1,17 @@
 /*
 **  register Controller for handling user based 
-**  material registeration business logic 
+**  product/material registeration business logic 
 */
 
 "use strict";
 
 angular.module('materialModule')
 
-    //For new material resgistration
-    .controller('registerMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'registerMaterialService', '$log', 'materialModel', 'materialList', '$scope', 'ngDialog', 'localStorageService',
+    //For raw material resgistration
+    .controller('batchMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
+        'batchMaterialService', '$log', 'materialModel', 'materialList', '$scope', 'ngDialog', '$stateParams',
         function (userModel, appConstants, $state, $rootScope,
-            registerMaterialService, $log, materialModel, materialList, $scope, ngDialog, localStorageService) {
+            batchMaterialService, $log, materialModel, materialList, $scope, ngDialog, $stateParams) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
@@ -19,7 +19,6 @@ angular.module('materialModule')
                 vm.isReadonly = false;
                 setUserProfile(vm, userModel);
                 vm.material = materialModel.getMaterial();
-                vm.file = {};
                 vm.urlList = [];
                 vm.list = [];
                 vm.datePickerData = vm.material.productionDate;
@@ -36,8 +35,44 @@ angular.module('materialModule')
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
-                
-                vm.reset = function(){
+
+                //if ($stateParams.qrCode) {  for time being
+                //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
+                batchMaterialService
+                    .getMaterial($stateParams.qrCode)
+                    .then(function (response) {
+                        materialModel.setMaterial(response);
+                        vm.material = materialModel.getMaterial();
+                        //vm.urlList = vm.material.filePath;
+                        /***** Hardcoded for demo purpose */
+                        vm.urlList = [{src:'asset/images/bag1.png',alt:'material image'},
+										{src:'asset/images/bag5.jpg',alt:'material image'},
+										{src:'asset/images/bag6.jpg',alt:'material image'},
+										{src:'asset/images/bag7.jpg',alt:'material image'},
+										{src:'asset/images/bag7.jpg',alt:'material image'}];
+                    }, function (err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function (e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
+                /* } else {  for time being
+                     shipMaterialService
+                         .getMaterialList(vm.user)
+                         .then(function (response) {
+                             vm.materialList = response;
+                             shipModel.setModel(vm.materialList[0]);
+                             vm.ship = shipModel.getModel();
+                         }, function (err) {
+                             $log.error(appConstants.FUNCTIONAL_ERR, err);
+                         })
+                         .catch(function (e) {
+                             $log.error(appConstants.FUNCTIONAL_ERR, e);
+                         });
+                 }*/
+
+
+                vm.reset = function () {
                     $rootScope.hasError = false;
                     $rootScope.isSuccess = false;
                     vm.isReadonly = false;
@@ -47,17 +82,20 @@ angular.module('materialModule')
 
 
                 /******************* Register new material *************************/
-                vm.registerMaterial = function () {
-                    vm.material.file = vm.file;
-                    vm.material.productionDate = vm.datePickerData;
+                vm.registerBatchMaterial = function () {
                     materialModel.setMaterial(vm.material);
-                    materialModel.setFilePath(vm.urlList);
-
-                    registerMaterialService
-                        .registerMaterial(materialModel.getMaterial())
+                    var req = {
+                        qrCode: vm.material.qrCode,
+                        materialName: vm.material.materialName,
+                        quantity: vm.material.quantity
+                    }
+                    batchMaterialService
+                        .registerBatchMaterial(req)
                         .then(function (response) {
                             $rootScope.hasError = false;
                             $scope.entity = 'raw material';
+                            $scope.ifBatches = "batches";
+							$scope.ifFinishedGoods="Finished good";
                             $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.name = vm.material.materialName;
                             renderLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
@@ -75,7 +113,7 @@ angular.module('materialModule')
                         $state.reload();
                     }
                     else {
-                        $state.go('materialBatch', { qrCode: $scope.randomToken });
+                        $state.go('materialShip', { qrCode: $scope.randomToken });
                     }
                 };
 
@@ -93,22 +131,6 @@ angular.module('materialModule')
                     vm.isReadonly = true;
                 };
 
-                vm.upload = function (data) {
-                    //Making delete service call
-                    if (data) {
-                        registerMaterialService
-                            .uploadFile({ file: data })
-                            .then(function (response) {
-                                vm.urlList = response;
-                            }, function (err) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, err);
-                            })
-                            .catch(function (e) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, e);
-                            });
-                    }
-                };
-
 
                 /******************* DELETE registered product *************************/
                 vm.delete = function (data) {
@@ -123,8 +145,8 @@ angular.module('materialModule')
                         ngDialog.close();
 
                         //Making delete service call
-                        registerMaterialService
-                            .deleteMaterial({ materialId: $scope.data.id })
+                        batchMaterialService
+                            .deleteMaterialBatch({ materialId: $scope.data.id })
                             .then(function (response) {
                                 vm.list = response;
                                 $rootScope.hasError = false;
@@ -153,17 +175,4 @@ function setUserProfile(vm, userModel) {
     vm.isProducer = userModel.isProducer();
     vm.isRetailer = userModel.isRetailer();
     vm.isAdmin = userModel.isAdmin();
-};
-
-/****
- *  Utility function for rendering product lineage 
- ***/
-function renderLineage(ngDialog, scope, templateID, width, showClose, className) {
-    return ngDialog.open({
-        scope: scope,
-        width: width,
-        template: templateID,
-        showClose: showClose,
-        className: className
-    });
 };

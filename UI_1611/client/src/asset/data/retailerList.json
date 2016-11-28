@@ -1,16 +1,14 @@
-[{
-    "id": 1,
-    "label": "Coach, Hongkong"
-},
-{
-    "id": 2,
-    "label": "Coach, Phillippines"
-},
-{
-    "id": 3,
-    "label": "Coach, India"
-},
-{
-    "id": 4,
-    "label": "Coach, Florida"
-}]
+[
+    {
+        "id": 1,
+        "label": "Bloomingdale's - San Francisco Centre"
+    },
+    {
+        "id": 2,
+        "label": "Bloomingdale's Beverly Center"
+    },
+    {
+        "id": 3,
+        "label": "Bloomingdale's Newport Fashion Island"
+    }
+]

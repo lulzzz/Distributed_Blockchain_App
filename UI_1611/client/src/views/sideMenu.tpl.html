@@ -4,10 +4,11 @@
 	</a>
 	<a href="#" class="closebtn" ng-click="openNav()">MENU</a>
 	
-		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="productReg">REGISTER PRODUCT</a>
+		<a ng-if="userProfile.isManufacturer" ng-class="{'selected': activeMenu.prodRegister }" ui-sref="productReg">REGISTER FINISHED GOODS</a>
 		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.matRegister }" ui-sref="materialReg">REGISTER RM</a>
+		<a ng-if="userProfile.isProducer" ng-class="{'selected': activeMenu.rmBatch }" ui-sref="materialBatch">REGISTER RM BATCH</a>
 		<a ng-if="userProfile.isAdmin" ng-class="{'selected': activeMenu.userRegister }" ui-sref="register">REGISTER USER</a>
-		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isManufacturer" ui-sref="productShip">SHIP PRODUCT</a>
+		<a ng-class="{'selected': activeMenu.prodShip }" ng-if="userProfile.isManufacturer" ui-sref="productShip">SHIP FINISHED GOODS</a>
 		<a ng-class="{'selected': activeMenu.matShip }" ng-if="userProfile.isProducer" ui-sref="materialShip">SHIP RAW MATERIAL</a>
 
 		<a ng-if="userProfile.isManufacturer || userProfile.isProducer" ui-sref="home" ng-class="{'selected': activeMenu.trackShip }">TRACK SHIPMENTS</a>
@@ -21,7 +22,7 @@
 		<a ng-if="userProfile.isRetailer" ng-class="{'selected': activeMenu.prodProcure }" ui-sref="productAck">
 				<ul>
 					<li>ACKNOWLEDGE</li>
-					 <li>PRODUCTS</li>
+					 <li>FINISHED GOODS</li>
 				</ul>
 		</a>
 

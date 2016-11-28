@@ -9,7 +9,8 @@ angular.module('materialModule')
     // Registering/Retreiving/shipping/acknowledging material
     .value('procureMaterialUrl', {
         'list': 'asset/data/materialList.json', // TO-DO need to change against WEB API URL
-        'procure': 'asset/data/register.json'   // TO-DO need to change against WEB API URL
+        'procure': 'asset/data/register.json',   // TO-DO need to change against WEB API URL
+        'ackMaterialLineage': 'asset/data/materialAckLineage.json' 
     })
 
     //Configuring resource for making service call
@@ -20,6 +21,7 @@ angular.module('materialModule')
             materialList: { url: __ENV.apiUrl + procureMaterialUrl.list, method: "GET", isArray: "true" },
             /**************************************************************** */
             procureMat: { url: __ENV.apiUrl + procureMaterialUrl.procure, method: "GET" },  // TO-DO need to change POST
+            ackMaterialLineage: { url: __ENV.apiUrl + procureMaterialUrl.ackMaterialLineage, method: "GET"}
         });
     }])
 
@@ -49,6 +51,23 @@ angular.module('materialModule')
             try{
                 procureMaterialResource
                     .procureMat(list)
+                    .$promise
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+            }catch(e){
+                $log.error(appConstants.FUNCTIONAL_ERR, e);
+            }
+            return deferred.promise;
+        };
+
+        this.getAckLineageData = function (req) {
+            var deferred = $q.defer();
+            try{
+                procureMaterialResource
+                    .ackMaterialLineage(req)
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);

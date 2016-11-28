@@ -15,7 +15,7 @@ angular.module('materialModule')
                 materialName: "Garcia leather",
                 quantity: "35",
                 batchNumber: "GLB14012016HK",
-                productionDate: "",
+                productionDate: "14/1/2016 19:01:26",
                 expiryDate: "Not Applicable",
                 quality: "Top Grain",
                 color: "Brown",

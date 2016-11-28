@@ -5,7 +5,8 @@ var path = require("path"),
 
 exports.uploadFile = function (req, res) {
     try {
-        var list = ["https://s3.ap-south-1.amazonaws.com/bverifybucket/manufacturer.png", "https://s3.ap-south-1.amazonaws.com/bverifybucket/qrcode.png"];
+        var list = ["https://s3.ap-south-1.amazonaws.com/bverifybucket/bag1.png", "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag5.jpg",
+                    "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag6.jpg", "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag7.jpg"];
         //Configuring AWS account
         /*  AWS.config.update({
               accessKeyId: config.AWS_ACCESSKEY,

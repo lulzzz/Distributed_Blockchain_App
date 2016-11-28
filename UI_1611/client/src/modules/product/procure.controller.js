@@ -72,7 +72,6 @@ angular.module('productModule')
                             $scope.ifNegativeUsecase = false;
                             $scope.isShipped = true;
                             $scope.isShippedToRetailer = true;
-
                             renderProductLineage(ngDialog, $scope, 'productLineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);

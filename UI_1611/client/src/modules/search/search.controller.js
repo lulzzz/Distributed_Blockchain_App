@@ -7,17 +7,13 @@
 angular.module('searchModule')
     // searchController for tracking shipment details
     .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope',
-        '$scope', '$stateParams', 'userInfo', 'shipmentList',
+        '$scope', '$stateParams',  'shipmentList',
         function ($state, appConstants, userModel, $log, $rootScope,
-            $scope, $stateParams, userInfo, shipmentList) {
+            $scope, $stateParams, shipmentList) {
             try {
                 var vm = this;
                 vm.searchQuery = '';
                 vm.user = userModel.getUser();
-                if (userInfo.user) {
-                    vm.user = userInfo.user;
-                    userModel.setUser(userInfo.user);
-                }
                 setUserProfile(vm, userModel);
 
 

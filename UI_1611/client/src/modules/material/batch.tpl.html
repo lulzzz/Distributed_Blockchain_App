@@ -4,20 +4,23 @@
 <!-- TO-DO // remove hard-code value -->
 
 <div class="">
-	<div class="searchResult col-lg-10 col-md-10 col-sm-10 col-xs-12 padding-top-20">
+	<div class="searchResult col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<!-- Directive for module header -->
-		<app-legend header="REGISTER NEW MATERIAL"></app-legend>
+		<app-legend header="REGISTER RAW MATERIAL BATCH"></app-legend>
 		<!-- TO-DO need to apply condition based on profile -->
 
 		<div class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<form class="registerMaterial" name="registerForm" ng-submit="vm.registerMaterial()">
+			<form class="registerProduct" name="registerForm" ng-submit="vm.registerBatchMaterial()">
 				<div class="col-lg-6 col-md-6 col-sm-12">
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
 							<label for="materialName">Material Name :</label>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.material.materialName">
+							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.material.materialName">-->
+							 <select id="materialName" class="form-control">
+                                    <option value="garcia-leather" selected>Garcia Leather</option>
+                            </select>
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
@@ -26,23 +29,26 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.material.quantity">
+							<!--{{vm.material.quantity}}-->
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="margin-top:0px;line-height:16px;">
-							<label for="batchNumber">Raw Material <br class="visible-lg visible-md"/> Batch Number :</label>
+							<label for="batchNumber">Harmonization code/ <br class="visible-lg visible-md"/> Model Number :</label>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="batchNumber" ng-model="vm.material.batchNumber">
+						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
+							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="batchNumber" ng-model="vm.material.batchNumber">-->
+							{{vm.material.batchNumber}}
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="line-height:16px;">
-							<label for="date">Date of <br class="visible-md"/>Production&nbsp;:</label>
+							<label for="date">Production Date:</label>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
+						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
 							<!-- custom date picker directive -->
-							<app-datepicker date-picker-data="vm.datePickerData"></app-datepicker>
+							<!--<app-datepicker ng-disabled="vm.isReadonly"  date-picker-data="vm.datePickerData"></app-datepicker>-->
+							{{vm.datePickerData}}
 						</div>
 					</div>
 				</div>
@@ -51,24 +57,27 @@
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
 							<label for="quality">Quality :</label>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="quality" ng-model="vm.material.quality">
+						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
+							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="quality" ng-model="vm.product.quality">-->
+							{{vm.product.quality}}
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
 							<label for="color">Color/Dimension :</label>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="color" ng-model="vm.material.color">
+						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
+							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="color" ng-model="vm.product.color">-->
+							{{vm.material.color}}, <span style="font-size: 10px;word-spacing: -1px;">{{vm.material.dimension}}</span>
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<label for="materialWeight">Material Weight :</label>
+							<label for="materialWeight">material Weight :</label>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialWeight" ng-model="vm.material.weight">
+						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
+							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialWeight" ng-model="vm.material.weight">-->
+							{{vm.material.weight}}
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
@@ -77,18 +86,19 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<!-- custom file uploader directive -->
-							<app-fileuploader upload="vm.upload(data)" file="vm.file"></app-fileuploader>
-							<div class="imageThumbnails displayInlineBlock" style="padding-right:5px;" ng-repeat="image in vm.urlList | limitTo:5">
-								<img src="{{image}}" class="img-thumbnail" alt="Material Image" width="40" height="40">
+							<div class="displayNone"><app-fileuploader></app-fileuploader></div>
+							<div class="imageThumbnails displayInlineBlock" style="padding-right:5px;" ng-repeat="images in vm.urlList | limitTo:5">
+								<img src="{{images.src}}" class="img-thumbnail" alt="{{images.alt}}" width="40" height="40">
 							</div>
 						</div>
 					</div>
 				</div>
+				<input type="hidden" ng-model="vm.material.id"/>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
-					<button type="submit" ng-disabled="vm.isReadonly" class="btn btn-primary registerBtn">REGISTER RAW MATERTIAL</button>
+					<button type="submit" ng-disabled="" class="btn btn-primary registerBtn">REGISTER MATERIAL BATCH</button>
 				</div>
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
-					<button type="reset" ng-click="vm.reset()" class="btn btn-primary registerBtn">RESET</button>
+					<button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">RESET</button>
 				</div>
 			</form>
 		</div>
@@ -97,7 +107,7 @@
 
         <!-- Directive for redning all pervious regsitered materials inside table -->
         <app-registration-list list="vm.list" title="MANAGE PREVIOUS REGISTRATION" is-register-screen="new Boolean(true)"
-		edit="vm.edit(data)" view="vm.view(data)" delete="vm.delete(data)"></app-registration-list> 
+        edit="vm.edit(data)" view="vm.view(data)" delete="vm.delete(data)"></app-registration-list> 
 </div>
 
 

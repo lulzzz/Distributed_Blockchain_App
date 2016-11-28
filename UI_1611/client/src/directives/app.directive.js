@@ -6,19 +6,28 @@ angular.module('bverifyApp')
     .directive('appDatepicker', function () {
         return {
             restrict: 'E',
+            scope:{
+				datePickerData:'='
+			},
             templateUrl: '../views/datepicker.tpl.html',
             link: function (scope, element, attrs) {
                 try {
+                    scope.vm = {};
                     scope.vm.datepickerObj = {
                         dateFormat: 'MM/dd/yyyy',
                         dateOptions: {
                             startingDay: 1,
-                            showWeeks: false
+                            showWeeks: false,
+							 maxDate: new Date(),
                         },
                         popup: {
                             opened: false
                         }
                     };
+					scope.date = Date.parse(scope.datePickerData) ? Date.parse(scope.datePickerData) : new Date();
+					scope.openDatepicker = function () {
+						scope.vm.datepickerObj.popup.opened = true;
+					};
                 } catch (e) {
                     console.log(appConstants.FUNCTIONAL_ERR, e);
                 }
@@ -26,7 +35,7 @@ angular.module('bverifyApp')
         }
     })
 
-    .directive('appFileuploader', [ function () {
+    .directive('appFileuploader', [function () {
         return {
             restrict: 'E',
             templateUrl: '../views/fileUpload.tpl.html',
@@ -50,12 +59,12 @@ angular.module('bverifyApp')
 
                 scope.userProfile = populateUserProfile(userModel);
                 scope.onSelect = function (event) {
-                    if(event.srcElement)
+                    if (event.srcElement)
                         id = event.srcElement.id;
-                    if(event.target)
+                    if (event.target)
                         id = event.target.id;
                     // For demo instance
-                    $state.go("home", { role: id });
+                    $state.go("landing", { role: id });
                 }
             }
         }
@@ -93,7 +102,7 @@ angular.module('bverifyApp')
             }
         }])
 
-        //Directive for table section for product/material list
+    //Directive for table section for product/material list
     .directive('appRegistrationList', function () {
         return {
             restrict: 'E',
@@ -108,7 +117,7 @@ angular.module('bverifyApp')
                 delete: '&?',
                 procure: '&?',
                 showLineage: '&?',
-				rowSelected:'&?'
+                rowSelected: '&?'
             },
             link: function (scope, element, attrs) {
             },
@@ -122,7 +131,62 @@ angular.module('bverifyApp')
                 $scope.$watchCollection('list', function (newNames, oldNames) {
                     self.customConfigParams = createUsingFullOptions();
                 });
-               
+
+                $scope.header = {
+                    selectedRows: false
+                };
+                if ($scope.$parent.ifRow) {
+                    $scope.ifRow = $scope.$parent.ifRow;
+                    $scope.ifRow.listOfSelectedRows = $scope.$parent.parentSelectedRows;
+
+                    $scope.selectedRow = function (data, flag) {
+                        if ($scope.ifRow.listOfSelectedRows.indexOf(data.tokenId) === -1) {
+                            $scope.ifRow.listOfSelectedRows.push(data.tokenId);
+                            data.selectedRows = true;
+                        }
+                        else {
+                            var deleteItem = $scope.ifRow.listOfSelectedRows.indexOf(data.tokenId);
+                            if (deleteItem > -1) {
+                                $scope.ifRow.listOfSelectedRows.splice(deleteItem, 1);
+                                data.selectedRows = false;
+                            }
+                        }
+                    };
+
+                    $scope.selectAllRows = function (list, flag) {
+                        $scope.selectedRows = $scope.selectedRows ? false : true;
+                        if (!flag) {
+                            $scope.ifRow.listOfSelectedRows = [];
+                            $scope.header.selectedRows = false;
+                            $scope.selectedRows = false;
+                        }
+                        if ($scope.selectedRows) {
+                            $scope.header.selectedRows = true;
+                            angular.forEach(list, function (value, key) {
+                                value.selectedRows = true;
+                                if ($scope.ifRow.listOfSelectedRows.indexOf(value.tokenId) === -1) {
+                                    $scope.ifRow.listOfSelectedRows.push(value.tokenId);
+                                    value.selectedRows = true;
+                                }
+                                else {
+                                    // var deleteItem = $scope.listOfSelectedRows.indexOf(value.tokenId);
+                                    // if (deleteItem > -1) {
+                                    // $scope.listOfSelectedRows.splice(deleteItem, 1);
+                                    // value.selectedRows = false;
+                                    // }
+                                    //$scope.header.selectedRows = false;
+                                }
+                            });
+                        }
+                        else {
+                            $scope.ifRow.listOfSelectedRows = [];
+                            $scope.header.selectedRows = false;
+                            angular.forEach(list, function (value, key) {
+                                value.selectedRows = false;
+                            });
+                        }
+                    }
+                }
 
                 function createUsingFullOptions() {
                     var initialParams = {
@@ -163,6 +227,7 @@ function populateActiveMenu(menu) {
         matShip: menu === '/material/ship' ? true : false,
         trackShip: menu === '/home' ? true : false,
         prodProcure: menu === '/product/acknowledge' ? true : false,
-        matProcure: menu === '/material/acknowledge' ? true : false
+        matProcure: menu === '/material/acknowledge' ? true : false,
+        rmBatch: menu === '/material/batch' ? true : false
     }
 };

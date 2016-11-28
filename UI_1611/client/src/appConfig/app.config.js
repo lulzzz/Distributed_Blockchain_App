@@ -81,7 +81,7 @@ angular
         UNAUTHORIZED_ERROR: "Access denied ! You may not have permission to acccess.",
         FUNCTIONAL_ERR: "Something went wrong here....",
         UPLOAD_ERR: "Error ! Please upload a valid File",
-        ROUTE_STATES_CONSTANTS: ['login', 'register', 'home', 'home.result'],
+        ROUTE_STATES_CONSTANTS: ['login', 'register', 'landing'],
         HTTP_METHODS: ['POST', 'PUT', 'DELETE'],
         ACCESS_DENIED_CODE: [401, 403, 408],
         USER_ROLES: {
@@ -94,6 +94,7 @@ angular
         PROD_DELETED: "Product has been deleted successfully",
         MATERIAL_REGISTERED: "Material has been registered successfully",
         MATERIAL_DELETED: "Material has been deleted successfully",
+        //MATERIAL_BATCH_DELETED: "Material has been removed from batched"
         MULTISELECT_SETTINGS: {
             scrollable: true,
             scrollableHeight: '250px'

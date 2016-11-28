@@ -34,6 +34,10 @@ body {
 .font9 {
   font-size: 9px !important;
 }
+.paddingTB5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .displayInline {
   display: inline;
 }
@@ -198,6 +202,12 @@ header .sideMenuPanel .list ul li a:hover {
 }
 .cursorPointer {
   cursor: pointer;
+}
+.cursorDefault {
+  cursor: default !important;
+}
+.padding-top-20 {
+  padding-top: 20px;
 }
 .searchBox {
   margin-top: 50px;
@@ -571,7 +581,7 @@ header .sideMenuPanel .list ul li a:hover {
 .multiSelectDirective .multiselect-parent ul.dropdown-menu {
   width: 100% !important;
   overflow-x: hidden !important;
-  height: auto;
+  height: auto !important;
   border: 1px solid !important;
 }
 .errorDiv {
@@ -785,6 +795,37 @@ input[type=radio] {
 }
 .endUserView .productDetails .col-xs-12 {
   padding-bottom: 10px !important;
+}
+.landingPanel {
+  margin-top: 90px;
+}
+.landingPanel .panel {
+  border-radius: 0px !important;
+}
+.landingPanel .panel-heading {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.landingPanel .panel-body {
+  height: 165px !important;
+  background-color: #d9d9d9;
+  border: 1px solid grey;
+}
+.landingPanel .panel-body ul {
+  padding-left: 15px !important;
+}
+.landingPanel .panel-body a {
+  color: black !important;
+  cursor: pointer;
+}
+.landingPanel .panel-body li {
+  padding: 5px 0px;
+}
+.landingPanel .panel-primary {
+  border: 0px;
+}
+.pointerNone {
+  pointer-events: none;
 }
 /************* Ends here ************/
 /**/

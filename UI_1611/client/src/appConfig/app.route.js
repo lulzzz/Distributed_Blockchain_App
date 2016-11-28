@@ -11,7 +11,7 @@ angular
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('landing');
 
             $stateProvider
                 // HOME STATES AND NESTED VIEWS 
@@ -37,26 +37,26 @@ angular
                             controller: 'searchController'
                         }
                     },
-                    params: {
+                    /*params: {
                         role: window.profile
                     },
                     /****** below needs to be change. This has to be justify more when service gets ready */
                     resolve: {
-                        userInfo: function ($stateParams, userServiceAPI, searchServiceAPI, userModel) {
-                            return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
-                        },
-                        shipmentList: function ($stateParams, searchServiceAPI, userModel, userInfo) {
-                            userModel.setUser(userInfo.user);
+                        /*  userInfo: function ($stateParams, userServiceAPI, searchServiceAPI, userModel) {
+                              return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
+                          },*/
+                        shipmentList: function ($stateParams, searchServiceAPI, userModel) {
+                            var user = userModel.getUser();
                             if (userModel.isProducer()) {
                                 return searchServiceAPI.getMaterialShipmentList({
-                                    userName: userInfo.user.userName,
-                                    userProfile: userInfo.user.userProfile
+                                    userName: user.userName,
+                                    userProfile: user.userProfile
                                 });
                             }
                             if (userModel.isManufacturer()) {
                                 return searchServiceAPI.getProductShipmentList({
-                                    userName: userInfo.user.userName,
-                                    userProfile: userInfo.user.userProfile
+                                    userName: user.userName,
+                                    userProfile: user.userProfile
                                 });
                             }
                             else {
@@ -114,6 +114,20 @@ angular
                     controllerAs: 'vm',
                     controller: 'dashboardController'
                 })
+                .state('landing', {
+                    url: '/landing',
+                    templateUrl: '../modules/landing/landing.tpl.html',
+                    controllerAs: 'vm',
+                    controller: 'landingController',
+                    params: {
+                        role: window.profile
+                    },
+                    resolve: {
+                        userInfo: function ($stateParams, userServiceAPI) {
+                            return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
+                        }
+                    }
+                })
 
                 /************************** FOR MATERIAL STATES **********************************/
                 .state('materialReg', {
@@ -133,6 +147,26 @@ angular
                     controller: 'registerMaterialController'
                 })
 
+                .state('materialBatch', {
+                    url: '/material/batch',
+                    templateUrl: '../modules/material/batch.tpl.html',
+                     params: {
+                        qrCode: null,
+                    },
+                    resolve: {
+                        materialList: function (userModel, batchMaterialService) {
+                            var user = userModel.getUser();
+                            return batchMaterialService.getMaterialList({
+                                userName: user.userName,
+                                userProfile: user.userProfile
+                            });
+
+                        }
+                    },
+                    controllerAs: 'vm',
+                    controller: 'batchMaterialController'
+                })
+
                 .state('materialShip', {
                     url: '/material/ship',
                     templateUrl: '../modules/material/ship.tpl.html',
@@ -143,7 +177,7 @@ angular
                     controller: 'shipMaterialController'
                 })
 
-                 .state('materialAck', {
+                .state('materialAck', {
                     url: '/material/procure',
                     templateUrl: '../modules/material/procure.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
@@ -160,7 +194,7 @@ angular
                     controller: 'procureMaterialController'
                 })
 
-               .state('productReg', {
+                .state('productReg', {
                     url: '/product/register',
                     templateUrl: '../modules/product/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
@@ -233,10 +267,10 @@ angular
                             if (user === null || !user.isAuthenticatedUser) {
                                 $rootScope.isLoggedIn = false;
                                 event.preventDefault();
-                                $state.go('home');
+                                $state.go('landing');
                             }
                         }
-                        if (angular.equals(toState.name, 'home') && angular.equals(fromState.name, '')) {
+                        if (angular.equals(toState.name, 'landing') && angular.equals(fromState.name, '')) {
                             userModel.resetUser();
                         }
                     } catch (e) {
