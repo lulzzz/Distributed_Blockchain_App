@@ -206,9 +206,6 @@ header .sideMenuPanel .list ul li a:hover {
 .cursorDefault {
   cursor: default !important;
 }
-.padding-top-20 {
-  padding-top: 20px;
-}
 .searchBox {
   margin-top: 50px;
 }
@@ -281,6 +278,9 @@ header .sideMenuPanel .list ul li a:hover {
   height: 35px;
   padding-left: 4px;
   font-weight: bold;
+}
+.searchResult .searchResultForm .imageThumbnails img {
+  height: 40px !important;
 }
 .searchResult .searchResultQRCode {
   margin-top: 100px;
@@ -828,6 +828,36 @@ input[type=radio] {
   pointer-events: none;
 }
 /************* Ends here ************/
+/*.toast-animation{
+	.setMarginTop(168px);
+	margin-left: 4px;
+	.alert{
+		padding: 8px !important;
+    	margin-bottom: 10px;
+	}
+}*/
+.toast-animation.ng-enter {
+  -webkit-animation: flipInY 1s;
+  -moz-animation: flipInY 1s;
+  animation: flipInY 1s;
+}
+.toast-animation.ng-leave {
+  -webkit-animation: flipOutY 1s;
+  -moz-animation: flipOutY 1s;
+  animation: flipOutY 1s;
+}
+.padding-top-20 {
+  padding-top: 20px;
+}
+#errorDiv.ng-hide-add,
+#errorDiv.ng-hide-remove {
+  -webkit-transition: 0.5s ease-in-out opacity;
+  transition: 0.5s ease-in-out opacity;
+  opacity: 0;
+}
+#errorDiv.ng-hide {
+  opacity: 0;
+}
 /**/
 /* Import statement should be placed at bottom */
 @media (max-width: 600px) {

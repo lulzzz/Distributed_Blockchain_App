@@ -1,0 +1,9 @@
+<script type="text/ng-template" id="product-deleteBox">
+<legend class="legendHead">DELETE REGISTRATION
+</legend>
+<p>Are you sure you want to delete product &quot;{{data.productName | uppercase}}&quot; ?</p>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">No</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirmDelete()">Yes</button>
+</div>
+</script>   

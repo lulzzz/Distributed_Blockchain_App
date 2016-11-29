@@ -5,7 +5,7 @@
 "use strict";
 
 angular.module('materialModule')
-    .factory('shipModel', ['appConstants', '$log',
+    .factory('shipMaterialModel', ['appConstants', '$log',
         function (appConstants, $log) {
 
             //Below is hardcoded for demo purpose
@@ -58,10 +58,23 @@ angular.module('materialModule')
                 this._ship.shippedTo = list;
             };
 
+            var _validateQuantity = function (oldValue, newValue) {
+                if ((isNaN(parseInt(newValue, 10)))) {
+                    return false;
+                }
+                else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            };
+
             return {
                 'getModel': _getShipMaterial,
                 'setModel': _setShipMaterial,
                 'shippedTo': _setManufacturerList,
+                'verifyQuantity': _validateQuantity,
                 'resetModel': _reset
             }
         }]);

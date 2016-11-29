@@ -5,7 +5,7 @@
 <div class="">
 	<div class="searchResult col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<!-- Directive for module header -->
-		<app-legend header="REGISTER NEW PRODUCT"></app-legend>
+		<app-legend header="REGISTER FINISHED GOODS"></app-legend>
 
 		<!-- Below div is just for demo purpose. For retailer, no ship product functionality provided but it has side menu link -->
 		<div ng-if="vm.isRetailer" class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -63,6 +63,9 @@
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<!-- custom file uploader directive -->
 							<app-fileuploader upload="vm.upload(data)" file="vm.file"></app-fileuploader>
+							<div class="imageThumbnails displayInlineBlock" style="padding-right:5px;" ng-repeat="image in vm.urlList | limitTo:5">
+								<img src="{{image}}" class="img-thumbnail" alt="Material Image" width="40" height="40" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -144,29 +147,13 @@
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>
 
-<!-- Commented out based on new UI  -->
-<!--
- <script type="text/ng-template" id="blackchainProductRegisterDataView.html">
-        <div class="col-lg-12 innerPopups">
-			<div class="text-center">Manufacturer 1 (18/10/2016, 13:44 - #19507-)</div> -->
-<!-- <div class="col-lg-2"><span class="glyphicon glyphicon-qrcode qrImage"></span></div> -->
-
-<!--<div class="text-center upArrow"><span class="glyphicon glyphicon-arrow-up"></span></div>
-			
-			<div class="text-center">Raw material producer (18/10/2016, 10:44 - #19507-)</div> -->
-<!-- <div class="col-lg-2"><span class="glyphicon glyphicon-qrcode qrImage"></span></div> -->
-<!--</div>
-</script> -->
-
-
-
-<dialog-delete></dialog-delete>
+<product-delete-dialog></product-delete-dialog>
 
 <!-- Directive for displaying confirmation box -->
-<dialog-confirmation is-register-screen="true"></dialog-confirmation>
+<product-register-dialog></product-register-dialog>
 
 <!-- Directive for displaying product lineage box -->
-<dialog-lineage></dialog-lineage>
+<product-lineage-dialog></product-lineage-dialog>
 
 <!-- Directive for displaying warning box -->
 <dialog-warning></dialog-warning>

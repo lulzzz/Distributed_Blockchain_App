@@ -79,7 +79,7 @@
 							<!-- custom file uploader directive -->
 							<app-fileuploader upload="vm.upload(data)" file="vm.file"></app-fileuploader>
 							<div class="imageThumbnails displayInlineBlock" style="padding-right:5px;" ng-repeat="image in vm.urlList | limitTo:5">
-								<img src="{{image}}" class="img-thumbnail" alt="Material Image" width="40" height="40">
+								<img src="{{image}}" class="img-thumbnail" alt="Material Image" width="40" height="40" />
 							</div>
 						</div>
 					</div>
@@ -105,10 +105,10 @@
 <side-menu user="vm.user"></side-menu>
 
 
-<dialog-delete></dialog-delete>
+<material-delete-dialog></material-delete-dialog>
 
 <!-- Directive for displaying confirmation box -->
-<dialog-confirmation is-register-screen="true" /></dialog-confirmation>
+<material-register-dialog></material-register-dialog>
 
 <!-- Directive for displaying warning box -->
 <dialog-warning></dialog-warning>

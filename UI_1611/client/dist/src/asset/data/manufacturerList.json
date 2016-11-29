@@ -1,14 +1,18 @@
 [
     {
         "id": 1,
-        "label": "Walmart, Florida"
+        "label": "Coach, Hongkong"
     },
     {
         "id": 2,
-        "label": "Walmart, New York"
+        "label": "Coach, Phillippines"
     },
     {
         "id": 5,
-        "label": "Walmart, North Carolina"
+        "label": "Coach, India"
+    },
+    {
+        "id": 5,
+        "label": "Coach, Florida"
     }
 ]

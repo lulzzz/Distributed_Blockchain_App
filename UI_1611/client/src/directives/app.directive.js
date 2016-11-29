@@ -14,7 +14,7 @@ angular.module('bverifyApp')
                 try {
                     scope.vm = {};
                     scope.vm.datepickerObj = {
-                        dateFormat: 'MM/dd/yyyy',
+                        dateFormat: 'dd/MM/yyyy',
                         dateOptions: {
                             startingDay: 1,
                             showWeeks: false,
@@ -83,7 +83,7 @@ angular.module('bverifyApp')
                 link: function (scope, element, attrs) {
                     try {
                         scope.userProfile = populateUserProfile(userModel);
-                        scope.activeMenu = populateActiveMenu($rootScope.activeMenu);
+                        scope.activeMenu = populateSideMenu($rootScope.activeMenu);
                         scope.a = false;
                         scope.openNav = function () {
                             if (scope.a == true) {
@@ -217,7 +217,7 @@ function populateUserProfile(userModel) {
     }
 };
 
-function populateActiveMenu(menu) {
+function populateSideMenu(menu) {
     return {
         dashboard: menu === '/dashboard' ? true : false,
         userRegister: menu === '/register' ? true : false,
@@ -226,8 +226,8 @@ function populateActiveMenu(menu) {
         prodShip: menu === '/product/ship' ? true : false,
         matShip: menu === '/material/ship' ? true : false,
         trackShip: menu === '/home' ? true : false,
-        prodProcure: menu === '/product/acknowledge' ? true : false,
-        matProcure: menu === '/material/acknowledge' ? true : false,
+        prodProcure: menu === '/product/procure' ? true : false,
+        matProcure: menu === '/material/procure' ? true : false,
         rmBatch: menu === '/material/batch' ? true : false
     }
 };

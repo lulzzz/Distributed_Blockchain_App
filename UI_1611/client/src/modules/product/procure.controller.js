@@ -17,6 +17,8 @@ angular.module('productModule')
                 vm.user = userModel.getUser();
                 setUserProfile(vm, userModel);
                 vm.list = [];
+                $scope.ifRow = {};
+				$scope.parentSelectedRows =[];
 
                 /****************** PRODUCT/MATERIAL List to procure */
                 //Populating list of Products on load based on productList resolve
@@ -36,11 +38,18 @@ angular.module('productModule')
 
                 vm.procure = function (dataList) {
 
+                    if($scope.ifRow.listOfSelectedRows.length <= 0){
+                        $rootScope.hasError = true;
+                        $rootScope.ERROR_MSG = appConstants.PROCURE_CHECKBOX_ERR;
+                        return;
+                    }
+                    $rootScope.hasError = false;
+
                     procureService
                         .procureProduct({}) // for demo instance
                         //.procureProduct(vm.list)
                         .then(function (response) {
-                            renderProductLineage(ngDialog, $scope, 'confirmationBox', '35%', false, 'ngdialog-theme-default confirmation-box');
+                            renderDialog(ngDialog, $scope, 'product-procure-confirmBox', '35%', false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -72,7 +81,7 @@ angular.module('productModule')
                             $scope.ifNegativeUsecase = false;
                             $scope.isShipped = true;
                             $scope.isShippedToRetailer = true;
-                            renderProductLineage(ngDialog, $scope, 'productLineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
+                            renderDialog(ngDialog, $scope, 'product-lineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -101,7 +110,7 @@ function setUserProfile(vm, userModel) {
 /****
  *  Utility function for rendering product lineage 
  ***/
-function renderProductLineage(ngDialog, scope, templateID, width, showClose, className) {
+function renderDialog(ngDialog, scope, templateID, width, showClose, className) {
     return ngDialog.open({
         scope: scope,
         width: width,

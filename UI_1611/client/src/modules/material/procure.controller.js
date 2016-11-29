@@ -9,16 +9,16 @@ angular.module('materialModule')
 
     //For acknowledging received product
     .controller('procureMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'procureMaterialService', '$log', 'materialList', 'ngDialog', '$scope',
+        'procureMaterialService', '$log', 'materialList', 'ngDialog', '$scope', 'ngToast',
         function (userModel, appConstants, $state, $rootScope,
-            procureMaterialService, $log, materialList, ngDialog, $scope) {
+            procureMaterialService, $log, materialList, ngDialog, $scope, ngToast) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
                 setUserProfile(vm, userModel);
                 vm.list = [];
                 $scope.ifRow = {};
-				$scope.parentSelectedRows =[];
+                $scope.parentSelectedRows = [];
 
                 /****************** MATERIAL List to procure */
                 //Populating list of Material on load based on materialList resolve
@@ -33,7 +33,6 @@ angular.module('materialModule')
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
-                $scope.entity = 'materials';
                 $scope.redirectUser = function (flag) {
                     if (!flag) {
                         ngDialog.close();
@@ -49,9 +48,9 @@ angular.module('materialModule')
 
                 vm.procure = function (dataList) {
 
-                    if($scope.ifRow.listOfSelectedRows.length <= 0){
+                    if ($scope.ifRow.listOfSelectedRows.length <= 0) {
                         $rootScope.hasError = true;
-                        $rootScope.ERROR_MSG = "Please select atleast one record.";
+                        $rootScope.ERROR_MSG = appConstants.PROCURE_CHECKBOX_ERR;
                         return;
                     }
                     $rootScope.hasError = false;
@@ -61,7 +60,7 @@ angular.module('materialModule')
                         //.procureMaterial(dataList)
                         .then(function (response) {
                             if (response)
-                                renderLineage(ngDialog, $scope, 'confirmationBox', '35%', false, 'ngdialog-theme-default confirmation-box');
+                                renderDialog(ngDialog, $scope, 'material-procure-confirmBox', '38%', false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -80,7 +79,7 @@ angular.module('materialModule')
                             $scope.ifNegativeUsecase = false;
                             $scope.isShipped = true;
                             $scope.isShippedToRetailer = false;
-                            renderProductLineage(ngDialog, $scope, 'productLineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
+                            renderDialog(ngDialog, $scope, 'procure-material-lineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -109,7 +108,7 @@ function setUserProfile(vm, userModel) {
 /****
  *  Utility function for rendering product lineage 
  ***/
-function renderProductLineage(ngDialog, scope, templateID, width, showClose, className) {
+function renderDialog(ngDialog, scope, templateID, width, showClose, className) {
     return ngDialog.open({
         scope: scope,
         width: width,

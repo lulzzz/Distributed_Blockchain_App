@@ -1,0 +1,30 @@
+<script type="text/ng-template" id="material-batch-confirmBox">
+    <legend class="legendHead" style="padding-bottom: 5px;">CONFIRMATION</legend>
+    <div class="col-lg-12 col-xs-12 noPadding">
+        
+        <div class="col-lg-8 col-xs-8 noPaddingLeft">The raw material &quot;{{$parent.vm.material.materialName}}&quot; has been registered successfully and a token has been
+            generated.</div>
+        <div class="col-lg-4 col-xs-4 noPadding userQRCode">
+            <ul>
+                <li>
+                    <i style="font-size: 12px;">Click on image to Download</i>
+                </li>
+                <li style="padding-top: 6px;">
+                    <qrcode version="5" error-correction-level="M" size="80" data="{{$parent.qrCode}}" download></qrcode>
+                </li>
+                <li>
+                    <span class="fontBold">Token : {{$parent.qrCode}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+
+	 <div  class="col-lg-12 col-xs-12 noPaddingLeft" style="padding-top:20px;">
+        Click
+        &quot;<a ng-click="redirectUser(true)" class="cursorPointer"> <u class="colorLightBlue">REGISTER MATERIAL BATCH</u></a>&quot; to register more batches or
+        &quot;<a class="cursorPointer" ng-click="redirectUser(false)"><u class="colorLightBlue">SHIP MATERIAL BATCH</u></a>&quot; to transfer registered materials to a manufacturer
+    </div>
+   
+    <div style="clear:both"></div>
+</script>

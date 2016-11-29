@@ -15,7 +15,7 @@ angular.module('materialModule')
                 materialName: "Garcia leather",
                 quantity: "35",
                 batchNumber: "GLB14012016HK",
-                productionDate: "14/1/2016 19:01:26",
+                productionDate: "14/1/2016",
                 expiryDate: "Not Applicable",
                 quality: "Top Grain",
                 color: "Brown",
@@ -57,10 +57,10 @@ angular.module('materialModule')
                 this._material.filePath = fileList;
             };
 
-            return {
-                'getMaterial': _getMaterial,
-                'setMaterial': _setMaterial,
-                'setFilePath': _setFilePath,
-                'resetMaterial': _reset
-            }
-        }]);
+                return {
+                    'getMaterial': _getMaterial,
+                    'setMaterial': _setMaterial,
+                    'setFilePath': _setFilePath,
+                    'resetMaterial': _reset
+                }
+            }]);

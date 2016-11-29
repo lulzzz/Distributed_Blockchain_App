@@ -9,9 +9,9 @@ angular.module('materialModule')
 
     //For shipment of registered products
     .controller('shipMaterialController', ['userModel', 'appConstants', '$state', '$rootScope', 'shipMaterialService',
-        '$log', 'shipModel', 'ngDialog', '$scope', 'userServiceAPI', '$stateParams', 'localStorageService',
+        '$log', 'shipMaterialModel', 'ngDialog', '$scope', 'userServiceAPI', '$stateParams', 'localStorageService',
         function (userModel, appConstants, $state, $rootScope, shipMaterialService,
-            $log, shipModel, ngDialog, $scope, userServiceAPI, $stateParams, localStorageService) {
+            $log, shipMaterialModel, ngDialog, $scope, userServiceAPI, $stateParams, localStorageService) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
@@ -23,32 +23,32 @@ angular.module('materialModule')
                 };
 
                 //if ($stateParams.qrCode) {  for time being
-                    //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
-                    shipMaterialService
-                        .getMaterial($stateParams.qrCode)
-                        .then(function (response) {
-                            shipModel.setModel(response);
-                            vm.ship = shipModel.getModel();
-                        }, function (err) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, err);
-                        })
-                        .catch(function (e) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });
-               /* } else {  for time being
-                    shipMaterialService
-                        .getMaterialList(vm.user)
-                        .then(function (response) {
-                            vm.materialList = response;
-                            shipModel.setModel(vm.materialList[0]);
-                            vm.ship = shipModel.getModel();
-                        }, function (err) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, err);
-                        })
-                        .catch(function (e) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });
-                }*/
+                //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
+                shipMaterialService
+                    .getMaterial($stateParams.qrCode)
+                    .then(function (response) {
+                        shipMaterialModel.setModel(response);
+                        vm.ship = shipMaterialModel.getModel();
+                    }, function (err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function (e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
+                /* } else {  for time being
+                     shipMaterialService
+                         .getMaterialList(vm.user)
+                         .then(function (response) {
+                             vm.materialList = response;
+                             shipMaterialModel.setModel(vm.materialList[0]);
+                             vm.ship = shipMaterialModel.getModel();
+                         }, function (err) {
+                             $log.error(appConstants.FUNCTIONAL_ERR, err);
+                         })
+                         .catch(function (e) {
+                             $log.error(appConstants.FUNCTIONAL_ERR, e);
+                         });
+                 }*/
 
 
 
@@ -71,32 +71,24 @@ angular.module('materialModule')
 
                 /****************** material Shipment functionality *******************/
                 vm.shipMaterial = function () {
-
-                    if (!(isNaN(parseInt(vm.userQuantity, 10)))) {
-                        if (parseInt(vm.userQuantity) > parseInt(vm.ship.quantity)) {
-                            $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
-                            showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
-                            return;
-                        }
+                    if (shipMaterialModel.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
+                        vm.ship.quantity = vm.userQuantity;
                     } else {
                         $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
-                        showWarning(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
+                        renderPopup(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
                         return;
                     }
-                    vm.ship.quantity = vm.userQuantity;
-                    shipModel.setModel(vm.ship);
-                    shipModel.shippedTo(vm.manufacturerList);
+                    shipMaterialModel.setModel(vm.ship);
+                    shipMaterialModel.shippedTo(vm.manufacturerList);
 
                     // do material shipment
                     shipMaterialService
-                        .shipMaterial(shipModel.getModel())
+                        .shipMaterial(shipMaterialModel.getModel())
                         .then(function (response) {
                             $rootScope.hasError = false;
-                            $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
-                            $scope.name = vm.ship.materialName;
-                            $scope.quality = vm.ship.quality;
-                            $scope.entity = 'material';
-                            showConfirmation(ngDialog, 'confirmationBox', 600, false, 'ngdialog-theme-default', $scope);
+                            $scope.qrCode = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            $scope.materialName = vm.ship.materialName;
+                            renderPopup(ngDialog, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default', $scope);
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -145,7 +137,7 @@ function setUserProfile(vm, userModel) {
 /****
  *  Utility function for rendering warning message 
  ***/
-function showWarning(ngDialog, templateID, width, showClose, className, scope) {
+function renderPopup(ngDialog, templateID, width, showClose, className, scope) {
     ngDialog.open({
         scope: scope,
         width: width,
@@ -154,16 +146,3 @@ function showWarning(ngDialog, templateID, width, showClose, className, scope) {
         className: className
     });
 };
-
-/****
- *  Utility function for rendering confirmation message 
- ***/
-function showConfirmation(ngDialog, templateID, width, showClose, className, scope) {
-    ngDialog.open({
-        scope: scope,
-        width: width,
-        template: templateID,
-        showClose: showClose,
-        className: className
-    });
-}

@@ -48,7 +48,6 @@ angular.module('materialModule')
 
                 /******************* Register new material *************************/
                 vm.registerMaterial = function () {
-                    vm.material.file = vm.file;
                     vm.material.productionDate = vm.datePickerData;
                     materialModel.setMaterial(vm.material);
                     materialModel.setFilePath(vm.urlList);
@@ -57,10 +56,9 @@ angular.module('materialModule')
                         .registerMaterial(materialModel.getMaterial())
                         .then(function (response) {
                             $rootScope.hasError = false;
-                            $scope.entity = 'raw material';
-                            $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
-                            $scope.name = vm.material.materialName;
-                            renderLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
+                            $scope.qrCode = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            $scope.materialName = vm.material.materialName;
+                            displayModal(ngDialog, $scope, 'material-register-confirmBox', 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -75,7 +73,7 @@ angular.module('materialModule')
                         $state.reload();
                     }
                     else {
-                        $state.go('materialBatch', { qrCode: $scope.randomToken });
+                        $state.go('materialBatch', { qrCode: $scope.qrCode });
                     }
                 };
 
@@ -85,11 +83,13 @@ angular.module('materialModule')
                 vm.edit = function (data) {
                     materialModel.setMaterial(data);
                     vm.material = materialModel.getMaterial();
+                    vm.urlList = vm.material.filePath;
                     vm.isReadonly = false;
                 };
                 vm.view = function (data) {
                     materialModel.setMaterial(data);
                     vm.material = materialModel.getMaterial();
+                    vm.urlList = vm.material.filePath;
                     vm.isReadonly = true;
                 };
 
@@ -115,7 +115,7 @@ angular.module('materialModule')
                     $scope.data = data;
                     ngDialog.open({
                         scope: $scope,
-                        template: 'deleteBox'
+                        template: 'material-deleteBox'
                     });
 
 
@@ -158,7 +158,7 @@ function setUserProfile(vm, userModel) {
 /****
  *  Utility function for rendering product lineage 
  ***/
-function renderLineage(ngDialog, scope, templateID, width, showClose, className) {
+function displayModal(ngDialog, scope, templateID, width, showClose, className) {
     return ngDialog.open({
         scope: scope,
         width: width,

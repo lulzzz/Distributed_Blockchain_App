@@ -16,9 +16,9 @@ if (window) {
 
 angular
     .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize',
-        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog'])
+        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog', 'ngToast'])
 
-    .config(['$httpProvider', '$logProvider', 'ngDialogProvider', function ($httpProvider, $logProvider, ngDialogProvider) {
+    .config(['$httpProvider', '$logProvider', 'ngDialogProvider', 'ngToastProvider', function ($httpProvider, $logProvider, ngDialogProvider, ngToastProvider) {
 
         // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
         $httpProvider.defaults.useXDomain = true;
@@ -40,13 +40,21 @@ angular
             closeByNavigation: true
         });
 
+        ngToastProvider.configure({
+            timeOut: 5000,          
+            animation: 'fade',
+            additionalClasses: 'toast-animation',
+            horizontalPosition: 'left',
+            maxNumber: 1
+        });
+
     }])
 
     .factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
         function ($q, $rootScope, $log, appConstants) {
             return {
                 request: function (config) {
-                    if(appConstants.HTTP_METHODS.indexOf(config.method) > -1){
+                    if (appConstants.HTTP_METHODS.indexOf(config.method) > -1) {
                         $rootScope.$broadcast("loaderShow");
                     }
                     return config || $q.when(config);
@@ -101,6 +109,7 @@ angular
         },
         QUANTITY_EXCEEDED: "The Quantity to be shipped cannot exceed the available quantity. Please revalidate!",
         MATERIAL_ADHERED: "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.",
+        PROCURE_CHECKBOX_ERR: 'Please select atleast one record.',
         MATERIAL_PROCURED: "All the selected materials have been procured successfully.",
         PRODUCT_PROCURED: "All the selected products have been acknowledge successfully.",
         //Header configuration for posting file data to node server

@@ -93,12 +93,9 @@ angular.module('materialModule')
                         .registerBatchMaterial(req)
                         .then(function (response) {
                             $rootScope.hasError = false;
-                            $scope.entity = 'raw material';
-                            $scope.ifBatches = "batches";
-							$scope.ifFinishedGoods="Finished good";
-                            $scope.randomToken = 'LFG' + (Math.floor(Math.random() * 90000) + 10000) + '';
-                            $scope.name = vm.material.materialName;
-                            renderLineage(ngDialog, $scope, 'confirmationBox', 600, false, 'ngdialog-theme-default confirmation-box');
+                            $scope.qrCode = 'CL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            $scope.materialName = vm.material.materialName;
+                            renderModal(ngDialog, $scope, 'material-batch-confirmBox', 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -113,7 +110,7 @@ angular.module('materialModule')
                         $state.reload();
                     }
                     else {
-                        $state.go('materialShip', { qrCode: $scope.randomToken });
+                        $state.go('materialShip', { qrCode: $scope.qrCode });
                     }
                 };
 
@@ -137,7 +134,7 @@ angular.module('materialModule')
                     $scope.data = data;
                     ngDialog.open({
                         scope: $scope,
-                        template: 'deleteBox'
+                        template: 'material-deleteBox'
                     });
 
 
@@ -175,4 +172,16 @@ function setUserProfile(vm, userModel) {
     vm.isProducer = userModel.isProducer();
     vm.isRetailer = userModel.isRetailer();
     vm.isAdmin = userModel.isAdmin();
+};
+/****
+ *  Utility function for rendering product lineage 
+ ***/
+function renderModal(ngDialog, scope, templateID, width, showClose, className) {
+    return ngDialog.open({
+        scope: scope,
+        width: width,
+        template: templateID,
+        showClose: showClose,
+        className: className
+    });
 };

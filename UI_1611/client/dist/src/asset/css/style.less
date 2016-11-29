@@ -47,6 +47,10 @@ body {
 .font9{
 	font-size:9px !important;
 }
+.paddingTB5 {
+padding-top:5px;
+padding-bottom:5px;
+}
 .displayInline {
 	display: inline;
 }
@@ -67,6 +71,9 @@ body {
 }
 .setMarginBottom(@bottom) {
     margin-bottom: @bottom;
+}
+.setPaddingTop(@top) {
+    padding-top: @top;
 }
 .fontBold {
 	font-weight:bold;
@@ -235,6 +242,12 @@ header {
 }
 .cursorPointer {
 		.setCursor(pointer);
+}
+.cursorDefault {
+    .setCursor(default) !important;
+}
+.padding-top-20 {
+	.setPaddingTop(20px);
 }
 .searchBox {
     margin-top:50px;
@@ -623,7 +636,7 @@ min-height: 100%;
 		ul.dropdown-menu{
 			width:100% !important;
 			overflow-x:hidden !important;
-			height: auto;
+			height: auto !important;
 			border: 1px solid !important;
 		}
 	}
@@ -862,6 +875,37 @@ input[type=radio] {
 			padding-bottom:10px !important;
 		}
 	}
+}
+.landingPanel {
+	margin-top:90px;
+	.panel {
+		border-radius:0px !important;
+	}
+	.panel-heading {
+		border-top-left-radius: 0px;
+		border-top-right-radius: 0px;
+	}
+	.panel-body {
+		height:165px !important;
+		background-color:rgb(217,217,217);
+		border:1px solid grey;
+		ul {
+			padding-left:15px !important;
+		}
+		a {
+			color:black !important;
+			.setCursor(pointer);
+		}
+		li {
+			padding:5px 0px;
+		}
+	}
+	.panel-primary {
+		border:0px;
+	}
+}
+.pointerNone{
+	pointer-events: none;
 }
 /************* Ends here ************/
 

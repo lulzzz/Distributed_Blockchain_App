@@ -4,7 +4,7 @@
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -25,7 +25,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Walmart, NY)",
+        "name":"COACH,SAN FRANCISCO",
         "isAvailable": true
     }
 }, {
@@ -34,7 +34,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -55,7 +55,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Walmart, NC)",
+        "name":"COACH, LOS ANGELES",
         "isAvailable": true
     }
 }, {
@@ -64,7 +64,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -85,7 +85,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Walmart, NY)",
+        "name":"COACH FLORIDA MALL",
         "isAvailable": false
     }
 }, {
@@ -94,7 +94,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -115,7 +115,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Walmart, NC)",
+        "name":"COACH VERO BEACH",
         "isAvailable": true
     }
 },{
@@ -124,7 +124,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -145,7 +145,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Walmart, NC)",
+        "name":"COACH, LOS ANGELES",
         "isAvailable": false
     }
 },
@@ -155,7 +155,7 @@
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -176,7 +176,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Walmart, NY)",
+        "name":"COACH FLORIDA MALL",
         "isAvailable": true
     }
 }, {
@@ -185,7 +185,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -206,7 +206,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Coach)",
+        "name":"COACH,SAN FRANCISCO",
         "isAvailable": true
     }
 }, {
@@ -215,7 +215,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -236,7 +236,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Mike)",
+        "name":"COACH,SAN FRANCISCO",
         "isAvailable": false
     }
 }, {
@@ -245,7 +245,7 @@
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
 	"quantity": "200",
-	"manufactureDate": "10/10/2010",
+	"productionDate": "10/10/2010",
 	"registeredDate": "10/09/2010",
 	"trackDetails": {
 		"currentlyAt": "DTDC",
@@ -266,7 +266,7 @@
         "isAvailable": false
     },
     "retailerDetail": {
-        "name":"Retailer (Pandey)",
+        "name":"COACH VERO BEACH",
         "isAvailable": true
     }
 }]
