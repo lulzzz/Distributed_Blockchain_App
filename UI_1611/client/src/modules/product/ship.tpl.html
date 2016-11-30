@@ -32,8 +32,8 @@
 							<input ng-required="true" type="text" class="form-control" id="prodName" ng-model="vm.product.productName">
 						</div> --->
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select id="productName" class="form-control">
-                                    <option value="leather">{{vm.ship.productName}} - {{vm.ship.quality}}</option>
+                                <select ng-class="{'errBox': vm.showRedBox}" id="productName" ng-repeat="prod in productList" class="form-control">
+                                    <option value="{{prod.qrCode}}">{{prod.productName}} - {{prod.quality}}</option>
                                 </select>
                             </div>
 					</div>
@@ -112,7 +112,7 @@
 							<label for="picture">Distributer/Retailer :</label>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<div class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.retailerList" selected-model="vm.exampleModel" checkboxes="true"></div>
+							<div class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.retailerList" selected-model="vm.selectedRetailers" checkboxes="true"></div>
 						</div>
 					</div>
 				</div>

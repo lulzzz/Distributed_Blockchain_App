@@ -584,6 +584,9 @@ header .sideMenuPanel .list ul li a:hover {
   height: auto !important;
   border: 1px solid !important;
 }
+.multiSelectDirective .errBox {
+  border: 1px solid red;
+}
 .errorDiv {
   font-weight: bold;
 }

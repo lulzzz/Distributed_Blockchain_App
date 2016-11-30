@@ -21,6 +21,7 @@ angular.module('materialModule')
                 vm.material = materialModel.getMaterial();
                 vm.urlList = [];
                 vm.list = [];
+                vm.registeredMatList = [];
                 vm.datePickerData = vm.material.productionDate;
 
                 //Populating list of Products on load based on productList resolve
@@ -43,6 +44,11 @@ angular.module('materialModule')
                     .then(function (response) {
                         materialModel.setMaterial(response);
                         vm.material = materialModel.getMaterial();
+                        vm.registeredMatList.push({
+                           qrCode: vm.material.qrCode,
+                           materialName: vm.material.materialName,
+                           batchNumber: vm.material.batchNumber
+                        })
                         //vm.urlList = vm.material.filePath;
                         /***** Hardcoded for demo purpose */
                         vm.urlList = [{src:'asset/images/bag1.png',alt:'material image'},
@@ -60,8 +66,8 @@ angular.module('materialModule')
                      shipMaterialService
                          .getMaterialList(vm.user)
                          .then(function (response) {
-                             vm.materialList = response;
-                             shipModel.setModel(vm.materialList[0]);
+                             vm.registeredMatList = response;
+                             shipModel.setModel(vm.registeredMatList[0]);
                              vm.ship = shipModel.getModel();
                          }, function (err) {
                              $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -120,11 +126,13 @@ angular.module('materialModule')
                 vm.edit = function (data) {
                     materialModel.setMaterial(data);
                     vm.material = materialModel.getMaterial();
+                    vm.urlList = vm.material.filePath;
                     vm.isReadonly = false;
                 };
                 vm.view = function (data) {
                     materialModel.setMaterial(data);
                     vm.material = materialModel.getMaterial();
+                    vm.urlList = vm.material.filePath;
                     vm.isReadonly = true;
                 };
 

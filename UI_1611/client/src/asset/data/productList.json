@@ -1,5 +1,5 @@
 [{
-	"tokenId": "materialID0",
+	"qrCode": "materialID0",
 	"productName": "Coach Crosby line Tote Handbag",
 	"batchNumber": "B00RWSC2MW0",
 	"weight": "100kg",
@@ -13,7 +13,7 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Coach, Florida"
 }, {
-	"tokenId": "materialID1",
+	"qrCode": "materialID1",
 	"productName": "Coach Hobo Bag",
 	"batchNumber": "B00RWSC2MW1",
 	"weight": "100kg",
@@ -27,7 +27,7 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Coach, New York"
 }, {
-	"tokenId": "materialID2",
+	"qrCode": "materialID2",
 	"productName": "Coach Tote Bag",
 	"batchNumber": "B00RWSC2MW2",
 	"weight": "100kg",
@@ -41,7 +41,7 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Coach, Florida"
 }, {
-	"tokenId": "materialID3",
+	"qrCode": "materialID3",
 	"productName": "Hobo Bag",
 	"batchNumber": "B00RWSC2MW3",
 	"weight": "100kg",
@@ -55,7 +55,7 @@
 	"shippedOn": "10/10/2011",
 	"shippedFrom": "Manufacturer (Azim)"
 }, {
-	"tokenId": "materialID4",
+	"qrCode": "materialID4",
 	"productName": "Tote Bag",
 	"batchNumber": "B00RWSC2MW4",
 	"weight": "100kg",

@@ -105,7 +105,8 @@ angular
         //MATERIAL_BATCH_DELETED: "Material has been removed from batched"
         MULTISELECT_SETTINGS: {
             scrollable: true,
-            scrollableHeight: '250px'
+            scrollableHeight: '250px',
+            className: 'errBox'
         },
         QUANTITY_EXCEEDED: "The Quantity to be shipped cannot exceed the available quantity. Please revalidate!",
         MATERIAL_ADHERED: "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.",

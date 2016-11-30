@@ -18,8 +18,8 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.material.materialName">-->
-							 <select id="materialName" class="form-control">
-                                    <option value="garcia-leather" selected>Garcia Leather</option>
+							 <select id="materialName" ng-repeat="mat in vm.registeredMatList" class="form-control">
+                                    <option value="{{mat.qrCode}}">{{mat.materialName}}</option>
                             </select>
 						</div>
 					</div>
@@ -93,7 +93,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" ng-model="vm.material.id"/>
+				<input type="hidden" ng-model="vm.material.qrCode"/>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
 					<button type="submit" ng-disabled="" class="btn btn-primary registerBtn">REGISTER MATERIAL BATCH</button>
 				</div>
@@ -101,7 +101,7 @@
 					<button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">RESET</button>
 				</div>
 			</form>
-		</div>
+		</div>	
 	</div>
 </div>
 

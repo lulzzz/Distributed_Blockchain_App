@@ -17,6 +17,7 @@ angular.module('productModule')
                 vm.user = userModel.getUser();
                 setUserProfile(vm, userModel);
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
+                vm.productList = [];
 
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
@@ -28,6 +29,11 @@ angular.module('productModule')
                     .then(function (response) {
                         shipProductModel.setModel(response);
                         vm.ship = shipProductModel.getModel();
+                        vm.productList.push({
+                            qrCode: vm.ship.qrCode,
+                            productName: vm.ship.productName,
+                            batchNumber: vm.ship.batchNumber
+                        })
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -53,7 +59,7 @@ angular.module('productModule')
 
                 /****************** Distributer/Retailer Multiselect functionality *******************/
                 vm.settings = appConstants.MULTISELECT_SETTINGS;
-                vm.exampleModel = [];
+                vm.selectedRetailers = [];
 
                 //Retreive all retailer list and populate inside Multiselect
                 shipService
@@ -68,30 +74,41 @@ angular.module('productModule')
                     });
 
 
-                    vm.showLineage = function (data) {
+                vm.showLineage = function (data) {
 
-                        shipService
-                            .getShipLineageData(data)
-                            .then(function (response) {
-                                $scope.lineageData = response.data;
-                                $scope.lineageSubData = $scope.lineageData.product.items[0];
-                                $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                                $scope.ifNegativeUsecase = false;
-                                $scope.isShipped = true;
-                                $scope.isShippedToRetailer = false;
-                                renderLineage(ngDialog, 'product-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box', $scope);
-                            }, function (err) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, err);
-                            })
-                            .catch(function (e) {
-                                $log.error(appConstants.FUNCTIONAL_ERR, e);
-                            });
-                    };
+                    shipService
+                        .getShipLineageData(data)
+                        .then(function (response) {
+                            $scope.lineageData = response.data;
+                            $scope.lineageSubData = $scope.lineageData.product.items[0];
+                            $scope.lineageSubMaterialData = $scope.lineageData.product.items;
+                            $scope.ifNegativeUsecase = false;
+                            $scope.isShipped = true;
+                            $scope.isShippedToRetailer = false;
+                            renderLineage(ngDialog, 'product-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box', $scope);
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
 
 
                 /****************** material Shipment functionality *******************/
                 vm.shipProduct = function () {
-                     if (shipProductModel.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
+
+                    if (vm.selectedRetailers.length <= 0) {
+                        $rootScope.hasError = true;
+                        vm.showRedBox = true;
+                        $rootScope.ERROR_MSG = 'Please select atleast one distributer/retailer.';
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                        vm.showRedBox = false;
+                    }
+
+                    if (shipProductModel.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
                         vm.ship.quantity = vm.userQuantity;
                     } else {
                         $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
@@ -100,7 +117,7 @@ angular.module('productModule')
                     }
 
                     shipProductModel.setModel(vm.ship);
-                    shipProductModel.shippedTo(vm.retailerList);
+                    shipProductModel.shippedTo(selectedRetailers);
 
                     // do product shipment
                     shipService

@@ -42,6 +42,7 @@ angular.module('materialModule')
                     $rootScope.isSuccess = false;
                     vm.isReadonly = false;
                     vm.material = materialModel.resetMaterial();
+                    vm.urlList = vm.material.filePath;
                 };
 
 
@@ -57,6 +58,7 @@ angular.module('materialModule')
                         .then(function (response) {
                             $rootScope.hasError = false;
                             $scope.qrCode = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            vm.material.qrCode = $scope.qrCode; // for time being
                             $scope.materialName = vm.material.materialName;
                             displayModal(ngDialog, $scope, 'material-register-confirmBox', 600, false, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {

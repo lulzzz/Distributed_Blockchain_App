@@ -13,7 +13,8 @@
 		"trackRecord": []
 	},
 	"shippedOn": "10/10/2011",
-	"shippedFrom": "Raw Material Producer(FODERFIL SRL)"
+	"shippedFrom": "Raw Material Producer(FODERFIL SRL)",
+	"filePath": ["https://s3.ap-south-1.amazonaws.com/bverifybucket/bag1.png", "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag6.jpg"]
 }, {
 	"qrCode": "materialID1",
 	"materialName": "Leather - Top Grain",

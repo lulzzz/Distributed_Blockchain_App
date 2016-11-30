@@ -17,6 +17,7 @@ angular.module('materialModule')
                 vm.user = userModel.getUser();
                 setUserProfile(vm, userModel);
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
+                vm.materialList = [];
 
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
@@ -29,6 +30,11 @@ angular.module('materialModule')
                     .then(function (response) {
                         shipMaterialModel.setModel(response);
                         vm.ship = shipMaterialModel.getModel();
+                        vm.materialList.push({
+                            qrCode: vm.ship.qrCode,
+                            materialName: vm.ship.materialName,
+                            batchNumber: vm.ship.batchNumber
+                        });
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -54,7 +60,7 @@ angular.module('materialModule')
 
                 /****************** Distributer/Retailer Multiselect functionality *******************/
                 vm.settings = appConstants.MULTISELECT_SETTINGS;
-                vm.exampleModel = [];
+                vm.selectedManufacturer = [];
 
                 //Retreive all manufacturerr list and populate inside Multiselect
                 shipMaterialService
@@ -71,6 +77,17 @@ angular.module('materialModule')
 
                 /****************** material Shipment functionality *******************/
                 vm.shipMaterial = function () {
+
+                    if (vm.selectedManufacturer.length <= 0) {
+                        $rootScope.hasError = true;
+                        vm.showRedBox = true;
+                        $rootScope.ERROR_MSG = 'Please select atleast one manufacturer.';
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                        vm.showRedBox = false;
+                    }
+
                     if (shipMaterialModel.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
                         vm.ship.quantity = vm.userQuantity;
                     } else {
@@ -79,7 +96,7 @@ angular.module('materialModule')
                         return;
                     }
                     shipMaterialModel.setModel(vm.ship);
-                    shipMaterialModel.shippedTo(vm.manufacturerList);
+                    shipMaterialModel.shippedTo(vm.selectedManufacturer);
 
                     // do material shipment
                     shipMaterialService
