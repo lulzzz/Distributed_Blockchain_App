@@ -101,7 +101,7 @@ angular.module('productModule')
                     if (vm.selectedRetailers.length <= 0) {
                         $rootScope.hasError = true;
                         vm.showRedBox = true;
-                        $rootScope.ERROR_MSG = 'Please select atleast one distributer/retailer.';
+                        $rootScope.ERROR_MSG = 'Please select atleast one Distributer/Retailer.';
                         return;
                     } else {
                         $rootScope.hasError = false;
@@ -117,7 +117,7 @@ angular.module('productModule')
                     }
 
                     shipProductModel.setModel(vm.ship);
-                    shipProductModel.shippedTo(selectedRetailers);
+                    shipProductModel.shippedTo(vm.selectedRetailers);
 
                     // do product shipment
                     shipService

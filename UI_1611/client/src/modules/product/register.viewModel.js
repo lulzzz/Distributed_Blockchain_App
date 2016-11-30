@@ -63,9 +63,9 @@ angular.module('productModule')
                 this.selectedMaterials = [];
                 var self = this;
                 angular.forEach(list, function(val, key){
+                    
                     self.selectedMaterials.push({
-                        'id': val.qrCode,
-                        'label': val.materialName
+                        'qrCode': val.id
                     })
                 });
             };

@@ -19,6 +19,7 @@ angular.module('productModule')
                 vm.list = [];
                 $scope.ifRow = {};
 				$scope.parentSelectedRows =[];
+                vm.procuredList = [];
 
                 /****************** PRODUCT/MATERIAL List to procure */
                 //Populating list of Products on load based on productList resolve
@@ -42,8 +43,13 @@ angular.module('productModule')
                         $rootScope.hasError = true;
                         $rootScope.ERROR_MSG = appConstants.PROCURE_CHECKBOX_ERR;
                         return;
+                    }else{
+                        $rootScope.hasError = false;
+                        angular.forEach($scope.ifRow.listOfSelectedRows, function(val, key){
+                            console.log(val);   
+                        })
                     }
-                    $rootScope.hasError = false;
+                    
 
                     procureService
                         .procureProduct({}) // for demo instance

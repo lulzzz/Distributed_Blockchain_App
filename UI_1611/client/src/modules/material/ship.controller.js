@@ -81,7 +81,7 @@ angular.module('materialModule')
                     if (vm.selectedManufacturer.length <= 0) {
                         $rootScope.hasError = true;
                         vm.showRedBox = true;
-                        $rootScope.ERROR_MSG = 'Please select atleast one manufacturer.';
+                        $rootScope.ERROR_MSG = 'Please select atleast one Manufacturer.';
                         return;
                     } else {
                         $rootScope.hasError = false;

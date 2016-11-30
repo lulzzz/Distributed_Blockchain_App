@@ -35,7 +35,7 @@
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<!--- Comment out based on new UI changes -->
 							<!-- <input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.userMaterial">-->
-							<div class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.materialList" selected-model="vm.selectedMaterial" checkboxes="true"></div>
+							<div  ng-class="{'errBox': vm.showRedBox}" class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.materialList" selected-model="vm.selectedMaterial" checkboxes="true"></div>
 						</div>
 					</div>
 

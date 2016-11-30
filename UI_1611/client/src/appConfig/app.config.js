@@ -111,6 +111,7 @@ angular
         QUANTITY_EXCEEDED: "The Quantity to be shipped cannot exceed the available quantity. Please revalidate!",
         MATERIAL_ADHERED: "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.",
         PROCURE_CHECKBOX_ERR: 'Please select atleast one record.',
+        UPLOAD_FILE_ERR: 'Please upload an image/video',
         MATERIAL_PROCURED: "All the selected materials have been procured successfully.",
         PRODUCT_PROCURED: "All the selected products have been acknowledge successfully.",
         //Header configuration for posting file data to node server

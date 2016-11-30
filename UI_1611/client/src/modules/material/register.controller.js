@@ -49,6 +49,15 @@ angular.module('materialModule')
 
                 /******************* Register new material *************************/
                 vm.registerMaterial = function () {
+
+                    if(vm.urlList.length <= 0){
+                        $rootScope.hasError = true;
+                        $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
+                        return;
+                    }else{
+                        $rootScope.hasError = false;
+                    }
+
                     vm.material.productionDate = vm.datePickerData;
                     materialModel.setMaterial(vm.material);
                     materialModel.setFilePath(vm.urlList);

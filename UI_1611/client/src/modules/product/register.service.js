@@ -25,7 +25,7 @@ angular.module('productModule')
             productList: { url: __ENV.apiUrl + registerUrl.list, method: "GET", isArray: "true" },
             materialList: { url: __ENV.apiUrl + registerUrl.materials, method: "GET", isArray: "true" },
             /**************************************************************** */
-            registerProduct: { url: __ENV.apiUrl + registerUrl.register, method: "POST", transformRequest: appConstants.HEADER_CONFIG.transformRequest, headers: appConstants.HEADER_CONFIG.headers },  //  // TO-DO need to change POST
+            registerProduct: { url: __ENV.apiUrl + registerUrl.register, method: "POST"},  //  // TO-DO need to change POST
             prodDelete: { url: __ENV.apiUrl + registerUrl.deleteProd, method: "GET", isArray: "true" }, // TO-DO need to change DELETE
             fileUpload: { url: __ENV.apiUrl + registerUrl.upload, method: "POST", isArray: "true", transformRequest: appConstants.HEADER_CONFIG.transformRequest, headers: appConstants.HEADER_CONFIG.headers }, // TO-DO need to change DELETE
             registerProductLineage: { url: __ENV.apiUrl + registerUrl.registerProductLineage, method: "GET"}

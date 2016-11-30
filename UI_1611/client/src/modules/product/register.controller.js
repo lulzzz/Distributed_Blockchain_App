@@ -43,6 +43,10 @@ angular.module('productModule')
                     .then(function (response) {
                         vm.materialList = [];
                         angular.forEach(response, function (val, key) {
+                            //limit to populate only 3 materials
+                            if(key >2 ){
+                                return;
+                            }
                             vm.materialList.push({
                                 'id': val.qrCode,
                                 'label': val.materialName
@@ -71,11 +75,13 @@ angular.module('productModule')
                 vm.edit = function (data) {
                     productModel.setProduct(data);
                     vm.product = productModel.getProduct();
+                    vm.urlList = vm.product.filePath;
                     vm.isReadonly = false;
                 };
                 vm.view = function (data) {
                     productModel.setProduct(data);
                     vm.product = productModel.getProduct();
+                    vm.urlList = vm.product.filePath;
                     vm.isReadonly = true;
                 };
 
@@ -148,7 +154,23 @@ angular.module('productModule')
 
 
                 vm.registerProduct = function () {
-                   
+                    if (vm.selectedMaterial.length <= 0) {
+                        $rootScope.hasError = true;
+                        vm.showRedBox = true;
+                        $rootScope.ERROR_MSG = 'Please select atleast one Material.';
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                        vm.showRedBox = false;
+                    }
+
+                    if (vm.urlList.length <= 0) {
+                        $rootScope.hasError = true;
+                        $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                    }
                     productModel.setProduct(vm.product);
                     productModel.setFilePath(vm.urlList);
                     productModel.setSelectedMaterials.call(vm.product, vm.selectedMaterial);
