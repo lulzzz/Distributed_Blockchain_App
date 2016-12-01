@@ -8,8 +8,9 @@
 	<!--old Changes-->
 <div class="col-lg-12 col-xs-12 noPadding dataLineage">
 		<div class="col-lg-3 col-xs-3 noPadding">
-			<div><span class="borderGreenLeft"></span><span class="borderGreen"></span><span class="borderGreenRight"></span></div>
-			<div class="img-responsive"><img src="asset/images/dataLineage1.png" style="width:90%"/></div>
+			<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-90px;"></span><span class="borderGreenRight" style="right:-95px;"></span></div>
+			<div class="img-responsive"><img src="asset/images/dataLineage1.png" style="width:90%" popover-trigger="mouseenter" 
+				uib-popover-template="'extraLineageDetails.html'" popover-placement="right"/></div>
 			<div class="dataDetails">
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
@@ -21,8 +22,9 @@
 			</div>
 		</div>
 		<div class="col-lg-3 col-xs-3 noPadding">
-			<div><span class="borderGreenLeft" style="border-color:#00B0F0;"></span><span class="borderGreen" style="border-color:#00B0F0;"></span><span style="border-color:#00B0F0;" class="borderGreenRight"></span></div>
-			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png"/></div>
+			<div><span class="borderGreenLeft" style="border-color:#00B0F0;left:95px;"></span><span class="borderGreen" style="border-color:#00B0F0;left:100px"></span><span style="border-color:#00B0F0;" class="borderGreenRight"></span></div>
+			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png" popover-trigger="mouseenter" 
+			uib-popover-template="'extraLineageDetails.html'" popover-placement="right"/></div>
 			<div class="dataDetails">
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 				<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
@@ -35,13 +37,14 @@
 		</div>
 		<div class="col-lg-2 col-xs-2 noPadding">
 			<img class="smartContractManufactutrer" src="asset/images/smartContract.png"/>
-			<div><span style="border-color:#00B0F0;" class="borderGreen"></span><span style="border-color:#00B0F0;" class="borderGreenRight"></span></div>
+			<div><span style="border-color:#00B0F0;right:-80px" class="borderGreen"></span><span style="border-color:#00B0F0;right:-85px" class="borderGreenRight"></span></div>
 			<div class="img-responsive text-center"><img class="middleImages" src="asset/images/dataLineage3.png"/></div>
 		</div>
 		<div class="col-lg-3 col-xs-3 noPadding">
 			<!--<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-100px"></span><span class="borderGreenRight" style="right:-108px;"></span></div>-->
-			<div><span class="borderGreenLeft"></span><span class="borderGreen" style="right:-10px"></span><span class="borderGreenRight" style="right:-15px;"></span></div>
-			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png"/></div>
+			<div><span class="borderGreenLeft" style="left:85px;"></span><span class="borderGreen" style="right:-10px;left:90px"></span><span class="borderGreenRight" style="right:-15px;"></span></div>
+			<div class="img-responsive text-center"><img src="asset/images/dataLineage2.png" popover-trigger="mouseenter" 
+			uib-popover-template="'extraLineageDetailsManufacturer.html'" popover-placement="left"/></div>
 			<div class="dataDetails">
 				<div class="col-lg-2 col-xs-2 noPadding"><img style="width: 21px;padding:0px;" src="asset/images/smartContract.png"/></div>
 					<div class="col-lg-10 col-xs-10 noPadding" style="font-size:11px;">
@@ -58,4 +61,27 @@
 		</div>
 <!--old Changes-->
 	<div style="clear:both"></div>
+</script>
+
+ <script type="text/ng-template" id="extraLineageDetails.html">
+        <div class="innerPopups">
+			<div class="text-center" style="padding-bottom:10px;width:250px;">
+							<div class=""><strong>{{lineageSubData.name}}</strong></div>
+							<div>Prod on: {{lineageSubData.mfgDate}}</div>
+							<div>Locn: {{lineageSubData.loc}}</div>
+			</div>
+		</div>
+</script>
+<script type="text/ng-template" id="extraLineageDetailsManufacturer.html">
+        <div class="innerPopups">
+			<div class="text-center" style="padding-bottom:10px;width:250px;">
+					<div><strong>COACH-Manufacturing Center</strong></div>
+					<div ng-repeat="data in lineageSubMaterialData">
+						<div class=""><strong>{{data.name}}</strong></div>
+						<div>Prod on: {{data.mfgDate}}</div>
+						<div>Received on: {{data.receivedDate}}</div>
+						<div>Locn: {{data.recLoc}}</div>
+					</div>
+				</div>
+		</div>
 </script>

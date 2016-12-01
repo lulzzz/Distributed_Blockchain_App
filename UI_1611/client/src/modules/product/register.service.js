@@ -36,7 +36,7 @@ angular.module('productModule')
     .service('registerService', ['registerResource', 'appConstants', '$q', '$log', function (registerResource, appConstants, $q, $log) {
         
         this.registerProduct = function (product) {
-             
+            //var req = populateProductHexRequest(prod);
             var deferred = $q.defer();
             try{
                 registerResource
@@ -141,5 +141,6 @@ angular.module('productModule')
             return deferred.promise;
         };
 
-        
     }]);
+
+   

@@ -84,9 +84,6 @@ angular.module('productModule')
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                            $scope.ifNegativeUsecase = false;
-                            $scope.isShipped = true;
-                            $scope.isShippedToRetailer = true;
                             renderDialog(ngDialog, $scope, 'product-lineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);

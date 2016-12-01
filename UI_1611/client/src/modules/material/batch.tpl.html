@@ -18,8 +18,8 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.material.materialName">-->
-							 <select id="materialName" ng-repeat="mat in vm.registeredMatList" class="form-control">
-                                    <option value="{{mat.qrCode}}">{{mat.materialName}}</option>
+							 <select ng-change="vm.onMaterialChanged(vm.mat)" id="materialName" ng-options="mat.materialName for mat in vm.matList track by mat.id" ng-model="vm.mat" class="form-control">
+                                    <option value="vm.selectedMat">SELECT</option>
                             </select>
 						</div>
 					</div>
@@ -34,11 +34,11 @@
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="margin-top:0px;line-height:16px;">
-							<label for="batchNumber">Harmonization code/ <br class="visible-lg visible-md"/> Model Number :</label>
+							<label for="modelNumber">Harmonization code/ <br class="visible-lg visible-md"/> Model Number :</label>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
 							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="batchNumber" ng-model="vm.material.batchNumber">-->
-							{{vm.material.batchNumber}}
+							{{vm.material.modelNumber}}
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
@@ -68,7 +68,7 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-sm-10 paddingTB5">
 							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="color" ng-model="vm.product.color">-->
-							{{vm.material.color}}, <span style="font-size: 10px;word-spacing: -1px;">{{vm.material.dimension}}</span>
+							{{vm.material.dimension}} <!--, <span style="font-size: 10px;word-spacing: -1px;">{{vm.material.dimension}}</span> -->
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12">
@@ -93,7 +93,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" ng-model="vm.material.qrCode"/>
+				<input type="hidden" ng-model="vm.material.id"/>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
 					<button type="submit" ng-disabled="" class="btn btn-primary registerBtn">REGISTER MATERIAL BATCH</button>
 				</div>

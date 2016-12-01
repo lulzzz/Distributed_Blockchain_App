@@ -23,6 +23,7 @@ angular.module('productModule')
                 vm.urlList = [];
                 vm.list = [];
                 vm.selectedMaterial = [];
+                vm.imageSrc = [];
 
                 //Populating list of Products on load based on productList resolve
                 productList
@@ -73,12 +74,14 @@ angular.module('productModule')
 
                 /******************* VIEW EDIT registered material *************************/
                 vm.edit = function (data) {
+                    $rootScope.hasError = true;
                     productModel.setProduct(data);
                     vm.product = productModel.getProduct();
                     vm.urlList = vm.product.filePath;
                     vm.isReadonly = false;
                 };
                 vm.view = function (data) {
+                    $rootScope.hasError = true;
                     productModel.setProduct(data);
                     vm.product = productModel.getProduct();
                     vm.urlList = vm.product.filePath;
@@ -86,8 +89,20 @@ angular.module('productModule')
                 };
 
                 vm.upload = function (data) {
-                    //Making upload service call
+                     if(vm.imageSrc.length >= 5){
+                        $rootScope.hasError = true;
+                        $rootScope.ERROR_MSG = "Alert ! You cannot upload more than 5 files";
+                        return;
+                    }
+                    //Making delete service call
                     if (data) {
+                        var fileReader = new FileReader();
+                        fileReader.readAsDataURL(data);
+                        fileReader.onload = function(e) {
+                            (function() {
+                                vm.imageSrc.push(e.target.result); // Retrieve the image. 
+                            })();
+                        };
                         registerService
                             .uploadFile({ file: data })
                             .then(function (response) {
@@ -139,11 +154,7 @@ angular.module('productModule')
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                            $scope.ifNegativeUsecase = false;
-                            $scope.isShipped = false;
-                            $scope.isShippedToRetailer = false;
-
-                            renderDialog(ngDialog, $scope, 'product-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
+                            renderDialog(ngDialog, $scope, 'register-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -152,7 +163,15 @@ angular.module('productModule')
                         });
                 };
 
-
+				 vm.negativeUsecase = function () {
+							$scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Garcia leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }, { name: 'Buckle', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }] } } };
+							$scope.lineageData = $scope.serviceData.data;
+							$scope.lineageSubData = $scope.lineageData.product.items[0];
+							$scope.lineageSubMaterialData = $scope.lineageData.product.items;
+                            renderDialog(ngDialog, $scope, 'negative-lineageBox', '65%', true, 'ngdialog-theme-default lineage-box');
+                     
+				 };
+				 
                 vm.registerProduct = function () {
                     if (vm.selectedMaterial.length <= 0) {
                         $rootScope.hasError = true;

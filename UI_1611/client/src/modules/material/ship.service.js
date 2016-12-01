@@ -9,7 +9,7 @@ angular.module('materialModule')
     // Registering/Retreiving/shipping/acknowledging material
     .value('shipMaterialUrl', {
         'list': 'asset/data/materialList.json', // TO-DO need to change against WEB API URL
-        'ship': 'asset/data/register.json',  // TO-DO need to change against WEB API URL
+        'ship': 'api/material/register.json',  // TO-DO need to change against WEB API URL
         /****** below needs to be change. Hardcoded for demo */
         'getMaterial': 'asset/data/material.json',
         'manufacturerList': 'asset/data/manufacturerList.json' // TO-DO need to change against WEB API URL
@@ -22,7 +22,7 @@ angular.module('materialModule')
             /****** below needs to be change. Hardcoded for demo */
             materialList: { url: __ENV.apiUrl + shipMaterialUrl.list, method: "GET", isArray: "true" },
             /**************************************************************** */
-            shipMat: { url: __ENV.apiUrl + shipMaterialUrl.ship, method: "GET" },   // TO-DO need to change POST
+            shipMat: { url: __ENV.apiUrl + shipMaterialUrl.ship, method: "POST" },   // TO-DO need to change POST
             /****** below needs to be change. Hardcoded for demo */
             retreiveMat: { url: __ENV.apiUrl + shipMaterialUrl.getMaterial, method: "GET"}, // TO-DO need to change DELETE
             manufacturerList: { url: __ENV.apiUrl + shipMaterialUrl.manufacturerList, method: "GET", isArray: "true"}

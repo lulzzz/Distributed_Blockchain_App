@@ -19,8 +19,8 @@
                                 <label for="materialName">Material Name :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select  id="materialName" ng-repeat="mat in vm.materialList" class="form-control">
-                                    <option value="{{mat.qrCode}}">{{mat.materialName}} - {{mat.batchNumber}}</option>
+                                <select required ng-change="vm.onMaterialChanged(vm.mat)" id="materialName" ng-options="mat.materialName for mat in vm.materialList track by mat.id" ng-model="vm.mat" class="form-control">
+                                    <option value="">SELECT</option>
                                 </select>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
                                 <span class="verticalAlignment">{{vm.ship.weight}}</span>
-                                <span class="verticalAlignment tokenNumberShipProduct" style="right:-125px;">Batch Token #: LFG14561</span>
+                                <span class="verticalAlignment tokenNumberShipProduct" style="right:-125px;">Batch Token #: {{vm.ship.id}}</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -65,7 +65,8 @@
                                 <label for="carrier">Carrier :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select id="carrier" class="form-control">
+                                <select required ng-change="vm.onCarrierChanged(vm.carrier)" id="carrier" ng-model="vm.carrier" class="form-control">
+                                    <option id="0" value="">SELECT</option>
                                     <option id="1" value="fedex">FedEx</option>
                                     <option id="2" value="dtdc">DTDC</option>
                                    </select>
@@ -78,7 +79,7 @@
                                 <label for="picture">Manufacturer :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <div ng-class="{'errBox': vm.showRedBox}" class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.manufacturerList" selected-model="vm.selectedManufacturer"
+                                <div ng-class="{'errBox': vm.showRedBox}" required class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.manufacturerList" selected-model="vm.selectedManufacturer"
                                     checkboxes="true"></div>
                             </div>
                         </div>
@@ -87,7 +88,7 @@
                         <button type="submit" class="btn btn-primary registerBtn">SHIP MATERIAL</button>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
-                        <button type="reset" ng-click="reset()" class="btn btn-primary registerBtn">RESET</button>
+                        <button type="reset" ng-click="vm.reset()" class="btn btn-primary registerBtn">RESET</button>
                     </div>
                 </form>
             </div>

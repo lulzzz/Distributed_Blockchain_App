@@ -3,37 +3,51 @@
 angular.module('bverifyApp')
 
     //Directive for rendering module section
-    .directive('appDatepicker', function () {
+    .directive('appDatepicker', ['appConstants', function (appConstants) {
         return {
             restrict: 'E',
-            scope:{
-				datePickerData:'='
-			},
-            templateUrl: '../views/datepicker.tpl.html',
+            templateUrl: 'views/datepicker.tpl.html',
+            scope: {
+                datePickerData: '=',
+                isExpiryDate: '@?'
+            },
             link: function (scope, element, attrs) {
+
+                scope.$watch('date', function () {
+                    scope.datePickerData = scope.date;
+                });
+
                 try {
                     scope.vm = {};
-                    scope.vm.datepickerObj = {
-                        dateFormat: 'dd/MM/yyyy',
-                        dateOptions: {
-                            startingDay: 1,
-                            showWeeks: false,
-							 maxDate: new Date(),
-                        },
-                        popup: {
-                            opened: false
-                        }
+                        scope.vm.datepickerObj = {
+                            dateFormat: 'dd/MM/yyyy',
+                            dateOptions: {
+                                startingDay: 1,
+                                showWeeks: false,
+                                maxDate: !scope.isExpiryDate ? new Date() : null,
+                                minDate: scope.isExpiryDate ? new Date() : null,
+                            },
+                            popup: {
+                                opened: false
+                            }
+                        };
+                    if (scope.datePickerData !== null && angular.isDefined(scope.datePickerData) && scope.datePickerData !== "") {
+                        scope.array = scope.datePickerData.split('/');
+                        var month = scope.array[0] - 1;
+                        scope.date = new Date(scope.array[2], month, scope.array[1]);
+                    } else {
+                        scope.date = new Date();
+                    }
+                    scope.openDatepicker = function () {
+                        scope.vm.datepickerObj.popup.opened = true;
                     };
-					scope.date = Date.parse(scope.datePickerData) ? Date.parse(scope.datePickerData) : new Date();
-					scope.openDatepicker = function () {
-						scope.vm.datepickerObj.popup.opened = true;
-					};
                 } catch (e) {
                     console.log(appConstants.FUNCTIONAL_ERR, e);
                 }
             }
         }
-    })
+    }])
+
 
     .directive('appFileuploader', [function () {
         return {
@@ -140,12 +154,12 @@ angular.module('bverifyApp')
                     $scope.ifRow.listOfSelectedRows = $scope.$parent.parentSelectedRows;
 
                     $scope.selectedRow = function (data, flag) {
-                        if ($scope.ifRow.listOfSelectedRows.indexOf(data.tokenId) === -1) {
-                            $scope.ifRow.listOfSelectedRows.push(data.tokenId);
+                        if ($scope.ifRow.listOfSelectedRows.indexOf(data.qrCode) === -1) {
+                            $scope.ifRow.listOfSelectedRows.push(data.qrCode);
                             data.selectedRows = true;
                         }
                         else {
-                            var deleteItem = $scope.ifRow.listOfSelectedRows.indexOf(data.tokenId);
+                            var deleteItem = $scope.ifRow.listOfSelectedRows.indexOf(data.qrCode);
                             if (deleteItem > -1) {
                                 $scope.ifRow.listOfSelectedRows.splice(deleteItem, 1);
                                 data.selectedRows = false;
@@ -164,12 +178,12 @@ angular.module('bverifyApp')
                             $scope.header.selectedRows = true;
                             angular.forEach(list, function (value, key) {
                                 value.selectedRows = true;
-                                if ($scope.ifRow.listOfSelectedRows.indexOf(value.tokenId) === -1) {
-                                    $scope.ifRow.listOfSelectedRows.push(value.tokenId);
+                                if ($scope.ifRow.listOfSelectedRows.indexOf(value.qrCode) === -1) {
+                                    $scope.ifRow.listOfSelectedRows.push(value.qrCode);
                                     value.selectedRows = true;
                                 }
                                 else {
-                                    // var deleteItem = $scope.listOfSelectedRows.indexOf(value.tokenId);
+                                    // var deleteItem = $scope.listOfSelectedRows.indexOf(value.qrCode);
                                     // if (deleteItem > -1) {
                                     // $scope.listOfSelectedRows.splice(deleteItem, 1);
                                     // value.selectedRows = false;

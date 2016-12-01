@@ -18,16 +18,20 @@ angular.module('materialModule')
                 setUserProfile(vm, userModel);
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.materialList = [];
+                vm.selectedMat = '';
+                vm.carrier = '';
+                vm.ship = shipMaterialModel.resetModel();
 
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
 
-                //if ($stateParams.qrCode) {  for time being
+                if ($stateParams.qrCode) {
                 //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
                 shipMaterialService
                     .getMaterial($stateParams.qrCode)
                     .then(function (response) {
+                        vm.materialList = [];
                         shipMaterialModel.setModel(response);
                         vm.ship = shipMaterialModel.getModel();
                         vm.materialList.push({
@@ -35,26 +39,27 @@ angular.module('materialModule')
                             materialName: vm.ship.materialName,
                             batchNumber: vm.ship.batchNumber
                         });
+                        vm.selectedMat = vm.ship.qrCode;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
                     .catch(function (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
-                /* } else {  for time being
+                } else { 
                      shipMaterialService
                          .getMaterialList(vm.user)
                          .then(function (response) {
                              vm.materialList = response;
-                             shipMaterialModel.setModel(vm.materialList[0]);
-                             vm.ship = shipMaterialModel.getModel();
+                             /*shipMaterialModel.setModel(vm.materialList[0]);
+                             vm.ship = shipMaterialModel.getModel();*/
                          }, function (err) {
                              $log.error(appConstants.FUNCTIONAL_ERR, err);
                          })
                          .catch(function (e) {
                              $log.error(appConstants.FUNCTIONAL_ERR, e);
                          });
-                 }*/
+                 }
 
 
 
@@ -74,6 +79,49 @@ angular.module('materialModule')
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
+                 vm.reset = function () {
+                    $rootScope.hasError = false;
+                    $rootScope.isSuccess = false;
+                    vm.ship = shipMaterialModel.resetModel();
+                };
+
+
+                vm.onMaterialChanged = function (mat) {
+                    if(!mat){
+                        vm.ship = shipMaterialModel.resetModel();
+                    }
+                    if (mat) {
+                        shipMaterialService
+                            .getMaterial(mat.qrCode)
+                            .then(function (response) {
+                                shipMaterialModel.setModel(response);
+                                vm.ship = shipMaterialModel.getModel();
+                                //vm.urlList = vm.material.filePath;
+                                /***** Hardcoded for demo purpose */
+                                vm.urlList = [{ src: 'asset/images/bag1.png', alt: 'material image' },
+                                    { src: 'asset/images/bag5.jpg', alt: 'material image' },
+                                    { src: 'asset/images/bag6.jpg', alt: 'material image' },
+                                    { src: 'asset/images/bag7.jpg', alt: 'material image' },
+                                    { src: 'asset/images/bag7.jpg', alt: 'material image' }];
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+                    }
+                };
+
+                 vm.onCarrierChanged = function (carrier) {
+                    if(!carrier){
+                        vm.ship.trackDetails = {};
+                    }
+                    if(carrier){
+                       vm.ship.trackDetails = {
+                           currentlyAt: carrier
+                       }
+                    }
+                 };
 
                 /****************** material Shipment functionality *******************/
                 vm.shipMaterial = function () {
@@ -95,6 +143,17 @@ angular.module('materialModule')
                         renderPopup(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
                         return;
                     }
+
+                    if (vm.carrier === '') {
+                        $rootScope.hasError = true;
+                        vm.showRedBox = true;
+                        $rootScope.ERROR_MSG = 'Please select a shipment carrier.';
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                        vm.showRedBox = false;
+                    }
+
                     shipMaterialModel.setModel(vm.ship);
                     shipMaterialModel.shippedTo(vm.selectedManufacturer);
 

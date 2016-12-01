@@ -9,7 +9,7 @@
                 <td style="padding-left: 10px;"  ng-if="vm.userProfile.isProducer" class="col-lg-4 col-xs-2" data-title="'Name'">{{row.materialName}}</td>
                 <td style="padding-left: 10px;"  ng-if="vm.userProfile.isManufacturer" class="col-lg-4 col-xs-2" data-title="'Name'">{{row.productName}}</td>
                 <td style="padding-left: 10px;"  title="'Quantity'">{{row.quantity}}</td>
-                <td style="padding-left: 10px;"  title="'Registered On'">{{row.registeredDate}}</td>
+                <td style="padding-left: 10px;"  title="'Registered On'">{{row.registeredDate | parseRegDate}}</td>
                 <!-- desktop view --->
                 <td style="padding-left: 10px;"  title="'View / Edit'">
 					<span class="hidden-xs"><a id="{{row.id}}" ng-click="edit({data: row})">Edit</a>
@@ -42,7 +42,7 @@
 
                 <tr ng-repeat="row in $data">
                     <td header="'headerCheckbox.html'">
-                        <input type="checkbox" id="{{row.qrCode}}" ng-click="selectedRow(row)" ng-model="row.selectedRows">
+                        <input type="checkbox" id="{{row.id}}" ng-click="selectedRow(row)" ng-model="row.selectedRows">
                     </td>
                     <td style="padding-left: 10px;"  ng-if="vm.userProfile.isManufacturer" data-title="'Name'">{{row.materialName}}</td>
                     <td style="padding-left: 10px;"  ng-if="vm.userProfile.isRetailer" data-title="'Name'">{{row.productName}}</td>

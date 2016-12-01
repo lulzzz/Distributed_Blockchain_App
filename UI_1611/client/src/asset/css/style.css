@@ -588,7 +588,7 @@ header .sideMenuPanel .list ul li a:hover {
   font-weight: bold;
 }
 .errBox {
-  border: 1px solid red;
+  border: 1px solid red !important;
 }
 .userType {
   background-color: #70AD47;

@@ -135,7 +135,7 @@ angular
                     templateUrl: '../modules/material/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        materialList: function (userModel, registerMaterialService) {
+                        registeredMatList: function (userModel, registerMaterialService) {
                             var user = userModel.getUser();
                             return registerMaterialService.getMaterialList({
                                 userName: user.userName,
@@ -151,10 +151,10 @@ angular
                     url: '/material/batch',
                     templateUrl: '../modules/material/batch.tpl.html',
                      params: {
-                        qrCode: null,
+                        id: null,
                     },
                     resolve: {
-                        materialList: function (userModel, batchMaterialService) {
+                        registeredMatList: function (userModel, batchMaterialService) {
                             var user = userModel.getUser();
                             return batchMaterialService.getMaterialList({
                                 userName: user.userName,
@@ -171,7 +171,7 @@ angular
                     url: '/material/ship',
                     templateUrl: '../modules/material/ship.tpl.html',
                     params: {
-                        qrCode: null,
+                        id: null,
                     },
                     controllerAs: 'vm',
                     controller: 'shipMaterialController'

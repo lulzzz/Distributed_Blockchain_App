@@ -10,17 +10,17 @@ angular.module('materialModule')
 
             //Below is hardcoded for demo purpose
             var _init = {
-                qrCode: '',
-                materialName: "Garcia leather",
-                quantity: "35",
-                batchNumber: "GLB14012016HK",
-                productionDate: "14/1/2016 19:01:26",
-                expiryDate: "Not Applicable",
-                quality: "Top Grain",
-                color: "Brown",
-                weight: "50 oz.",
+                id: '',
+                materialName: "",
+                quantity: "",
+                batchNumber: "",
+                productionDate: "",
+                expiryDate: "",
+                quality: "",
+                color: "",
+                weight: "",
                 description: "signature leather made from natural tanned Italian cowhide",
-                dimension: "33 sq. ft. (L) x .25 sq. ft. (H) x 18 sq. ft. (W)",
+                dimension: "",
                 trackDetails : {},
                 shippedTo: []
             };
@@ -70,11 +70,27 @@ angular.module('materialModule')
                 }
             };
 
+            var _getParsedShipMaterial = function (data) {
+                return {
+                    materialName: CONVERTER.hexTostr(data.name),
+                    quantity: CONVERTER.hexTostr(data.quantity),
+                    batchNumber: CONVERTER.hexTostr(data.batchNumber),
+                    modelNumber: CONVERTER.hexTostr(data.model),
+                    productionDate: PARSER.parseMilliSecToDate(data.mnfDate),
+                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
+                    quality: CONVERTER.hexTostr(data.quality),
+                    dimension: CONVERTER.hexTostr(data.dimension),
+                    weight: data.weight,
+                    description: CONVERTER.hexTostr(data.description)
+                }
+            };
+
             return {
                 'getModel': _getShipMaterial,
                 'setModel': _setShipMaterial,
                 'shippedTo': _setManufacturerList,
                 'verifyQuantity': _validateQuantity,
+                'getParsedShipMaterial': _getParsedShipMaterial,
                 'resetModel': _reset
             }
         }]);

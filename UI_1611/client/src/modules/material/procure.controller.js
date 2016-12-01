@@ -76,10 +76,7 @@ angular.module('materialModule')
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                            $scope.ifNegativeUsecase = false;
-                            $scope.isShipped = true;
-                            $scope.isShippedToRetailer = false;
-                            renderDialog(ngDialog, $scope, 'procure-material-lineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
+                            renderDialog(ngDialog, $scope, 'procure-material-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })

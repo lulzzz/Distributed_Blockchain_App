@@ -51,4 +51,33 @@ angular.module('productModule')
             link: function (scope, element, attrs) {
             }
         }
+    }])
+	
+	 //Directive for rendering product lineage box section
+    .directive('registerLineageBox',[function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'modules/product/registerProductLineage.tpl.html',
+            link: function (scope, element, attrs) {
+            }
+        }
+    }])
+	
+	 //Directive for rendering negative usecase for product lineage box section
+	.directive('registerLineageBoxNegative',[function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'modules/product/negativeLineage.tpl.html',
+            link: function (scope, element, attrs) {
+            }
+        }
+    }])
+	
+	.directive('shipLineageBox',[function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'modules/product/shipLineage.tpl.html',
+            link: function (scope, element, attrs) {
+            }
+        }
     }]);

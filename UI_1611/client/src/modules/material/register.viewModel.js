@@ -10,13 +10,14 @@ angular.module('materialModule')
 
             //Below is hardcoded for demo purpose
             var _init = {
-                qrCode: '',
+                id: '',
                 filePath: [],
                 materialName: "Garcia leather",
                 quantity: "35",
                 batchNumber: "GLB14012016HK",
-                productionDate: "14/1/2016",
-                expiryDate: "Not Applicable",
+                modelNumber: "GLB14012016HK",
+                productionDate: "",
+                expiryDate: "",
                 quality: "Top Grain",
                 color: "Brown",
                 weight: "50 oz.",
@@ -57,10 +58,41 @@ angular.module('materialModule')
                 this._material.filePath = fileList;
             };
 
+            var _getParsedMaterialList = function (data) {
+                var list = [];
+                angular.forEach(data, function (val, key) {
+                    list.push({
+                        materialName: CONVERTER.hexTostr(val.name),
+                        quantity: val.quantity,
+                        registeredDate: val.regDate,
+                        id: val.id
+                    })
+                });
+                return list;
+            };
+
+            var _getParsedMaterial = function (data) {
                 return {
-                    'getMaterial': _getMaterial,
-                    'setMaterial': _setMaterial,
-                    'setFilePath': _setFilePath,
-                    'resetMaterial': _reset
+                    materialName: CONVERTER.hexTostr(data.name),
+                    quantity: CONVERTER.hexTostr(data.quantity),
+                    batchNumber: CONVERTER.hexTostr(data.batchNumber),
+                    modelNumber: CONVERTER.hexTostr(data.model),
+                    productionDate: PARSER.parseMilliSecToDate(data.mnfDate),
+                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
+                    quality: CONVERTER.hexTostr(data.quality),
+                    dimension: CONVERTER.hexTostr(data.dimension),
+                    weight: data.weight,
+                    description: CONVERTER.hexTostr(data.description),
+                    filePath: PARSER.parseHexToStrImage(data.images)
                 }
-            }]);
+            };
+
+            return {
+                'getMaterial': _getMaterial,
+                'setMaterial': _setMaterial,
+                'setFilePath': _setFilePath,
+                'getParsedMaterialList': _getParsedMaterialList,
+                'getParsedMaterial': _getParsedMaterial,
+                'resetMaterial': _reset
+            }
+        }]);    

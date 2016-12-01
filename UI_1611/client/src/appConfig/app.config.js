@@ -27,6 +27,19 @@ angular
         //Configure http interceptor and application loader
         $httpProvider.interceptors.push('httpInterceptorService');
 
+        $httpProvider.interceptors.push(function () {
+            var sessionInjector = {
+                request: function (config) {
+                    //assign value from cookie if it exists
+                   // if (Cookies.get("loginQR")) {
+                        config.headers.Authorization = 'x-access-token A88DE8EE3955C5813FD2EEFECEA8E1AF26957199';// + Cookies.get("loginQR");
+                    //}
+                    return config;
+                }
+            };
+            return sessionInjector;
+        }); 
+
         //Configure logging
         $logProvider.debugEnabled(__env.enableDebug);
 
@@ -66,7 +79,7 @@ angular
                 responseError: function (response) {
                     try {
                         $rootScope.hasError = true;
-                        if (response.data.errorMsg) {
+                        if (response && response.data && response.data.errorMsg) {
                             $rootScope.ERROR_MSG = response.data.errorMsg;
                         }
                         else if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
