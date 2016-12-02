@@ -8,7 +8,7 @@ angular.module('materialModule')
 
     // Registering/Retreiving/shipping/acknowledging material
     .value('procureMaterialUrl', {
-        'list': 'asset/data/materialList.json', // TO-DO need to change against WEB API URL
+        'list': 'shipment/pending/1', // TO-DO need to change against WEB API URL
         'procure': 'asset/data/register.json',   // TO-DO need to change against WEB API URL
         'ackMaterialLineage': 'asset/data/materialAckLineage.json' 
     })
@@ -16,11 +16,11 @@ angular.module('materialModule')
     //Configuring resource for making service call
     .service('procureMaterialResource', ['$resource', 'procureMaterialUrl', '__ENV', 'appConstants', function ($resource, procureMaterialUrl, __ENV, appConstants) {
 
-        return $resource('', {_id: '@materialId'}, {
+        return $resource('', {id: '@id'}, {
             /****** below needs to be change. Hardcoded for demo */
-            materialList: { url: __ENV.apiUrl + procureMaterialUrl.list, method: "GET", isArray: "true" },
+            materialList: { url: 'http://35.164.15.146:8082/' + procureMaterialUrl.list, method: "GET", isArray: "true" },
             /**************************************************************** */
-            procureMat: { url: __ENV.apiUrl + procureMaterialUrl.procure, method: "GET" },  // TO-DO need to change POST
+            procureMat: { url: 'http://35.164.15.146:8082/' + procureMaterialUrl.procure, method: "GET" },  // TO-DO need to change POST
             ackMaterialLineage: { url: __ENV.apiUrl + procureMaterialUrl.ackMaterialLineage, method: "GET"}
         });
     }])
@@ -33,7 +33,7 @@ angular.module('materialModule')
             var deferred = $q.defer();
             try{
                 procureMaterialResource
-                    .materialList(req)
+                    .materialList()
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);

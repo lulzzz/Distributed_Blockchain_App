@@ -9,7 +9,7 @@ angular.module('materialModule')
     // Registering/Retreiving/shipping/acknowledging material
     .value('shipMaterialUrl', {
         'list': 'asset/data/materialList.json', // TO-DO need to change against WEB API URL
-        'ship': 'api/material/register.json',  // TO-DO need to change against WEB API URL
+        'ship': 'shipment',  // TO-DO need to change against WEB API URL
         /****** below needs to be change. Hardcoded for demo */
         'getMaterial': 'asset/data/material.json',
         'manufacturerList': 'asset/data/manufacturerList.json' // TO-DO need to change against WEB API URL
@@ -18,11 +18,11 @@ angular.module('materialModule')
     //Configuring resource for making service call
     .service('shipMaterialResource', ['$resource', 'shipMaterialUrl', '__ENV', 'appConstants', function ($resource, shipMaterialUrl, __ENV, appConstants) {
 
-        return $resource('', {_id: '@materialId'}, {
+        return $resource('', {_id: '@id'}, {
             /****** below needs to be change. Hardcoded for demo */
             materialList: { url: __ENV.apiUrl + shipMaterialUrl.list, method: "GET", isArray: "true" },
             /**************************************************************** */
-            shipMat: { url: __ENV.apiUrl + shipMaterialUrl.ship, method: "POST" },   // TO-DO need to change POST
+            shipMat: { url: 'http://35.164.15.146:8082/' + shipMaterialUrl.ship, method: "POST" },   // TO-DO need to change POST
             /****** below needs to be change. Hardcoded for demo */
             retreiveMat: { url: __ENV.apiUrl + shipMaterialUrl.getMaterial, method: "GET"}, // TO-DO need to change DELETE
             manufacturerList: { url: __ENV.apiUrl + shipMaterialUrl.manufacturerList, method: "GET", isArray: "true"}
@@ -69,7 +69,8 @@ angular.module('materialModule')
         };
 
 
-         this.shipMaterial = function (req) {
+         this.shipMaterial = function (mat) {
+            var req = getMatShipHexRequest(mat);
             var deferred = $q.defer();
             try{
                 shipMaterialResource
@@ -101,6 +102,15 @@ angular.module('materialModule')
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
             return deferred.promise;
+        };
+
+        function getMatShipHexRequest(mat) {
+            return {
+                carrier: CONVERTER.strTohex(mat.carrier),
+                type: 0, // for raw material shipment
+                item: mat.batchNumber,
+                quantity: parseInt(mat.quantity)
+            }
         };
        
     }]);

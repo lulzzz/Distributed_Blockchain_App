@@ -8,25 +8,27 @@ angular.module('materialModule')
 
     // Registering/Retreiving/shipping/acknowledging material
     .value('materialBatchUrl', {
-        'registerBatch': 'api/material/register.json',  // TO-DO need to change against WEB API URL
+        'registerBatch': 'rawmaterial/batch',  // TO-DO need to change against WEB API URL
         /****** below needs to be change. Hardcoded for demo */
-        'list': 'asset/data/materialList.json', // TO-DO need to change against WEB API URL
-        'getMaterial': 'asset/data/material.json',
+        'list': 'rawmaterial/list/:page',// TO-DO need to change against WEB API URL
         'deleteMatbatch': 'asset/data/deleteMaterial.json',   // TO-DO need to change against WEB API URL
-        'matBatchEdit': 'rawmaterial/:_id'
+        'update': 'rawmaterial/:id',
+        'retreive': 'rawmaterial/:id',
+        'rmList': 'rawmaterial/list/rm/all'
     })
 
     //Configuring resource for making service call
     .service('materialBatchResource', ['$resource', 'materialBatchUrl', '__ENV', 'appConstants', function ($resource, materialBatchUrl, __ENV, appConstants) {
 
-        return $resource('', { _id: '@materialId' }, {
+        return $resource('', {id: '@id', page: '@page'}, {
             /****** below needs to be change. Hardcoded for demo */
-            materialList: { url: __ENV.apiUrl + materialBatchUrl.list, method: "GET", isArray: "true" },
+            materialList: { url: 'http://35.164.15.146:8082/'  + materialBatchUrl.list, method: "GET"},
             /**************************************************************** */
-            registerMatBatch: { url: __ENV.apiUrl + materialBatchUrl.registerBatch, method: "POST" },  //  // TO-DO need to change POST
-            retreiveMat: { url: __ENV.apiUrl + materialBatchUrl.getMaterial, method: "GET" }, // TO-DO need to change DELETE
+            registerMatBatch: { url: 'http://35.164.15.146:8082/' + materialBatchUrl.registerBatch, method: "POST"},  //  // TO-DO need to change POST
+            retreiveMat: { url: 'http://35.164.15.146:8082/'  + materialBatchUrl.retreive, method: "GET", isArray: "true"}, // TO-DO need to change DELETE
             matBatchDelete: { url: __ENV.apiUrl + materialBatchUrl.deleteMatbatch, method: "GET", isArray: "true" }, // TO-DO need to change DELETE
-            matBatchEdit: { url: __ENV.apiUrl + materialBatchUrl.editMatbatch, method: "PUT" } // TO-DO need to change DELETE
+            matBatchUpdate: { url: 'http://35.164.15.146:8082/'  + materialBatchUrl.update, method: "PUT" }, // TO-DO need to change DELETE
+            rmList: { url: 'http://35.164.15.146:8082/'  + materialBatchUrl.rmList, method: "GET"},
         });
     }])
 
@@ -56,7 +58,7 @@ angular.module('materialModule')
             var deferred = $q.defer();
             try {
                 materialBatchResource
-                    .retreiveMat(req)
+                    .retreiveMat({id: req.id})
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);
@@ -75,7 +77,25 @@ angular.module('materialModule')
             var deferred = $q.defer();
             try {
                 materialBatchResource
-                    .materialList(req)
+                    .materialList({page: req.page})
+                    .$promise
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+            } catch (e) {
+                $log.error(appConstants.FUNCTIONAL_ERR, e);
+            }
+            return deferred.promise;
+        };
+
+        /****** below needs to be change. Hardcoded for demo */
+        this.getRMList = function (req) {
+            var deferred = $q.defer();
+            try {
+                materialBatchResource
+                    .rmList()
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);
@@ -105,11 +125,11 @@ angular.module('materialModule')
             return deferred.promise;
         };
 
-        this.editMaterialBatch = function (req) {
+        this.updateMaterialBatch = function (req) {
             var deferred = $q.defer();
             try {
                 materialBatchResource
-                    .matBatchEdit(req)
+                    .matBatchUpdate(req)
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);
@@ -124,7 +144,7 @@ angular.module('materialModule')
 
         function populateBatchHexRequest(mat) {
             return {
-                rawmaterial: mat.id,
+                rawmaterial: mat.qrCode,
                 quantity: parseInt(mat.quantity),
                 regDate: PARSER.parseStrDate(new Date())
             }

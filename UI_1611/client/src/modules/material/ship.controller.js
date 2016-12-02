@@ -26,20 +26,20 @@ angular.module('materialModule')
                     vm.datepickerObj.popup.opened = true;
                 };
 
-                if ($stateParams.qrCode) {
+                if ($stateParams.id) {
                 //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
                 shipMaterialService
-                    .getMaterial($stateParams.qrCode)
+                    .getMaterial($stateParams.id)
                     .then(function (response) {
                         vm.materialList = [];
-                        shipMaterialModel.setModel(response);
+                        shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
                         vm.ship = shipMaterialModel.getModel();
                         vm.materialList.push({
-                            qrCode: vm.ship.qrCode,
+                            id: vm.ship.id,
                             materialName: vm.ship.materialName,
                             batchNumber: vm.ship.batchNumber
                         });
-                        vm.selectedMat = vm.ship.qrCode;
+                        vm.selectedMat = vm.ship.id;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -50,9 +50,7 @@ angular.module('materialModule')
                      shipMaterialService
                          .getMaterialList(vm.user)
                          .then(function (response) {
-                             vm.materialList = response;
-                             /*shipMaterialModel.setModel(vm.materialList[0]);
-                             vm.ship = shipMaterialModel.getModel();*/
+                             vm.materialList = shipMaterialModel.getParsedMaterialList(response.data);
                          }, function (err) {
                              $log.error(appConstants.FUNCTIONAL_ERR, err);
                          })
@@ -71,7 +69,7 @@ angular.module('materialModule')
                 shipMaterialService
                     .getManufacturerList(vm.user)
                     .then(function (response) {
-                        vm.manufacturerList = response;
+                        vm.manufacturerList = PARSER.parseShipToList(response.data);
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -92,17 +90,10 @@ angular.module('materialModule')
                     }
                     if (mat) {
                         shipMaterialService
-                            .getMaterial(mat.qrCode)
+                            .getMaterial({id: mat.batchNumber})
                             .then(function (response) {
-                                shipMaterialModel.setModel(response);
+                                shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
                                 vm.ship = shipMaterialModel.getModel();
-                                //vm.urlList = vm.material.filePath;
-                                /***** Hardcoded for demo purpose */
-                                vm.urlList = [{ src: 'asset/images/bag1.png', alt: 'material image' },
-                                    { src: 'asset/images/bag5.jpg', alt: 'material image' },
-                                    { src: 'asset/images/bag6.jpg', alt: 'material image' },
-                                    { src: 'asset/images/bag7.jpg', alt: 'material image' },
-                                    { src: 'asset/images/bag7.jpg', alt: 'material image' }];
                             }, function (err) {
                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
                             })
@@ -114,12 +105,10 @@ angular.module('materialModule')
 
                  vm.onCarrierChanged = function (carrier) {
                     if(!carrier){
-                        vm.ship.trackDetails = {};
+                        vm.ship.carrier = '';
                     }
                     if(carrier){
-                       vm.ship.trackDetails = {
-                           currentlyAt: carrier
-                       }
+                       vm.ship.carrier = carrier;
                     }
                  };
 
@@ -153,24 +142,30 @@ angular.module('materialModule')
                         $rootScope.hasError = false;
                         vm.showRedBox = false;
                     }
-
-                    shipMaterialModel.setModel(vm.ship);
-                    shipMaterialModel.shippedTo(vm.selectedManufacturer);
-
-                    // do material shipment
-                    shipMaterialService
-                        .shipMaterial(shipMaterialModel.getModel())
-                        .then(function (response) {
+                    
+                    angular.forEach(vm.selectedManufacturer, function(val, key){
+                        vm.ship.carrier = val;
+                        shipMaterialModel.setModel(vm.ship);
+                        // do material shipment
+                        shipMaterialService
+                            .shipMaterial(shipMaterialModel.getModel())
+                            .then(function (response) {
+                                
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                                return;
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                                return;
+                            });
+                        });
                             $rootScope.hasError = false;
-                            $scope.qrCode = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            $scope.id = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.materialName = vm.ship.materialName;
                             renderPopup(ngDialog, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default', $scope);
-                        }, function (err) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, err);
-                        })
-                        .catch(function (e) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });
+                    
+                    //shipMaterialModel.shippedTo(vm.selectedManufacturer);
                 };
 
                 /****************** Confirmation box functionality *******************/

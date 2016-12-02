@@ -9,7 +9,7 @@
         },
 
         parseMilliSecToDate: function(milliSecs){
-            var d = new Date(milliSecs * 1000),
+            var d = new Date(parseInt(milliSecs) * 1000),
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
                 year = d.getFullYear();
@@ -38,6 +38,17 @@
                     images.push(CONVERTER.hexTostr(val));
                 });
                 return images;
+        },
+
+        parseShipToList: function(userList){
+            var list = [];
+            angular.forEach(userList, function (val, key) {
+                    images.push({
+                        label: CONVERTER.hexTostr(val.name),
+                        id: val.id
+                    });
+                });
+                return list;
         }
     };
 })(this);

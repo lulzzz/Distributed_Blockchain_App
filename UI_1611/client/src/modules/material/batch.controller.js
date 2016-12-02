@@ -24,6 +24,7 @@ angular.module('materialModule')
                 vm.matList = [];
                 vm.datePickerData = vm.material.productionDate;
                 vm.selectedMat = '';
+                vm.toUpdate = false;
 
                 //Populating list of Products on load based on materialList resolve
                 registeredMatList
@@ -41,7 +42,7 @@ angular.module('materialModule')
                 if ($stateParams.id) {
                     //localStorageService.set('qrCode', angular.toJson($stateParams.id))
                     batchMaterialService
-                        .getMaterial({materialId: $stateParams.id})
+                        .getMaterial({id: $stateParams.id})
                         .then(function (response) {
                             vm.matList = [];
                             materialModel.setMaterial(materialModel.getParsedMaterial(response));
@@ -53,11 +54,8 @@ angular.module('materialModule')
                             })
                             //vm.urlList = vm.material.filePath;
                             /***** Hardcoded for demo purpose */
-                            vm.urlList = [{ src: 'asset/images/bag1.png', alt: 'material image' },
-                                { src: 'asset/images/bag5.jpg', alt: 'material image' },
-                                { src: 'asset/images/bag6.jpg', alt: 'material image' },
-                                { src: 'asset/images/bag7.jpg', alt: 'material image' },
-                                { src: 'asset/images/bag7.jpg', alt: 'material image' }];
+                            //vm.urlList = vm.material.filePath;
+                            vm.urlList = ['asset/images/bag1.png', 'asset/images/bag2.png']
                             vm.selectedMat = vm.material.id;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -67,11 +65,9 @@ angular.module('materialModule')
                         });
                 } else {
                     batchMaterialService
-                        .getMaterialList(vm.user)
+                        .getRMList(vm.user)
                         .then(function (response) {
-                            vm.matList = response;
-                            /*shipModel.setModel(vm.matList[0]);
-                            vm.ship = shipModel.getModel();*/
+                            vm.matList = materialModel.getParsedBatchMaterialList(response.data);
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -85,7 +81,9 @@ angular.module('materialModule')
                     $rootScope.hasError = false;
                     $rootScope.isSuccess = false;
                     vm.isReadonly = false;
+                    vm.toUpdate = false;
                     vm.material = materialModel.resetMaterial();
+                    vm.urlList = [];
                 };
 
 
@@ -95,17 +93,12 @@ angular.module('materialModule')
                     }
                     if (mat) {
                         batchMaterialService
-                            .getMaterial({materialId: mat.id})
+                            .getMaterial({id: mat.id})
                             .then(function (response) {
                                 materialModel.setMaterial(materialModel.getParsedMaterial(response));
                                 vm.material = materialModel.getMaterial();
                                 //vm.urlList = vm.material.filePath;
-                                /***** Hardcoded for demo purpose */
-                                vm.urlList = [{ src: 'asset/images/bag1.png', alt: 'material image' },
-                                    { src: 'asset/images/bag5.jpg', alt: 'material image' },
-                                    { src: 'asset/images/bag6.jpg', alt: 'material image' },
-                                    { src: 'asset/images/bag7.jpg', alt: 'material image' },
-                                    { src: 'asset/images/bag7.jpg', alt: 'material image' }];
+                                vm.urlList = ['asset/images/bag1.png', 'asset/images/bag2.png']
                             }, function (err) {
                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
                             })
@@ -118,6 +111,7 @@ angular.module('materialModule')
 
                 /******************* Register new material *************************/
                 vm.registerBatchMaterial = function () {
+                    vm.toUpdate = false;
                    // materialModel.setMaterial(vm.material);
                     var req = {
                         id: vm.material.id,
@@ -127,9 +121,34 @@ angular.module('materialModule')
                         .registerBatchMaterial(req)
                         .then(function (response) {
                             $rootScope.hasError = false;
+                            $scope.id = response.message;
+                            $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/'+response.message;
+                            vm.material.id = $scope.id; // for time being
+                            $scope.materialName = vm.material.materialName;
+                            renderModal(ngDialog, $scope, 'material-batch-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
+
+                 /******************* Register new material *************************/
+                vm.updateBatchMaterial = function () {
+                    vm.toUpdate = true;
+                   // materialModel.setMaterial(vm.material);
+                    var req = {
+                        id: vm.material.id,
+                        quantity: vm.material.quantity
+                    }
+                    batchMaterialService
+                        .updateMaterialBatch(req)
+                        .then(function (response) {
+                            $rootScope.hasError = false;
                             $scope.id = 'CL' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.materialName = vm.material.materialName;
-                            renderModal(ngDialog, $scope, 'material-batch-confirmBox', 600, false, 'ngdialog-theme-default confirmation-box');
+                            renderModal(ngDialog, $scope, 'material-batch-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -155,11 +174,12 @@ angular.module('materialModule')
                     $rootScope.hasError = false;
                     //Making edit service call
                     batchMaterialService
-                        .editMaterialBatch({materialId: data.id})
+                        .getMaterial({id: data.id})
                         .then(function (response) {
                             materialModel.setMaterial(materialModel.getParsedMaterial(response));
                             vm.material = materialModel.getMaterial();
                             vm.urlList = vm.material.filePath;
+                            vm.toUpdate = true;
                             vm.isReadonly = false;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -174,12 +194,13 @@ angular.module('materialModule')
                     $rootScope.hasError = false;
                    //Making view service call
                     batchMaterialService
-                        .editMaterialBatch({ materialId: data.id })
+                        .getMaterial({ id: data.id })
                         .then(function (response) {
                             materialModel.setMaterial(materialModel.getParsedMaterial(response));
                             vm.material = materialModel.getMaterial();
                             vm.urlList = vm.material.filePath;
-                            vm.isReadonly = false;
+                            vm.toUpdate = true;
+                            vm.isReadonly = true;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })

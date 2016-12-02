@@ -12,17 +12,17 @@ angular.module('materialModule')
             var _init = {
                 id: '',
                 filePath: [],
-                materialName: "Garcia leather",
-                quantity: "35",
-                batchNumber: "GLB14012016HK",
-                modelNumber: "GLB14012016HK",
+                materialName: "",
+                quantity: "",
+                batchNumber: "",
+                modelNumber: "",
                 productionDate: "",
                 expiryDate: "",
-                quality: "Top Grain",
-                color: "Brown",
-                weight: "50 oz.",
+                quality: "",
+                color: "",
+                weight: "",
                 description: "signature leather made from natural tanned Italian cowhide",
-                dimension: "33 sq. ft. (L) x .25 sq. ft. (H) x 18 sq. ft. (W)"
+                dimension: ""
             };
 
             var _material = {};
@@ -61,29 +61,47 @@ angular.module('materialModule')
             var _getParsedMaterialList = function (data) {
                 var list = [];
                 angular.forEach(data, function (val, key) {
-                    list.push({
-                        materialName: CONVERTER.hexTostr(val.name),
-                        quantity: val.quantity,
-                        registeredDate: val.regDate,
-                        id: val.id
-                    })
+                    if(parseInt(val.id) > 0){
+
+                        list.push({
+                            materialName: CONVERTER.hexTostr(val.name),
+                            quality: CONVERTER.hexTostr(val.quality),
+                            registeredDate: PARSER.parseMilliSecToDate(val.regDates),
+                            id: val.id
+                        })
+                    }
+                });
+                return list;
+            };
+
+             var _getParsedBatchMaterialList = function (data) {
+                var list = [];
+                angular.forEach(data, function (val, key) {
+                    if(parseInt(val.id) > 0){
+
+                        list.push({
+                            materialName: CONVERTER.hexTostr(val.name),
+                            id: val.id
+                        })
+                    }
                 });
                 return list;
             };
 
             var _getParsedMaterial = function (data) {
                 return {
-                    materialName: CONVERTER.hexTostr(data.name),
-                    quantity: CONVERTER.hexTostr(data.quantity),
-                    batchNumber: CONVERTER.hexTostr(data.batchNumber),
-                    modelNumber: CONVERTER.hexTostr(data.model),
-                    productionDate: PARSER.parseMilliSecToDate(data.mnfDate),
-                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
-                    quality: CONVERTER.hexTostr(data.quality),
-                    dimension: CONVERTER.hexTostr(data.dimension),
-                    weight: data.weight,
-                    description: CONVERTER.hexTostr(data.description),
-                    filePath: PARSER.parseHexToStrImage(data.images)
+                    //id: data[8] ? data[8]: '',
+                    materialName: CONVERTER.hexTostr(data[0]),
+                    quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
+                    batchNumber: CONVERTER.hexTostr(data.batchNumber ? '': ''),
+                    modelNumber: CONVERTER.hexTostr(data[2]),
+                    productionDate: PARSER.parseMilliSecToDate(data[1]),
+                    expiryDate: PARSER.parseMilliSecToDate(data[3]),
+                    quality: CONVERTER.hexTostr(data[4]),
+                    dimension: CONVERTER.hexTostr(data[5]),
+                    weight: data[6],
+                    description: CONVERTER.hexTostr(data.description ? '':''),
+                    filePath: PARSER.parseHexToStrImage(data[7])
                 }
             };
 
@@ -93,6 +111,7 @@ angular.module('materialModule')
                 'setFilePath': _setFilePath,
                 'getParsedMaterialList': _getParsedMaterialList,
                 'getParsedMaterial': _getParsedMaterial,
+                'getParsedBatchMaterialList': _getParsedBatchMaterialList,
                 'resetMaterial': _reset
             }
         }]);    

@@ -138,8 +138,7 @@ angular
                         registeredMatList: function (userModel, registerMaterialService) {
                             var user = userModel.getUser();
                             return registerMaterialService.getMaterialList({
-                                userName: user.userName,
-                                userProfile: user.userProfile
+                                page: 1
                             });
                         }
                     },
@@ -157,8 +156,7 @@ angular
                         registeredMatList: function (userModel, batchMaterialService) {
                             var user = userModel.getUser();
                             return batchMaterialService.getMaterialList({
-                                userName: user.userName,
-                                userProfile: user.userProfile
+                               page: 1
                             });
 
                         }
@@ -185,8 +183,7 @@ angular
                         materialList: function (userModel, procureMaterialService) {
                             var user = userModel.getUser();
                             return procureMaterialService.getMaterialList({
-                                userName: user.userName,
-                                userProfile: user.userProfile
+                                page:1
                             });
                         }
                     },

@@ -25,7 +25,7 @@ angular.module('materialModule')
                 materialList
                     .$promise
                     .then(function (response) {
-                        vm.list = response;
+                        vm.list = parsePendingMatShipments(response.shipments);
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -114,3 +114,19 @@ function renderDialog(ngDialog, scope, templateID, width, showClose, className) 
         className: className
     });
 };
+
+function parsePendingMatShipments(data){
+    var list = [];
+    angular.forEach(data, function (val, key) {
+                    list.push({
+                        id : data.id,
+                        quantity: data.quantity,
+                        shipDate : PARSER.parseMilliSecToDate(data.shipDate),
+                        sender : CONVERTER.hexTostr(data.sender),
+                        materialName : CONVERTER.hexTostr(data.name),
+                        quality : CONVERTER.hexTostr(data.quality),
+                        shipmentType : CONVERTER.hexTostr(data.shipmentType)
+        })
+    });
+return list;
+}

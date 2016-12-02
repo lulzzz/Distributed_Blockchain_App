@@ -54,12 +54,14 @@ angular.module('userModule')
                         response.user.userProfile.id = 'MANUFACT';
                         response.user.userProfile.profile = 'Manufacturer';
                         response.user.userProfile.alias = "Manufacturer";
+                        response.user.accountToken = "abc";
                     }
                     if(angular.equals(user.id, 'retailer')){
                         response.user.userName = 'Walmart';
                         response.user.userProfile.id = 'RETAIL';
                         response.user.userProfile.profile = 'Retailer';
                         response.user.userProfile.alias = "Retailer";
+                        response.user.accountToken = "xyz";
                     }
                     /**************************** */
                         deferred.resolve(response);

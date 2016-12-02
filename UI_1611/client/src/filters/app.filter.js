@@ -18,8 +18,9 @@ angular.module('bverifyApp')
     //filter for display '-' symbol in shipment details list table when input is null/empty
     .filter('parseRegDate', function () {
         return function (input, optional1, optional2) {
+            var d = PARSER.parseMilliSecToDate(input);
 
-            return PARSER.parseMilliSecToDate(input);
+            return d;
         }
 
     });

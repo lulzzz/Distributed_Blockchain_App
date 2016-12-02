@@ -8,21 +8,21 @@
             <tr ng-repeat="row in $data"> 
                 <td style="padding-left: 10px;"  ng-if="vm.userProfile.isProducer" class="col-lg-4 col-xs-2" data-title="'Name'">{{row.materialName}}</td>
                 <td style="padding-left: 10px;"  ng-if="vm.userProfile.isManufacturer" class="col-lg-4 col-xs-2" data-title="'Name'">{{row.productName}}</td>
-                <td style="padding-left: 10px;"  title="'Quantity'">{{row.quantity}}</td>
-                <td style="padding-left: 10px;"  title="'Registered On'">{{row.registeredDate | parseRegDate}}</td>
+                <td style="padding-left: 10px;"  title="'Quality'">{{row.quality}}</td>
+                <td style="padding-left: 10px;"  title="'Registered On'">{{row.registeredDate}}</td>
                 <!-- desktop view --->
                 <td style="padding-left: 10px;"  title="'View / Edit'">
-					<span class="hidden-xs"><a id="{{row.id}}" ng-click="edit({data: row})">Edit</a>
+                    <span class="hidden-xs"><a id="{{row.id}}" ng-click="edit({data: row})">Edit</a>
                                           <a id="{{row.id}}" ng-click="view({data: row})">View</a>
                                           <a id="{{row.id}}" ng-click="delete({data: row})">Delete</a>
                     </span>
                     <!-- mobile view --->
-					<span class="visible-xs text-center">
-					<span id="{{row.id}}" ng-click="edit({data: row})" class="glyphicon glyphicon-edit"></span>
-					<span id="{{row.id}}" ng-click="view({data: row})" class="glyphicon glyphicon-info-sign"></span>
-					<span id="{{row.id}}" ng-click="delete({data: row})" class="glyphicon glyphicon-remove"></span>
-					</span>
-				</td>            
+                    <span class="visible-xs text-center">
+                    <span id="{{row.id}}" ng-click="edit({data: row})" class="glyphicon glyphicon-edit"></span>
+                    <span id="{{row.id}}" ng-click="view({data: row})" class="glyphicon glyphicon-info-sign"></span>
+                    <span id="{{row.id}}" ng-click="delete({data: row})" class="glyphicon glyphicon-remove"></span>
+                    </span>
+                </td>            
             </tr>
         </table>
     </div>
@@ -57,8 +57,8 @@
                             <option id="" value="">WalNC4452</option>
                         </select>
                     </td>
-                    <td style="padding-left: 10px;"  title="'Shipped On'">{{row.shippedOn}}</td>
-                    <td style="padding-left: 10px;"  title="'Shipment From'">{{row.shippedFrom}}</td>
+                    <td style="padding-left: 10px;"  title="'Shipped On'">{{row.shipDate}}</td>
+                    <td style="padding-left: 10px;"  title="'Shipment From'">{{row.sender}}</td>
                     <td ng-if="vm.userProfile.isRetailer" title="'Track Product details'">
                         <center>
                             <!-- Comment out based on new UI -->

@@ -21,8 +21,8 @@ angular.module('materialModule')
                 weight: "",
                 description: "signature leather made from natural tanned Italian cowhide",
                 dimension: "",
-                trackDetails : {},
-                shippedTo: []
+                carrier : '',
+                shipTo: ''
             };
 
             var _ship = {};
@@ -54,9 +54,9 @@ angular.module('materialModule')
             };
 
             //set list of uploaded file url 
-            var _setManufacturerList = function (list) {
+           /* var _setManufacturerList = function (list) {
                 this._ship.shippedTo = list;
-            };
+            };*/
 
             var _validateQuantity = function (oldValue, newValue) {
                 if ((isNaN(parseInt(newValue, 10)))) {
@@ -68,6 +68,19 @@ angular.module('materialModule')
                 else {
                     return true;
                 }
+            };
+
+            var _getParsedMaterialList = function (data) {
+                var list = [];
+                angular.forEach(data, function (val, key) {
+                    list.push({
+                        materialName: CONVERTER.hexTostr(val.name),
+                        quality: CONVERTER.hexTostr(val.quality),
+                        registeredDate: PARSER.parseMilliSecToDate(val.regDates),
+                        id: val.id
+                    })
+                });
+                return list;
             };
 
             var _getParsedShipMaterial = function (data) {
@@ -88,7 +101,7 @@ angular.module('materialModule')
             return {
                 'getModel': _getShipMaterial,
                 'setModel': _setShipMaterial,
-                'shippedTo': _setManufacturerList,
+                'getParsedMaterialList': _getParsedMaterialList,
                 'verifyQuantity': _validateQuantity,
                 'getParsedShipMaterial': _getParsedShipMaterial,
                 'resetModel': _reset

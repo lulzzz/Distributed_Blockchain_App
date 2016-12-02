@@ -25,6 +25,7 @@ angular.module('materialModule')
                 vm.imageSrc = [];
                 vm.datePickerData = vm.material.productionDate;
                 vm.datePickerExpiryData = vm.material.expiryDate;
+                vm.toUpdate = false;
 
                 //Populating list of Products on load based on productList resolve
                 registeredMatList
@@ -38,20 +39,21 @@ angular.module('materialModule')
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
-
+                /********RESET action ***********/
                 vm.reset = function () {
                     $rootScope.hasError = false;
                     $rootScope.isSuccess = false;
                     vm.isReadonly = false;
+                    vm.toUpdate = false;
                     vm.material = materialModel.resetMaterial();
-                    vm.urlList = vm.material.filePath;
+                    vm.urlList = [];
                 };
 
 
 
                 /******************* Register new material *************************/
                 vm.registerMaterial = function () {
-
+                    vm.toUpdate = false;
                     if (vm.urlList.length <= 0) {
                         $rootScope.hasError = true;
                         $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
@@ -69,10 +71,12 @@ angular.module('materialModule')
                         .registerMaterial(materialModel.getMaterial())
                         .then(function (response) {
                             $rootScope.hasError = false;
-                            $scope.id = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            $scope.id = response.message;
+                            $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/'+response.message;
                             vm.material.id = $scope.id; // for time being
                             $scope.materialName = vm.material.materialName;
-                            displayModal(ngDialog, $scope, 'material-register-confirmBox', 600, false, 'ngdialog-theme-default confirmation-box');
+                            $scope.toUpdate = vm.toUpdate;
+                            displayModal(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -80,6 +84,41 @@ angular.module('materialModule')
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
+
+
+                /************** UPDATE Material *******************/
+                vm.updateMaterial = function () {
+                    vm.toUpdate = true;
+                    if (vm.urlList.length <= 0) {
+                        $rootScope.hasError = true;
+                        $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                    }
+
+                    vm.material.productionDate = PARSER.parseStrDate(vm.datePickerData);
+                    vm.material.expiryDate = PARSER.parseStrDate(vm.datePickerExpiryData);
+                    materialModel.setMaterial(vm.material);
+                    materialModel.setFilePath(vm.urlList);
+
+                    registerMaterialService
+                        .updateMaterial(materialModel.getMaterial())
+                        .then(function (response) {
+                            $rootScope.hasError = false;
+                            $scope.id = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                            vm.material.id = $scope.id; // for time being
+                            $scope.materialName = vm.material.materialName;
+                            $scope.toUpdate = vm.toUpdate;
+                            displayModal(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                        }, function (err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function (e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
+
 
                 $scope.redirectUser = function (flag) {
                     ngDialog.close();
@@ -95,14 +134,16 @@ angular.module('materialModule')
 
                 /******************* VIEW EDIT registered material *************************/
                 vm.edit = function (data) {
+                    
                     $rootScope.hasError = false;
                     //Making edit service call
                     registerMaterialService
-                        .editMaterial({ materialId: data.id })
+                        .getMaterial({ id: data.id })
                         .then(function (response) {
                             materialModel.setMaterial(materialModel.getParsedMaterial(response));
                             vm.material = materialModel.getMaterial();
                             vm.urlList = vm.material.filePath;
+                            vm.toUpdate = true;
                             vm.isReadonly = false;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -114,15 +155,17 @@ angular.module('materialModule')
 
 
                 vm.view = function (data) {
+                    
                     $rootScope.hasError = false;
                    //Making view service call
                     registerMaterialService
-                        .editMaterial({ materialId: data.id })
+                        .getMaterial({ id: data.id })
                         .then(function (response) {
                             materialModel.setMaterial(materialModel.getParsedMaterial(response));
                             vm.material = materialModel.getMaterial();
                             vm.urlList = vm.material.filePath;
-                            vm.isReadonly = false;
+                            vm.toUpdate = true;
+                            vm.isReadonly = true;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })

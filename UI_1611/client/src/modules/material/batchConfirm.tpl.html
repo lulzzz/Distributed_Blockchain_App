@@ -2,7 +2,9 @@
     <legend class="legendHead" style="padding-bottom: 5px;">CONFIRMATION</legend>
     <div class="col-lg-12 col-xs-12 noPadding">
         
-        <div class="col-lg-8 col-xs-8 noPaddingLeft">The raw material &quot;{{$parent.vm.material.materialName}}&quot; has been registered successfully and a token has been
+        <div ng-if="!$parent.toUpdate" class="col-lg-8 col-xs-8 noPaddingLeft">The raw material &quot;{{$parent.vm.material.materialName}}&quot; has been registered successfully and a token has been
+            generated.</div>
+             <div ng-if="$parent.toUpdate" class="col-lg-8 col-xs-8 noPaddingLeft">The raw material &quot;{{$parent.vm.material.materialName}}&quot; has been updated successfully and a token has been
             generated.</div>
         <div class="col-lg-4 col-xs-4 noPadding userQRCode">
             <ul>
