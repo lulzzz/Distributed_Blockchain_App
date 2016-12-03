@@ -10,7 +10,7 @@ angular.module('productModule')
     //For acknowledging received product
     .controller('procureProductController', ['userModel', 'appConstants', '$state', '$rootScope',
         'procureService', '$log', 'productList', 'ngDialog', '$scope',
-        function (userModel, appConstants, $state, $rootScope,
+        function(userModel, appConstants, $state, $rootScope,
             procureService, $log, productList, ngDialog, $scope) {
             try {
                 var vm = this;
@@ -18,77 +18,66 @@ angular.module('productModule')
                 setUserProfile(vm, userModel);
                 vm.list = [];
                 $scope.ifRow = {};
-				$scope.parentSelectedRows =[];
-                vm.procuredList = [];
+                $scope.parentSelectedRows = [];
 
                 /****************** PRODUCT/MATERIAL List to procure */
                 //Populating list of Products on load based on productList resolve
                 productList
                     .$promise
-                    .then(function (response) {
-                        vm.list = response;
-                    }, function (err) {
+                    .then(function(response) {
+                        vm.list = parsePendingProdShipments(response.shipments);
+                    }, function(err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
-                    .catch(function (e) {
+                    .catch(function(e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
                 /******************* PROCURE List of product/material *************************/
                 /*    TO-DO need to test with actual data and implementation */
 
-                vm.procure = function (dataList) {
+                vm.procure = function(dataList) {
 
-                    if($scope.ifRow.listOfSelectedRows.length <= 0){
+                    if ($scope.ifRow.listOfSelectedRows.length <= 0) {
                         $rootScope.hasError = true;
                         $rootScope.ERROR_MSG = appConstants.PROCURE_CHECKBOX_ERR;
                         return;
-                    }else{
-                        $rootScope.hasError = false;
-                        angular.forEach($scope.ifRow.listOfSelectedRows, function(val, key){
-                            console.log(val);   
-                        })
                     }
-                    
+                    $rootScope.hasError = false;
 
                     procureService
                         .procureProduct({}) // for demo instance
                         //.procureProduct(vm.list)
-                        .then(function (response) {
-                            renderDialog(ngDialog, $scope, 'product-procure-confirmBox', '35%', false, 'ngdialog-theme-default confirmation-box');
-                        }, function (err) {
+                        .then(function(response) {
+                            renderDialog(ngDialog, $scope, 'product-procure-confirmBox', '35%', true, 'ngdialog-theme-default confirmation-box');
+                        }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
-                        .catch(function (e) {
+                        .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
 
-                $scope.entity = 'products';
-                $scope.redirectUser = function (flag) {
-                    if (!flag) {
-                        ngDialog.close();
-                        return;
-                    }
-                    if (flag && vm.isRetailer) {
-                        ngDialog.close();
-                    }
+                /***** CONFIRM action **********/
+                $scope.redirectUser = function(flag) {
+                    ngDialog.close();
+                    return;
                 };
 
 
                 /**************Product Lineage functionality **********************/
-                vm.showLineage = function (data) {
+                vm.showLineage = function(data) {
                     procureService
                         .getAckLineageData(data)
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
                             renderDialog(ngDialog, $scope, 'product-lineageBox', '82%', true, 'ngdialog-theme-default lineage-box');
-                        }, function (err) {
+                        }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
-                        .catch(function (e) {
+                        .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
@@ -122,3 +111,19 @@ function renderDialog(ngDialog, scope, templateID, width, showClose, className) 
         className: className
     });
 };
+
+function parsePendingProdShipments(data) {
+    var list = [];
+    angular.forEach(data, function(val, key) {
+        list.push({
+            id: data.id,
+            quantity: data.quantity,
+            shipDate: PARSER.parseMilliSecToDate(data.shipDate),
+            sender: CONVERTER.hexTostr(data.sender),
+            productName: CONVERTER.hexTostr(data.name),
+            quality: CONVERTER.hexTostr(data.quality),
+            shipmentType: CONVERTER.hexTostr(data.shipmentType)
+        })
+    });
+    return list;
+}

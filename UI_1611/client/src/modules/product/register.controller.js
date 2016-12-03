@@ -7,91 +7,104 @@
 
 angular.module('productModule')
 
-    //For new product/material resgistration
+    //For new product resgistration
     .controller('registerProductController', ['userModel', 'appConstants', '$state', '$rootScope',
-        'registerService', '$log', 'productModel', 'productList', '$scope', 'ngDialog', 'materialList',
-        function (userModel, appConstants, $state, $rootScope,
-            registerService, $log, productModel, productList, $scope, ngDialog, materialList) {
+        'registerService', '$log', 'productModel', 'registeredProdList', '$scope', 'ngDialog', 'registeredMatList',
+        function(userModel, appConstants, $state, $rootScope,
+            registerService, $log, productModel, registeredProdList, $scope, ngDialog, registeredMatList) {
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.isReadonly = false;
                 setUserProfile(vm, userModel);
-                vm.product = productModel.getProduct();
+                vm.product = productModel.resetProduct();
                 vm.file = {};
                 vm.urlList = [];
                 vm.list = [];
                 vm.selectedMaterial = [];
                 vm.imageSrc = [];
+                vm.datePickerData = vm.product.manufactureDate;
+                vm.toUpdate = false;
 
                 //Populating list of Products on load based on productList resolve
-                productList
+                registeredProdList
                     .$promise
-                    .then(function (response) {
-                        vm.list = response;
-                    }, function (err) {
+                    .then(function(response) {
+                        vm.list = productModel.getParsedProductList(response.data);
+                    }, function(err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
-                    .catch(function (e) {
+                    .catch(function(e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
 
                 //Populating list of Products on load based on productList resolve
-                materialList
+                registeredMatList
                     .$promise
-                    .then(function (response) {
-                        vm.materialList = [];
-                        angular.forEach(response, function (val, key) {
-                            //limit to populate only 3 materials
-                            if(key >2 ){
-                                return;
-                            }
-                            vm.materialList.push({
-                                'id': val.qrCode,
-                                'label': val.materialName
-                            })
-                        });
+                    .then(function(response) {
+                        vm.materialList = productModel.getParsedMaterialList(response.data);
                         vm.settings = appConstants.MULTISELECT_SETTINGS;
-                    }, function (err) {
+                    }, function(err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
-                    .catch(function (e) {
+                    .catch(function(e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
-                vm.openDatepicker = function () {
-                    vm.datepickerObj.popup.opened = true;
-                };
 
-                vm.reset = function () {
+                /********RESET action ***********/
+                vm.reset = function() {
                     $rootScope.hasError = false;
                     $rootScope.isSuccess = false;
                     vm.isReadonly = false;
+                    vm.toUpdate = false;
                     vm.product = productModel.resetProduct();
+                    vm.urlList = [];
                 };
+
 
                 /******************* VIEW EDIT registered material *************************/
-                vm.edit = function (data) {
+                vm.edit = function(data) {
                     $rootScope.hasError = true;
-                    productModel.setProduct(data);
-                    vm.product = productModel.getProduct();
-                    vm.urlList = vm.product.filePath;
-                    vm.isReadonly = false;
-                };
-                vm.view = function (data) {
-                    $rootScope.hasError = true;
-                    productModel.setProduct(data);
-                    vm.product = productModel.getProduct();
-                    vm.urlList = vm.product.filePath;
-                    vm.isReadonly = true;
+                    //Making edit service call
+                    registerService
+                        .getProduct({ id: data.id })
+                        .then(function(response) {
+                            getProduct(response);
+                            vm.isReadonly = false;
+                        }, function(err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function(e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
                 };
 
-                vm.upload = function (data) {
-                     if(vm.imageSrc.length >= 5){
+
+
+                vm.view = function(data) {
+                    $rootScope.hasError = true;
+                    //Making edit service call
+                    registerService
+                        .getProduct({ id: data.id })
+                        .then(function(response) {
+                            getProduct(response);
+                            vm.isReadonly = true;
+                        }, function(err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function(e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
+
+                /************ UPLOAD Action ****************** */
+                vm.upload = function(data) {
+                    if (vm.imageSrc.length >= 5) {
                         $rootScope.hasError = true;
-                        $rootScope.ERROR_MSG = "Alert ! You cannot upload more than 5 files";
+                        $rootScope.ERROR_MSG = appConstants.FILE_UPLOAD_LIMIT;
                         return;
                     }
                     //Making delete service call
@@ -105,19 +118,21 @@ angular.module('productModule')
                         };
                         registerService
                             .uploadFile({ file: data })
-                            .then(function (response) {
+                            .then(function(response) {
+                                $rootScope.hasError = false;
                                 vm.urlList = response;
-                            }, function (err) {
+                            }, function(err) {
+                                vm.imageSrc.pop(); // delete the image. 
                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
                             })
-                            .catch(function (e) {
+                            .catch(function(e) {
                                 $log.error(appConstants.FUNCTIONAL_ERR, e);
                             });
                     }
                 };
 
                 /******************* DELETE registered product *************************/
-                vm.delete = function (data) {
+                vm.delete = function(data) {
                     $scope.data = data;
                     ngDialog.open({
                         scope: $scope,
@@ -125,54 +140,102 @@ angular.module('productModule')
                     });
 
 
-                    $scope.confirmDelete = function () {
+                    $scope.confirmDelete = function() {
                         ngDialog.close();
 
                         //Making delete service call
                         registerService
                             .deleteProduct({ productId: $scope.data.id })
-                            .then(function (response) {
+                            .then(function(response) {
                                 vm.list = response;
                                 $rootScope.hasError = false;
                                 $rootScope.isSuccess = true;
                                 $rootScope.SUCCESS_MSG = appConstants.PROD_DELETED;
-                            }, function (err) {
+                            }, function(err) {
                                 $log.error(appConstants.FUNCTIONAL_ERR, err);
                             })
-                            .catch(function (e) {
+                            .catch(function(e) {
                                 $log.error(appConstants.FUNCTIONAL_ERR, e);
                             });
                     }
                 };
 
-
-                vm.showLineage = function (data) {
+                /******* PRODUCT LINEAGE Action **************** */
+                vm.showLineage = function(data) {
 
                     registerService
                         .getRegisterLineageData(data)
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
                             renderDialog(ngDialog, $scope, 'register-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
-                        }, function (err) {
+                        }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
-                        .catch(function (e) {
+                        .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
 
-				 vm.negativeUsecase = function () {
-							$scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Garcia leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }, { name: 'Buckle', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }] } } };
-							$scope.lineageData = $scope.serviceData.data;
-							$scope.lineageSubData = $scope.lineageData.product.items[0];
-							$scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                            renderDialog(ngDialog, $scope, 'negative-lineageBox', '65%', true, 'ngdialog-theme-default lineage-box');
-                     
-				 };
-				 
-                vm.registerProduct = function () {
+                vm.negativeUsecase = function() {
+                    $scope.serviceData = { data: { product: { isShipped: 'pending', name: 'Handbag', mfgDate: '1/1/2016', receivedDate: '1/1/2016', items: [{ name: 'Garcia leather', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }, { name: 'Buckle', mfgDate: '3/1/2016', shipmentDate: '4/1/2016', receivedDate: '7/1/2016', loc: 'Florence, Italy', recLoc: 'Florida' }] } } };
+                    $scope.lineageData = $scope.serviceData.data;
+                    $scope.lineageSubData = $scope.lineageData.product.items[0];
+                    $scope.lineageSubMaterialData = $scope.lineageData.product.items;
+                    renderDialog(ngDialog, $scope, 'negative-lineageBox', '65%', true, 'ngdialog-theme-default lineage-box');
+
+                };
+
+                /********** REgister new Product **************** */
+                vm.registerProduct = function() {
+                    vm.toUpdate = false;
+                    validateProduct();
+                    registerService
+                        .registerProduct(productModel.getProduct())
+                        .then(function(response) {
+                            populateResponse(response);
+                        }, function(err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function(e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
+
+                /************** UPDATE Product *******************/
+                vm.updateProduct = function() {
+                    vm.toUpdate = true;
+                    validateProduct();
+                    registerService
+                        .updateProduct(productModel.getProduct())
+                        .then(function(response) {
+                            populateResponse(response);
+                        }, function(err) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, err);
+                        })
+                        .catch(function(e) {
+                            $log.error(appConstants.FUNCTIONAL_ERR, e);
+                        });
+                };
+
+
+                /********* CONFIRM box action *******************/
+                $scope.redirectUser = function(flag) {
+                    ngDialog.close();
+                    if (flag) {
+                        $state.reload();
+                    }
+                    else {
+                        $state.go('productShip', { id: $scope.id });
+                    }
+                };
+
+
+
+                /***************** HELPER Functions ************************/
+
+                function validateProduct() {
                     if (vm.selectedMaterial.length <= 0) {
                         $rootScope.hasError = true;
                         vm.showRedBox = true;
@@ -190,35 +253,33 @@ angular.module('productModule')
                     } else {
                         $rootScope.hasError = false;
                     }
+
+                    vm.product.manufactureDate = PARSER.parseStrDate(vm.datePickerData);
                     productModel.setProduct(vm.product);
                     productModel.setFilePath(vm.urlList);
                     productModel.setSelectedMaterials.call(vm.product, vm.selectedMaterial);
-
-                    registerService
-                        .registerProduct(productModel.getProduct())
-                        .then(function (response) {
-                            $rootScope.hasError = false;
-                            $scope.qrCode = 'CCTH' + (Math.floor(Math.random() * 90000) + 10000) + '';
-                            $scope.productName = vm.product.productName;
-                            renderDialog(ngDialog, $scope, 'product-register-confirmBox', 600, false, 'ngdialog-theme-default confirmation-box');
-                        }, function (err) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, err);
-                        })
-                        .catch(function (e) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });
                 };
 
-                $scope.redirectUser = function (flag) {
-                    ngDialog.close();
-                    if (flag) {
-                        productModel.resetProduct();
-                        $state.reload();
-                    }
-                    else {
-                        $state.go('productShip', { qrCode: $scope.qrCode });
-                    }
+                function populateResponse(response) {
+                    $rootScope.hasError = false;
+                    $scope.id = response.message;
+                    $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + response.message;
+                    vm.product.id = $scope.id; // for time being
+                    $scope.productName = vm.product.productName;
+                    $scope.toUpdate = vm.toUpdate;
+                    renderDialog(ngDialog, $scope, 'product-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                 };
+
+                function getProduct(response) {
+                    productModel.setProduct(productModel.getParsedProduct(response));
+                    vm.product = productModel.getProduct();
+                    vm.urlList = vm.product.filePath;
+                    vm.toUpdate = true;
+                };
+
+                /*************************************************************** */
+
+
 
             } catch (e) {
                 console.log(appConstants.FUNCTIONAL_ERR, e);

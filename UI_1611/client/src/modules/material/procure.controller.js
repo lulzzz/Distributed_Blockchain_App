@@ -10,7 +10,7 @@ angular.module('materialModule')
     //For acknowledging received product
     .controller('procureMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
         'procureMaterialService', '$log', 'materialList', 'ngDialog', '$scope', 'ngToast',
-        function (userModel, appConstants, $state, $rootScope,
+        function(userModel, appConstants, $state, $rootScope,
             procureMaterialService, $log, materialList, ngDialog, $scope, ngToast) {
             try {
                 var vm = this;
@@ -24,16 +24,17 @@ angular.module('materialModule')
                 //Populating list of Material on load based on materialList resolve
                 materialList
                     .$promise
-                    .then(function (response) {
+                    .then(function(response) {
                         vm.list = parsePendingMatShipments(response.shipments);
-                    }, function (err) {
+                    }, function(err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
-                    .catch(function (e) {
+                    .catch(function(e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
 
-                $scope.redirectUser = function (flag) {
+                /***** CONFIRM action **********/
+                $scope.redirectUser = function(flag) {
                     if (!flag) {
                         ngDialog.close();
                         return;
@@ -46,7 +47,7 @@ angular.module('materialModule')
                 /******************* PROCURE List of product/material *************************/
                 /*    TO-DO need to test with actual data and implementation */
 
-                vm.procure = function (dataList) {
+                vm.procure = function(dataList) {
 
                     if ($scope.ifRow.listOfSelectedRows.length <= 0) {
                         $rootScope.hasError = true;
@@ -58,29 +59,30 @@ angular.module('materialModule')
                     procureMaterialService
                         .procureMaterial({}) // for demo instance
                         //.procureMaterial(dataList)
-                        .then(function (response) {
+                        .then(function(response) {
                             if (response)
-                                renderDialog(ngDialog, $scope, 'material-procure-confirmBox', '38%', false, 'ngdialog-theme-default confirmation-box');
-                        }, function (err) {
+                                renderDialog(ngDialog, $scope, 'material-procure-confirmBox', '38%', true, 'ngdialog-theme-default confirmation-box');
+                        }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
-                        .catch(function (e) {
+                        .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
 
-                vm.showLineage = function (data) {
+                /**************Material Lineage functionality **********************/
+                vm.showLineage = function(data) {
                     procureMaterialService
                         .getAckLineageData(data)
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
                             renderDialog(ngDialog, $scope, 'procure-material-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
-                        }, function (err) {
+                        }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
-                        .catch(function (e) {
+                        .catch(function(e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
@@ -115,18 +117,18 @@ function renderDialog(ngDialog, scope, templateID, width, showClose, className) 
     });
 };
 
-function parsePendingMatShipments(data){
+function parsePendingMatShipments(data) {
     var list = [];
-    angular.forEach(data, function (val, key) {
-                    list.push({
-                        id : data.id,
-                        quantity: data.quantity,
-                        shipDate : PARSER.parseMilliSecToDate(data.shipDate),
-                        sender : CONVERTER.hexTostr(data.sender),
-                        materialName : CONVERTER.hexTostr(data.name),
-                        quality : CONVERTER.hexTostr(data.quality),
-                        shipmentType : CONVERTER.hexTostr(data.shipmentType)
+    angular.forEach(data, function(val, key) {
+        list.push({
+            id: data.id,
+            quantity: data.quantity,
+            shipDate: PARSER.parseMilliSecToDate(data.shipDate),
+            sender: CONVERTER.hexTostr(data.sender),
+            materialName: CONVERTER.hexTostr(data.name),
+            quality: CONVERTER.hexTostr(data.quality),
+            shipmentType: CONVERTER.hexTostr(data.shipmentType)
         })
     });
-return list;
+    return list;
 }

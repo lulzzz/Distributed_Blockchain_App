@@ -9,7 +9,7 @@ angular
     .module('appRoute', ['ui.router'])
 
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        function($stateProvider, $urlRouterProvider, $locationProvider) {
 
             $urlRouterProvider.otherwise('landing');
 
@@ -28,7 +28,7 @@ angular
 
                         // the child views will be defined here (absolutely named)
                         'shipmentList@home': {
-                            templateProvider: function (userModel, $templateFactory) {
+                            templateProvider: function(userModel, $templateFactory) {
                                 if (userModel.isManufacturer() || userModel.isProducer()) {
                                     return $templateFactory.fromUrl('../modules/search/searchList.tpl.html');
                                 }
@@ -45,7 +45,7 @@ angular
                         /*  userInfo: function ($stateParams, userServiceAPI, searchServiceAPI, userModel) {
                               return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
                           },*/
-                        shipmentList: function ($stateParams, searchServiceAPI, userModel) {
+                        shipmentList: function($stateParams, searchServiceAPI, userModel) {
                             var user = userModel.getUser();
                             if (userModel.isProducer()) {
                                 return searchServiceAPI.getMaterialShipmentList({
@@ -75,7 +75,7 @@ angular
                     },
                     //Resolve added to retreive shipmentDetails before loading searchResultController
                     resolve: {
-                        shipmentDetails: function ($stateParams, searchServiceAPI, appConstants) {
+                        shipmentDetails: function($stateParams, searchServiceAPI, appConstants) {
                             if ($stateParams.tokenInfo) {
                                 return $stateParams.tokenInfo;
                             } else {
@@ -123,7 +123,7 @@ angular
                         role: window.profile
                     },
                     resolve: {
-                        userInfo: function ($stateParams, userServiceAPI) {
+                        userInfo: function($stateParams, userServiceAPI) {
                             return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
                         }
                     }
@@ -135,7 +135,7 @@ angular
                     templateUrl: '../modules/material/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        registeredMatList: function (userModel, registerMaterialService) {
+                        registeredMatList: function(userModel, registerMaterialService) {
                             var user = userModel.getUser();
                             return registerMaterialService.getMaterialList({
                                 page: 1
@@ -149,16 +149,15 @@ angular
                 .state('materialBatch', {
                     url: '/material/batch',
                     templateUrl: '../modules/material/batch.tpl.html',
-                     params: {
+                    params: {
                         id: null,
                     },
                     resolve: {
-                        registeredMatList: function (userModel, batchMaterialService) {
+                        registeredMatList: function(userModel, batchMaterialService) {
                             var user = userModel.getUser();
                             return batchMaterialService.getMaterialList({
-                               page: 1
+                                page: 1
                             });
-
                         }
                     },
                     controllerAs: 'vm',
@@ -180,10 +179,10 @@ angular
                     templateUrl: '../modules/material/procure.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        materialList: function (userModel, procureMaterialService) {
+                        materialList: function(userModel, procureMaterialService) {
                             var user = userModel.getUser();
                             return procureMaterialService.getMaterialList({
-                                page:1
+                                page: 1
                             });
                         }
                     },
@@ -196,18 +195,16 @@ angular
                     templateUrl: '../modules/product/register.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        productList: function (userModel, registerService) {
+                        registeredProdList: function(userModel, registerService) {
                             var user = userModel.getUser();
                             return registerService.getProductList({
-                                userName: user.userName,
-                                userProfile: user.userProfile
+                                page: 1
                             });
                         },
-                        materialList: function (userModel, registerService) {
+                        registeredMatList: function(userModel, registerService) {
                             var user = userModel.getUser();
                             return registerService.getMaterialList({
-                                userName: user.userName,
-                                userProfile: user.userProfile
+                                page: 1
                             });
                         }
                     },
@@ -219,7 +216,7 @@ angular
                     url: '/product/ship',
                     templateUrl: '../modules/product/ship.tpl.html',
                     params: {
-                        qrCode: null,
+                        id: null,
                     },
                     controllerAs: 'vm',
                     controller: 'shipProductController'
@@ -230,11 +227,10 @@ angular
                     templateUrl: '../modules/product/procure.tpl.html',
                     //Resolve added to retreive registered material List before loading material register screen
                     resolve: {
-                        productList: function (userModel, procureService) {
+                        productList: function(userModel, procureService) {
                             var user = userModel.getUser();
                             return procureService.getProductList({
-                                userName: user.userName,
-                                userProfile: user.userProfile
+                                page: 1
                             });
                         }
                     },
@@ -248,12 +244,12 @@ angular
 
 
     .run(['$rootScope', 'userModel', '$state', 'appConstants', '$log',
-        function ($rootScope, userModel, $state, appConstants, $log) {
+        function($rootScope, userModel, $state, appConstants, $log) {
 
             $log.debug('appRoute bootstrapped!');
 
             $rootScope.$on('$stateChangeStart',
-                function (event, toState, toParams, fromState, fromParams) {
+                function(event, toState, toParams, fromState, fromParams) {
                     try {
                         $rootScope.activeMenu = toState.url;
                         $rootScope.hasError = false;

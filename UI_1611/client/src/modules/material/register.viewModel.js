@@ -6,7 +6,7 @@
 
 angular.module('materialModule')
     .factory('materialModel', ['appConstants', '$log',
-        function (appConstants, $log) {
+        function(appConstants, $log) {
 
             //Below is hardcoded for demo purpose
             var _init = {
@@ -28,7 +28,7 @@ angular.module('materialModule')
             var _material = {};
 
             //Reset material obj
-            var _reset = function () {
+            var _reset = function() {
                 try {
                     this._material = angular.copy(_init);
                 } catch (e) {
@@ -37,7 +37,7 @@ angular.module('materialModule')
                 return this._material;
             };
             //Set material object
-            var _setMaterial = function (obj) {
+            var _setMaterial = function(obj) {
                 try {
                     this._material = obj;
                 } catch (e) {
@@ -45,7 +45,7 @@ angular.module('materialModule')
                 }
             };
             //Get material object
-            var _getMaterial = function () {
+            var _getMaterial = function() {
                 try {
                     return this._material ? this._material : angular.copy(_init);
                 } catch (e) {
@@ -54,15 +54,15 @@ angular.module('materialModule')
             };
 
             //set list of uploaded file url 
-            var _setFilePath = function (fileList) {
+            var _setFilePath = function(fileList) {
                 this._material.filePath = fileList;
             };
 
-            var _getParsedMaterialList = function (data) {
+            var _getParsedMaterialList = function(data) {
                 var list = [];
-                angular.forEach(data, function (val, key) {
-                    if(parseInt(val.id) > 0){
-
+                angular.forEach(data, function(val, key) {
+                    //condition for ignoring null values encoded as 0
+                    if (parseInt(val.id) > 0) {
                         list.push({
                             materialName: CONVERTER.hexTostr(val.name),
                             quality: CONVERTER.hexTostr(val.quality),
@@ -74,11 +74,11 @@ angular.module('materialModule')
                 return list;
             };
 
-             var _getParsedBatchMaterialList = function (data) {
+            var _getParsedBatchMaterialList = function(data) {
                 var list = [];
-                angular.forEach(data, function (val, key) {
-                    if(parseInt(val.id) > 0){
-
+                angular.forEach(data, function(val, key) {
+                    //condition for ignoring null values encoded as 0
+                    if (parseInt(val.id) > 0) {
                         list.push({
                             materialName: CONVERTER.hexTostr(val.name),
                             id: val.id
@@ -88,19 +88,19 @@ angular.module('materialModule')
                 return list;
             };
 
-            var _getParsedMaterial = function (data) {
+            var _getParsedMaterial = function(data) {
                 return {
                     //id: data[8] ? data[8]: '',
                     materialName: CONVERTER.hexTostr(data[0]),
                     quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
-                    batchNumber: CONVERTER.hexTostr(data.batchNumber ? '': ''),
+                    batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
                     modelNumber: CONVERTER.hexTostr(data[2]),
                     productionDate: PARSER.parseMilliSecToDate(data[1]),
                     expiryDate: PARSER.parseMilliSecToDate(data[3]),
                     quality: CONVERTER.hexTostr(data[4]),
                     dimension: CONVERTER.hexTostr(data[5]),
                     weight: data[6],
-                    description: CONVERTER.hexTostr(data.description ? '':''),
+                    description: CONVERTER.hexTostr(data.description ? '' : ''),
                     filePath: PARSER.parseHexToStrImage(data[7])
                 }
             };

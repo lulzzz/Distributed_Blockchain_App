@@ -96,7 +96,7 @@ angular.module('materialModule')
             var deferred = $q.defer();
             try {
                 registerMaterialResource
-                    .matDelete(req)
+                    .matDelete({id: req.id})
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);
