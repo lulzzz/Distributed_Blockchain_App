@@ -17,7 +17,7 @@ angular.module('productModule')
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.isReadonly = false;
-                setUserProfile(vm, userModel);
+                bverifyUtil.setUserProfile(vm, userModel);
                 vm.product = productModel.resetProduct();
                 vm.file = {};
                 vm.urlList = [];
@@ -169,7 +169,7 @@ angular.module('productModule')
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                            renderDialog(ngDialog, $scope, 'register-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
+                            bverifyUtil.openModalDialog(ngDialog, $scope, 'register-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
                         }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -183,8 +183,7 @@ angular.module('productModule')
                     $scope.lineageData = $scope.serviceData.data;
                     $scope.lineageSubData = $scope.lineageData.product.items[0];
                     $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                    renderDialog(ngDialog, $scope, 'negative-lineageBox', '65%', true, 'ngdialog-theme-default lineage-box');
-
+                    bverifyUtil.openModalDialog(ngDialog, $scope, 'negative-lineageBox', '65%', true, 'ngdialog-theme-default lineage-box');
                 };
 
                 /********** REgister new Product **************** */
@@ -267,7 +266,7 @@ angular.module('productModule')
                     vm.product.id = $scope.id; // for time being
                     $scope.productName = vm.product.productName;
                     $scope.toUpdate = vm.toUpdate;
-                    renderDialog(ngDialog, $scope, 'product-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                    bverifyUtil.openModalDialog(ngDialog, $scope, 'product-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                 };
 
                 function getProduct(response) {
@@ -286,26 +285,3 @@ angular.module('productModule')
             }
         }]);
 
-
-/****
- *  Utility function for populating userProfile 
- ***/
-function setUserProfile(vm, userModel) {
-    vm.isManufacturer = userModel.isManufacturer();
-    vm.isProducer = userModel.isProducer();
-    vm.isRetailer = userModel.isRetailer();
-    vm.isAdmin = userModel.isAdmin();
-};
-
-/****
- *  Utility function for rendering product lineage 
- ***/
-function renderDialog(ngDialog, scope, templateID, width, showClose, className) {
-    return ngDialog.open({
-        scope: scope,
-        width: width,
-        template: templateID,
-        showClose: showClose,
-        className: className
-    });
-};

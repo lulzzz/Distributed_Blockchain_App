@@ -14,8 +14,7 @@ angular.module('searchModule')
                 var vm = this;
                 vm.searchQuery = '';
                 vm.user = userModel.getUser();
-                setUserProfile(vm, userModel);
-
+                bverifyUtil.setUserProfile(vm, userModel);
 
                 /***********QR CODE based search functionality *************************/
                 //Capturing broadcasted event from qrCodeReader directive to retreive User info read from uploaded QR img.
@@ -37,9 +36,6 @@ angular.module('searchModule')
                 vm.searchTrackID = function () {
                     $state.go('home.result', { id: vm.searchQuery, tokenInfo: null, qrCode: null });
                 };
-
-
-
 
                 /*********** Shipment List functionality on load *************************/
                 //Populating shipment details on load based on shipmentDetails resolve
@@ -73,7 +69,7 @@ angular.module('searchModule')
         function ($state, appConstants, $log, shipmentDetails, $stateParams, userModel) {
             try {
                 var vm = this;
-                setUserProfile(vm, userModel);
+                bverifyUtil.setUserProfile(vm, userModel);
                 /*********** Shipment Details functionality based on QR/TOKEN search *************************/
                 if (!shipmentDetails.$promise) {
                     vm.shipment = shipmentDetails;
@@ -95,14 +91,3 @@ angular.module('searchModule')
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }]);
-
-
-/****
- *  Utility function for populating userProfile 
- ***/
-function setUserProfile(vm, userModel) {
-    vm.isManufacturer = userModel.isManufacturer();
-    vm.isProducer = userModel.isProducer();
-    vm.isRetailer = userModel.isRetailer();
-    vm.isAdmin = userModel.isAdmin();
-};

@@ -10,7 +10,7 @@ angular.module('productModule')
     .value('registerUrl', {
         'register': 'rawmaterial',  // TO-DO need to change against WEB API URL
         /****** below needs to be change. Hardcoded for demo */
-        'materials': 'rawmaterial/list/rm/all', // TO-DO need to change against WEB API URL
+        'materialList': 'rawmaterial/list/rm/all', // TO-DO need to change against WEB API URL
         'list': 'rawmaterial/list/:page', // TO-DO need to change against WEB API URL
         'deleteProd': 'asset/data/deleteProduct.json',   // TO-DO need to change against WEB API URL
         'upload': 'file/upload',
@@ -25,7 +25,7 @@ angular.module('productModule')
         return $resource('', {id:'@id', page:'@page'}, {
             /****** below needs to be change. Hardcoded for demo */
             productList: { url:  'http://35.164.15.146:8082/' + registerUrl.list, method: "GET"},
-            materialList: { url:  'http://35.164.15.146:8082/' + registerUrl.materials, method: "GET", isArray: "true" },
+            materialList: { url:  'http://35.164.15.146:8082/' + registerUrl.materialList, method: "GET", isArray: "true" },
             /**************************************************************** */
             registerProduct: { url:  'http://35.164.15.146:8082/' + registerUrl.register, method: "POST"},  //  // TO-DO need to change POST
             prodDelete: { url: __ENV.apiUrl + registerUrl.deleteProd, method: "GET", isArray: "true" }, // TO-DO need to change DELETE

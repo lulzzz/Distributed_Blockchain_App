@@ -17,7 +17,7 @@ angular.module('materialModule')
                 vm.user = userModel.getUser();
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.isReadonly = false;
-                setUserProfile(vm, userModel);
+                bverifyUtil.setUserProfile(vm, userModel);
                 vm.material = materialModel.resetMaterial();
                 vm.file = {};
                 vm.urlList = [];
@@ -104,7 +104,7 @@ angular.module('materialModule')
                     registerMaterialService
                         .getMaterial({ id: data.id })
                         .then(function(response) {
-                            getMaterial(response);
+                            setMaterial(response);
                             vm.isReadonly = false;
                         }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -122,7 +122,7 @@ angular.module('materialModule')
                     registerMaterialService
                         .getMaterial({ id: data.id })
                         .then(function(response) {
-                            getMaterial(response);
+                            setMaterial(response);
                             vm.isReadonly = true;
                         }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -221,10 +221,10 @@ angular.module('materialModule')
                     vm.material.id = $scope.id; // for time being
                     $scope.materialName = vm.material.materialName;
                     $scope.toUpdate = vm.toUpdate;
-                    displayModal(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                    bverifyUtil.openModalDialog(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                 };
 
-                function getMaterial(response) {
+                function setMaterial(response) {
                     materialModel.setMaterial(materialModel.getParsedMaterial(response));
                     vm.material = materialModel.getMaterial();
                     vm.urlList = vm.material.filePath;
@@ -238,27 +238,3 @@ angular.module('materialModule')
                 console.log(appConstants.FUNCTIONAL_ERR, e);
             }
         }]);
-
-
-/****
- *  Utility function for populating userProfile 
- ***/
-function setUserProfile(vm, userModel) {
-    vm.isManufacturer = userModel.isManufacturer();
-    vm.isProducer = userModel.isProducer();
-    vm.isRetailer = userModel.isRetailer();
-    vm.isAdmin = userModel.isAdmin();
-};
-
-/****
- *  Utility function for rendering product lineage 
- ***/
-function displayModal(ngDialog, scope, templateID, width, showClose, className) {
-    return ngDialog.open({
-        scope: scope,
-        width: width,
-        template: templateID,
-        showClose: showClose,
-        className: className
-    });
-};

@@ -15,16 +15,16 @@ angular.module('materialModule')
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
-                setUserProfile(vm, userModel);
+                bverifyUtil.setUserProfile(vm, userModel);
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.materialList = [];
                 vm.selectedMat = '';
                 vm.carrier = '';
                 vm.ship = shipMaterialModel.resetModel();
 
-                vm.openDatepicker = function () {
+                /*vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
-                };
+                };*/
 
                 if ($stateParams.id) {
                 //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
@@ -129,7 +129,7 @@ angular.module('materialModule')
                         vm.ship.quantity = vm.userQuantity;
                     } else {
                         $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
-                        renderPopup(ngDialog, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box', $scope);
+                        bverifyUtil.openModalDialog(ngDialog, $scope, 'warningBox', '42%', false, 'ngdialog-theme-default warning-box');
                         return;
                     }
 
@@ -163,7 +163,7 @@ angular.module('materialModule')
                             $rootScope.hasError = false;
                             $scope.id = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.materialName = vm.ship.materialName;
-                            renderPopup(ngDialog, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default', $scope);
+                            bverifyUtil.openModalDialog(ngDialog, $scope, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default');
                     
                     //shipMaterialModel.shippedTo(vm.selectedManufacturer);
                 };
@@ -193,27 +193,3 @@ angular.module('materialModule')
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
         }]);
-
-
-/****
- *  Utility function for populating userProfile 
- ***/
-function setUserProfile(vm, userModel) {
-    vm.isManufacturer = userModel.isManufacturer();
-    vm.isProducer = userModel.isProducer();
-    vm.isRetailer = userModel.isRetailer();
-    vm.isAdmin = userModel.isAdmin();
-};
-
-/****
- *  Utility function for rendering warning message 
- ***/
-function renderPopup(ngDialog, templateID, width, showClose, className, scope) {
-    ngDialog.open({
-        scope: scope,
-        width: width,
-        template: templateID,
-        showClose: showClose,
-        className: className
-    });
-};

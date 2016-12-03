@@ -18,7 +18,7 @@ angular.module('landingModule')
                     vm.user = userInfo.user;
                     userModel.setUser(userInfo.user);
                 }
-                setUserProfile(vm, userModel);
+                bverifyUtil.setUserProfile(vm, userModel);
                 vm.redirectUser = function(state, flag){
                     if(flag && state)
                         $state.go(state);
@@ -29,13 +29,3 @@ angular.module('landingModule')
             }
         }]);
 		
-
-/****
- *  Utility function for populating userProfile 
- ***/
-function setUserProfile(vm, userModel) {
-    vm.isManufacturer = userModel.isManufacturer();
-    vm.isProducer = userModel.isProducer();
-    vm.isRetailer = userModel.isRetailer();
-    vm.isAdmin = userModel.isAdmin();
-};

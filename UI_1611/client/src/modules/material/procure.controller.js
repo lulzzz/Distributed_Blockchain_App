@@ -15,7 +15,7 @@ angular.module('materialModule')
             try {
                 var vm = this;
                 vm.user = userModel.getUser();
-                setUserProfile(vm, userModel);
+                bverifyUtil.setUserProfile(vm, userModel);
                 vm.list = [];
                 $scope.ifRow = {};
                 $scope.parentSelectedRows = [];
@@ -55,13 +55,12 @@ angular.module('materialModule')
                         return;
                     }
                     $rootScope.hasError = false;
-
                     procureMaterialService
                         .procureMaterial({}) // for demo instance
                         //.procureMaterial(dataList)
                         .then(function(response) {
                             if (response)
-                                renderDialog(ngDialog, $scope, 'material-procure-confirmBox', '38%', true, 'ngdialog-theme-default confirmation-box');
+                                bverifyUtil.openModalDialog(ngDialog, $scope, 'material-procure-confirmBox', '38%', true, 'ngdialog-theme-default confirmation-box');
                         }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -78,7 +77,7 @@ angular.module('materialModule')
                             $scope.lineageData = response.data;
                             $scope.lineageSubData = $scope.lineageData.product.items[0];
                             $scope.lineageSubMaterialData = $scope.lineageData.product.items;
-                            renderDialog(ngDialog, $scope, 'procure-material-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
+                            bverifyUtil.openModalDialog(ngDialog, $scope, 'procure-material-lineageBox', '60%', true, 'ngdialog-theme-default lineage-box');
                         }, function(err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -94,28 +93,6 @@ angular.module('materialModule')
             }
         }]);
 
-/****
- *  Utility function for populating userProfile 
- ***/
-function setUserProfile(vm, userModel) {
-    vm.isManufacturer = userModel.isManufacturer();
-    vm.isProducer = userModel.isProducer();
-    vm.isRetailer = userModel.isRetailer();
-    vm.isAdmin = userModel.isAdmin();
-};
-
-/****
- *  Utility function for rendering product lineage 
- ***/
-function renderDialog(ngDialog, scope, templateID, width, showClose, className) {
-    return ngDialog.open({
-        scope: scope,
-        width: width,
-        template: templateID,
-        showClose: showClose,
-        className: className
-    });
-};
 
 function parsePendingMatShipments(data) {
     var list = [];
