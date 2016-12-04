@@ -18,29 +18,34 @@ angular.module('productModule')
                 bverifyUtil.setUserProfile(vm, userModel);
                 $rootScope.isLoggedIn = userModel.isLoggedIn();
                 vm.productList = [];
+                vm.selectedProd = '';
+                vm.carrier = '';
+                vm.ship = shipProduct.resetModel();
 
                 vm.openDatepicker = function () {
                     vm.datepickerObj.popup.opened = true;
                 };
 
-                //if ($stateParams.qrCode) { for time being
+                if ($stateParams.id) {
                 shipService
                     .getProduct($stateParams.id)
                     .then(function (response) {
-                        shipProductModel.setModel(response);
+                        vm.productList = [];
+                        shipProductModel.setModel(shipProductModel.getParsedShipProduct(response));
                         vm.ship = shipProductModel.getModel();
                         vm.productList.push({
                             id: vm.ship.id,
                             productName: vm.ship.productName,
                             batchNumber: vm.ship.batchNumber
                         })
+                        vm.selectedProd = vm.ship.id;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
                     .catch(function (e) {
                         $log.error(appConstants.FUNCTIONAL_ERR, e);
                     });
-                /*} else {  for time being
+                } else { 
                     shipService
                         .getProductList(vm.user)
                         .then(function (response) {
@@ -53,7 +58,7 @@ angular.module('productModule')
                         .catch(function (e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
-                }*/
+                }
 
 
 
@@ -65,7 +70,7 @@ angular.module('productModule')
                 shipService
                     .getRetailerList(vm.user)
                     .then(function (response) {
-                        vm.retailerList = response;
+                        vm.retailerList = PARSER.parseShipToList(response.data);
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -90,6 +95,34 @@ angular.module('productModule')
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
                 };
+
+                vm.onProductChanged = function (prod) {
+                    if(!prod){
+                        vm.ship = shipProductModel.resetModel();
+                    }
+                    if (prod) {
+                        shipService
+                            .getProduct({id: prod.batchNumber})
+                            .then(function (response) {
+                                shipProductModel.setModel(shipProductModel.getParsedShipProduct(response));
+                                vm.ship = shipProductModel.getModel();
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+                    }
+                };
+
+                 vm.onCarrierChanged = function (carrier) {
+                    if(!carrier){
+                        vm.ship.carrier = '';
+                    }
+                    if(carrier){
+                       vm.ship.carrier = carrier;
+                    }
+                 };
 
 
                 /****************** material Shipment functionality *******************/
