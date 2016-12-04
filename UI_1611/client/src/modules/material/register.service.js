@@ -127,11 +127,12 @@ angular.module('materialModule')
             return deferred.promise;
         };
 
-        this.updateMaterial = function (req) {
+        this.updateMaterial = function (req, id) {
             var deferred = $q.defer();
             try {
+                registerMaterialResource.updateMat.url+='/'+id;
                 registerMaterialResource
-                    .updateMat({id: req.id})
+                    .updateMat(req)
                     .$promise
                     .then(function (response) {
                         deferred.resolve(response);

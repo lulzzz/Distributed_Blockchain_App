@@ -10,20 +10,20 @@ angular.module('productModule')
 
             //Below is hardcoded for demo purpose
             var _init = {
-                qrCode: "",
-                productName: "Coach Crosby line Tote Handbag",
-                quantity: "25 units",
-                batchNumber: "CCLTH22216FL",
-                manufactureDate: "14/1/2016 22:01:26",
+                id: "",
+                productName: "",
+                quantity: "",
+                batchNumber: "",
+                manufactureDate: "",
                 expiryDate: "",
-                quality: "Top Grain",
-                color: "Brown",
-                weight: "5.7 oz.",
+                quality: "",
+                color: "",
+                weight: "",
                 description: "",
-                dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
-                modelNumber: "33524LIC7C",
-                trackDetails : {},
-                shippedTo: []
+                dimension: "",
+                modelNumber: "",
+                carrier : "",
+                sendTo: ""
             };
 
             var _ship = {};
@@ -71,11 +71,41 @@ angular.module('productModule')
                 }
             };
 
+             var _getParsedProductList = function (data) {
+                var list = [];
+                angular.forEach(data, function (val, key) {
+                    list.push({
+                        materialName: CONVERTER.hexTostr(val.name),
+                        quality: CONVERTER.hexTostr(val.quality),
+                        registeredDate: PARSER.parseMilliSecToDate(val.regDates),
+                        id: val.id
+                    })
+                });
+                return list;
+            };
+
+            var _getParsedShipProduct = function (data) {
+                return {
+                    productName: CONVERTER.hexTostr(data.name),
+                    quantity: CONVERTER.hexTostr(data.quantity),
+                    batchNumber: CONVERTER.hexTostr(data.batchNumber),
+                    modelNumber: CONVERTER.hexTostr(data.model),
+                    productionDate: PARSER.parseMilliSecToDate(data.mnfDate),
+                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
+                    quality: CONVERTER.hexTostr(data.quality),
+                    dimension: CONVERTER.hexTostr(data.dimension),
+                    weight: data.weight,
+                    description: CONVERTER.hexTostr(data.description)
+                }
+            };
+
             return {
                 'getModel': _getShipProduct,
                 'setModel': _setShipProduct,
                 'shippedTo': _setRetailerList,
                 'verifyQuantity': _validateQuantity,
+                'getParsedProductList': _getParsedProductList,
+                'getParsedShipProduct': _getParsedShipProduct,
                 'resetModel': _reset
             }
         }]);

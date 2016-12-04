@@ -103,15 +103,6 @@ angular.module('materialModule')
                     }
                 };
 
-                 vm.onCarrierChanged = function (carrier) {
-                    if(!carrier){
-                        vm.ship.carrier = '';
-                    }
-                    if(carrier){
-                       vm.ship.carrier = carrier;
-                    }
-                 };
-
                 /****************** material Shipment functionality *******************/
                 vm.shipMaterial = function () {
 
@@ -133,7 +124,7 @@ angular.module('materialModule')
                         return;
                     }
 
-                    if (vm.carrier === '') {
+                    if (_.isUndefined(vm.ship.carrier) || _.isEmpty(vm.ship.carrier)) {
                         $rootScope.hasError = true;
                         vm.showRedBox = true;
                         $rootScope.ERROR_MSG = 'Please select a shipment carrier.';
@@ -144,7 +135,7 @@ angular.module('materialModule')
                     }
                     
                     angular.forEach(vm.selectedManufacturer, function(val, key){
-                        vm.ship.carrier = val;
+                        vm.ship.sendTo = val;
                         shipMaterialModel.setModel(vm.ship);
                         // do material shipment
                         shipMaterialService

@@ -49,9 +49,7 @@ angular.module('productModule')
                     shipService
                         .getProductList(vm.user)
                         .then(function (response) {
-                            vm.productList = response;
-                            shipProductModel.setModel(vm.productList[0]);
-                            vm.ship = shipProductModel.getModel();
+                             vm.productList = shipProductModel.getParsedProductList(response.data);
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -115,15 +113,6 @@ angular.module('productModule')
                     }
                 };
 
-                 vm.onCarrierChanged = function (carrier) {
-                    if(!carrier){
-                        vm.ship.carrier = '';
-                    }
-                    if(carrier){
-                       vm.ship.carrier = carrier;
-                    }
-                 };
-
 
                 /****************** material Shipment functionality *******************/
                 vm.shipProduct = function () {
@@ -146,23 +135,38 @@ angular.module('productModule')
                         return;
                     }
 
-                    shipProductModel.setModel(vm.ship);
-                    shipProductModel.shippedTo(vm.selectedRetailers);
+                     if (_.isUndefined(vm.ship.carrier) || _.isEmpty(vm.ship.carrier)) {
+                        $rootScope.hasError = true;
+                        vm.showRedBox = true;
+                        $rootScope.ERROR_MSG = 'Please select a shipment carrier.';
+                        return;
+                    } else {
+                        $rootScope.hasError = false;
+                        vm.showRedBox = false;
+                    }
 
-                    // do product shipment
-                    shipService
-                        .shipProduct(shipProductModel.getModel())
-                        .then(function (response) {
+
+                    angular.forEach(vm.selectedRetailers, function(val, key){
+                        vm.ship.sendTo = val;
+                        shipProductModel.setModel(vm.ship);
+                        // do product shipment
+                        shipService
+                            .shipProduct(shipProductModel.getModel())
+                            .then(function (response) {
+                                
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                                return;
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                                return;
+                            });
+                        });
                             $rootScope.hasError = false;
                             $scope.qrCode = 'CCTH' + (Math.floor(Math.random() * 90000) + 10000) + '';
                             $scope.productName = vm.ship.productName;
                             bverifyUtil.openModalDialog(ngDialog, $scope, 'product-ship-confirmBox', 600, false, 'ngdialog-theme-default');
-                        }, function (err) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, err);
-                        })
-                        .catch(function (e) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });
                 };
 
 

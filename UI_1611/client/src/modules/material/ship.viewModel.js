@@ -22,7 +22,7 @@ angular.module('materialModule')
                 description: "signature leather made from natural tanned Italian cowhide",
                 dimension: "",
                 carrier : '',
-                shipTo: ''
+                sendTo: ''
             };
 
             var _ship = {};
