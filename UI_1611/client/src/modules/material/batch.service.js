@@ -12,7 +12,7 @@ angular.module('materialModule')
     /****** below needs to be change. Hardcoded for demo */
     'list': 'rawmaterial/list/:page', // TO-DO need to change against WEB API URL
     'deleteMatbatch': 'asset/data/deleteMaterial.json', // TO-DO need to change against WEB API URL
-    'update': 'rawmaterial/:id',
+    'update': 'rawmaterial/batch/',
     'retreive': 'rawmaterial/:id',
     'rmList': 'rawmaterial/list/rm/all'
 })
@@ -56,7 +56,7 @@ angular.module('materialModule')
 }])
 
 //Making service call 
-.service('batchMaterialService', ['materialBatchResource', 'appConstants', '$q', '$log', function (materialBatchResource, appConstants, $q, $log) {
+.service('batchMaterialService', ['materialBatchResource', 'appConstants', '$q', '$log', 'materialBatchUrl', '$http', function (materialBatchResource, appConstants, $q, $log, materialBatchUrl, $http) {
 
     this.registerBatchMaterial = function (mat) {
         var req = populateBatchHexRequest(mat);
@@ -155,14 +155,15 @@ angular.module('materialModule')
     this.updateMaterialBatch = function (req) {
         var deferred = $q.defer();
         try {
-            materialBatchResource
-                .matBatchUpdate(req)
-                .$promise
-                .then(function (response) {
-                    deferred.resolve(response);
-                }, function (err) {
-                    deferred.reject(err);
-                });
+            var url = 'http://35.164.15.146:8082/' + materialBatchUrl.update + req.id;
+            delete req['id'];
+            $http.put(url, req)
+                .success(function(data, status, headers, config) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject(appConstants.FUNCTIONAL_ERR);
+                    });
         } catch (e) {
             $log.error(appConstants.FUNCTIONAL_ERR, e);
         }
@@ -171,7 +172,7 @@ angular.module('materialModule')
 
     function populateBatchHexRequest(mat) {
         return {
-            rawmaterial: mat.qrCode,
+            rawmaterial: parseInt(mat.rawmaterial),
             quantity: parseInt(mat.quantity),
             regDate: PARSER.parseStrDate(new Date())
         }

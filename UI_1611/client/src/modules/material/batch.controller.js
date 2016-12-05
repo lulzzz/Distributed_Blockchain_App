@@ -18,7 +18,7 @@ angular.module('materialModule')
             $rootScope.isLoggedIn = userModel.isLoggedIn();
             vm.isReadonly = false;
             bverifyUtil.setUserProfile(vm, userModel);
-            vm.material = materialModel.getMaterial();
+            vm.material = materialModel.resetMaterial();
             vm.urlList = [];
             vm.list = [];
             vm.matList = [];
@@ -86,12 +86,14 @@ angular.module('materialModule')
                 vm.toUpdate = false;
                 vm.material = materialModel.resetMaterial();
                 vm.urlList = [];
+                vm.selectedMat = '';
             };
 
 
             vm.onMaterialChanged = function (mat) {
                 if (!mat) {
-                    vm.material = shipMaterialModel.resetMaterial();
+                    vm.material = materialModel.resetMaterial();
+                    vm.urlList = [];
                 }
                 if (mat) {
                     batchMaterialService
@@ -101,6 +103,7 @@ angular.module('materialModule')
                         .then(function (response) {
                             materialModel.setMaterial(materialModel.getParsedMaterial(response));
                             vm.material = materialModel.getMaterial();
+                            vm.material.id = mat.id;
                             //vm.urlList = vm.material.filePath;
                             vm.urlList = ['asset/images/bag1.png', 'asset/images/bag2.png']
                         }, function (err) {
@@ -115,10 +118,11 @@ angular.module('materialModule')
 
             /******************* Register new material *************************/
             vm.registerBatchMaterial = function () {
+
                 vm.toUpdate = false;
                 // materialModel.setMaterial(vm.material);
                 var req = {
-                    id: vm.material.id,
+                    rawmaterial: vm.material.id,
                     quantity: vm.material.quantity
                 }
                 batchMaterialService
@@ -138,13 +142,17 @@ angular.module('materialModule')
                 vm.toUpdate = true;
                 // materialModel.setMaterial(vm.material);
                 var req = {
-                    id: vm.material.id,
+                    rawmaterial: vm.material.id,
                     quantity: vm.material.quantity
                 }
                 batchMaterialService
                     .updateMaterialBatch(req)
                     .then(function (response) {
-                        populateResponse(response);
+                        $rootScope.hasError = false;
+                        $scope.id = vm.material.id;
+                        $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + vm.material.id;
+                        $scope.materialName = vm.material.materialName;
+                        bverifyUtil.openModalDialog(ngDialog, $scope, 'material-batch-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -176,6 +184,8 @@ angular.module('materialModule')
                     })
                     .then(function (response) {
                         setMaterial(response);
+                        vm.material.id = data.id;
+                        vm.selectedMat = data.id;
                         vm.isReadonly = false;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -195,6 +205,7 @@ angular.module('materialModule')
                     })
                     .then(function (response) {
                         setMaterial(response);
+                        vm.material.id = data.id;
                         vm.isReadonly = true;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -220,7 +231,7 @@ angular.module('materialModule')
                     //Making delete service call
                     batchMaterialService
                         .deleteMaterialBatch({
-                            materialId: $scope.data.id
+                            id: $scope.data.id
                         })
                         .then(function (response) {
                             vm.list = response;

@@ -70,7 +70,11 @@ angular.module('materialModule')
             shipMaterialService
                 .getManufacturerList(vm.user)
                 .then(function (response) {
-                    vm.manufacturerList = PARSER.parseShipToList(response.data);
+                    //vm.manufacturerList = PARSER.parseShipToList(response.data);
+                    vm.manufacturerList = [{
+                        id: "6DF4F3F7B2DC8DB6309773C88F715F6EBC415ECC",
+                        label: "Coach"
+                    }]
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })
@@ -92,11 +96,12 @@ angular.module('materialModule')
                 if (mat) {
                     shipMaterialService
                         .getMaterial({
-                            id: mat.batchNumber
+                            id: mat.id
                         })
                         .then(function (response) {
                             shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
                             vm.ship = shipMaterialModel.getModel();
+                            vm.ship.id = mat.id;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -138,7 +143,7 @@ angular.module('materialModule')
                 }
 
                 angular.forEach(vm.selectedManufacturer, function (val, key) {
-                    vm.ship.sendTo = val;
+                    vm.ship.sendTo = val.id;
                     shipMaterialModel.setModel(vm.ship);
                     // do material shipment
                     shipMaterialService

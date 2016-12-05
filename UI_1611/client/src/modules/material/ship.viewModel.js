@@ -61,27 +61,30 @@ angular.module('materialModule')
             var _getParsedMaterialList = function (data) {
                 var list = [];
                 angular.forEach(data, function (val, key) {
+                    if (parseInt(val.name) > 0) {
                     list.push({
                         materialName: CONVERTER.hexTostr(val.name),
-                        id: val.id,
-                        batchNumber: val.batchNumber
+                        id: val.id
                     })
+                }
                 });
                 return list;
             };
 
             var _getParsedShipMaterial = function (data) {
                 return {
-                    materialName: CONVERTER.hexTostr(data.name),
-                    quantity: CONVERTER.hexTostr(data.quantity),
-                    batchNumber: CONVERTER.hexTostr(data.batchNumber),
-                    modelNumber: CONVERTER.hexTostr(data.model),
-                    productionDate: PARSER.parseMilliSecToDate(data.mnfDate),
-                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
-                    quality: CONVERTER.hexTostr(data.quality),
-                    dimension: CONVERTER.hexTostr(data.dimension),
-                    weight: data.weight,
-                    description: CONVERTER.hexTostr(data.description)
+                    //id: data[8] ? data[8]: '',
+                    materialName: CONVERTER.hexTostr(data[0]),
+                    //quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
+                    //batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
+                    modelNumber: CONVERTER.hexTostr(data[2]),
+                    productionDate: PARSER.parseMilliSecToDate(data[1]),
+                    expiryDate: PARSER.parseMilliSecToDate(data[3]),
+                    quality: CONVERTER.hexTostr(data[4]),
+                    dimension: CONVERTER.hexTostr(data[5]),
+                    weight: data[6],
+                    //description: CONVERTER.hexTostr(data.description ? '' : ''),
+                    filePath: PARSER.parseHexToStrImage(data[7])
                 }
             };
 

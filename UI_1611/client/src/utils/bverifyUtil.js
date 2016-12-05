@@ -20,7 +20,7 @@
             });
         },
 
-        validateQuantity: function (oldValue, newValue) {
+        verifyQuantity: function (oldValue, newValue) {
             if ((isNaN(parseInt(newValue, 10)))) {
                 return false;
             } else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
@@ -34,9 +34,9 @@
             return {
                 carrier: CONVERTER.strTohex(obj.carrier),
                 type: type, // 0 material  1 product
-                item: obj.batchNumber,
+                item: parseInt(obj.id),
                 quantity: parseInt(obj.quantity),
-                sendTo: CONVERTER.strTohex(obj.sendTo)
+                sendTo: obj.sendTo
             }
         },
 

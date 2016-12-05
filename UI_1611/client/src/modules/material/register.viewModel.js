@@ -76,15 +76,15 @@ angular.module('materialModule')
                 return {
                     //id: data[8] ? data[8]: '',
                     materialName: CONVERTER.hexTostr(data[0]),
-                    quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
-                    batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
+                    //quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
+                    //batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
                     modelNumber: CONVERTER.hexTostr(data[2]),
                     productionDate: PARSER.parseMilliSecToDate(data[1]),
                     expiryDate: PARSER.parseMilliSecToDate(data[3]),
                     quality: CONVERTER.hexTostr(data[4]),
                     dimension: CONVERTER.hexTostr(data[5]),
                     weight: data[6],
-                    description: CONVERTER.hexTostr(data.description ? '' : ''),
+                    //description: CONVERTER.hexTostr(data.description ? '' : ''),
                     filePath: PARSER.parseHexToStrImage(data[7])
                 }
             };

@@ -58,7 +58,13 @@ angular.module('materialModule')
                 registerMaterialService
                     .registerMaterial(materialModel.getMaterial())
                     .then(function (response) {
-                        populateResponse(response);
+                        $rootScope.hasError = false;
+                        $scope.id = response.message;
+                        $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + response.message;
+                        vm.material.id = $scope.id; // for time being
+                        $scope.materialName = vm.material.materialName;
+                        $scope.toUpdate = vm.toUpdate;
+                        bverifyUtil.openModalDialog(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -75,7 +81,12 @@ angular.module('materialModule')
                 registerMaterialService
                     .updateMaterial(materialModel.getMaterial())
                     .then(function (response) {
-                        populateResponse(response);
+                        $rootScope.hasError = false;
+                        $scope.id = vm.material.id;
+                        $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + vm.material.id;
+                        $scope.materialName = vm.material.materialName;
+                        $scope.toUpdate = vm.toUpdate;
+                        bverifyUtil.openModalDialog(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -108,6 +119,7 @@ angular.module('materialModule')
                     })
                     .then(function (response) {
                         setMaterial(response);
+                        vm.material.id = data.id;
                         vm.isReadonly = false;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -128,6 +140,7 @@ angular.module('materialModule')
                     })
                     .then(function (response) {
                         setMaterial(response);
+                        vm.material.id = data.id;
                         vm.isReadonly = true;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);

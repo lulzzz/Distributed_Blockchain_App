@@ -14,7 +14,7 @@ angular.module('materialModule')
     /****** below needs to be change. Hardcoded for demo */
     'deleteMat': 'asset/data/deleteMaterial.json', // TO-DO need to change against WEB API URL
     'upload': 'file/upload',
-    'update': 'rawmaterial',
+    'update': 'rawmaterial/',
     'retreive': 'rawmaterial/:id'
 })
 
@@ -58,7 +58,7 @@ angular.module('materialModule')
 }])
 
 //Making service call 
-.service('registerMaterialService', ['registerMaterialResource', 'appConstants', '$q', '$log', function (registerMaterialResource, appConstants, $q, $log) {
+.service('registerMaterialService', ['registerMaterialResource', 'appConstants', '$q', '$log', '$http', 'registerMaterialUrl', function (registerMaterialResource, appConstants, $q, $log, $http, registerMaterialUrl) {
 
     this.registerMaterial = function (mat) {
         var req = populateMaterialHexRequest(mat);
@@ -157,16 +157,15 @@ angular.module('materialModule')
         var req = populateMaterialHexRequest(mat);
         var deferred = $q.defer();
         try {
-            registerMaterialResource.updateMat.url += '/' + req.id;
-            var matReq = delete req['id'];
-            registerMaterialResource
-                .updateMat(matReq)
-                .$promise
-                .then(function (response) {
-                    deferred.resolve(response);
-                }, function (err) {
-                    deferred.reject(err);
-                });
+            var url = 'http://35.164.15.146:8082/' + registerMaterialUrl.update + req.id;
+            delete req['id'];
+            $http.put(url, req)
+                .success(function(data, status, headers, config) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject(appConstants.SERVICE_ERROR);
+                    });
         } catch (e) {
             $log.error(appConstants.FUNCTIONAL_ERR, e);
         }
@@ -175,7 +174,7 @@ angular.module('materialModule')
 
     function populateMaterialHexRequest(mat) {
         return {
-            id: mat.id,
+            id: parseInt(mat.id),
             name: CONVERTER.strTohex(mat.materialName),
             mnfDate: mat.productionDate,
             expDate: mat.expiryDate,

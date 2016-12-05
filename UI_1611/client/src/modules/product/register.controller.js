@@ -75,6 +75,7 @@ angular.module('productModule')
                     })
                     .then(function (response) {
                         getProduct(response);
+                        vm.product.id = data.id;
                         vm.isReadonly = false;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -95,6 +96,7 @@ angular.module('productModule')
                     })
                     .then(function (response) {
                         getProduct(response);
+                        vm.product.id = data.id;
                         vm.isReadonly = true;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);

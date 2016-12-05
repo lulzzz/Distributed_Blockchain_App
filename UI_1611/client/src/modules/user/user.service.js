@@ -8,9 +8,9 @@ angular.module('userModule')
 
 //Registering user login/register url
 .value('userUrl', {
-    'producer': 'asset/data/producer.json', // TO-DO change it WEB API URL
-    'manufacturer': 'asset/data/manufacturer.json',
-    'retailer': 'asset/data/retailer.json',
+    'producer': 'asset/data/producerLogin.json', // TO-DO change it WEB API URL
+    'manufacturer': 'asset/data/manufacturerLogin.json',
+    'retailer': 'asset/data/retailerLogin.json',
     'register': 'api/register'
 })
 

@@ -8,9 +8,9 @@ angular.module('materialModule')
 
 // Registering/Retreiving/shipping/acknowledging material
 .value('shipMaterialUrl', {
-    'materialList': 'rawmaterial/list/rm/all',
+    'materialList': 'rawmaterial/list/rmbatch/all',
     'ship': 'shipment',
-    'retreive': 'rawmaterial/:id',
+    'retreive': 'rawmaterial/batch/:id',
     'manufacturerList': 'asset/data/manufacturerList.json'
 })
 
@@ -23,8 +23,7 @@ angular.module('materialModule')
     }, {
         materialList: {
             url: 'http://35.164.15.146:8082/' + shipMaterialUrl.materialList,
-            method: "GET",
-            isArray: "true"
+            method: "GET"
         },
         shipMat: {
             url: 'http://35.164.15.146:8082/' + shipMaterialUrl.ship,
@@ -32,7 +31,8 @@ angular.module('materialModule')
         }, 
         retreiveMat: {
             url: 'http://35.164.15.146:8082/' + shipMaterialUrl.retreive,
-            method: "GET"
+            method: "GET",
+            isArray: "true"
         }, 
         manufacturerList: {
             url: __ENV.apiUrl + shipMaterialUrl.manufacturerList,
@@ -49,7 +49,7 @@ angular.module('materialModule')
         var deferred = $q.defer();
         try {
             shipMaterialResource
-                .materialList(req)
+                .materialList()
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);

@@ -69,9 +69,9 @@ angular
     function ($q, $rootScope, $log, appConstants) {
         return {
             request: function (config) {
-                if (appConstants.HTTP_METHODS.indexOf(config.method) > -1) {
+                //if (appConstants.HTTP_METHODS.indexOf(config.method) > -1) {
                     $rootScope.$broadcast("loaderShow");
-                }
+                //}
                 return config || $q.when(config);
             },
             response: function (response) {
@@ -129,6 +129,7 @@ angular
         CARRIER_OPTION_ERR: 'Please select a shipment carrier.',
         MANUFACT_OPTION_ERR: 'Please select atleast one Manufacturer.',
         RETAILER_OPTION_ERR: 'Please select atleast one Distributer/Retailer.',
+        MATERIAL_OPTION_ERR: 'Please select a Material',
         UPLOAD_FILE_ERR: 'Please upload an image/video',
         FILE_UPLOAD_LIMIT: 'Alert ! You cannot upload more than 5 files',
         MATERIAL_PROCURED: "All the selected materials have been procured successfully.",
