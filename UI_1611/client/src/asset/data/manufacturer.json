@@ -1,0 +1,17 @@
+{
+   "user":{
+      "userName":"Coach",
+      "isAuthenticatedUser":true,
+      "certification":"B00RWSC2MW",
+      "consortium":{
+         "id":"",
+         "name":""
+      },
+      "userProfile":{
+         "id":"MANUFACT",
+         "profile":"Manufacturer",
+         "alias": "Manufacturer"
+      },
+      "accountToken": "3C0D306F46D3F9644DDD11403404F0B7839B6F71"
+   }
+}

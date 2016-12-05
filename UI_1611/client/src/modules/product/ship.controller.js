@@ -177,7 +177,7 @@ angular.module('productModule')
                         id: 'retailer'
                     }
                     userServiceAPI
-                        .login(userReq)
+                        .retailerLogin(userReq)
                         .then(function (response) {
                             userModel.setUser(response.user);
                             $state.go('productAck');

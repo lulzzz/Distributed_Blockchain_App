@@ -124,7 +124,9 @@ angular
                     },
                     resolve: {
                         userInfo: function($stateParams, userServiceAPI) {
-                            return $stateParams.role ? userServiceAPI.login({ id: $stateParams.role }) : "";
+                            return $stateParams.role === 'producer' ? userServiceAPI.producerLogin({ id: $stateParams.role }) :
+                                    $stateParams.role === 'manufacturer' ? userServiceAPI.manufacturerLogin({ id: $stateParams.role }) : 
+                                    $stateParams.role === 'retailer' ? userServiceAPI.retailerLogin({ id: $stateParams.role }) : '';
                         }
                     }
                 })

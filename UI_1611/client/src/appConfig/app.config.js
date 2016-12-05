@@ -33,7 +33,6 @@ angular
                 request: function (config) {
                     //assign value from cookie if it exists
                    // if (Cookies.get("loginQR")) {
-                        delete  config.headers['Authorization'];
                         config.headers.Authorization = 'x-access-token '+ user.accountToken;// + Cookies.get("loginQR");
                     //}
                     return config;

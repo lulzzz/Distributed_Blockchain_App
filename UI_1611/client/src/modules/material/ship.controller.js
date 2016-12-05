@@ -166,7 +166,7 @@ angular.module('materialModule')
                         id: 'manufacturer'
                     }
                     userServiceAPI
-                        .login(userReq)
+                        .manufacturerLogin(userReq)
                         .then(function (response) {
                             userModel.setUser(response.user);
                             $state.go('materialAck');

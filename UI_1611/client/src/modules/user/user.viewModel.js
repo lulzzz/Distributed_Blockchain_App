@@ -21,7 +21,7 @@ angular.module('userModule')
                     profile: ''
                 },
                 isAuthenticatedUser: false,
-                password: '' // TO-DO added for implementing login functionality. needs to replace with actual.
+                accountToken: ''
 
             };
 
