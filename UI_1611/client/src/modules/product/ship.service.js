@@ -20,7 +20,7 @@ angular.module('productModule')
 .service('shipResource', ['$resource', 'shipUrl', '__ENV', 'appConstants', function ($resource, shipUrl, __ENV, appConstants) {
 
     return $resource('', {
-        _id: '@productId'
+        id: '@id'
     }, {
         /****** below needs to be change. Hardcoded for demo */
         productList: {
