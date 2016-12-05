@@ -58,24 +58,13 @@ angular.module('materialModule')
                  this._ship.shippedTo = list;
              };*/
 
-            var _validateQuantity = function (oldValue, newValue) {
-                if ((isNaN(parseInt(newValue, 10)))) {
-                    return false;
-                } else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            };
-
             var _getParsedMaterialList = function (data) {
                 var list = [];
                 angular.forEach(data, function (val, key) {
                     list.push({
                         materialName: CONVERTER.hexTostr(val.name),
-                        quality: CONVERTER.hexTostr(val.quality),
-                        registeredDate: PARSER.parseMilliSecToDate(val.regDates),
-                        id: val.id
+                        id: val.id,
+                        batchNumber: val.batchNumber
                     })
                 });
                 return list;
@@ -100,7 +89,6 @@ angular.module('materialModule')
                 'getModel': _getShipMaterial,
                 'setModel': _setShipMaterial,
                 'getParsedMaterialList': _getParsedMaterialList,
-                'verifyQuantity': _validateQuantity,
                 'getParsedShipMaterial': _getParsedShipMaterial,
                 'resetModel': _reset
             }

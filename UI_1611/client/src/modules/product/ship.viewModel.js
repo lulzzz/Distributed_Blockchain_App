@@ -55,28 +55,17 @@ angular.module('productModule')
             };
 
             //set list of uploaded file url 
-            var _setRetailerList = function (list) {
+            /*var _setRetailerList = function (list) {
                 this._ship.shippedTo = list;
-            };
-
-            var _validateQuantity = function (oldValue, newValue) {
-                if ((isNaN(parseInt(newValue, 10)))) {
-                    return false;
-                } else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            };
+            };*/
 
             var _getParsedProductList = function (data) {
                 var list = [];
                 angular.forEach(data, function (val, key) {
                     list.push({
-                        materialName: CONVERTER.hexTostr(val.name),
-                        quality: CONVERTER.hexTostr(val.quality),
-                        registeredDate: PARSER.parseMilliSecToDate(val.regDates),
-                        id: val.id
+                        productName: CONVERTER.hexTostr(val.name),
+                        id: val.id,
+                        batchNumber: val.batchNumber
                     })
                 });
                 return list;
@@ -100,8 +89,7 @@ angular.module('productModule')
             return {
                 'getModel': _getShipProduct,
                 'setModel': _setShipProduct,
-                'shippedTo': _setRetailerList,
-                'verifyQuantity': _validateQuantity,
+                //'shippedTo': _setRetailerList,
                 'getParsedProductList': _getParsedProductList,
                 'getParsedShipProduct': _getParsedShipProduct,
                 'resetModel': _reset

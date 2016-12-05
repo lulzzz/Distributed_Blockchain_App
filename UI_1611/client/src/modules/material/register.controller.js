@@ -31,7 +31,7 @@ angular.module('materialModule')
             registeredMatList
                 .$promise
                 .then(function (response) {
-                    vm.list = materialModel.getParsedMaterialList(response.data);
+                    vm.list = bverifyUtil.parseList(response.data);
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })
@@ -187,7 +187,7 @@ angular.module('materialModule')
                     //Making delete service call
                     registerMaterialService
                         .deleteMaterial({
-                            materialId: $scope.data.id
+                            id: $scope.data.id
                         })
                         .then(function (response) {
                             vm.list = response;

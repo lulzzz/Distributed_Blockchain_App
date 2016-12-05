@@ -9,9 +9,9 @@ angular.module('productModule')
 
 //For acknowledging received product
 .controller('procureProductController', ['userModel', 'appConstants', '$state', '$rootScope',
-    'procureService', '$log', 'productList', 'ngDialog', '$scope',
+    'procureService', '$log', 'registeredProdList', 'ngDialog', '$scope',
     function (userModel, appConstants, $state, $rootScope,
-        procureService, $log, productList, ngDialog, $scope) {
+        procureService, $log, registeredProdList, ngDialog, $scope) {
         try {
             var vm = this;
             vm.user = userModel.getUser();
@@ -20,9 +20,8 @@ angular.module('productModule')
             $scope.ifRow = {};
             $scope.parentSelectedRows = [];
 
-            /****************** PRODUCT/MATERIAL List to procure */
-            //Populating list of Products on load based on productList resolve
-            productList
+            //Populating list of Products on load based on registeredProdList resolve
+            registeredProdList
                 .$promise
                 .then(function (response) {
                     vm.list = parsePendingProdShipments(response.shipments);
@@ -34,7 +33,6 @@ angular.module('productModule')
                 });
 
             /******************* PROCURE List of product/material *************************/
-            /*    TO-DO need to test with actual data and implementation */
 
             vm.procure = function (dataList) {
 

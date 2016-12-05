@@ -88,22 +88,6 @@ angular.module('productModule')
                 return list;
             };
 
-            var _getParsedProductList = function (data) {
-                var list = [];
-                angular.forEach(data, function (val, key) {
-                    //condition for ignoring null values encoded as 0
-                    if (parseInt(val.id) > 0) {
-                        list.push({
-                            productName: CONVERTER.hexTostr(val.name),
-                            quality: CONVERTER.hexTostr(val.quality),
-                            registeredDate: PARSER.parseMilliSecToDate(val.regDates),
-                            id: val.id
-                        })
-                    }
-                });
-                return list;
-            };
-
             var _getParsedProduct = function (data) {
                 return {
                     //id: data[8] ? data[8]: '',
@@ -128,7 +112,6 @@ angular.module('productModule')
                 'getSelectedMaterials': _getSelectedMaterials,
                 'getParsedMaterialList': _getParsedMaterialList,
                 'getParsedProduct': _getParsedProduct,
-                'getParsedProductList': _getParsedProductList,
                 'resetProduct': _reset
             }
         }

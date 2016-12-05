@@ -8,10 +8,9 @@ angular.module('productModule')
 
 // Registering/Retreiving/shipping/acknowledging product
 .value('shipUrl', {
-    /****** below needs to be change. Hardcoded for demo */
-    'list': 'asset/data/productList.json', // TO-DO need to change against WEB API URL
-    'ship': 'asset/data/register.json', // TO-DO need to change against WEB API URL
-    'getProduct': 'asset/data/product.json',
+    'productList': 'product/list/all', 
+    'ship': 'shipment', 
+    'retreive': 'product/:id',
     'retailerList': 'asset/data/retailerList.json',
     'shipProductLineage': 'asset/data/productShipLineage.json'
 })
@@ -20,22 +19,22 @@ angular.module('productModule')
 .service('shipResource', ['$resource', 'shipUrl', '__ENV', 'appConstants', function ($resource, shipUrl, __ENV, appConstants) {
 
     return $resource('', {
-        id: '@id'
+        id: '@id',
+        page: '@page'
     }, {
-        /****** below needs to be change. Hardcoded for demo */
         productList: {
-            url: __ENV.apiUrl + shipUrl.list,
+            url: 'http://35.164.15.146:8082/' + shipUrl.productList,
             method: "GET",
             isArray: "true"
         },
         shipProduct: {
-            url: __ENV.apiUrl + shipUrl.ship,
+            url: 'http://35.164.15.146:8082/' + shipUrl.ship,
             method: "GET"
-        }, // TO-DO need to change POST
+        }, 
         retreiveProd: {
-            url: __ENV.apiUrl + shipUrl.getProduct,
+            url: 'http://35.164.15.146:8082/' + shipUrl.retreive,
             method: "GET"
-        }, // TO-DO need to change DELETE
+        }, 
         retailerList: {
             url: __ENV.apiUrl + shipUrl.retailerList,
             method: "GET",
@@ -51,13 +50,11 @@ angular.module('productModule')
 //Making service call 
 .service('shipService', ['shipResource', 'appConstants', '$q', '$log', function (shipResource, appConstants, $q, $log) {
 
-
-    /****** below needs to be change. Hardcoded for demo */
     this.getProductList = function (data) {
         var deferred = $q.defer();
         try {
             shipResource
-                .productList(data)
+                .productList()
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);
@@ -70,7 +67,6 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    /****** below needs to be change. Hardcoded for demo */
     this.getProduct = function (req) {
         var deferred = $q.defer();
         try {
@@ -88,12 +84,12 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    /********************************************************** */
-    this.shipProduct = function (list) {
+    this.shipProduct = function (prod) {
+        var req = bverifyUtil.getShipmentHexRequest(mat, 1);
         var deferred = $q.defer();
         try {
             shipResource
-                .shipProduct(list)
+                .shipProduct(req)
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);
@@ -139,5 +135,5 @@ angular.module('productModule')
         }
         return deferred.promise;
     };
-
+    
 }]);

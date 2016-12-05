@@ -8,14 +8,13 @@ angular.module('productModule')
 
 // Registering/Retreiving/shipping/acknowledging product
 .value('registerUrl', {
-    'register': 'rawmaterial', // TO-DO need to change against WEB API URL
-    /****** below needs to be change. Hardcoded for demo */
-    'materialList': 'rawmaterial/list/rm/all', // TO-DO need to change against WEB API URL
-    'list': 'rawmaterial/list/:page', // TO-DO need to change against WEB API URL
-    'deleteProd': 'asset/data/deleteProduct.json', // TO-DO need to change against WEB API URL
+    'register': 'product',
+    'materialList': 'rawmaterial/list/rm/all', 
+    'productList': 'product/list/:page',
+    'deleteProd': 'asset/data/deleteProduct.json',
     'upload': 'file/upload',
-    'update': 'rawmaterial/:id',
-    'retreive': 'rawmaterial/:id',
+    'update': 'product',
+    'retreive': 'product/:id',
     'registerProductLineage': 'asset/data/productRegisterLineage.json'
 })
 
@@ -26,9 +25,8 @@ angular.module('productModule')
         id: '@id',
         page: '@page'
     }, {
-        /****** below needs to be change. Hardcoded for demo */
         productList: {
-            url: 'http://35.164.15.146:8082/' + registerUrl.list,
+            url: 'http://35.164.15.146:8082/' + registerUrl.productList,
             method: "GET"
         },
         materialList: {
@@ -36,23 +34,22 @@ angular.module('productModule')
             method: "GET",
             isArray: "true"
         },
-        /**************************************************************** */
         registerProduct: {
             url: 'http://35.164.15.146:8082/' + registerUrl.register,
             method: "POST"
-        }, //  // TO-DO need to change POST
+        }, 
         prodDelete: {
             url: __ENV.apiUrl + registerUrl.deleteProd,
             method: "GET",
             isArray: "true"
-        }, // TO-DO need to change DELETE
+        }, 
         fileUpload: {
             url: 'http://35.164.15.146:8082/' + registerUrl.upload,
             method: "POST",
             isArray: "true",
             transformRequest: appConstants.HEADER_CONFIG.transformRequest,
             headers: appConstants.HEADER_CONFIG.headers
-        }, // TO-DO need to change DELETE
+        }, 
         updateProd: {
             url: 'http://35.164.15.146:8082/' + registerUrl.update,
             method: "PUT"
@@ -90,7 +87,6 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    /****** below needs to be change. Hardcoded for demo */
     this.getProduct = function (req) {
         var deferred = $q.defer();
         try {
@@ -110,7 +106,6 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    /****** below needs to be change. Hardcoded for demo */
     this.getMaterialList = function (data) {
         var deferred = $q.defer();
         try {
@@ -130,7 +125,6 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    /****** below needs to be change. Hardcoded for demo */
     this.getProductList = function (data) {
         var deferred = $q.defer();
         try {
@@ -150,7 +144,6 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    /****** below needs to be change. Hardcoded for demo */
     this.deleteProduct = function (data) {
         var deferred = $q.defer();
         try {
@@ -187,13 +180,14 @@ angular.module('productModule')
         return deferred.promise;
     };
 
-    this.updateProduct = function (req) {
+    this.updateProduct = function (prod) {
+        var req = populateProductHexRequest(prod);
         var deferred = $q.defer();
         try {
+            registerResource.updateProd.url += '/' + req.id;
+            var prodReq = delete req['id'];
             registerResource
-                .updateProd({
-                    id: req.id
-                })
+                .updateProd(prodReq)
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);
@@ -226,6 +220,7 @@ angular.module('productModule')
 
     function populateProductHexRequest(prod) {
         return {
+            id: prod.id,
             name: CONVERTER.strTohex(prod.productName),
             mnfDate: prod.manufactureDate,
             model: CONVERTER.strTohex(prod.modelNumber),

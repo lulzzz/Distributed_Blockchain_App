@@ -28,14 +28,14 @@ angular
     //Configure http interceptor and application loader
     $httpProvider.interceptors.push('httpInterceptorService');
 
+    //Configure http interceptor for tokenizer
     $httpProvider.interceptors.push(function (userModel) {
         var user = userModel.getUser();
         var sessionInjector = {
             request: function (config) {
-                //assign value from cookie if it exists
-                // if (Cookies.get("loginQR")) {
-                config.headers.Authorization = 'x-access-token ' + user.accountToken; // + Cookies.get("loginQR");
-                //}
+                if (user.accountToken) {
+                    config.headers.Authorization = 'x-access-token ' + user.accountToken;
+                }
                 return config;
             }
         };
@@ -105,7 +105,7 @@ angular
         FUNCTIONAL_ERR: "Something went wrong here....",
         UPLOAD_ERR: "Error ! Please upload a valid File",
         ROUTE_STATES_CONSTANTS: ['login', 'register', 'landing'],
-        HTTP_METHODS: ['POST', 'PUT', 'DELETE'],
+        HTTP_METHODS: ['GET', 'POST', 'PUT', 'DELETE'],
         ACCESS_DENIED_CODE: [401, 403, 408],
         USER_ROLES: {
             admin: 'ADMIN',
@@ -126,10 +126,14 @@ angular
         QUANTITY_EXCEEDED: "The Quantity to be shipped cannot exceed the available quantity. Please revalidate!",
         MATERIAL_ADHERED: "The product you are trying to register has not adhered to manufacturing process standards as per the smart contract.",
         PROCURE_CHECKBOX_ERR: 'Please select atleast one record.',
+        CARRIER_OPTION_ERR: 'Please select a shipment carrier.',
+        MANUFACT_OPTION_ERR: 'Please select atleast one Manufacturer.',
+        RETAILER_OPTION_ERR: 'Please select atleast one Distributer/Retailer.',
         UPLOAD_FILE_ERR: 'Please upload an image/video',
         FILE_UPLOAD_LIMIT: 'Alert ! You cannot upload more than 5 files',
         MATERIAL_PROCURED: "All the selected materials have been procured successfully.",
         PRODUCT_PROCURED: "All the selected products have been acknowledge successfully.",
+
         //Header configuration for posting file data to node server
         HEADER_CONFIG: {
             headers: {

@@ -122,14 +122,14 @@ angular.module('productModule')
                 if (vm.selectedRetailers.length <= 0) {
                     $rootScope.hasError = true;
                     vm.showRedBox = true;
-                    $rootScope.ERROR_MSG = 'Please select atleast one Distributer/Retailer.';
+                    $rootScope.ERROR_MSG = appConstants.RETAILER_OPTION_ERR;
                     return;
                 } else {
                     $rootScope.hasError = false;
                     vm.showRedBox = false;
                 }
 
-                if (shipProductModel.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
+                if (bverifyUtil.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
                     vm.ship.quantity = vm.userQuantity;
                 } else {
                     $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
@@ -140,7 +140,7 @@ angular.module('productModule')
                 if (_.isUndefined(vm.ship.carrier) || _.isEmpty(vm.ship.carrier)) {
                     $rootScope.hasError = true;
                     vm.showRedBox = true;
-                    $rootScope.ERROR_MSG = 'Please select a shipment carrier.';
+                    $rootScope.ERROR_MSG = appConstants.CARRIER_OPTION_ERR;
                     return;
                 } else {
                     $rootScope.hasError = false;

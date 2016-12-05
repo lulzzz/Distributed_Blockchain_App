@@ -8,8 +8,7 @@ angular.module('productModule')
 
 // Registering/Retreiving/shipping/acknowledging product
 .value('procureUrl', {
-
-    'list': 'asset/data/productList.json', // TO-DO need to change against WEB API URL
+    'pendingList': 'shipment/pending/:page',
     'procure': 'asset/data/register.json', // TO-DO need to change against WEB API URL
     'ackProductLineage': 'asset/data/productAckLineage.json'
 })
@@ -18,19 +17,18 @@ angular.module('productModule')
 .service('procureResource', ['$resource', 'procureUrl', '__ENV', 'appConstants', function ($resource, procureUrl, __ENV, appConstants) {
 
     return $resource('', {
-        id: '@id'
+        id: '@id',
+        page: '@page'
     }, {
-        /****** below needs to be change. Hardcoded for demo */
         productList: {
-            url: __ENV.apiUrl + procureUrl.list,
+            url: 'http://35.164.15.146:8082/' + procureUrl.pendingList,
             method: "GET",
             isArray: "true"
         },
         procureProd: {
             url: __ENV.apiUrl + procureUrl.procure,
             method: "GET"
-        }, // TO-DO need to change POST
-        /****** below needs to be change. Hardcoded for demo */
+        },
         ackProductLineage: {
             url: __ENV.apiUrl + procureUrl.ackProductLineage,
             method: "GET"
@@ -41,12 +39,13 @@ angular.module('productModule')
 //Making service call 
 .service('procureService', ['procureResource', 'appConstants', '$q', '$log', function (procureResource, appConstants, $q, $log) {
 
-    /****** below needs to be change. Hardcoded for demo */
-    this.getProductList = function (data) {
+    this.getProductList = function (req) {
         var deferred = $q.defer();
         try {
             procureResource
-                .productList(data)
+                .productList({
+                    page: req.page
+                })
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);

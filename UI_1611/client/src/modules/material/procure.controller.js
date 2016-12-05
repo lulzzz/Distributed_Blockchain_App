@@ -9,9 +9,9 @@ angular.module('materialModule')
 
 //For acknowledging received product
 .controller('procureMaterialController', ['userModel', 'appConstants', '$state', '$rootScope',
-    'procureMaterialService', '$log', 'materialList', 'ngDialog', '$scope', 'ngToast',
+    'procureMaterialService', '$log', 'registeredMatList', 'ngDialog', '$scope', 'ngToast',
     function (userModel, appConstants, $state, $rootScope,
-        procureMaterialService, $log, materialList, ngDialog, $scope, ngToast) {
+        procureMaterialService, $log, registeredMatList, ngDialog, $scope, ngToast) {
         try {
             var vm = this;
             vm.user = userModel.getUser();
@@ -20,9 +20,9 @@ angular.module('materialModule')
             $scope.ifRow = {};
             $scope.parentSelectedRows = [];
 
-            /****************** MATERIAL List to procure */
-            //Populating list of Material on load based on materialList resolve
-            materialList
+
+            //Populating list of Material on load based on registeredMatList resolve
+            registeredMatList
                 .$promise
                 .then(function (response) {
                     vm.list = parsePendingMatShipments(response.shipments);

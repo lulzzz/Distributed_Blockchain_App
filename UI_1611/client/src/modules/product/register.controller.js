@@ -31,7 +31,7 @@ angular.module('productModule')
             registeredProdList
                 .$promise
                 .then(function (response) {
-                    vm.list = productModel.getParsedProductList(response.data);
+                    vm.list = bverifyUtil.parseList(response.data);
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })
@@ -152,7 +152,7 @@ angular.module('productModule')
                     //Making delete service call
                     registerService
                         .deleteProduct({
-                            productId: $scope.data.id
+                            id: $scope.data.id
                         })
                         .then(function (response) {
                             vm.list = response;
@@ -295,7 +295,7 @@ angular.module('productModule')
             function populateResponse(response) {
                 $rootScope.hasError = false;
                 $scope.id = response.message;
-                $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + response.message;
+                $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
                 vm.product.id = $scope.id; // for time being
                 $scope.productName = vm.product.productName;
                 $scope.toUpdate = vm.toUpdate;

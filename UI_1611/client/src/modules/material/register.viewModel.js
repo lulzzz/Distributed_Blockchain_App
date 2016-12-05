@@ -58,22 +58,6 @@ angular.module('materialModule')
                 this._material.filePath = fileList;
             };
 
-            var _getParsedMaterialList = function (data) {
-                var list = [];
-                angular.forEach(data, function (val, key) {
-                    //condition for ignoring null values encoded as 0
-                    if (parseInt(val.id) > 0) {
-                        list.push({
-                            materialName: CONVERTER.hexTostr(val.name),
-                            quality: CONVERTER.hexTostr(val.quality),
-                            registeredDate: PARSER.parseMilliSecToDate(val.regDates),
-                            id: val.id
-                        })
-                    }
-                });
-                return list;
-            };
-
             var _getParsedBatchMaterialList = function (data) {
                 var list = [];
                 angular.forEach(data, function (val, key) {
@@ -109,7 +93,6 @@ angular.module('materialModule')
                 'getMaterial': _getMaterial,
                 'setMaterial': _setMaterial,
                 'setFilePath': _setFilePath,
-                'getParsedMaterialList': _getParsedMaterialList,
                 'getParsedMaterial': _getParsedMaterial,
                 'getParsedBatchMaterialList': _getParsedBatchMaterialList,
                 'resetMaterial': _reset

@@ -30,7 +30,7 @@ angular.module('materialModule')
             registeredMatList
                 .$promise
                 .then(function (response) {
-                    vm.list = materialModel.getParsedMaterialList(response.data);
+                    vm.list = bverifyUtil.parseList(response.data);
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })

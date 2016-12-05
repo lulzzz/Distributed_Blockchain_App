@@ -8,8 +8,8 @@ angular.module('materialModule')
 
 // Registering/Retreiving/shipping/acknowledging material
 .value('procureMaterialUrl', {
-    'list': 'shipment/pending/1', // TO-DO need to change against WEB API URL
-    'procure': 'asset/data/register.json', // TO-DO need to change against WEB API URL
+    'pendingList': 'shipment/pending/:page',
+    'procure': 'asset/data/register.json',
     'ackMaterialLineage': 'asset/data/materialAckLineage.json'
 })
 
@@ -17,19 +17,20 @@ angular.module('materialModule')
 .service('procureMaterialResource', ['$resource', 'procureMaterialUrl', '__ENV', 'appConstants', function ($resource, procureMaterialUrl, __ENV, appConstants) {
 
     return $resource('', {
-        id: '@id'
+        id: '@id',
+        page: '@page'
     }, {
-        /****** below needs to be change. Hardcoded for demo */
+
         materialList: {
-            url: 'http://35.164.15.146:8082/' + procureMaterialUrl.list,
+            url: 'http://35.164.15.146:8082/' + procureMaterialUrl.pendingList,
             method: "GET",
             isArray: "true"
         },
-        /**************************************************************** */
+
         procureMat: {
             url: 'http://35.164.15.146:8082/' + procureMaterialUrl.procure,
             method: "GET"
-        }, // TO-DO need to change POST
+        },
         ackMaterialLineage: {
             url: __ENV.apiUrl + procureMaterialUrl.ackMaterialLineage,
             method: "GET"
@@ -40,12 +41,13 @@ angular.module('materialModule')
 //Making service call 
 .service('procureMaterialService', ['procureMaterialResource', 'appConstants', '$q', '$log', function (procureMaterialResource, appConstants, $q, $log) {
 
-    /****** below needs to be change. Hardcoded for demo */
     this.getMaterialList = function (req) {
         var deferred = $q.defer();
         try {
             procureMaterialResource
-                .materialList()
+                .materialList({
+                    page: req.page
+                })
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);

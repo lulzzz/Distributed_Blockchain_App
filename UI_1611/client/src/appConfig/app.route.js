@@ -14,6 +14,9 @@ angular
         $urlRouterProvider.otherwise('landing');
 
         $stateProvider
+
+        /************************** FOR TRACK-SHIPMENT SCREEN **********************************/
+
         // HOME STATES AND NESTED VIEWS 
             .state('home', {
                 url: '/home',
@@ -85,8 +88,10 @@ angular
                 controllerAs: 'vm',
                 controller: 'searchResultController'
             })
-            // USER LOGIN/REGISTER/DASHBOARD STATES 
-            .state('register', {
+
+
+        /************************** FOR LOGIN/REGISTER/LOGOUT SCREEN **********************************/
+        .state('register', {
                 url: '/register',
                 templateUrl: '../modules/user/register.tpl.html',
                 controllerAs: 'vm',
@@ -107,36 +112,42 @@ angular
                 controllerAs: 'vm',
                 controller: 'logoutController'
             })
-            .state('dashboard', {
-                url: '/dashboard',
-                templateUrl: '../modules/dashboard/dashboard.tpl.html',
-                controllerAs: 'vm',
-                controller: 'dashboardController'
-            })
-            .state('landing', {
-                url: '/landing',
-                templateUrl: '../modules/landing/landing.tpl.html',
-                controllerAs: 'vm',
-                controller: 'landingController',
-                params: {
-                    role: window.profile
-                },
-                resolve: {
-                    userInfo: function ($stateParams, userServiceAPI) {
-                        return $stateParams.role === 'producer' ? userServiceAPI.producerLogin({
-                                id: $stateParams.role
-                            }) :
-                            $stateParams.role === 'manufacturer' ? userServiceAPI.manufacturerLogin({
-                                id: $stateParams.role
-                            }) :
-                            $stateParams.role === 'retailer' ? userServiceAPI.retailerLogin({
-                                id: $stateParams.role
-                            }) : '';
-                    }
-                }
-            })
 
-        /************************** FOR MATERIAL STATES **********************************/
+
+        /************************** FOR DASHBOARD SCREEN **********************************/
+        .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: '../modules/dashboard/dashboard.tpl.html',
+            controllerAs: 'vm',
+            controller: 'dashboardController'
+        })
+
+
+        /************************** FOR LANDING SCREEN **********************************/
+        .state('landing', {
+            url: '/landing',
+            templateUrl: '../modules/landing/landing.tpl.html',
+            controllerAs: 'vm',
+            controller: 'landingController',
+            params: {
+                role: window.profile
+            },
+            resolve: {
+                userInfo: function ($stateParams, userServiceAPI) {
+                    return $stateParams.role === 'producer' ? userServiceAPI.producerLogin({
+                            id: $stateParams.role
+                        }) :
+                        $stateParams.role === 'manufacturer' ? userServiceAPI.manufacturerLogin({
+                            id: $stateParams.role
+                        }) :
+                        $stateParams.role === 'retailer' ? userServiceAPI.retailerLogin({
+                            id: $stateParams.role
+                        }) : '';
+                }
+            }
+        })
+
+        /************************** FOR MATERIAL SCREENS **********************************/
         .state('materialReg', {
             url: '/material/register',
             templateUrl: '../modules/material/register.tpl.html',
@@ -186,7 +197,7 @@ angular
             templateUrl: '../modules/material/procure.tpl.html',
             //Resolve added to retreive registered material List before loading material register screen
             resolve: {
-                materialList: function (userModel, procureMaterialService) {
+                registeredMatList: function (userModel, procureMaterialService) {
                     var user = userModel.getUser();
                     return procureMaterialService.getMaterialList({
                         page: 1
@@ -197,6 +208,9 @@ angular
             controller: 'procureMaterialController'
         })
 
+
+
+        /************************** FOR PRODUCT SCREENS **********************************/
         .state('productReg', {
             url: '/product/register',
             templateUrl: '../modules/product/register.tpl.html',
@@ -234,7 +248,7 @@ angular
             templateUrl: '../modules/product/procure.tpl.html',
             //Resolve added to retreive registered material List before loading material register screen
             resolve: {
-                productList: function (userModel, procureService) {
+                registeredProdList: function (userModel, procureService) {
                     var user = userModel.getUser();
                     return procureService.getProductList({
                         page: 1

@@ -19,7 +19,6 @@ angular.module('materialModule')
             $rootScope.isLoggedIn = userModel.isLoggedIn();
             vm.materialList = [];
             vm.selectedMat = '';
-            vm.carrier = '';
             vm.ship = shipMaterialModel.resetModel();
 
             /*vm.openDatepicker = function () {
@@ -29,7 +28,9 @@ angular.module('materialModule')
             if ($stateParams.id) {
                 //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
                 shipMaterialService
-                    .getMaterial($stateParams.id)
+                    .getMaterial({
+                        id: $stateParams.id
+                    })
                     .then(function (response) {
                         vm.materialList = [];
                         shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
@@ -111,14 +112,14 @@ angular.module('materialModule')
                 if (vm.selectedManufacturer.length <= 0) {
                     $rootScope.hasError = true;
                     vm.showRedBox = true;
-                    $rootScope.ERROR_MSG = 'Please select atleast one Manufacturer.';
+                    $rootScope.ERROR_MSG = appConstants.MANUFACT_OPTION_ERR;
                     return;
                 } else {
                     $rootScope.hasError = false;
                     vm.showRedBox = false;
                 }
 
-                if (shipMaterialModel.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
+                if (bverifyUtil.verifyQuantity(vm.ship.quantity, vm.userQuantity)) {
                     vm.ship.quantity = vm.userQuantity;
                 } else {
                     $scope.warningMsg = appConstants.QUANTITY_EXCEEDED;
@@ -129,7 +130,7 @@ angular.module('materialModule')
                 if (_.isUndefined(vm.ship.carrier) || _.isEmpty(vm.ship.carrier)) {
                     $rootScope.hasError = true;
                     vm.showRedBox = true;
-                    $rootScope.ERROR_MSG = 'Please select a shipment carrier.';
+                    $rootScope.ERROR_MSG = appConstants.CARRIER_OPTION_ERR;
                     return;
                 } else {
                     $rootScope.hasError = false;
