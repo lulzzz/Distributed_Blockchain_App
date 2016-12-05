@@ -1,16 +1,16 @@
 /*
-**  userController for handling user login/registration business logic 
-*/
+ **  userController for handling user login/registration business logic 
+ */
 
 "use strict";
 
 angular.module('landingModule')
     .controller('landingController', ['userModel', 'userServiceAPI', 'appConstants', '$state',
-        '$log', '$sce','userInfo',
-        function(userModel, userServiceAPI, appConstants, $state,
-            $log, $sce , userInfo) {
+        '$log', '$sce', 'userInfo',
+        function (userModel, userServiceAPI, appConstants, $state,
+            $log, $sce, userInfo) {
 
-			try {
+            try {
                 var vm = this;
                 vm.user = userModel.getUser();
 
@@ -19,13 +19,12 @@ angular.module('landingModule')
                     userModel.setUser(userInfo.user);
                 }
                 bverifyUtil.setUserProfile(vm, userModel);
-                vm.redirectUser = function(state, flag){
-                    if(flag && state)
+                vm.redirectUser = function (state, flag) {
+                    if (flag && state)
                         $state.go(state);
                 }
-			}
-			catch (e) {
+            } catch (e) {
                 console.log(appConstants.FUNCTIONAL_ERR, e);
             }
-        }]);
-		
+        }
+    ]);

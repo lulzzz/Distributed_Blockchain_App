@@ -34,8 +34,7 @@
             debugger
             if (a < 10) {
                 return '0' + a;
-            }
-            else {
+            } else {
                 return a;
             }
         }

@@ -1,12 +1,9 @@
 <!-- Product/Material shipment by logged user -->
-
 <!-- Directive for app header -->
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
 <!-- TO-DO // remove hard-code value -->
-
 <div class="">
     <div class="searchResult col-lg-10 col-md-8 col-sm-10 col-xs-12">
-
         <!-- Directive for module header -->
         <app-legend header="SHIP RAW MATERIAL BATCH"></app-legend>
         <!-- TO-DO need to apply condition based on profile -->
@@ -19,14 +16,15 @@
                                 <label for="materialName">Material Name :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" ng-options="mat.materialName for mat in vm.materialList track by mat.batchNumber" ng-model="vm.selectedMat" class="form-control">
+                                <select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" ng-options="mat.materialName for mat in vm.materialList track by mat.batchNumber"
+                                    ng-model="vm.selectedMat" class="form-control">
                                     <option value="">SELECT</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="col-lg-6 col-md-6 text-right-lg text-right-md formLabel">
-								<label for="batchNum">Harmonization code/ <br class="visible-lg visible-md"/> Model Number :</label>
+                                <label for="batchNum">Harmonization code/ <br class="visible-lg visible-md"/> Model Number :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
                                 <span class="verticalAlignment" style="position:relative;top:10px;">{{vm.ship.modelNumber}}</span>
@@ -79,8 +77,8 @@
                                 <label for="picture">Manufacturer :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <div ng-class="{'errBox': vm.showRedBox}" required class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.manufacturerList" selected-model="vm.selectedManufacturer"
-                                    checkboxes="true"></div>
+                                <div ng-class="{'errBox': vm.showRedBox}" required class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings"
+                                    options="vm.manufacturerList" selected-model="vm.selectedManufacturer" checkboxes="true"></div>
                             </div>
                         </div>
                     </div>
@@ -95,13 +93,9 @@
         </div>
     </div>
 </div>
-
-
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>
-
 <!-- Directive for displaying confirmation box -->
 <material-ship-dialog></material-ship-dialog>
-
 <!-- Directive for displaying warning box -->
 <dialog-warning></dialog-warning>

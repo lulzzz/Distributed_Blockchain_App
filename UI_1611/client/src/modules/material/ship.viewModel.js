@@ -1,6 +1,6 @@
 /*
-**  viewModel - pojo model for capturing material details
-*/
+ **  viewModel - pojo model for capturing material details
+ */
 
 "use strict";
 
@@ -21,7 +21,7 @@ angular.module('materialModule')
                 weight: "",
                 description: "signature leather made from natural tanned Italian cowhide",
                 dimension: "",
-                carrier : '',
+                carrier: '',
                 sendTo: ''
             };
 
@@ -54,18 +54,16 @@ angular.module('materialModule')
             };
 
             //set list of uploaded file url 
-           /* var _setManufacturerList = function (list) {
-                this._ship.shippedTo = list;
-            };*/
+            /* var _setManufacturerList = function (list) {
+                 this._ship.shippedTo = list;
+             };*/
 
             var _validateQuantity = function (oldValue, newValue) {
                 if ((isNaN(parseInt(newValue, 10)))) {
                     return false;
-                }
-                else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
+                } else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
                     return false;
-                }
-                else {
+                } else {
                     return true;
                 }
             };
@@ -106,4 +104,5 @@ angular.module('materialModule')
                 'getParsedShipMaterial': _getParsedShipMaterial,
                 'resetModel': _reset
             }
-        }]);
+        }
+    ]);

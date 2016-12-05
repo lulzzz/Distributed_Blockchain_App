@@ -1,4 +1,3 @@
-
 "use strict";
 
 angular.module('searchModule')
@@ -12,8 +11,7 @@ angular.module('searchModule')
                 title: '@',
                 getShipmentDetails: '&'
             },
-            link: function (scope, element, attrs) {
-            },
+            link: function (scope, element, attrs) {},
             controller: function ($scope, $element, $attrs, $transclude, NgTableParams, userModel) {
                 var self = this;
                 self.userProfile = populateUserProfile(userModel);
@@ -21,7 +19,7 @@ angular.module('searchModule')
                 $scope.$watchCollection('list', function (newNames, oldNames) {
                     self.customConfigParams = createUsingFullOptions();
                 });
- 
+
                 function createUsingFullOptions() {
                     var initialParams = {
                         count: 6 // initial page size

@@ -7,13 +7,12 @@
 
   // API url
   window.__env.apiUrl = '';
-  
+
   //Use below hardcode in app for demo instance
   window.profileID = 'PROD';
   window.profile = 'producer';
   window.userName = 'FODERFIL SRL';
 
   // Whether or not to enable debug mode
-  window.__env.enableDebug = true;  // make it false in production env
+  window.__env.enableDebug = true; // make it false in production env
 }(this));
-  

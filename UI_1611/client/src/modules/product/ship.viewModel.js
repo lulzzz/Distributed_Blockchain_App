@@ -1,6 +1,6 @@
 /*
-**  viewModel - pojo model for capturing material details
-*/
+ **  viewModel - pojo model for capturing material details
+ */
 
 "use strict";
 
@@ -22,7 +22,7 @@ angular.module('productModule')
                 description: "",
                 dimension: "",
                 modelNumber: "",
-                carrier : "",
+                carrier: "",
                 sendTo: ""
             };
 
@@ -62,16 +62,14 @@ angular.module('productModule')
             var _validateQuantity = function (oldValue, newValue) {
                 if ((isNaN(parseInt(newValue, 10)))) {
                     return false;
-                }
-                else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
+                } else if (!(isNaN(parseInt(newValue, 10))) && parseInt(newValue) > parseInt(oldValue)) {
                     return false;
-                }
-                else {
+                } else {
                     return true;
                 }
             };
 
-             var _getParsedProductList = function (data) {
+            var _getParsedProductList = function (data) {
                 var list = [];
                 angular.forEach(data, function (val, key) {
                     list.push({
@@ -108,4 +106,5 @@ angular.module('productModule')
                 'getParsedShipProduct': _getParsedShipProduct,
                 'resetModel': _reset
             }
-        }]);
+        }
+    ]);

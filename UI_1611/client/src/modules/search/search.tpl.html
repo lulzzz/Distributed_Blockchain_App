@@ -1,9 +1,7 @@
 <!-- search based on shipment ID or QR code -->
-
 <!-- Directive for app header -->
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
 <!-- TO-DO // remove hard-code value -->
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-10 col-xs-12 searchBox">
@@ -23,12 +21,10 @@
             <qr-code-reader></qr-code-reader>
             <div class="col-lg-2 col-md-3 col-sm-2 col-xs-3 col-lg-offset-10 col-md-offset-10 col-sm-offset-10 col-xs-offset-9 noPaddingLeftSm noPaddingLeftMd noPaddingLeftLg"><strong>Scan/Upload<br/> QR Code</strong></div>
         </div>
-
     </div>
 </div>
 <div ui-view class=""></div>
 <div ng-if="vm.isProducer || vm.isManufacturer" ui-view="shipmentList" class=""></div>
 <div style="clear:both;padding-bottom:10px;"></div>
-
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>

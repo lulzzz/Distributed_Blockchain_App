@@ -1,13 +1,13 @@
 /*
-**  controller for tracking shipment details and displaying result
-*/
+ **  controller for tracking shipment details and displaying result
+ */
 
 "use strict";
 
 angular.module('searchModule')
     // searchController for tracking shipment details
     .controller('searchController', ['$state', 'appConstants', 'userModel', '$log', '$rootScope',
-        '$scope', '$stateParams',  'shipmentList',
+        '$scope', '$stateParams', 'shipmentList',
         function ($state, appConstants, userModel, $log, $rootScope,
             $scope, $stateParams, shipmentList) {
             try {
@@ -22,7 +22,11 @@ angular.module('searchModule')
                     $rootScope.hasError = false;
                     $rootScope.ERROR_MSG = appConstants.UPLOAD_ERR;
                     if (qrCode) {
-                        $state.go('home.result', { id: "", tokenInfo: null, qrCode: qrCode });
+                        $state.go('home.result', {
+                            id: "",
+                            tokenInfo: null,
+                            qrCode: qrCode
+                        });
                     }
                 });
                 //Capturing broadcasted event from qrCodeReader directive to display error.
@@ -34,7 +38,11 @@ angular.module('searchModule')
 
                 /*********** TOKEN ID based search functionality *************************/
                 vm.searchTrackID = function () {
-                    $state.go('home.result', { id: vm.searchQuery, tokenInfo: null, qrCode: null });
+                    $state.go('home.result', {
+                        id: vm.searchQuery,
+                        tokenInfo: null,
+                        qrCode: null
+                    });
                 };
 
                 /*********** Shipment List functionality on load *************************/
@@ -54,7 +62,11 @@ angular.module('searchModule')
 
                     vm.getShipmentDetails = function (data) {
                         if (data) {
-                            $state.go('home.result', { id: vm.searchQuery, tokenInfo: data, qrCode: null });
+                            $state.go('home.result', {
+                                id: vm.searchQuery,
+                                tokenInfo: data,
+                                qrCode: null
+                            });
                         }
                     };
                 }
@@ -62,32 +74,34 @@ angular.module('searchModule')
             } catch (e) {
                 $log.error(appConstants.FUNCTIONAL_ERR, e);
             }
-        }])
+        }
+    ])
 
-    // searchResultController for rendering shipment details
-    .controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails', '$stateParams', 'userModel',
-        function ($state, appConstants, $log, shipmentDetails, $stateParams, userModel) {
-            try {
-                var vm = this;
-                bverifyUtil.setUserProfile(vm, userModel);
-                /*********** Shipment Details functionality based on QR/TOKEN search *************************/
-                if (!shipmentDetails.$promise) {
-                    vm.shipment = shipmentDetails;
-                    vm.tokenID = vm.shipment.tokenId;
-                } else { 
-                    vm.tokenID = ($stateParams.id && $stateParams.id !== '') ? $stateParams.id : '';
-                    shipmentDetails
-                        .$promise
-                        .then(function (response) {
-                            vm.shipment = response;
-                        }, function (err) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, err);
-                        })
-                        .catch(function (e) {
-                            $log.error(appConstants.FUNCTIONAL_ERR, e);
-                        });
-                }
-            } catch (e) {
-                $log.error(appConstants.FUNCTIONAL_ERR, e);
+// searchResultController for rendering shipment details
+.controller('searchResultController', ['$state', 'appConstants', '$log', 'shipmentDetails', '$stateParams', 'userModel',
+    function ($state, appConstants, $log, shipmentDetails, $stateParams, userModel) {
+        try {
+            var vm = this;
+            bverifyUtil.setUserProfile(vm, userModel);
+            /*********** Shipment Details functionality based on QR/TOKEN search *************************/
+            if (!shipmentDetails.$promise) {
+                vm.shipment = shipmentDetails;
+                vm.tokenID = vm.shipment.tokenId;
+            } else {
+                vm.tokenID = ($stateParams.id && $stateParams.id !== '') ? $stateParams.id : '';
+                shipmentDetails
+                    .$promise
+                    .then(function (response) {
+                        vm.shipment = response;
+                    }, function (err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function (e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
             }
-        }]);
+        } catch (e) {
+            $log.error(appConstants.FUNCTIONAL_ERR, e);
+        }
+    }
+]);

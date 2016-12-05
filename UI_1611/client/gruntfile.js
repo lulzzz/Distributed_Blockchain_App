@@ -1,19 +1,19 @@
 /*
-**	gruntfile.js for automating project task.
-*	Tasks : Copying, Concatination, Minification, Watch, Less conversion, browser synchronization
-*/
+ **	gruntfile.js for automating project task.
+ *	Tasks : Copying, Concatination, Minification, Watch, Less conversion, browser synchronization
+ */
 
 
 "use strict";
 
 //Exporting project level automation configuration
 module.exports = function (grunt) {
-	
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		 clean: {
-            dist: ["dist/", "_package/"]
-        },
+		clean: {
+			dist: ["dist/", "_package/"]
+		},
 		jshint: {
 			dist: ["src/**/*.js"]
 		},
@@ -27,12 +27,12 @@ module.exports = function (grunt) {
 			options: {
 				sourceMap: true,
 				sourceMapName: 'dist/src/js/scriptMap.map',
-				banner: '/*! Application : <%= pkg.name %>        '
-							+'Version : <%= pkg.version %>        '
-							+'Description : <%= pkg.description %>          ' 
-							+'Author : <%= pkg.author %>           '
-							+'License : <%= pkg.license %>         '
-							+'Created at : <%= grunt.template.today("yyyy-mm-dd") %> */',
+				banner: '/*! Application : <%= pkg.name %>        ' +
+					'Version : <%= pkg.version %>        ' +
+					'Description : <%= pkg.description %>          ' +
+					'Author : <%= pkg.author %>           ' +
+					'License : <%= pkg.license %>         ' +
+					'Created at : <%= grunt.template.today("yyyy-mm-dd") %> */',
 				compress: {
 					drop_console: true,
 					global_defs: {
@@ -64,12 +64,12 @@ module.exports = function (grunt) {
 		less: {
 			dev: {
 				options: {
-					compress: false,   // Compress output by removing some whitespaces.
-					optimization: 2,  // Set the parser's optimization level. The lower the number, the less nodes it will create in the tree. 
-					ieCompat: true    // Enforce the CSS output is compatible with Internet Explorer 8.
+					compress: false, // Compress output by removing some whitespaces.
+					optimization: 2, // Set the parser's optimization level. The lower the number, the less nodes it will create in the tree. 
+					ieCompat: true // Enforce the CSS output is compatible with Internet Explorer 8.
 				},
 				files: {
-					"src/asset/css/style.css": "src/asset/css/style.less"  // destination file and source file
+					"src/asset/css/style.css": "src/asset/css/style.less" // destination file and source file
 				},
 				tasks: ['cssmin']
 			}
@@ -85,19 +85,19 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-        compress: {
-            main: {
-                options: {
-                    archive: '_package/package.zip',
-                    mode: 'zip',
-                    pretty: true
-                },
-                files: [{
-                    src: ['**/*'],
-                    expand: true
-                }]
-            }
-        }
+		compress: {
+			main: {
+				options: {
+					archive: '_package/package.zip',
+					mode: 'zip',
+					pretty: true
+				},
+				files: [{
+					src: ['**/*'],
+					expand: true
+				}]
+			}
+		}
 
 	});
 
@@ -111,6 +111,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 
-	grunt.task.registerTask("build", ["clean", "less", "cssmin", "concat", "uglify", "copy", "compress"]);
+	grunt.task.registerTask("build", ["clean", "less", "cssmin", "concat", "uglify", "copy"]);
 
 }

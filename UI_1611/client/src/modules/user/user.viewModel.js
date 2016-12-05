@@ -1,6 +1,6 @@
 /*
-**  User Object pojo model for capturing user details
-*/
+ **  User Object pojo model for capturing user details
+ */
 
 "use strict";
 
@@ -91,4 +91,5 @@ angular.module('userModule')
                 'isRetailer': _isRetailer,
                 'resetUser': _reset
             }
-        }]);
+        }
+    ]);

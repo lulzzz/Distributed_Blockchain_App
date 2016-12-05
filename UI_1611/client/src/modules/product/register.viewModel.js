@@ -1,12 +1,12 @@
 /*
-**  viewModel - pojo model for capturing product details
-*/
+ **  viewModel - pojo model for capturing product details
+ */
 
 "use strict";
 
 angular.module('productModule')
     .factory('productModel', ['appConstants', '$log',
-        function(appConstants, $log) {
+        function (appConstants, $log) {
 
             //Below is hardcoded for demo purpose
             var _init = {
@@ -29,7 +29,7 @@ angular.module('productModule')
             var _product = {};
 
             //Reset product obj
-            var _reset = function() {
+            var _reset = function () {
                 try {
                     this._product = angular.copy(_init);
                 } catch (e) {
@@ -38,7 +38,7 @@ angular.module('productModule')
                 return this._product;
             };
             //Set product object
-            var _setProduct = function(obj) {
+            var _setProduct = function (obj) {
                 try {
                     this._product = obj;
                 } catch (e) {
@@ -46,7 +46,7 @@ angular.module('productModule')
                 }
             };
             //Get product object
-            var _getProduct = function() {
+            var _getProduct = function () {
                 try {
                     return this._product ? this._product : angular.copy(_init);
                 } catch (e) {
@@ -55,27 +55,27 @@ angular.module('productModule')
             };
 
             //set list of uploaded file url 
-            var _setFilePath = function(fileList) {
+            var _setFilePath = function (fileList) {
                 this._product.filePath = fileList;
             };
             //set list of uploaded file url 
-            var _setSelectedMaterials = function(list) {
+            var _setSelectedMaterials = function (list) {
                 this.selectedMaterials = [];
                 var self = this;
-                angular.forEach(list, function(val, key) {
+                angular.forEach(list, function (val, key) {
                     self.selectedMaterials.push({
                         id: val.id
                     })
                 });
             };
 
-            var _getSelectedMaterials = function() {
+            var _getSelectedMaterials = function () {
                 return this.selectedMaterials;
             };
 
-            var _getParsedMaterialList = function(data) {
+            var _getParsedMaterialList = function (data) {
                 var list = [];
-                angular.forEach(data, function(val, key) {
+                angular.forEach(data, function (val, key) {
                     //limit to populate only 3 materials
                     if (key > 2) {
                         return;
@@ -88,9 +88,9 @@ angular.module('productModule')
                 return list;
             };
 
-            var _getParsedProductList = function(data) {
+            var _getParsedProductList = function (data) {
                 var list = [];
-                angular.forEach(data, function(val, key) {
+                angular.forEach(data, function (val, key) {
                     //condition for ignoring null values encoded as 0
                     if (parseInt(val.id) > 0) {
                         list.push({
@@ -104,7 +104,7 @@ angular.module('productModule')
                 return list;
             };
 
-            var _getParsedProduct = function(data) {
+            var _getParsedProduct = function (data) {
                 return {
                     //id: data[8] ? data[8]: '',
                     productName: CONVERTER.hexTostr(data[0]),
@@ -131,4 +131,5 @@ angular.module('productModule')
                 'getParsedProductList': _getParsedProductList,
                 'resetProduct': _reset
             }
-        }]);
+        }
+    ]);

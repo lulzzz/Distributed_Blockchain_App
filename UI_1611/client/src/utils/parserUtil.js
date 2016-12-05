@@ -2,13 +2,13 @@
 
     //namespace
     window.PARSER = {
- 
-        parseStrDate: function(dateStr){
+
+        parseStrDate: function (dateStr) {
             var milliSecs = Date.parse(dateStr);
             return milliSecs / 1000;
         },
 
-        parseMilliSecToDate: function(milliSecs){
+        parseMilliSecToDate: function (milliSecs) {
             var d = new Date(parseInt(milliSecs) * 1000),
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
@@ -20,7 +20,7 @@
             return [day, month, year].join('/');
         },
 
-        parseStrToHexImage: function(urls){
+        parseStrToHexImage: function (urls) {
             var hexImages = [];
             angular.forEach(urls, function (val, key) {
                 if (key > 4) // limit of 5
@@ -30,25 +30,25 @@
             return hexImages;
         },
 
-        parseHexToStrImage: function(urls){
+        parseHexToStrImage: function (urls) {
             var images = [];
-                angular.forEach(urls, function (val, key) {
-                    if (key > 4) // limit of 5
-                        return;
-                    images.push(CONVERTER.hexTostr(val));
-                });
-                return images;
+            angular.forEach(urls, function (val, key) {
+                if (key > 4) // limit of 5
+                    return;
+                images.push(CONVERTER.hexTostr(val));
+            });
+            return images;
         },
 
-        parseShipToList: function(userList){
+        parseShipToList: function (userList) {
             var list = [];
             angular.forEach(userList, function (val, key) {
-                    images.push({
-                        label: CONVERTER.hexTostr(val.name),
-                        id: val.id
-                    });
+                images.push({
+                    label: CONVERTER.hexTostr(val.name),
+                    id: val.id
                 });
-                return list;
+            });
+            return list;
         }
     };
 })(this);

@@ -1,14 +1,27 @@
 {
-  "files": ["./src/**/*.css", "./src/**/*.js","./*.js", "./src/**/*.html", "./src/*.html", "./*.ico","./*.json"],
-  "server": { 
-  		"routes": {
-        	"/node_modules": "node_modules",
-          "/src": "src"
-    		}
-  		},
-  "open":false,
+  "files": [
+    "./src/**/*.css",
+    "./src/**/*.js",
+    "./*.js",
+    "./src/**/*.html",
+    "./src/*.html",
+    "./*.ico",
+    "./*.json"
+  ],
+  "server": {
+    "routes": {
+      "/node_modules": "node_modules",
+      "/src": "src"
+    }
+  },
+  "open": false,
   "injectChanges": false,
   "logLevel": "info",
   "watchTask": true,
-  "serveStatic": ["./node_modules", "./src", "./dist*", "./**"]
-} 
+  "serveStatic": [
+    "./node_modules",
+    "./src",
+    "./dist*",
+    "./**"
+  ]
+}

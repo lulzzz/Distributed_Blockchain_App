@@ -1,7 +1,7 @@
 /*
-*	app.js for initializing angular module container.
-*   Defining routes, value and rootscope.
-*/
+ *	app.js for initializing angular module container.
+ *   Defining routes, value and rootscope.
+ */
 
 'use strict';
 

@@ -1,7 +1,7 @@
 /*
-*	JS for initializing angular module container.
-*   Defining controller, model, service for Product functionality.
-*/
+ *	JS for initializing angular module container.
+ *   Defining controller, model, service for Product functionality.
+ */
 
 'use strict';
 

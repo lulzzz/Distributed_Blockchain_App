@@ -1,144 +1,137 @@
 <!-- Product/Material shipment by logged user -->
-
 <!-- Directive for app header -->
-<app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header> <!-- TO-DO // remove hard-code value --> 
-
+<app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
+<!-- TO-DO // remove hard-code value -->
 <div class="">
-  <div class="searchResult col-lg-10 col-md-8 col-sm-10 col-xs-12">
-
-    <!-- Directive for module header -->
-    <app-legend header="SHIP FINISHED GOODS"></app-legend> <!-- TO-DO need to apply condition based on profile -->
-	
-
-<!-- Below div is just for demo purpose. For retailer, no ship product functionality provided but it has side menu link -->
-	<div ng-if="vm.isRetailer || vm.isAdmin" class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-			<div class="alert alert-danger errorDiv">
-				Access denied ! You may not have permission to acccess page content.
+	<div class="searchResult col-lg-10 col-md-8 col-sm-10 col-xs-12">
+		<!-- Directive for module header -->
+		<app-legend header="SHIP FINISHED GOODS"></app-legend>
+		<!-- TO-DO need to apply condition based on profile -->
+		<!-- Below div is just for demo purpose. For retailer, no ship product functionality provided but it has side menu link -->
+		<div ng-if="vm.isRetailer || vm.isAdmin" class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+				<div class="alert alert-danger errorDiv">
+					Access denied ! You may not have permission to acccess page content.
+				</div>
 			</div>
 		</div>
-	</div>
-
-
-	<div ng-if="vm.isManufacturer">
-		<div class=" searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<form class="registerProduct" ng-submit="vm.shipProduct()">
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<label for="prodName">Product Name :</label>
-						</div>
-						<!--- <div class="form-group col-lg-6 col-md-6 col-sm-10">
+		<div ng-if="vm.isManufacturer">
+			<div class=" searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<form class="registerProduct" ng-submit="vm.shipProduct()">
+					<div class="col-lg-6 col-md-6 col-sm-12">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+								<label for="prodName">Product Name :</label>
+							</div>
+							<!--- <div class="form-group col-lg-6 col-md-6 col-sm-10">
 							<input ng-required="true" type="text" class="form-control" id="prodName" ng-model="vm.product.productName">
 						</div> -->
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" ng-options="mat.materialName for mat in vm.materialList track by mat.batchNumber" ng-model="vm.selectedMat" class="form-control">
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" ng-options="mat.materialName for mat in vm.materialList track by mat.batchNumber"
+												ng-model="vm.selectedMat" class="form-control">
                                     <option value="">SELECT</option>
                                 </select>
-                            </div>
-					</div>
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 text-right-lg text-right-md formLabel">
-							<label for="modelNum">Model Number :</label>
-						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-required="true" type="text" class="form-control" id="modelNum" ng-model="vm.ship.modelNumber">
-						</div>
-					</div>
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="margin-top:0px;line-height:16px;">
-							<label for="batchNumber">Batch Number :</label>
-						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-required="true" type="text" class="form-control" id="batchNumber" ng-model="vm.ship.batchNumber">
-						</div>
-					</div>
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<label for="productWeight">Product Weight :</label>
-						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-required="true" type="text" class="form-control" id="productWeight" ng-model="vm.ship.weight">
-						</div>
-					</div>
-					 <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-                                <label for="quantity">Quantity :</label>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <input ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.userQuantity">
-                            </div>
-                        </div>
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<label for="quality">Quality :</label>
-						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<input ng-required="true" type="text" class="form-control" id="quality" ng-model="vm.ship.quality">
-							<div class="noPadding">
-								<img class="cursorPointer" ng-mouseover="vm.showLineage()" src="asset/images/qr_search.png" class="pull-right" style="width: 27px;position: absolute;top:0px;right: -35px;" />
-								<!-- Comment out based on new UI -->
-								<!-- popover-trigger="mouseenter" popover-placement="top-left" uib-popover-template="'blackchainProductShipDataView.html'" /> -->
-								<div class="pull-right font9" style="position:absolute;top:30px;right:-85px;">Token : LFG14561</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="line-height:16px;">
-							<label for="date">Date of <br class="visible-md"/>Manufacturing&nbsp;:</label>
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 text-right-lg text-right-md formLabel">
+								<label for="modelNum">Model Number :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<input ng-required="true" type="text" class="form-control" id="modelNum" ng-model="vm.ship.modelNumber">
+							</div>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="margin-top:0px;line-height:16px;">
+								<label for="batchNumber">Batch Number :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<input ng-required="true" type="text" class="form-control" id="batchNumber" ng-model="vm.ship.batchNumber">
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+								<label for="productWeight">Product Weight :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<input ng-required="true" type="text" class="form-control" id="productWeight" ng-model="vm.ship.weight">
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+								<label for="quantity">Quantity :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<input ng-required="true" type="text" class="form-control" id="quantity" ng-model="vm.userQuantity">
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+								<label for="quality">Quality :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<input ng-required="true" type="text" class="form-control" id="quality" ng-model="vm.ship.quality">
+								<div class="noPadding">
+									<img class="cursorPointer" ng-mouseover="vm.showLineage()" src="asset/images/qr_search.png" class="pull-right" style="width: 27px;position: absolute;top:0px;right: -35px;"
+									/>
+									<!-- Comment out based on new UI -->
+									<!-- popover-trigger="mouseenter" popover-placement="top-left" uib-popover-template="'blackchainProductShipDataView.html'" /> -->
+									<div class="pull-right font9" style="position:absolute;top:30px;right:-85px;">Token : LFG14561</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel" style="line-height:16px;">
+								<label for="date">Date of <br class="visible-md"/>Manufacturing&nbsp;:</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
 								<input ng-readonly="true" type="text" class="form-control" id="" ng-model="vm.ship.manufactureDate">
-                            </div>
-					</div>
-					<!--Added carrier Field-->
-					 <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-                                <label for="carrier">Carrier :</label>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select required id="carrier" ng-model="vm.ship.carrier" class="form-control">
+							</div>
+						</div>
+						<!--Added carrier Field-->
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+								<label for="carrier">Carrier :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<select required id="carrier" ng-model="vm.ship.carrier" class="form-control">
                                     <option id="0" value="">SELECT</option>
                                     <option id="1" value="fedex">FedEx</option>
                                     <option id="2" value="dtdc">DTDC</option>
                                    </select>
-                            </div>
-                        </div>
-					<!--Added carrier Field-->
-
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class="col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
-							<label for="picture">Distributer/Retailer :</label>
+							</div>
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-sm-10">
-							<div ng-class="{'errBox': vm.showRedBox}" class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings" options="vm.retailerList" selected-model="vm.selectedRetailers" checkboxes="true"></div>
+						<!--Added carrier Field-->
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
+								<label for="picture">Distributer/Retailer :</label>
+							</div>
+							<div class="form-group col-lg-6 col-md-6 col-sm-10">
+								<div ng-class="{'errBox': vm.showRedBox}" class="multiSelectDirective" ng-dropdown-multiselect="" extra-settings="vm.settings"
+												options="vm.retailerList" selected-model="vm.selectedRetailers" checkboxes="true"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
-					<button type="submit" class="btn btn-primary registerBtn">SHIP PRODUCT</button>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
-					<button type="reset" ng-click="vm.reset()" class="btn btn-primary registerBtn">CANCEL</button>
-				</div>
-			</form>
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right-lg text-center-xs text-right-md" style="padding-left:0px">
+						<button type="submit" class="btn btn-primary registerBtn">SHIP PRODUCT</button>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left-lg text-center-xs" style="padding-left:0px">
+						<button type="reset" ng-click="vm.reset()" class="btn btn-primary registerBtn">CANCEL</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-	</div>
-    </div>
-  </div>
-
-
+</div>
+</div>
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>
-
 <!-- Directive for displaying confirmation box -->
 <product-ship-dialog></product-ship-dialog>
-
 <!-- Directive for displaying product lineage box -->
-<ship-lineage-box><ship-lineage-box>
-
-<!-- Directive for displaying warning box -->
-<dialog-warning></dialog-warning>
+<ship-lineage-box>
+	<ship-lineage-box>
+		<!-- Directive for displaying warning box -->
+		<dialog-warning></dialog-warning>

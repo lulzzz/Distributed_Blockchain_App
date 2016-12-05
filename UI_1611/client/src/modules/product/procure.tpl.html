@@ -1,29 +1,19 @@
 <!-- Product/Material acknowledgment by loggedIN user -->
-
 <!-- Directive for app header -->
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
 <!-- TO-DO // remove hard-code value -->
-
 <div class="">
-
     <div class="manageProducts col-lg-10 col-md-10 col-sm-10 col-xs-12">
         <!-- Directive for rendering all pervious registered materials inside table -->
-    <app-registration-list list="vm.list" title="ACKNOWLEDGE PRODUCTS" is-procure-screen="new Boolean(true)" procure="vm.procure(dataList)"
-    show-lineage="vm.showLineage(data)" row-Selected="vm.rowSelected(data)"></app-registration-list>
-
+        <app-registration-list list="vm.list" title="ACKNOWLEDGE PRODUCTS" is-procure-screen="new Boolean(true)" procure="vm.procure(dataList)"
+            show-lineage="vm.showLineage(data)" row-Selected="vm.rowSelected(data)"></app-registration-list>
     </div>
-
 </div>
-
-
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>
-
 <!-- Directive for displaying confirmation box -->
 <product-procure-dialog></product-procure-dialog>
-
 <!-- Directive for displaying product lineage box -->
 <product-lineage-dialog></product-lineage-dialog>
-
 <!-- Directive for displaying warning box -->
 <dialog-warning></dialog-warning>

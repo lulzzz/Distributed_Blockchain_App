@@ -6,7 +6,8 @@ var path = require("path"),
 exports.uploadFile = function (req, res) {
     try {
         var list = ["https://s3.ap-south-1.amazonaws.com/bverifybucket/bag1.png", "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag5.jpg",
-                    "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag6.jpg", "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag7.jpg"];
+            "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag6.jpg", "https://s3.ap-south-1.amazonaws.com/bverifybucket/bag7.jpg"
+        ];
         //Configuring AWS account
         /*  AWS.config.update({
               accessKeyId: config.AWS_ACCESSKEY,
@@ -55,7 +56,9 @@ exports.uploadFile = function (req, res) {
 
     } catch (e) {
         console.log("Errorr----------------", e);
-        res.status(500).json({ errorMsg: "Currently we are experiencing technical difficulties. Please try after some time." });
+        res.status(500).json({
+            errorMsg: "Currently we are experiencing technical difficulties. Please try after some time."
+        });
     }
 };
 
@@ -82,20 +85,20 @@ exports.registerMaterial = function (req, res) {
 exports.registerProduct = function (req, res) {
 
     var product = {
-                qrCode: "",
-                filePath: [],
-                productName: "Coach Crosby line Tote Handbag",
-                quantity: "25 units",
-                batchNumber: "CCLTH22216FL",
-                manufactureDate: "14/1/2016 19:01:26",
-                expiryDate: "",
-                quality: "Top Grain",
-                color: "Brown",
-                weight: "5.7 oz.",
-                description: "",
-                dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
-                modelNumber: "33524LIC7C",
-                selectedMaterials: []
+        qrCode: "",
+        filePath: [],
+        productName: "Coach Crosby line Tote Handbag",
+        quantity: "25 units",
+        batchNumber: "CCLTH22216FL",
+        manufactureDate: "14/1/2016 19:01:26",
+        expiryDate: "",
+        quality: "Top Grain",
+        color: "Brown",
+        weight: "5.7 oz.",
+        description: "",
+        dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
+        modelNumber: "33524LIC7C",
+        selectedMaterials: []
     };
     res.json(product);
 };

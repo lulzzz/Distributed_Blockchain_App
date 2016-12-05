@@ -1,16 +1,13 @@
 <!-- Directive for app header -->
-
 <app-header isLoggedIn="vm.user.isAuthenticatedUser" user="vm.user"></app-header>
 <!-- TO-DO // remove hard-code value -->
-
 <div class="">
 	<div class="searchResult col-lg-10 col-md-10 col-sm-10 col-xs-12 padding-top-20">
 		<!-- Directive for module header -->
 		<app-legend header="REGISTER NEW MATERIAL"></app-legend>
 		<!-- TO-DO need to apply condition based on profile -->
-
 		<div class="searchResultForm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<form class="registerMaterial" name="registerForm" >
+			<form class="registerMaterial" name="registerForm">
 				<div class="col-lg-6 col-md-6 col-sm-12">
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
@@ -55,7 +52,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12">	
+				<div class="col-lg-6 col-md-6 col-sm-12">
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="col-lg-6 col-md-6 col-sm-12 text-right-lg text-right-md formLabel">
 							<label for="quality">Quality :</label>
@@ -107,21 +104,14 @@
 		</div>
 	</div>
 </div>
-
-        <!-- Directive for redning all pervious regsitered materials inside table -->
-        <app-registration-list list="vm.list" title="MANAGE PREVIOUS REGISTRATION" is-register-screen="new Boolean(true)"
-		edit="vm.edit(data)" view="vm.view(data)" delete="vm.delete(data)"></app-registration-list> 
+<!-- Directive for redning all pervious regsitered materials inside table -->
+<app-registration-list list="vm.list" title="MANAGE PREVIOUS REGISTRATION" is-register-screen="new Boolean(true)" edit="vm.edit(data)"
+				view="vm.view(data)" delete="vm.delete(data)"></app-registration-list>
 </div>
-
-
 <!-- Directive for app side menu -->
 <side-menu user="vm.user"></side-menu>
-
-
 <material-delete-dialog></material-delete-dialog>
-
 <!-- Directive for displaying confirmation box -->
 <material-register-dialog></material-register-dialog>
-
 <!-- Directive for displaying warning box -->
 <dialog-warning></dialog-warning>

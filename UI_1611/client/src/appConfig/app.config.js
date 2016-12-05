@@ -1,7 +1,7 @@
 /*
-*   All application related constants, provider, interceptors,
-*   error handling and CORS has been wrapped up inside 'appConfig' module
-*/
+ *   All application related constants, provider, interceptors,
+ *   error handling and CORS has been wrapped up inside 'appConfig' module
+ */
 
 'use strict';
 
@@ -16,88 +16,89 @@ if (window) {
 
 angular
     .module('appConfig', ['LocalStorageModule', 'ngResource', 'ui.bootstrap', 'ngTable', 'ngAnimate', 'ngSanitize',
-        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog', 'ngToast'])
+        'ngFileUpload', 'angularjs-dropdown-multiselect', 'ngDialog', 'ngToast'
+    ])
 
-    .config(['$httpProvider', '$logProvider', 'ngDialogProvider', 'ngToastProvider', function ($httpProvider, $logProvider, ngDialogProvider, ngToastProvider) {
+.config(['$httpProvider', '$logProvider', 'ngDialogProvider', 'ngToastProvider', function ($httpProvider, $logProvider, ngDialogProvider, ngToastProvider) {
 
-        // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
-        //Configure http interceptor and application loader
-        $httpProvider.interceptors.push('httpInterceptorService');
+    //Configure http interceptor and application loader
+    $httpProvider.interceptors.push('httpInterceptorService');
 
-        $httpProvider.interceptors.push(function (userModel) {
-            var user = userModel.getUser();
-            var sessionInjector = {
-                request: function (config) {
-                    //assign value from cookie if it exists
-                   // if (Cookies.get("loginQR")) {
-                        config.headers.Authorization = 'x-access-token '+ user.accountToken;// + Cookies.get("loginQR");
-                    //}
-                    return config;
+    $httpProvider.interceptors.push(function (userModel) {
+        var user = userModel.getUser();
+        var sessionInjector = {
+            request: function (config) {
+                //assign value from cookie if it exists
+                // if (Cookies.get("loginQR")) {
+                config.headers.Authorization = 'x-access-token ' + user.accountToken; // + Cookies.get("loginQR");
+                //}
+                return config;
+            }
+        };
+        return sessionInjector;
+    });
+
+    //Configure logging
+    $logProvider.debugEnabled(__env.enableDebug);
+
+    //Configure default ngDialog settings
+    ngDialogProvider.setDefaults({
+        className: 'ngdialog-theme-default',
+        showClose: false,
+        closeByDocument: false,
+        closeByEscape: false,
+        overlay: true,
+        closeByNavigation: true
+    });
+
+    ngToastProvider.configure({
+        timeOut: 5000,
+        animation: 'fade',
+        additionalClasses: 'toast-animation',
+        horizontalPosition: 'left',
+        maxNumber: 1
+    });
+
+}])
+
+.factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
+    function ($q, $rootScope, $log, appConstants) {
+        return {
+            request: function (config) {
+                if (appConstants.HTTP_METHODS.indexOf(config.method) > -1) {
+                    $rootScope.$broadcast("loaderShow");
                 }
-            };
-            return sessionInjector;
-        }); 
-
-        //Configure logging
-        $logProvider.debugEnabled(__env.enableDebug);
-
-        //Configure default ngDialog settings
-        ngDialogProvider.setDefaults({
-            className: 'ngdialog-theme-default',
-            showClose: false,
-            closeByDocument: false,
-            closeByEscape: false,
-            overlay: true,
-            closeByNavigation: true
-        });
-
-        ngToastProvider.configure({
-            timeOut: 5000,          
-            animation: 'fade',
-            additionalClasses: 'toast-animation',
-            horizontalPosition: 'left',
-            maxNumber: 1
-        });
-
-    }])
-
-    .factory('httpInterceptorService', ['$q', '$rootScope', '$log', 'appConstants',
-        function ($q, $rootScope, $log, appConstants) {
-            return {
-                request: function (config) {
-                    if (appConstants.HTTP_METHODS.indexOf(config.method) > -1) {
-                        $rootScope.$broadcast("loaderShow");
+                return config || $q.when(config);
+            },
+            response: function (response) {
+                $rootScope.$broadcast("loaderHide");
+                return response || $q.when(response);
+            },
+            responseError: function (response) {
+                try {
+                    $rootScope.hasError = true;
+                    if (response && response.data && response.data.errorMsg) {
+                        $rootScope.ERROR_MSG = response.data.errorMsg;
+                    } else if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
+                        $rootScope.ERROR_MSG = appConstants.UNAUTHORIZED_ERROR;
+                    } else {
+                        $rootScope.ERROR_MSG = appConstants.SERVICE_ERROR;
                     }
-                    return config || $q.when(config);
-                },
-                response: function (response) {
                     $rootScope.$broadcast("loaderHide");
-                    return response || $q.when(response);
-                },
-                responseError: function (response) {
-                    try {
-                        $rootScope.hasError = true;
-                        if (response && response.data && response.data.errorMsg) {
-                            $rootScope.ERROR_MSG = response.data.errorMsg;
-                        }
-                        else if (appConstants.ACCESS_DENIED_CODE.indexOf(response.status) >= 0) {
-                            $rootScope.ERROR_MSG = appConstants.UNAUTHORIZED_ERROR;
-                        } else {
-                            $rootScope.ERROR_MSG = appConstants.SERVICE_ERROR;
-                        }
-                        $rootScope.$broadcast("loaderHide");
-                    } catch (e) {
-                        $log.error(appConstants.FUNCTIONAL_ERR, e);
-                    }
-                    return $q.reject(response);
+                } catch (e) {
+                    $log.error(appConstants.FUNCTIONAL_ERR, e);
                 }
-            };
-        }])
+                return $q.reject(response);
+            }
+        };
+    }
+])
 
-    .constant('__ENV', _env)
+.constant('__ENV', _env)
     .constant('appConstants', {
         SERVICE_ERROR: "Service is temporarily unavailable. Please try after sometime.",
         UNAUTHORIZED_ERROR: "Access denied ! You may not have permission to acccess.",
@@ -145,14 +146,14 @@ angular
         }
     })
 
-    .run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', '$templateCache', function ($rootScope, $window, localStorageService, $log, ngTableDefaults, $templateCache) {
+.run(['$rootScope', '$window', 'localStorageService', '$log', 'ngTableDefaults', '$templateCache', function ($rootScope, $window, localStorageService, $log, ngTableDefaults, $templateCache) {
 
-        $log.debug('appConfig bootstrapped!');
+    $log.debug('appConfig bootstrapped!');
 
-        $rootScope.isLoggedIn = false;
-        $rootScope.activeMenu = '';
-        $rootScope.hasError = false;
-        $rootScope.ERROR_MSG = "";
-        $rootScope.isSuccess = false;
-        $rootScope.SUCCESS_MSG = "";
-    }]);
+    $rootScope.isLoggedIn = false;
+    $rootScope.activeMenu = '';
+    $rootScope.hasError = false;
+    $rootScope.ERROR_MSG = "";
+    $rootScope.isSuccess = false;
+    $rootScope.SUCCESS_MSG = "";
+}]);
