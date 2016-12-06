@@ -82,9 +82,9 @@ angular.module('materialModule')
                     expiryDate: PARSER.parseMilliSecToDate(data[3]),
                     quality: CONVERTER.hexTostr(data[4]),
                     dimension: CONVERTER.hexTostr(data[5]),
-                    weight: data[6],
+                    weight: data[6]
                     //description: CONVERTER.hexTostr(data.description ? '' : ''),
-                    filePath: PARSER.parseHexToStrImage(data[7])
+                    //filePath: PARSER.parseHexToStrImage(data[7])
                 }
             };
 

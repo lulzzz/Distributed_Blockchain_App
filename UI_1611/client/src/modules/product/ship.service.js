@@ -85,7 +85,7 @@ angular.module('productModule')
     };
 
     this.shipProduct = function (prod) {
-        var req = bverifyUtil.getShipmentHexRequest(mat, 1);
+        var req = bverifyUtil.getShipmentHexRequest(prod, 1);
         var deferred = $q.defer();
         try {
             shipResource

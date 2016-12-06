@@ -19,7 +19,6 @@ angular.module('productModule')
             $rootScope.isLoggedIn = userModel.isLoggedIn();
             vm.productList = [];
             vm.selectedProd = '';
-            vm.carrier = '';
             vm.ship = shipProduct.resetModel();
 
             vm.openDatepicker = function () {
@@ -38,7 +37,9 @@ angular.module('productModule')
                             productName: vm.ship.productName,
                             batchNumber: vm.ship.batchNumber
                         })
-                        vm.selectedProd = vm.ship.id;
+                        vm.selectedProd = {
+                            id: vm.ship.id
+                        };
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -68,7 +69,11 @@ angular.module('productModule')
             shipService
                 .getRetailerList(vm.user)
                 .then(function (response) {
-                    vm.retailerList = PARSER.parseShipToList(response.data);
+                    //vm.retailerList = PARSER.parseShipToList(response.data);
+                    vm.retailerList = [{
+                        id: "6DF4F3F7B2DC8DB6309773C88F715F6EBC415ECC",
+                        label: "Bloomingdale's - San Francisco Centre"
+                    }];
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })
@@ -99,9 +104,12 @@ angular.module('productModule')
                     vm.ship = shipProductModel.resetModel();
                 }
                 if (prod) {
+                    vm.selectedProd = {
+                        id: prod.id
+                    };
                     shipService
                         .getProduct({
-                            id: prod.batchNumber
+                            id: prod.id
                         })
                         .then(function (response) {
                             shipProductModel.setModel(shipProductModel.getParsedShipProduct(response));
@@ -149,13 +157,13 @@ angular.module('productModule')
 
 
                 angular.forEach(vm.selectedRetailers, function (val, key) {
-                    vm.ship.sendTo = val;
+                    vm.ship.sendTo = val.id;
                     shipProductModel.setModel(vm.ship);
                     // do product shipment
                     shipService
                         .shipProduct(shipProductModel.getModel())
                         .then(function (response) {
-
+                            $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                             return;
@@ -166,7 +174,7 @@ angular.module('productModule')
                         });
                 });
                 $rootScope.hasError = false;
-                $scope.qrCode = 'CCTH' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                $scope.shipId = (Math.floor(Math.random() * 90000) + 10000) + '';
                 $scope.productName = vm.ship.productName;
                 bverifyUtil.openModalDialog(ngDialog, $scope, 'product-ship-confirmBox', 600, false, 'ngdialog-theme-default');
             };

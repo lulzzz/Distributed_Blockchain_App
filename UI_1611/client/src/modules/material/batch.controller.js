@@ -58,7 +58,9 @@ angular.module('materialModule')
                             /***** Hardcoded for demo purpose */
                             //vm.urlList = vm.material.filePath;
                         vm.urlList = ['asset/images/bag1.png', 'asset/images/bag2.png']
-                        vm.selectedMat = vm.material.id;
+                        vm.selectedMat = {
+                            id: vm.material.id
+                        };
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -96,6 +98,9 @@ angular.module('materialModule')
                     vm.urlList = [];
                 }
                 if (mat) {
+                    vm.selectedMat = {
+                        id: mat.id
+                    };
                     batchMaterialService
                         .getMaterial({
                             id: mat.id
@@ -105,7 +110,7 @@ angular.module('materialModule')
                             vm.material = materialModel.getMaterial();
                             vm.material.id = mat.id;
                             //vm.urlList = vm.material.filePath;
-                            vm.urlList = ['asset/images/bag1.png', 'asset/images/bag2.png']
+                            vm.urlList = ['asset/images/bag1.png', 'asset/images/bag2.png'];
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
@@ -129,6 +134,9 @@ angular.module('materialModule')
                     .registerBatchMaterial(req)
                     .then(function (response) {
                         populateResponse(response);
+                        $scope.batchId = response.message;
+                        $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/batch/' + response.message;
+                        vm.material.id = $scope.batchId; // for time being
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -148,11 +156,9 @@ angular.module('materialModule')
                 batchMaterialService
                     .updateMaterialBatch(req)
                     .then(function (response) {
-                        $rootScope.hasError = false;
+                        populateResponse(response);
                         $scope.id = vm.material.id;
-                        $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + vm.material.id;
-                        $scope.materialName = vm.material.materialName;
-                        bverifyUtil.openModalDialog(ngDialog, $scope, 'material-batch-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                        $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/batch/' + vm.material.id;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -183,9 +189,7 @@ angular.module('materialModule')
                         id: data.id
                     })
                     .then(function (response) {
-                        setMaterial(response);
-                        vm.material.id = data.id;
-                        vm.selectedMat = data.id;
+                        setMaterial(response, data);
                         vm.isReadonly = false;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -204,8 +208,7 @@ angular.module('materialModule')
                         id: data.id
                     })
                     .then(function (response) {
-                        setMaterial(response);
-                        vm.material.id = data.id;
+                        setMaterial(response, data);
                         vm.isReadonly = true;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -253,19 +256,19 @@ angular.module('materialModule')
 
             function populateResponse(response) {
                 $rootScope.hasError = false;
-                $scope.id = response.message;
-                $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + response.message;
-                vm.material.id = $scope.id; // for time being
                 $scope.materialName = vm.material.materialName;
                 bverifyUtil.openModalDialog(ngDialog, $scope, 'material-batch-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
             };
 
-            function setMaterial(response) {
+            function setMaterial(response, data) {
                 materialModel.setMaterial(materialModel.getParsedMaterial(response));
                 vm.material = materialModel.getMaterial();
                 vm.urlList = vm.material.filePath;
                 vm.toUpdate = true;
-
+                vm.material.id = data.id;
+                vm.selectedMat = {
+                    id: data.id
+                };
             };
 
             /*************************************************************** */

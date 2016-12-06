@@ -16,9 +16,9 @@
                                 <label for="materialName">Material Name :</label>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-10">
-                                <select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" ng-options="mat.materialName for mat in vm.materialList track by mat.id"
-                                    ng-model="vm.selectedMat" class="form-control">
-                                    <option value="">SELECT</option>
+                                <select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" data-ng-options="mat.materialName for mat in vm.materialList track by mat.id"
+                                    data-ng-model="vm.selectedMat" class="form-control">
+                                    <option value="vm.selectedMat">SELECT</option>
                                 </select>
                             </div>
                         </div>

@@ -58,13 +58,10 @@ angular.module('materialModule')
                 registerMaterialService
                     .registerMaterial(materialModel.getMaterial())
                     .then(function (response) {
-                        $rootScope.hasError = false;
                         $scope.id = response.message;
                         $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + response.message;
-                        vm.material.id = $scope.id; // for time being
-                        $scope.materialName = vm.material.materialName;
-                        $scope.toUpdate = vm.toUpdate;
-                        bverifyUtil.openModalDialog(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                        vm.material.id = $scope.id;
+                        populateResponse(response);
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -81,12 +78,9 @@ angular.module('materialModule')
                 registerMaterialService
                     .updateMaterial(materialModel.getMaterial())
                     .then(function (response) {
-                        $rootScope.hasError = false;
                         $scope.id = vm.material.id;
                         $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + vm.material.id;
-                        $scope.materialName = vm.material.materialName;
-                        $scope.toUpdate = vm.toUpdate;
-                        bverifyUtil.openModalDialog(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                        populateResponse(response);
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -238,9 +232,6 @@ angular.module('materialModule')
 
             function populateResponse(response) {
                 $rootScope.hasError = false;
-                $scope.id = response.message;
-                $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/' + response.message;
-                vm.material.id = $scope.id; // for time being
                 $scope.materialName = vm.material.materialName;
                 $scope.toUpdate = vm.toUpdate;
                 bverifyUtil.openModalDialog(ngDialog, $scope, 'material-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');

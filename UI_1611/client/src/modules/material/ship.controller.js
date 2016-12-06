@@ -9,9 +9,9 @@ angular.module('materialModule')
 
 //For shipment of registered products
 .controller('shipMaterialController', ['userModel', 'appConstants', '$state', '$rootScope', 'shipMaterialService',
-    '$log', 'shipMaterialModel', 'ngDialog', '$scope', 'userServiceAPI', '$stateParams', 'localStorageService',
+    '$log', 'shipMaterialModel', 'ngDialog', '$scope', 'userServiceAPI', '$stateParams',
     function (userModel, appConstants, $state, $rootScope, shipMaterialService,
-        $log, shipMaterialModel, ngDialog, $scope, userServiceAPI, $stateParams, localStorageService) {
+        $log, shipMaterialModel, ngDialog, $scope, userServiceAPI, $stateParams) {
         try {
             var vm = this;
             vm.user = userModel.getUser();
@@ -21,12 +21,7 @@ angular.module('materialModule')
             vm.selectedMat = '';
             vm.ship = shipMaterialModel.resetModel();
 
-            /*vm.openDatepicker = function () {
-                vm.datepickerObj.popup.opened = true;
-            };*/
-
             if ($stateParams.id) {
-                //localStorageService.set('qrCode', angular.toJson($stateParams.qrCode))
                 shipMaterialService
                     .getMaterial({
                         id: $stateParams.id
@@ -40,7 +35,9 @@ angular.module('materialModule')
                             materialName: vm.ship.materialName,
                             batchNumber: vm.ship.batchNumber
                         });
-                        vm.selectedMat = vm.ship.id;
+                        vm.selectedMat = {
+                            id: vm.ship.id
+                        };
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -73,8 +70,8 @@ angular.module('materialModule')
                     //vm.manufacturerList = PARSER.parseShipToList(response.data);
                     vm.manufacturerList = [{
                         id: "6DF4F3F7B2DC8DB6309773C88F715F6EBC415ECC",
-                        label: "Coach"
-                    }]
+                        label: "Coach, Florida"
+                    }];
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })
@@ -86,6 +83,7 @@ angular.module('materialModule')
                 $rootScope.hasError = false;
                 $rootScope.isSuccess = false;
                 vm.ship = shipMaterialModel.resetModel();
+                vm.selectedMat = '';
             };
 
 
@@ -94,6 +92,9 @@ angular.module('materialModule')
                     vm.ship = shipMaterialModel.resetModel();
                 }
                 if (mat) {
+                    vm.selectedMat = {
+                        id: mat.id
+                    };
                     shipMaterialService
                         .getMaterial({
                             id: mat.id
@@ -149,7 +150,7 @@ angular.module('materialModule')
                     shipMaterialService
                         .shipMaterial(shipMaterialModel.getModel())
                         .then(function (response) {
-
+                            $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                             return;
@@ -160,7 +161,7 @@ angular.module('materialModule')
                         });
                 });
                 $rootScope.hasError = false;
-                $scope.id = 'GL' + (Math.floor(Math.random() * 90000) + 10000) + '';
+                $scope.shipId = (Math.floor(Math.random() * 90000) + 10000) + '';
                 $scope.materialName = vm.ship.materialName;
                 bverifyUtil.openModalDialog(ngDialog, $scope, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default');
 

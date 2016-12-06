@@ -3,7 +3,8 @@
     <!--- Render Previous registered Product/Material -->
     <div class="prodList">
         <table ng-table="vm.customConfigParams" class="commonTable table table-condensed table-bordered table-striped">
-            <tr ng-repeat="row in $data">
+            <tr class="" ng-if="$data.length===0">No Records Found</tr>
+            <tr ng-if="!$data.length===0" ng-repeat="row in $data">
                 <td style="padding-left: 10px;" class="col-lg-4 col-xs-2" data-title="'Name'">{{row.name}}</td>
                 <td style="padding-left: 10px;" title="'Quality'">{{row.quality}}</td>
                 <td style="padding-left: 10px;" title="'Registered On'">{{row.registeredDate}}</td>
