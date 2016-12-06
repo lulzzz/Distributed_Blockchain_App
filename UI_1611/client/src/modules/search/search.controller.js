@@ -92,7 +92,7 @@ angular.module('searchModule')
                 shipmentDetails
                     .$promise
                     .then(function (response) {
-                        vm.shipment = response;
+                        vm.shipment = bverifyUtil.parseShipmentDetails(response);
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })

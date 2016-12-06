@@ -17,7 +17,7 @@
 							<!--<input ng-readonly="vm.isReadonly" ng-required="true" type="text" class="form-control" id="materialName" ng-model="vm.material.materialName">-->
 							<select required ng-change="vm.onMaterialChanged(vm.selectedMat)" id="materialName" data-ng-options="mat.materialName for mat in vm.matList track by mat.id" 
 											data-ng-model="vm.selectedMat" class="form-control">
-                                    <option value="vm.selectedMat">SELECT</option>
+                                    <option value="">SELECT</option>
                             </select>
 						</div>
 						
@@ -111,7 +111,7 @@
 	</div>
 </div>
 <!-- Directive for redning all pervious regsitered materials inside table -->
-<app-registration-list list="vm.list" title="MANAGE PREVIOUS REGISTRATION" is-register-screen="new Boolean(true)" edit="vm.edit(data)"
+<app-registration-list list="vm.list" title="MANAGE PREVIOUS REGISTRATION" is-batch="new Boolean(true)" is-register-screen="new Boolean(true)" edit="vm.edit(data)"
 				view="vm.view(data)" delete="vm.delete(data)"></app-registration-list>
 </div>
 <!-- Directive for app side menu -->

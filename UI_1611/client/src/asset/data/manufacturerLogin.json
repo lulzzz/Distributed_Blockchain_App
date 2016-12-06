@@ -1,6 +1,6 @@
 {
    "user":{
-      "userName":"FODERFIL SRL",
+      "userName":"Coach",
       "isAuthenticatedUser":true,
       "certification":"B00RWSC2MW",
       "consortium":{
@@ -8,10 +8,10 @@
          "name":""
       },
       "userProfile":{
-         "id":"PROD",
-         "profile":"producer",
-         "alias": "Raw Material Producer"
+         "id":"MANUFACT",
+         "profile":"manufacturer",
+         "alias": "Manufacturer"
       },
-      "accountToken": "6DF4F3F7B2DC8DB6309773C88F715F6EBC415ECC"
+      "accountToken": "C5AA2E0022515A522FA9ABFE15C898392A5F10B5"
    }
 }

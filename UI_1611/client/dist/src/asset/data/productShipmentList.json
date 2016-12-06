@@ -1,0 +1,272 @@
+[{
+	"tokenId": "TB11400",
+	"productName": "Tote Bag",
+	"batchNumber": "B00RWSC2MW0",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Coach)",
+    "exitPort": {
+        "location": "Jacksonville, Florida" ,
+        "isAvailable": true
+    },
+    "entryPort": {
+        "location": "Buffalo, New York",
+        "isAvailable": true 
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH,SAN FRANCISCO",
+        "isAvailable": true
+    }
+}, {
+	"tokenId": "HB11401",
+	"productName": "Hobo Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (John)",
+    "exitPort": {
+        "location": "Trenton, New Jersey",
+        "isAvailable": true 
+    },
+    "entryPort": {
+        "location": "Greensboro, New Carolina",
+        "isAvailable": false 
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH, LOS ANGELES",
+        "isAvailable": true
+    }
+}, {
+	"tokenId": "TB11402",
+	"productName": "Tote Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Coach)",
+    "exitPort": {
+        "location": "Jacksonville, Florida",
+        "isAvailable": false 
+    },
+    "entryPort": {
+        "location": "Buffalo, New York" ,
+        "isAvailable": false
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH FLORIDA MALL",
+        "isAvailable": false
+    }
+}, {
+	"tokenId": "HB11403",
+	"productName": "Hobo Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Mike)",
+    "exitPort": {
+        "location": "Trenton, New Jersey",
+        "isAvailable": false 
+    },
+    "entryPort": {
+        "location": "Greensboro, New Carolina" ,
+        "isAvailable": true
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH VERO BEACH",
+        "isAvailable": true
+    }
+},{
+	"tokenId": "TB11404",
+	"productName": "Tote Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Coach)",
+    "exitPort": {
+        "location": "Jacksonville, Florida",
+        "isAvailable": true 
+    },
+    "entryPort": {
+        "location": "Greensboro, New Carolina" ,
+        "isAvailable": true
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH, LOS ANGELES",
+        "isAvailable": false
+    }
+},
+{
+	"tokenId": "TB11400",
+	"productName": "Tote Bag",
+	"batchNumber": "B00RWSC2MW0",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (John)",
+    "exitPort": {
+        "location": "Jacksonville, Florida" ,
+        "isAvailable": true
+    },
+    "entryPort": {
+        "location": "Buffalo, New York",
+        "isAvailable": true 
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH FLORIDA MALL",
+        "isAvailable": true
+    }
+}, {
+	"tokenId": "HB11401",
+	"productName": "Hobo Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Coach)",
+    "exitPort": {
+        "location": "Jacksonville, Florida",
+        "isAvailable": true 
+    },
+    "entryPort": {
+        "location": "Location 456",
+        "isAvailable": false 
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH,SAN FRANCISCO",
+        "isAvailable": true
+    }
+}, {
+	"tokenId": "TB11402",
+	"productName": "Tote Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Mike)",
+    "exitPort": {
+        "location": "Location 123",
+        "isAvailable": false 
+    },
+    "entryPort": {
+        "location": "Location 456" ,
+        "isAvailable": false
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH,SAN FRANCISCO",
+        "isAvailable": false
+    }
+}, {
+	"tokenId": "HB11403",
+	"productName": "Hobo Bag",
+	"batchNumber": "B00RWSC2MW1",
+	"weight": "100kg",
+	"quantity": "200",
+	"productionDate": "10/10/2010",
+	"registeredDate": "10/09/2010",
+	"trackDetails": {
+		"currentlyAt": "DTDC",
+		"trackRecord": []
+	},
+	"shippedOn": "10/10/2011",
+	"shippedFrom": "Manufacturer (Azim)",
+    "exitPort": {
+        "location": "Location 123",
+        "isAvailable": false 
+    },
+    "entryPort": {
+        "location": "Location 456" ,
+        "isAvailable": true
+    },
+    "manufacturerDetail": {
+        "name":"",
+        "isAvailable": false
+    },
+    "retailerDetail": {
+        "name":"COACH VERO BEACH",
+        "isAvailable": true
+    }
+}]

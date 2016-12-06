@@ -225,7 +225,7 @@ angular.module('productModule')
             model: CONVERTER.strTohex(prod.modelNumber),
             quality: CONVERTER.strTohex(prod.quality),
             dimension: CONVERTER.strTohex(prod.dimension),
-            weight: parseInt(prod.weight),
+            weight: CONVERTER.strTohex(prod.weight),
             images: PARSER.parseStrToHexImage(prod.filePath)
         }
     };

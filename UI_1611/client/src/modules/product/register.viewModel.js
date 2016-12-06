@@ -12,18 +12,16 @@ angular.module('productModule')
             var _init = {
                 id: "",
                 filePath: [],
-                productName: "Coach Crosby line Tote Handbag",
-                quantity: "25 units",
-                batchNumber: "CCLTH22216FL",
+                productName: "",
+                quantity: "",
+                batchNumber: "",
                 manufactureDate: "",
-                expiryDate: "",
-                quality: "Top Grain",
-                color: "Brown",
-                weight: "5.7 oz.",
+                quality: "",
+                color: "",
+                weight: "",
                 description: "",
-                dimension: "17' (L) x 8 3/4' (H) x 7' (W)",
-                modelNumber: "33524LIC7C",
-                selectedMaterials: []
+                dimension: "",
+                modelNumber: ""
             };
 
             var _product = {};
@@ -90,17 +88,16 @@ angular.module('productModule')
 
             var _getParsedProduct = function (data) {
                 return {
-                    //id: data[8] ? data[8]: '',
-                    productName: CONVERTER.hexTostr(data[0]),
+                    productName: CONVERTER.hexTostr(data.name),
                     quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
                     batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
-                    modelNumber: CONVERTER.hexTostr(data[2]),
-                    manufactureDate: PARSER.parseMilliSecToDate(data[1]),
-                    quality: CONVERTER.hexTostr(data[4]),
-                    dimension: CONVERTER.hexTostr(data[5]),
-                    weight: data[6],
+                    modelNumber: CONVERTER.hexTostr(data.model),
+                    manufactureDate: PARSER.parseMilliSecToDate(data.manufacturingDate),
+                    quality: CONVERTER.hexTostr(data.quality),
+                    dimension: CONVERTER.hexTostr(data.colour_dimensions),
+                    weight: CONVERTER.hexTostr(data.weight),
                     description: CONVERTER.hexTostr(data.description ? '' : ''),
-                    filePath: PARSER.parseHexToStrImage(data[7])
+                    filePath: PARSER.parseHexToStrImage(data.img_vid_path)
                 }
             };
 

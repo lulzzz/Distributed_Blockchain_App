@@ -19,25 +19,41 @@ angular.module('materialModule')
             $rootScope.isLoggedIn = userModel.isLoggedIn();
             vm.materialList = [];
             vm.selectedMat = '';
+            vm.batchToken = '';
             vm.ship = shipMaterialModel.resetModel();
 
             if ($stateParams.id) {
+
                 shipMaterialService
-                    .getMaterial({
-                        id: $stateParams.id
+                    .getMaterialBatch({
+                        batchId: $stateParams.id
                     })
-                    .then(function (response) {
-                        vm.materialList = [];
-                        shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
-                        vm.ship = shipMaterialModel.getModel();
-                        vm.materialList.push({
-                            id: vm.ship.id,
-                            materialName: vm.ship.materialName,
-                            batchNumber: vm.ship.batchNumber
-                        });
-                        vm.selectedMat = {
-                            id: vm.ship.id
-                        };
+                    .then(function (batchData) {
+
+                        shipMaterialService
+                            .getMaterial({
+                                id: batchData.rawMaterial
+                            })
+                            .then(function (response) {
+                                vm.materialList = [];
+                                shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
+                                vm.ship = shipMaterialModel.getModel();
+                                vm.materialList.push({
+                                    id: $stateParams.id,
+                                    materialName: vm.ship.materialName + ' - BATCH00'+ $stateParams.id
+                                });
+                                vm.selectedMat = {
+                                    id: $stateParams.id
+                                };
+                                vm.batchToken = 'BATCH00' + $stateParams.id;
+                                vm.batchUrl = 'http://35.164.15.146:8082/rawmaterial/batch/' + $stateParams.id;
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -69,7 +85,7 @@ angular.module('materialModule')
                 .then(function (response) {
                     //vm.manufacturerList = PARSER.parseShipToList(response.data);
                     vm.manufacturerList = [{
-                        id: "6DF4F3F7B2DC8DB6309773C88F715F6EBC415ECC",
+                        id: "C5AA2E0022515A522FA9ABFE15C898392A5F10B5",
                         label: "Coach, Florida"
                     }];
                 }, function (err) {
@@ -88,27 +104,50 @@ angular.module('materialModule')
 
 
             vm.onMaterialChanged = function (mat) {
+                $rootScope.hasError = false;
                 if (!mat) {
                     vm.ship = shipMaterialModel.resetModel();
+                    vm.userQuantity = '';
+                    vm.batchUrl = null;
                 }
                 if (mat) {
                     vm.selectedMat = {
                         id: mat.id
                     };
+                    
+
                     shipMaterialService
-                        .getMaterial({
-                            id: mat.id
+                        .getMaterialBatch({
+                            batchId: mat.id
                         })
-                        .then(function (response) {
-                            shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
-                            vm.ship = shipMaterialModel.getModel();
-                            vm.ship.id = mat.id;
+                        .then(function (batchData) {
+                            
+                            shipMaterialService
+                                .getMaterial({
+                                    id: batchData.rawMaterial
+                                })
+                                .then(function (response) {
+                                    shipMaterialModel.setModel(shipMaterialModel.getParsedShipMaterial(response));
+                                    vm.ship = shipMaterialModel.getModel();
+                                    vm.ship.id = mat.id;
+                                    vm.userQuantity = batchData.quantity;
+                                    vm.ship.quantity = batchData.quantity;
+                                    vm.batchToken = 'BATCH00' + mat.id;
+                                    vm.batchUrl = 'http://35.164.15.146:8082/rawmaterial/batch/' + vm.ship.id;
+                                }, function (err) {
+                                    $log.error(appConstants.FUNCTIONAL_ERR, err);
+                                })
+                                .catch(function (e) {
+                                    $log.error(appConstants.FUNCTIONAL_ERR, e);
+                                });
+
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                         })
                         .catch(function (e) {
                             $log.error(appConstants.FUNCTIONAL_ERR, e);
                         });
+
                 }
             };
 
@@ -144,13 +183,17 @@ angular.module('materialModule')
                 }
 
                 angular.forEach(vm.selectedManufacturer, function (val, key) {
-                    vm.ship.sendTo = val.id;
+                    vm.ship.shipTo = val.id;
                     shipMaterialModel.setModel(vm.ship);
                     // do material shipment
                     shipMaterialService
                         .shipMaterial(shipMaterialModel.getModel())
                         .then(function (response) {
                             $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
+                            $rootScope.hasError = false;
+                            $scope.shipId = response;
+                            $scope.materialName = vm.ship.materialName;
+                            bverifyUtil.openModalDialog(ngDialog, $scope, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default');
                         }, function (err) {
                             $log.error(appConstants.FUNCTIONAL_ERR, err);
                             return;
@@ -160,10 +203,7 @@ angular.module('materialModule')
                             return;
                         });
                 });
-                $rootScope.hasError = false;
-                $scope.shipId = (Math.floor(Math.random() * 90000) + 10000) + '';
-                $scope.materialName = vm.ship.materialName;
-                bverifyUtil.openModalDialog(ngDialog, $scope, 'material-ship-confirmBox', 600, false, 'ngdialog-theme-default');
+                
 
                 //shipMaterialModel.shippedTo(vm.selectedManufacturer);
             };

@@ -74,7 +74,10 @@ angular.module('productModule')
                         id: data.id
                     })
                     .then(function (response) {
-                        getProduct(response);
+                        productModel.setProduct(productModel.getParsedProduct(response));
+                        vm.product = productModel.getProduct();
+                        vm.urlList = vm.product.filePath;
+                        vm.toUpdate = true;
                         vm.product.id = data.id;
                         vm.isReadonly = false;
                     }, function (err) {
@@ -95,7 +98,10 @@ angular.module('productModule')
                         id: data.id
                     })
                     .then(function (response) {
-                        getProduct(response);
+                        productModel.setProduct(productModel.getParsedProduct(response));
+                        vm.product = productModel.getProduct();
+                        vm.urlList = vm.product.filePath;
+                        vm.toUpdate = true;
                         vm.product.id = data.id;
                         vm.isReadonly = true;
                     }, function (err) {
@@ -223,53 +229,6 @@ angular.module('productModule')
             /********** REgister new Product **************** */
             vm.registerProduct = function () {
                 vm.toUpdate = false;
-                validateProduct();
-                registerService
-                    .registerProduct(productModel.getProduct())
-                    .then(function (response) {
-                        populateResponse(response);
-                    }, function (err) {
-                        $log.error(appConstants.FUNCTIONAL_ERR, err);
-                    })
-                    .catch(function (e) {
-                        $log.error(appConstants.FUNCTIONAL_ERR, e);
-                    });
-            };
-
-            /************** UPDATE Product *******************/
-            vm.updateProduct = function () {
-                vm.toUpdate = true;
-                validateProduct();
-                registerService
-                    .updateProduct(productModel.getProduct())
-                    .then(function (response) {
-                        populateResponse(response);
-                    }, function (err) {
-                        $log.error(appConstants.FUNCTIONAL_ERR, err);
-                    })
-                    .catch(function (e) {
-                        $log.error(appConstants.FUNCTIONAL_ERR, e);
-                    });
-            };
-
-
-            /********* CONFIRM box action *******************/
-            $scope.redirectUser = function (flag) {
-                ngDialog.close();
-                if (flag) {
-                    $state.reload();
-                } else {
-                    $state.go('productShip', {
-                        id: $scope.id
-                    });
-                }
-            };
-
-
-
-            /***************** HELPER Functions ************************/
-
-            function validateProduct() {
                 if (vm.selectedMaterial.length <= 0) {
                     $rootScope.hasError = true;
                     vm.showRedBox = true;
@@ -292,27 +251,79 @@ angular.module('productModule')
                 productModel.setProduct(vm.product);
                 productModel.setFilePath(vm.urlList);
                 productModel.setSelectedMaterials.call(vm.product, vm.selectedMaterial);
+                registerService
+                    .registerProduct(productModel.getProduct())
+                    .then(function (response) {
+                        $rootScope.hasError = false;
+                        $scope.id = response.message;
+                        $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
+                        vm.product.id = $scope.id; // for time being
+                        $scope.productName = vm.product.productName;
+                        $scope.toUpdate = vm.toUpdate;
+                        bverifyUtil.openModalDialog(ngDialog, $scope, 'product-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                    }, function (err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function (e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
             };
 
-            function populateResponse(response) {
-                $rootScope.hasError = false;
-                $scope.id = response.message;
-                $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
-                vm.product.id = $scope.id; // for time being
-                $scope.productName = vm.product.productName;
-                $scope.toUpdate = vm.toUpdate;
-                bverifyUtil.openModalDialog(ngDialog, $scope, 'product-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
-            };
-
-            function getProduct(response) {
-                productModel.setProduct(productModel.getParsedProduct(response));
-                vm.product = productModel.getProduct();
-                vm.urlList = vm.product.filePath;
+            /************** UPDATE Product *******************/
+            vm.updateProduct = function () {
                 vm.toUpdate = true;
+                if (vm.selectedMaterial.length <= 0) {
+                    $rootScope.hasError = true;
+                    vm.showRedBox = true;
+                    $rootScope.ERROR_MSG = 'Please select atleast one Material.';
+                    return;
+                } else {
+                    $rootScope.hasError = false;
+                    vm.showRedBox = false;
+                }
+
+                if (vm.urlList.length <= 0) {
+                    $rootScope.hasError = true;
+                    $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
+                    return;
+                } else {
+                    $rootScope.hasError = false;
+                }
+
+                vm.product.manufactureDate = PARSER.parseStrDate(vm.datePickerData);
+                productModel.setProduct(vm.product);
+                productModel.setFilePath(vm.urlList);
+                productModel.setSelectedMaterials.call(vm.product, vm.selectedMaterial);
+                registerService
+                    .updateProduct(productModel.getProduct())
+                    .then(function (response) {
+                        $rootScope.hasError = false;
+                        $scope.id = response.message;
+                        $scope.qrCode = 'http://35.164.15.146:8082/product/' + response.message;
+                        vm.product.id = $scope.id; // for time being
+                        $scope.productName = vm.product.productName;
+                        $scope.toUpdate = vm.toUpdate;
+                        bverifyUtil.openModalDialog(ngDialog, $scope, 'product-register-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
+                    }, function (err) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, err);
+                    })
+                    .catch(function (e) {
+                        $log.error(appConstants.FUNCTIONAL_ERR, e);
+                    });
             };
 
-            /*************************************************************** */
 
+            /********* CONFIRM box action *******************/
+            $scope.redirectUser = function (flag) {
+                ngDialog.close();
+                if (flag) {
+                    $state.reload();
+                } else {
+                    $state.go('productShip', {
+                        id: $scope.id
+                    });
+                }
+            };
 
 
         } catch (e) {

@@ -10,10 +10,11 @@ angular.module('materialModule')
 .value('materialBatchUrl', {
     'registerBatch': 'rawmaterial/batch', // TO-DO need to change against WEB API URL
     /****** below needs to be change. Hardcoded for demo */
-    'list': 'rawmaterial/list/:page', // TO-DO need to change against WEB API URL
+    'list': 'rawmaterial/list/batch/:page', // TO-DO need to change against WEB API URL
     'deleteMatbatch': 'asset/data/deleteMaterial.json', // TO-DO need to change against WEB API URL
     'update': 'rawmaterial/batch/',
-    'retreive': 'rawmaterial/:id',
+    'batchMaterialRetreive': 'rawmaterial/batch/:id',
+    'materialRetreive': 'rawmaterial/:id',
     'rmList': 'rawmaterial/list/rm/all'
 })
 
@@ -35,10 +36,13 @@ angular.module('materialModule')
             method: "POST"
         }, //  // TO-DO need to change POST
         retreiveMat: {
-            url: 'http://35.164.15.146:8082/' + materialBatchUrl.retreive,
-            method: "GET",
-            isArray: "true"
+            url: 'http://35.164.15.146:8082/' + materialBatchUrl.materialRetreive,
+            method: "GET"
         }, // TO-DO need to change DELETE
+        retreiveBatchMat: {
+            url: 'http://35.164.15.146:8082/' + materialBatchUrl.batchMaterialRetreive,
+            method: "GET"
+        },
         matBatchDelete: {
             url: __ENV.apiUrl + materialBatchUrl.deleteMatbatch,
             method: "GET",
@@ -77,6 +81,26 @@ angular.module('materialModule')
     };
 
     /****** below needs to be change. Hardcoded for demo */
+    this.getMaterialBatch = function (req) {
+        var deferred = $q.defer();
+        try {
+            materialBatchResource
+                .retreiveBatchMat({
+                    id: req.batchId
+                })
+                .$promise
+                .then(function (response) {
+                    deferred.resolve(response);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+        } catch (e) {
+            $log.error(appConstants.FUNCTIONAL_ERR, e);
+        }
+        return deferred.promise;
+    };
+
+     /****** below needs to be change. Hardcoded for demo */
     this.getMaterial = function (req) {
         var deferred = $q.defer();
         try {
@@ -122,7 +146,9 @@ angular.module('materialModule')
         var deferred = $q.defer();
         try {
             materialBatchResource
-                .rmList()
+                .rmList({
+                    page: 1
+                })
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);
@@ -155,8 +181,9 @@ angular.module('materialModule')
     this.updateMaterialBatch = function (req) {
         var deferred = $q.defer();
         try {
-            var url = 'http://35.164.15.146:8082/' + materialBatchUrl.update + req.id;
-            delete req['id'];
+            var url = 'http://35.164.15.146:8082/' + materialBatchUrl.update + req.rawmaterial;
+            delete req['rawmaterial'];
+            req.quantity = parseInt(req.quantity);
             $http.put(url, req)
                 .success(function(data, status, headers, config) {
                         deferred.resolve(data);

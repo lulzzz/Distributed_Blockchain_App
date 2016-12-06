@@ -30,7 +30,7 @@ angular.module('materialModule')
             registeredMatList
                 .$promise
                 .then(function (response) {
-                    vm.list = bverifyUtil.parseList(response.data);
+                    vm.list = bverifyUtil.parseBatchList(response.batches);
                 }, function (err) {
                     $log.error(appConstants.FUNCTIONAL_ERR, err);
                 })
@@ -93,6 +93,8 @@ angular.module('materialModule')
 
 
             vm.onMaterialChanged = function (mat) {
+                vm.toUpdate = false;
+                vm.isReadonly = false;
                 if (!mat) {
                     vm.material = materialModel.resetMaterial();
                     vm.urlList = [];
@@ -151,13 +153,13 @@ angular.module('materialModule')
                 // materialModel.setMaterial(vm.material);
                 var req = {
                     rawmaterial: vm.material.id,
-                    quantity: vm.material.quantity
+                    quantity: parseInt(vm.material.quantity)
                 }
                 batchMaterialService
                     .updateMaterialBatch(req)
                     .then(function (response) {
                         populateResponse(response);
-                        $scope.id = vm.material.id;
+                        $scope.batchId = vm.material.id;
                         $scope.qrCode = 'http://35.164.15.146:8082/rawmaterial/batch/' + vm.material.id;
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
@@ -173,7 +175,7 @@ angular.module('materialModule')
                     $state.reload();
                 } else {
                     $state.go('materialShip', {
-                        id: $scope.id
+                        id: $scope.batchId
                     });
                 }
             };
@@ -185,12 +187,33 @@ angular.module('materialModule')
                 $rootScope.hasError = false;
                 //Making edit service call
                 batchMaterialService
-                    .getMaterial({
-                        id: data.id
+                    .getMaterialBatch({
+                        batchId: data.id
                     })
-                    .then(function (response) {
-                        setMaterial(response, data);
-                        vm.isReadonly = false;
+                    .then(function (batchData) {
+
+                        batchMaterialService
+                            .getMaterial({
+                                id: batchData.rawMaterial
+                            })
+                            .then(function (response) {
+                                materialModel.setMaterial(materialModel.getParsedMaterial(response));
+                                vm.material = materialModel.getMaterial();
+                                vm.urlList = vm.material.filePath;
+                                vm.material.quantity = batchData.quantity;
+                                vm.toUpdate = true;
+                                vm.material.id = data.id;
+                                vm.selectedMat = {
+                                    id: batchData.rawMaterial
+                                };
+                                vm.isReadonly = false;
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -202,14 +225,35 @@ angular.module('materialModule')
 
             vm.view = function (data) {
                 $rootScope.hasError = false;
-                //Making view service call
+                //Making edit service call
                 batchMaterialService
-                    .getMaterial({
-                        id: data.id
+                    .getMaterialBatch({
+                        batchId: data.id
                     })
-                    .then(function (response) {
-                        setMaterial(response, data);
-                        vm.isReadonly = true;
+                    .then(function (batchData) {
+
+                        batchMaterialService
+                            .getMaterial({
+                                id: batchData.rawMaterial
+                            })
+                            .then(function (response) {
+                                materialModel.setMaterial(materialModel.getParsedMaterial(response));
+                                vm.material = materialModel.getMaterial();
+                                vm.urlList = vm.material.filePath;
+                                vm.material.quantity = batchData.quantity;
+                                vm.toUpdate = true;
+                                vm.material.id = data.id;
+                                vm.selectedMat = {
+                                    id: batchData.rawMaterial
+                                };
+                                vm.isReadonly = true;
+                            }, function (err) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, err);
+                            })
+                            .catch(function (e) {
+                                $log.error(appConstants.FUNCTIONAL_ERR, e);
+                            });
+
                     }, function (err) {
                         $log.error(appConstants.FUNCTIONAL_ERR, err);
                     })
@@ -256,21 +300,10 @@ angular.module('materialModule')
 
             function populateResponse(response) {
                 $rootScope.hasError = false;
+                $scope.toUpdate = vm.toUpdate;
                 $scope.materialName = vm.material.materialName;
                 bverifyUtil.openModalDialog(ngDialog, $scope, 'material-batch-confirmBox', 600, true, 'ngdialog-theme-default confirmation-box');
             };
-
-            function setMaterial(response, data) {
-                materialModel.setMaterial(materialModel.getParsedMaterial(response));
-                vm.material = materialModel.getMaterial();
-                vm.urlList = vm.material.filePath;
-                vm.toUpdate = true;
-                vm.material.id = data.id;
-                vm.selectedMat = {
-                    id: data.id
-                };
-            };
-
             /*************************************************************** */
 
 

@@ -131,6 +131,7 @@ angular.module('bverifyApp')
             title: '@',
             isRegisterScreen: '@?',
             isProcureScreen: '@?',
+            isBatch: '@?',
             edit: '&?',
             view: '&?',
             delete: '&?',
@@ -158,11 +159,11 @@ angular.module('bverifyApp')
                 $scope.ifRow.listOfSelectedRows = $scope.$parent.parentSelectedRows;
 
                 $scope.selectedRow = function (data, flag) {
-                    if ($scope.ifRow.listOfSelectedRows.indexOf(data.qrCode) === -1) {
-                        $scope.ifRow.listOfSelectedRows.push(data.qrCode);
+                    if ($scope.ifRow.listOfSelectedRows.indexOf(data.id) === -1) {
+                        $scope.ifRow.listOfSelectedRows.push(data.id);
                         data.selectedRows = true;
                     } else {
-                        var deleteItem = $scope.ifRow.listOfSelectedRows.indexOf(data.qrCode);
+                        var deleteItem = $scope.ifRow.listOfSelectedRows.indexOf(data.id);
                         if (deleteItem > -1) {
                             $scope.ifRow.listOfSelectedRows.splice(deleteItem, 1);
                             data.selectedRows = false;
@@ -181,8 +182,8 @@ angular.module('bverifyApp')
                         $scope.header.selectedRows = true;
                         angular.forEach(list, function (value, key) {
                             value.selectedRows = true;
-                            if ($scope.ifRow.listOfSelectedRows.indexOf(value.qrCode) === -1) {
-                                $scope.ifRow.listOfSelectedRows.push(value.qrCode);
+                            if ($scope.ifRow.listOfSelectedRows.indexOf(value.id) === -1) {
+                                $scope.ifRow.listOfSelectedRows.push(value.id);
                                 value.selectedRows = true;
                             } else {
                                 // var deleteItem = $scope.listOfSelectedRows.indexOf(value.qrCode);

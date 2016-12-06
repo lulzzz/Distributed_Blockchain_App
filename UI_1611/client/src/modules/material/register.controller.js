@@ -54,7 +54,18 @@ angular.module('materialModule')
             /******************* Register new material *************************/
             vm.registerMaterial = function () {
                 vm.toUpdate = false;
-                validateMaterial();
+                 /*if (vm.urlList.length <= 0) {
+                    $rootScope.hasError = true;
+                    $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
+                    return;
+                } else {
+                    $rootScope.hasError = false;
+                }*/
+
+                vm.material.productionDate = PARSER.parseStrDate(vm.datePickerData);
+                vm.material.expiryDate = PARSER.parseStrDate(vm.datePickerExpiryData);
+                materialModel.setMaterial(vm.material);
+                materialModel.setFilePath(vm.urlList);
                 registerMaterialService
                     .registerMaterial(materialModel.getMaterial())
                     .then(function (response) {
@@ -74,7 +85,18 @@ angular.module('materialModule')
             /************** UPDATE Material *******************/
             vm.updateMaterial = function () {
                 vm.toUpdate = true;
-                validateMaterial();
+                 /*if (vm.urlList.length <= 0) {
+                    $rootScope.hasError = true;
+                    $rootScope.ERROR_MSG = appConstants.UPLOAD_FILE_ERR;
+                    return;
+                } else {
+                    $rootScope.hasError = false;
+                }*/
+
+                vm.material.productionDate = PARSER.parseStrDate(vm.datePickerData);
+                vm.material.expiryDate = PARSER.parseStrDate(vm.datePickerExpiryData);
+                materialModel.setMaterial(vm.material);
+                materialModel.setFilePath(vm.urlList);
                 registerMaterialService
                     .updateMaterial(materialModel.getMaterial())
                     .then(function (response) {
@@ -240,6 +262,8 @@ angular.module('materialModule')
             function setMaterial(response) {
                 materialModel.setMaterial(materialModel.getParsedMaterial(response));
                 vm.material = materialModel.getMaterial();
+                vm.datePickerData = vm.material.productionDate;
+                vm.datePickerExpiryData = vm.material.expiryDate;
                 vm.urlList = vm.material.filePath;
                 vm.toUpdate = true;
             };

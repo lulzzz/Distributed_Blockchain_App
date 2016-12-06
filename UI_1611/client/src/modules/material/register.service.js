@@ -40,8 +40,7 @@ angular.module('materialModule')
         },
         retreiveMat: {
             url: 'http://35.164.15.146:8082/' + registerMaterialUrl.retreive,
-            method: "GET",
-            isArray: "true"
+            method: "GET"
         },
         updateMat: {
             url: 'http://35.164.15.146:8082/' + registerMaterialUrl.update,
@@ -62,6 +61,8 @@ angular.module('materialModule')
 
     this.registerMaterial = function (mat) {
         var req = populateMaterialHexRequest(mat);
+        delete req['id'];
+        delete req['quantity'];
         var deferred = $q.defer();
         try {
             registerMaterialResource
@@ -159,6 +160,7 @@ angular.module('materialModule')
         try {
             var url = 'http://35.164.15.146:8082/' + registerMaterialUrl.update + req.id;
             delete req['id'];
+            delete req['quantity'];
             $http.put(url, req)
                 .success(function(data, status, headers, config) {
                         deferred.resolve(data);
@@ -181,8 +183,9 @@ angular.module('materialModule')
             model: CONVERTER.strTohex(mat.modelNumber),
             quality: CONVERTER.strTohex(mat.quality),
             dimension: CONVERTER.strTohex(mat.dimension),
-            weight: parseInt(mat.weight),
-            images: PARSER.parseStrToHexImage(mat.filePath)
+            weight: CONVERTER.strTohex(mat.weight),
+            images: PARSER.parseStrToHexImage(['asset/images/bag1.png'])
+            //images: PARSER.parseStrToHexImage(mat.filePath)
         }
     };
 

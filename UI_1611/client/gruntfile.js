@@ -111,6 +111,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 
-	grunt.task.registerTask("build", ["clean", "less", "cssmin", "concat", "uglify", "copy"]);
+	grunt.task.registerTask("build", ["clean", "less", "cssmin", "concat", "uglify", "copy", "compress"]);
 
 }

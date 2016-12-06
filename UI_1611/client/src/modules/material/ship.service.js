@@ -10,7 +10,8 @@ angular.module('materialModule')
 .value('shipMaterialUrl', {
     'materialList': 'rawmaterial/list/rmbatch/all',
     'ship': 'shipment',
-    'retreive': 'rawmaterial/batch/:id',
+    'materialRetreive': 'rawmaterial/:id',
+    'batchMaterialRetreive': 'rawmaterial/batch/:id',
     'manufacturerList': 'asset/data/manufacturerList.json'
 })
 
@@ -30,10 +31,13 @@ angular.module('materialModule')
             method: "POST"
         }, 
         retreiveMat: {
-            url: 'http://35.164.15.146:8082/' + shipMaterialUrl.retreive,
-            method: "GET",
-            isArray: "true"
+            url: 'http://35.164.15.146:8082/' + shipMaterialUrl.materialRetreive,
+            method: "GET"
         }, 
+         retreiveBatchMat: {
+            url: 'http://35.164.15.146:8082/' + shipMaterialUrl.batchMaterialRetreive,
+            method: "GET"
+        },
         manufacturerList: {
             url: __ENV.apiUrl + shipMaterialUrl.manufacturerList,
             method: "GET",
@@ -67,6 +71,26 @@ angular.module('materialModule')
         try {
             shipMaterialResource
                 .retreiveMat({id: req.id})
+                .$promise
+                .then(function (response) {
+                    deferred.resolve(response);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+        } catch (e) {
+            $log.error(appConstants.FUNCTIONAL_ERR, e);
+        }
+        return deferred.promise;
+    };
+
+    /****** below needs to be change. Hardcoded for demo */
+    this.getMaterialBatch = function (req) {
+        var deferred = $q.defer();
+        try {
+            shipMaterialResource
+                .retreiveBatchMat({
+                    id: req.batchId
+                })
                 .$promise
                 .then(function (response) {
                     deferred.resolve(response);

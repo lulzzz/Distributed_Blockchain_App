@@ -6,7 +6,7 @@
             generated.</div>
              <div ng-if="$parent.toUpdate" class="col-lg-8 col-xs-8 noPaddingLeft">The raw material &quot;{{$parent.vm.material.materialName}}&quot; has been updated successfully and a token has been
             generated.</div>
-        <div class="col-lg-4 col-xs-4 noPadding userQRCode">
+        <div ng-if="!$parent.toUpdate" class="col-lg-4 col-xs-4 noPadding userQRCode">
             <ul>
                 <li>
                     <i style="font-size: 12px;">Click on image to Download</i>
@@ -15,17 +15,21 @@
                     <qrcode version="5" error-correction-level="M" size="80" data="{{$parent.qrCode}}" download></qrcode>
                 </li>
                 <li>
-                    <span class="fontBold">Token : RMBATCH00{{$parent.batchId}}</span>
+                    <span class="fontBold">Token : BATCH00{{$parent.batchId}}</span>
                 </li>
             </ul>
         </div>
     </div>
     <div style="clear:both"></div>
 
-	 <div  class="col-lg-12 col-xs-12 noPaddingLeft" style="padding-top:20px;">
+	 <div ng-if="!$parent.toUpdate" class="col-lg-12 col-xs-12 noPaddingLeft" style="padding-top:20px;">
         Click
         &quot;<a ng-click="redirectUser(true)" class="cursorPointer"> <u class="colorLightBlue">REGISTER MATERIAL BATCH</u></a>&quot; to register more batches or
         &quot;<a class="cursorPointer" ng-click="redirectUser(false)"><u class="colorLightBlue">SHIP MATERIAL BATCH</u></a>&quot; to transfer registered materials to a manufacturer
+    </div>
+
+    <div ng-if="$parent.toUpdate" class="col-lg-12 col-xs-12 noPaddingLeft text-center" style="padding-top:20px;">
+        <a ng-click="closeThisDialog(0)" class="cursorPointer"><u class="colorLightBlue">OK</u></a>
     </div>
    
     <div style="clear:both"></div>

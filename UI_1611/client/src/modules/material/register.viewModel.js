@@ -14,12 +14,12 @@ angular.module('materialModule')
                 filePath: [],
                 materialName: "",
                 quantity: "",
-                batchNumber: "",
+                //batchNumber: "",
                 modelNumber: "",
                 productionDate: "",
                 expiryDate: "",
                 quality: "",
-                color: "",
+                //color: "",
                 weight: "",
                 description: "signature leather made from natural tanned Italian cowhide",
                 dimension: ""
@@ -74,18 +74,14 @@ angular.module('materialModule')
 
             var _getParsedMaterial = function (data) {
                 return {
-                    //id: data[8] ? data[8]: '',
-                    materialName: CONVERTER.hexTostr(data[0]),
-                    //quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
-                    //batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
-                    modelNumber: CONVERTER.hexTostr(data[2]),
-                    productionDate: PARSER.parseMilliSecToDate(data[1]),
-                    expiryDate: PARSER.parseMilliSecToDate(data[3]),
-                    quality: CONVERTER.hexTostr(data[4]),
-                    dimension: CONVERTER.hexTostr(data[5]),
-                    weight: data[6],
-                    //description: CONVERTER.hexTostr(data.description ? '' : ''),
-                    filePath: PARSER.parseHexToStrImage(data[7])
+                    materialName: CONVERTER.hexTostr(data.name),
+                    modelNumber: CONVERTER.hexTostr(data.model),
+                    productionDate: PARSER.parseMilliSecToDate(data.manufacturingDate),
+                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
+                    quality: CONVERTER.hexTostr(data.quality),
+                    dimension: CONVERTER.hexTostr(data.colour_dimensions),
+                    weight: CONVERTER.hexTostr(data.weight),
+                    filePath: PARSER.parseHexToStrImage(data.img_vid_path)
                 }
             };
 

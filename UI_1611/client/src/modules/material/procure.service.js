@@ -9,7 +9,7 @@ angular.module('materialModule')
 // Registering/Retreiving/shipping/acknowledging material
 .value('procureMaterialUrl', {
     'pendingList': 'shipment/pending/:page',
-    'procure': 'asset/data/register.json',
+    'procure': 'shipment/acknowledge',
     'ackMaterialLineage': 'asset/data/materialAckLineage.json'
 })
 
@@ -23,13 +23,12 @@ angular.module('materialModule')
 
         materialList: {
             url: 'http://35.164.15.146:8082/' + procureMaterialUrl.pendingList,
-            method: "GET",
-            isArray: "true"
+            method: "GET"
         },
 
         procureMat: {
             url: 'http://35.164.15.146:8082/' + procureMaterialUrl.procure,
-            method: "GET"
+            method: "PUT"
         },
         ackMaterialLineage: {
             url: __ENV.apiUrl + procureMaterialUrl.ackMaterialLineage,
@@ -39,7 +38,7 @@ angular.module('materialModule')
 }])
 
 //Making service call 
-.service('procureMaterialService', ['procureMaterialResource', 'appConstants', '$q', '$log', function (procureMaterialResource, appConstants, $q, $log) {
+.service('procureMaterialService', ['procureMaterialResource', 'appConstants', '$q', '$log', '$http', 'procureMaterialUrl', function (procureMaterialResource, appConstants, $q, $log, $http, procureMaterialUrl) {
 
     this.getMaterialList = function (req) {
         var deferred = $q.defer();
@@ -60,16 +59,16 @@ angular.module('materialModule')
         return deferred.promise;
     };
 
-    this.procureMaterial = function (list) {
+    this.procureMaterial = function (req) {
         var deferred = $q.defer();
         try {
-            procureMaterialResource
-                .procureMat(list)
-                .$promise
-                .then(function (response) {
-                    deferred.resolve(response);
-                }, function (err) {
-                    deferred.reject(err);
+            var url = 'http://35.164.15.146:8082/' + procureMaterialUrl.procure;
+            $http.put(url, {trackingId: req})
+                .success(function (data, status, headers, config) {
+                    deferred.resolve(data);
+                })
+                .error(function (data, status, headers, config) {
+                    deferred.reject(appConstants.FUNCTIONAL_ERR);
                 });
         } catch (e) {
             $log.error(appConstants.FUNCTIONAL_ERR, e);

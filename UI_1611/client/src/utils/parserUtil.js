@@ -35,6 +35,7 @@
             angular.forEach(urls, function (val, key) {
                 if (key > 4) // limit of 5
                     return;
+                if(parseInt(val) > 0)    
                 images.push(CONVERTER.hexTostr(val));
             });
             return images;

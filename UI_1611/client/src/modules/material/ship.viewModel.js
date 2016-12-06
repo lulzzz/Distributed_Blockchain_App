@@ -22,7 +22,7 @@ angular.module('materialModule')
                 description: "signature leather made from natural tanned Italian cowhide",
                 dimension: "",
                 carrier: '',
-                sendTo: ''
+                shipTo: ''
             };
 
             var _ship = {};
@@ -63,7 +63,7 @@ angular.module('materialModule')
                 angular.forEach(data, function (val, key) {
                     if (parseInt(val.name) > 0) {
                     list.push({
-                        materialName: CONVERTER.hexTostr(val.name),
+                        materialName: CONVERTER.hexTostr(val.name) + ' - BATCH00'+val.id ,
                         id: val.id
                     })
                 }
@@ -73,18 +73,12 @@ angular.module('materialModule')
 
             var _getParsedShipMaterial = function (data) {
                 return {
-                    //id: data[8] ? data[8]: '',
-                    materialName: CONVERTER.hexTostr(data[0]),
-                    //quantity: CONVERTER.hexTostr(data.quantity ? '' : ''),
-                    //batchNumber: CONVERTER.hexTostr(data.batchNumber ? '' : ''),
-                    modelNumber: CONVERTER.hexTostr(data[2]),
-                    productionDate: PARSER.parseMilliSecToDate(data[1]),
-                    expiryDate: PARSER.parseMilliSecToDate(data[3]),
-                    quality: CONVERTER.hexTostr(data[4]),
-                    dimension: CONVERTER.hexTostr(data[5]),
-                    weight: data[6]
-                    //description: CONVERTER.hexTostr(data.description ? '' : ''),
-                    //filePath: PARSER.parseHexToStrImage(data[7])
+                    materialName: CONVERTER.hexTostr(data.name),
+                    modelNumber: CONVERTER.hexTostr(data.model),
+                    productionDate: PARSER.parseMilliSecToDate(data.manufacturingDate),
+                    expiryDate: PARSER.parseMilliSecToDate(data.expDate),
+                    quality: CONVERTER.hexTostr(data.quality),
+                    weight: CONVERTER.hexTostr(data.weight)
                 }
             };
 
